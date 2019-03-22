@@ -31,24 +31,24 @@ public class BusinessYesanController {
 	}
 	
 	//2.2.1 승인된 사업수행 결정서 일정계획 수정 처리
-	@PostMapping("business/yesan/in/schedule_up")
+	@PostMapping("business/yesan/in_schedule_up")
 	public String businessYesanInScheduleUp() {
 		
-		return "business/yesan/in/schedule_up";
+		return "business/yesan/in_schedule_up";
 	}
 	
 	//2.2.1 승인된 사업수행 결정서 제조경비1 입력 처리
-	@PostMapping("/business/yesan/in/jejo_one_in")
+	@PostMapping("/business/yesan/in_jejo_one_in")
 	public String businessYesanInJejoOneIn() {
 		
-		return "business/yesan/in/jejo_one_in";
+		return "bbusiness/yesan/in_jejo_one_in";
 	}
 	
 	//2.2.1 승인된 사업수행 결정서 제조경비2 입력 처리
-	@PostMapping("/business/yesan/in/jejo_two_in")
+	@PostMapping("/business/yesan/in_jejo_two_in")
 	public String businessYesanInJejoTwoIn() {
 		
-		return "business/yesan/in/jejo_two_in";
+		return "business/yesan/in_jejo_two_in";
 	}
 	
 	//2.2.1 승인된 사업수행 결정서 예산 승인을 위한 List
@@ -108,3 +108,7 @@ public class BusinessYesanController {
 		return "business/yesan/list";
 	}
 }
+
+
+
+

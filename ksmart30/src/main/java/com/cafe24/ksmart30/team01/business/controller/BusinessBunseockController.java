@@ -43,10 +43,11 @@ public class BusinessBunseockController {
 		return "business/ing/order/hyunhwang";
 	}
 	
-	@PostMapping("/business/ing/order/hyunhwang")
+	//2.3.2 발주처별 진행 현황
+	@PostMapping("/business/ing/order_hyunhwang")
 	public String businessIngOrderHyunhwang(Model model) {
 		
-		return "business/ing/order/hyunhwang";
+		return "business/ing/order_hyunhwang";
 	}
 	
 	//2.3.3 사업성검토 성공율
