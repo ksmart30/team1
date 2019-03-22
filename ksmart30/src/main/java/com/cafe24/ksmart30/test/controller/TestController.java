@@ -11,6 +11,14 @@ public class TestController {
 	}
 	@GetMapping("/form")
 	public String form(){
-		return "form";
+		return "tag/form";
+	}
+	@GetMapping("/sangse")
+	public String sangse(){
+		return "tag/sangse";
+	}
+	@GetMapping("/in")
+	public String in(){
+		return "tag/in";
 	}
 }
