@@ -1,4 +1,4 @@
-package team01.project.controller;
+package com.cafe24.ksmart30.team01.project.controller;
 
 public class ProjectCooperationManageController {
 
