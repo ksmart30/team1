@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <th:block layout:fragment="customHead">
+  	<meta charset="UTF-8">
+  </th:block>
+  <body class="nav-md" th:fragment="mainBody">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="/errorView" class="site_title"><i class="fa fa-bar-chart-o"></i> <span>ERP</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_info">
+                <span>Welcome,</span>
+                <h2>사번</h2>
+                <h2>이름</h2>
+              </div>
+            </div>
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                	<li><a><i class="fa fa-edit"></i>기준정보관리<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="/baseinfo/client/list">거래처업체</a></li>
+                      <li><a href="/baseinfo/totalcode/in">종합코드</a></li>
+                      <li><a href="/baseinfo/creditcard/in">신용카드</a></li>
+                      <li><a href="/baseinfo/bankaccount/in">통장계좌</a></li>
+                      <li><a href="/baseinfo/businesscard/in">기업카드</a></li>
+                      <li><a href="/baseinfo/accountcode/in">계정코드</a></li>
+                      <li><a href="/baseinfo/controlitemcode/in">관리항목코드</a></li>
+                      <li><a href="/baseinfo/assetclassifycode/in">자산분류코드</a></li>
+                      <li><a href="/baseinfo/depreciation/in">감가상각율</a></li>
+                      <li><a href="/baseInfo/company">본사정보(시스템운영사)</a></li>
+                      <li><a href="/baseInfo/departmentCode">부서코드</a></li>
+                      <li><a href="/baseInfo/schoolCode">학교코드</a></li>
+                      <li><a href="/baseInfo/majorCode">전공코드</a></li>
+                      <li><a href="/baseInfo/postalCode">우편번호</a></li>
+                      <li><a href="/baseInfo/nationalPension">국민연금조견표</a></li>
+                      <li><a href="/baseInfo/gapguense">갑근세세액조견표</a></li>
+                    </ul>
+                  	</li>
+                	<li><a><i class="fa fa-briefcase"></i> 사업성검토 관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<label style="font-size:14px; padding-left:10px">사업수행 결정서 관리</label>
+		                      <li><a href="/business/manage/search">사업수행 결정서 입력</a></li>
+		                      <li><a href="/business/manage/seungin_search">사업수행 결정서 승인</a></li>
+		                      <li><a href="/business/manage/schedule_list">사업성검토 진행 일정</a></li>
+		                      <li><a href="/business/manage/list">사업성검토 List</a></li>
+                  		<label style="font-size:14px; padding-left:10px">사업성검토 예산관리</label>
+		                      <li><a href="/business/yesan/search">사업성검토 예산 입력</a></li>
+		                      <li><a href="/business/yesan/seungin_search">사업성검토 예산 승인</a></li>
+		                      <li><a href="/business/yesan/output">사업성검토 예산 출력</a></li>
+		                      <li><a href="/business/yesan/list">승인된 사업성검토 List</a></li>
+                  		<label style="font-size:14px; padding-left:10px">사업성검토 분석 현황</label>
+		                      <li><a href="/business/ing/hyunhawng">진행 현황</a></li>
+		                      <li><a href="/business/end/hyunhawng">종료 현황</a></li>
+		                      <li><a href="/business/ing/order/hyunhwang">발주처별 진행현황</a></li>
+		                      <li><a href="/business/success_rate">사업성검토 성공율</a></li>
+                  		</li>
+                  	</ul>
+                  <li><a><i class="fa fa-check-square-o"></i> 계약프로젝트 관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<label style="font-size:14px; padding-left:10px">용역계약서 관리</label>
+		                      <li><a href="/project/manage/search">용역계약서 입력</a></li>
+		                      <li><a href="/project/manage/change/search">용역계약서 변경 입력</a></li>
+		                      <li><a href="/project/manage/change/list">용역계약서 변경 조회</a></li>
+		                      <li><a href="/project/manage/list">용역계약서 검색</a></li>
+		                      <li><a href="/project/manage/depart_list">부서별 용역계약서 검색</a></li>
+		                      <li><a href="/project/manage/hyunhwang">용역계약서 현황</a></li>
+                  		<label style="font-size:14px; padding-left:10px">프로젝트 예산관리</label>
+		                      <li><a href="/project/manage/seungin_search">프로젝트 예산 입력</a></li>
+		                      <li><a href="/project/yesan/search">프로젝트 예산 승인</a></li>
+		                      <li><a href="/project/yesan/output">프로젝트 예산 출력</a></li>
+		                      <li><a href="/project/yesan/list">프로젝트 예산 검색</a></li>
+                  		<label style="font-size:14px; padding-left:10px">프로젝트 수익/비용</label>
+		                      <li><a href="/project/yesan/depart_list">부서별 예산서</a></li>
+		                      <li><a href="/project/yesan/unit_price_list">인건비 및 배부단가표</a></li>
+		                <label style="font-size:14px; padding-left:10px">List / 손익관리</label>
+                  			  <li><a href="/project/last/list">계약 프로젝트 List</a><li>
+                  			  <li><a href="/project/sonik">프로젝트 손익 관리</a></li>
+                  	</ul>
+                  <li><a><i class="fa fa-money"></i> 외주 관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<label style="font-size:14px; padding-left:10px">외주비 분석 현황</label>
+		                      <li><a href="/project/cooperation/dragon/hyunhwang">용도별 분석현황</a></li>
+		                      <li><a href="/project/cooperation/pjt/hyunhwang">프로젝트별 분석현황</a></li>
+                  		<label style="font-size:14px; padding-left:10px">외주협력사 관리</label>
+		                      <li><a href="/project/last/search">외주계약서 입력</a></li>
+		                      <li><a href="/project/cooperation/list">외주계약서 검색</a></li>
+		                      <li><a href="/cooperation/buy/search">외주비 매입 예정 입력</a></li>
+							  <li><a href="/cooperation/buy/hyunhwang_list">외주비 매입 예정 현황</a></li>
+		                      <li><a href="/cooperation/buy/slip">외주비 매입 전표</a></li>
+		                      <li><a href="/cooperation/pay/search">외주비 지급 예정 입력</a></li>
+		                      <li><a href="/cooperation/pay/hyunhwang_list">외주비 지급 예정 현황</a></li>
+                  			  <li><a href="/cooperation/pay/slip">외주비 지급 전표</a></li>
+                       	</ul>
+                  	<li><a><i class="fa fa-user"></i> 인사 / 급여 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<label style="font-size:14px; padding-left:10px">인사관리</label>
+		                      <li><a href="/person/insa/personnelRecord">인사기록사항</a></li>
+		                      <li><a href="/person/insa/employeeSearch">직원검색</a></li>
+		                      <li><a href="/person/insa/personnelStats">인원현황통계</a></li>
+                  		<label style="font-size:14px; padding-left:10px">이동관리</label>
+		                      <li><a href="/person/yidong/list">이동자료 조회</a></li>
+		                      <li><a href="/person/yidong/register">인사발령대장</a></li>
+                  		<label style="font-size:14px; padding-left:10px">이동관리</label>
+		                      <li><a href="/person/insapyeonga/list">인사평가항목</a></li>
+		                      <li><a href="/person/insapyeonga/chart">인사평가표</a></li>
+		                      <li><a href="/person/insapyeonga/in">인사평가 입력</a></li>
+		                      <li><a href="/person/insapyeonga/result">인사평가 결과</a></li>
+                  		<label style="font-size:14px; padding-left:10px">급여관리</label>
+		                      <li><a href="/person/pay/register">급여 대장</a></li>
+                  	</ul>
+                  	<li><a><i class="fa fa-calendar"></i> 근태관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<li><a href="/kuntae/workTimeIn"> 출, 퇴근 정정 신청 </a>
+                    	<li><a href="/kuntae/workTimeRecord"> 출, 퇴근 기록부 </a>
+                    	<li><a href="/kuntae/breakApply"> 휴가 신청 </a>
+                    	<li><a href="/kuntae/approval"> 근태승인처리 </a>
+                    	<li><a href="/kuntae/search"> 근태현황(일, 월) </a>
+                  		</li>
+                  	</ul>
+                  	<li><a><i class="fa fa-group"></i> M/H 관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<li><a href="/manHour/result"> M/H 실적 입력 </a>
+                  		</li>
+                  		<li><a href="/manHour/resultList"> M/H 실적 조회 </a>
+                  		</li>
+                  	</ul>
+                  	<li><a><i class="fa fa-krw"></i> 회계관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<li><a href="/acc/slip/in"> 전표입력 </a>
+                    	<li><a href="/acc/slip/search/in"> 전표상세검색 </a>
+                    	<li><a href="/acc/conditionalslip/search/in"> 조건별 전표검색 </a>
+                    	<li><a href="/acc/paycard/in"> 카드결재내역입력 </a>
+                    	<li><a href="/acc/purchasedebt/in"> 매입채무입력 </a>
+                    	<li><a href="/acc/slipadmit/in"> 전표승인 </a>
+                    	<li><a href="/acc/excosttransfer/in"> 외주비지금전표이관 </a>
+                    	<li><a href="/acc/slipendday/in"> 전표마감(일) </a>
+                    	<li><a href="/acc/slipendmonth/in"> 전표마감(월) </a>
+                    	<li><a href="/acc/slipendyear/in"> 전표마감(년) </a>
+                  		</li>
+                  	</ul>
+                  	<li><a><i class="fa fa-search"></i> 통합 검색 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                   	 	<li><a href="/project/all/list"> 프로젝트 통합 검색 </a>
+                   	 	<li><a href="/person/all/search"> 직원 검색 </a>
+                    	<li><a href="/search/slipdetail"> 전표 상세 검색 </a>
+                  		</li>
+                  	</ul>
+                  	<li><a><i class="fa fa-gear"></i> 시스템 관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<li><a href="/system/userIdManagement/in"> User_ID 등록 </a>
+                  		</li>
+                  	</ul>
+                </ul>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="/errorView">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="images/img.jpg" alt="">John Doe
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="javascript:;"> Profile</a></li>
+                    <li>
+                      <a href="javascript:;">
+                        <span class="badge bg-red pull-right">50%</span>
+                        <span>Settings</span>
+                      </a>
+                    </li>
+                    <li><a href="javascript:;">Help</a></li>
+                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  </ul>
+                </li>
+
+                <li role="presentation" class="dropdown">
+                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">6</span>
+                  </a>
+                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                    <li>
+                      <a>
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="text-center">
+                        <a>
+                          <strong>See All Alerts</strong>
+                          <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+        	<th:block layout:fragment="customBody">
+        	</th:block>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="../vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="../vendors/Flot/jquery.flot.js"></script>
+    <script src="../vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="../vendors/Flot/jquery.flot.time.js"></script>
+    <script src="../vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="../vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="../vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="../vendors/moment/min/moment.min.js"></script>
+    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+	
+  </body>
+</html>
