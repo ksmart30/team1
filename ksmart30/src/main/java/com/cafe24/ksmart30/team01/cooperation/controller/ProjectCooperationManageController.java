@@ -164,7 +164,7 @@ public class ProjectCooperationManageController {
 		return "project/cooperation/list";
 	}
 	//4.2.2 입력된 외주계약서 검색 post
-	@GetMapping("/project/cooperation/list")
+	@PostMapping("/project/cooperation/list")
 	public String projectCooperationList(Model model) {		
 		return "redirect:/project/cooperation/list";
 	}
