@@ -25,48 +25,48 @@ public class ProjectManageController {
 	}
 	
 	//3.1.1 용역계약서 발주처 입력 화면
-	@GetMapping("/project/manage/owner/in")
+	@GetMapping("/project/manage/owner_in")
 	public String projectManageOwnerIn() {
-		return "project/manage/owner/in";
+		return "project/manage/owner_in";
 	}
 	//3.1.1 용역계약서 발주처 입력 처리
-	@PostMapping("/project/manage/owner/in")
+	@PostMapping("/project/manage/owner_in")
 	public String projectManageOwnerIn(Model model) {
-		return "project/manage/owner/in";
+		return "project/manage/owner_in";
 	}
 	
 	//3.1.1 용역계약서 발주처 삭제 처리
-	@GetMapping("/project/manage/owner/del")
+	@GetMapping("/project/manage/owner_del")
 	public String projectManageOwnerDel() {
-		return "project/manage/owner/del";
+		return "project/manage/owner_del";
 	}
 	
 	//3.1.1 용역계약서 기성단계 입력 화면
-	@GetMapping("/project/manage/giseong/in")
+	@GetMapping("/project/manage/giseong_in")
 	public String projectManageGiseongIn() {
-		return "project/manage/giseong/in";
+		return "project/manage/giseong_in";
 	}
 	//3.1.1 용역계약서 기성단계 입력 처리
-	@PostMapping("/project/manage/giseong/in")
+	@PostMapping("/project/manage/giseong_in")
 	public String projectManageGiseongIn(Model model) {
 		return "project/manage/giseong/in";
 	}
 	
 	//3.1.1 용역계약서 기성단계 삭제 처리
-	@GetMapping("/project/manage/giseong/del")
+	@GetMapping("/project/manage/giseong_del")
 	public String projectManageGiseongDel() {
 		return "project/manage/giseong/del";
 	}
 	
 	//3.1.1 용역계약서 세부사항 입력 화면
-	@GetMapping("/project/manage/sebu/in")
+	@GetMapping("/project/manage/sebu_in")
 	public String projectManageSebuIn() {
-		return "project/manage/sebu/in";
+		return "project/manage/sebu_in";
 	}
 	//3.1.1 용역계약서 세부사항 입력 처리
-	@PostMapping("/project/manage/sebu/in")
+	@PostMapping("/project/manage/sebu_in")
 	public String projectManageSebuIn(Model model) {
-		return "project/manage/sebu/in";
+		return "project/manage/sebu_in";
 	}
 	
 	//3.1.1 승인된 승인 사업수행 결정서 검색 List
