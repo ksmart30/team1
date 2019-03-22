@@ -96,12 +96,7 @@ public class ProjectManageController {
 	public String projectManageChangeIn(Model model) {
 		return "project/manage/change/in";
 	}
-	
-	//3.1.2 용역계약서 발주처 변경 입력 처리
-	@PostMapping("/project/manage/change/owner_in")
-	public String projectManageChangeOwnerIn() {
-		return "project/manage/change/owner_in";
-	}
+
 	//3.1.2 용역계약서 발주처 변경 입력 처리
 	@PostMapping("/project/manage/change/owner_in")
 	public String projectManageChangeOwnerIn(Model model) {
@@ -109,19 +104,19 @@ public class ProjectManageController {
 	}
 	
 	//3.1.2 용역계약서 발주처 변경 삭제 처리
-	@PostMapping("/project/manage/change/owner_del")
+	@GetMapping("/project/manage/change/owner_del")
 	public String projectManageChangeOwnerDel() {
 		return "project/manage/change/owner_del";
 	}
 	
 	//3.1.2 용역계약서 기성단계 변경 입력 처리
 	@PostMapping("/project/manage/change/giseong_in")
-	public String projectManageChangeGiseongIn() {
+	public String projectManageChangeGiseongIn(Model model) {
 		return "project/manage/change/giseong_in";
 	}
 	
 	//3.1.2 용역계약서 기성단계 변경 삭제 처리
-	@PostMapping("/project/manage/change/giseong_del")
+	@GetMapping("/project/manage/change/giseong_del")
 	public String projectManageChangeGiseongDel() {
 		return "project/manage/change/giseong_del";
 	}
