@@ -1,9 +1,12 @@
 package com.cafe24.ksmart30.team01.cooperation.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
+@Controller
 public class CooperationManageController {
 	
 	//4.2.3 외주비 매입 예정 입력을 위한 프로젝트 검색 list
