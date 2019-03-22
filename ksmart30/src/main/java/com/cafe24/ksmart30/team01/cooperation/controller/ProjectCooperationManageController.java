@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ProjectCooperationManageController {
 	
 	//4.1.1 용도별 분석현황 get
-	@GetMapping("/project/cooperation/dragon/hyunhwang")
+	@GetMapping("/project/cooperation/dragon_hyunhwang")
 	public String projectCooperationDragonHyunhwang() {		
-		return "project/cooperation/dragon/hyunhwang";		
+		return "project/cooperation/dragon_hyunhwang";		
 	}
 	//4.1.1 용도별 분석현황 post
-	@PostMapping("/project/cooperation/dragon/hyunhwang")
+	@PostMapping("/project/cooperation/dragon_hyunhwang")
 	public String projectCooperationDragonHyunhwang(Model model) {		
-		return "redirect:/project/cooperation/dragon/hyunhwang";		
+		return "redirect:/project/cooperation/dragon_hyunhwang";		
 	}
 	//4.1.2 프로젝트별 분석현황 get
-	@GetMapping("/project/cooperation/pjt/hyunhwang")
+	@GetMapping("/project/cooperation/pjt_hyunhwang")
 	public String projectCooperationPjtHyunhwang() {		
-		return "project/cooperation/pjt/hyunhwang";		
+		return "project/cooperation/pjt_hyunhwang";		
 	}
 	//4.1.2 프로젝트별 분석현황 post
-	@PostMapping("/project/cooperation/pjt/hyunhwang")
+	@PostMapping("/project/cooperation/pjt_hyunhwang")
 	public String projectCooperationPjtHyunhwang(Model model) {		
-		return "redirect:/project/cooperation/pjt/hyunhwang";		
+		return "redirect:/project/cooperation/pjt_hyunhwang";		
 	}
 	//4.2.1 완료된 프로젝트 검색 list get
 	@GetMapping("/project/last/search")
@@ -38,7 +38,7 @@ public class ProjectCooperationManageController {
 	public String projectLastSearch(Model model) {		
 		return "redirect:/project/last/search";		
 	}
-	//4.2.1 외주계약서 기본정보 입력 화면get
+	//4.2.1 외주계약서 기본정보 입력 화면 get
 	@GetMapping("/project/cooperation/in")
 	public String projectCooperationIn() {		
 		return "project/cooperation/in";		
@@ -58,12 +58,12 @@ public class ProjectCooperationManageController {
 	public String projectCooperationGiseungIn(Model model) {		
 		return "redirect:/project/cooperation/giseung_in";		
 	}
-	//4.2.1 외주계약서 매입기성 입력 화면 get
+	//4.2.1 외주계약서 매입기성 수정 화면 get
 	@GetMapping("/project/cooperation/giseung_up")
 	public String projectCooperationGiseungUp() {		
 		return "project/cooperation/giseung_up";		
 	}
-	//4.2.1 외주계약서 매입기성 입력 처리 post
+	//4.2.1 외주계약서 매입기성 수정 처리 post
 	@PostMapping("/project/cooperation/giseung_up")
 	public String projectCooperationGiseungUp(Model model) {		
 		return "redirect:/project/cooperation/giseung_up";		
@@ -153,7 +153,7 @@ public class ProjectCooperationManageController {
 	public String projectCooperationInYongIn(Model model) {		
 		return "redirect:/project/cooperation/in/yong_in";		
 	}
-	//4.2.1 입력된 외주계약서 용역내용 추가 처리
+	//4.2.1 입력된 외주계약서 용역내용 삭제 처리
 	@PostMapping("/project/cooperation/in/yong_del")
 	public String projectCooperationInYongDel(Model model) {		
 		return "redirect:/project/cooperation/in/yong_up"; //삭제후 입력된 외주계약서 용역내용 수정 화면 리다이렉트
