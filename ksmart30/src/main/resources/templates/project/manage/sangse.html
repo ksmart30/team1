@@ -1,45 +1,147 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
-	<th:block layout:fragment="customHead">
-		<meta charset="UTF-8">
-		<title>용역계약서 입력</title>
-	</th:block>
-	<th:block layout:fragment="customBody">
-	<div class="x_panel">
-                  <div class="x_title">
-                    <label for="ex3">프로젝트 코드 : </label>
-                    <label>19004</label><br>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>용역계약서 입력</title>
+</th:block>
+<th:block layout:fragment="customBody">
+<!-- Tap start -->
+<div class="col-md-12 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">
+			<div class="" role="tabpanel" data-example-id="togglable-tabs">
+					<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+						<li role="presentation" class="active">
+						<a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">기본사항</a></li>
+						<li role="presentation" class="">
+						<a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">세부사항</a></li>
+					</ul>
+					
+					<!-- 프로젝트 정보 start -->
+					<div class="col-md-12 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">
+					<label for="ex3">프로젝트 코드 : </label>
+                    <label>19004</label>
                     <label for="ex4">프로젝트 명 : </label>
                     <label>초코우유 프로젝트</label>
                     <ul class="nav navbar-right panel_toolbox">
                     </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <br>
-                    <div class="form-inline">
-                  <div class="form-group">
-                    <label for="ex3">계약일자 </label>
-                    <input type="date">
-                  </div>
-                  <br>
-                  <div class="form-group">
-                    <label for="ex3">계약기간 </label>
-                    <input type="date">
-                    ~
-                    <input type="date">
-                    <select>
-                    	<option>1</option>
-                    	<option>2</option>
-                    	<option>3</option>
-                    	<option>4</option>
-                    	<option>5</option>
-                    </select>
-                    <label for="ex3"> 까지</label>
-                  </div>
+                    </div>
+                    </div>
+                    </div>
+                    <!-- 프로젝트 정보 end -->
+                    
+	<div id="myTabContent" class="tab-content">
+	<!-- 기본사항 start -->
+	<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+
+	<!-- 1 -->
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">
+				<div class="form-inline">
+	                  <div class="form-group">
+	                    <label for="ex3">계약일자 </label>
+	                    <input type="date">
+	                  </div>
+	                  <br>
+	                  <div class="form-group">
+	                    <label for="ex3">계약기간 </label>
+	                    <input type="date">
+	                    ~
+	                    <input type="date">
+	                    <select>
+	                    	<option>1</option>
+	                    	<option>2</option>
+	                    	<option>3</option>
+	                    	<option>4</option>
+	                    	<option>5</option>
+	                    </select>
+	                    <label for="ex3"> 까지</label>
+	                  </div>
+	                  <br>
+	                  <div class="form-group">
+	                  <label for="ex3">수행부서코드 </label>
+	                  <select>
+	                    	<option>7500</option>
+	                    	<option>7530</option>
+	                    	<option>7540</option>
+	                    	<option>7600</option>
+	                    	<option>7630</option>
+	                  </select>
+	                  <label for="ex3">설계1본부</label>
+	                  </div>
+	                  <br>
+	                  <div class="form-group">
+	                  <label for="ex3">건축물유형</label>
+	                  <select>
+	                  		<option></option>
+	                    	<option>단독주택</option>
+	                    	<option>공동주택</option>
+	                    	<option>제1종 근린생활시설</option>
+	                    	<option>제2종 근린생활시설</option>
+	                    	<option>문화 및 잡화시설</option>
+	                    	<option>판매시설</option>
+	                    	<option>의료시설</option>
+	                    	<option>교육연구시설</option>
+	                    	<option>운동시설</option>
+	                    	<option>업무시설</option>
+	                    	<option>숙박시설</option>
+	                    	<option>위락시설</option>
+	                    	<option>공  장</option>
+	                    	<option>창고시설</option>
+	                    	<option>위험물저장 및 처리시설</option>
+	                    	<option>자동차관련시설</option>
+	                    	<option>동물 및 식물관련시설</option>
+	                    	<option>분뇨·쓰레기처리시설</option>
+	                    	<option>교정 및 군사시설</option>
+	                    	<option>묘지관련시설</option>
+	                    	<option>관광휴게시설</option>
+	                    	<option>주거복합</option>
+	                    	<option>지구단위계획</option>
+	                    	<option>종교시설</option>
+	                    	<option>운수시설</option>
+	                    	<option>노유자시설</option>
+	                    	<option>수련시설</option>
+	                    	<option>방송통신시설</option>
+	                    	<option>발전시설</option>
+	                    	<option>공공업무시설</option>
+	                    	<option>복합시설</option>
+	                    	<option>기타</option>
+	                  </select>
+	                  </div>
+	             </div>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	<!-- 2 -->
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">
+					  <label for="ex3">계약면적</label>
+	                  <div class="form-group">
+	                  	<label for="ex3">대지면적</label>
+	                  	<input type="text">m²
+	                  	<input type="text">평<br>
+	                  	<br>
+	                  	<label for="ex3">연 면 적</label>
+	                  	<input type="text">m²
+	                  	<input type="text">평<br>
+	                  	<br>
+	                  	<label for="ex3">평당단가</label>
+	                  	<input type="text">원
+	                  </div>
                   </div>
                 </div>
-		</div>
+			</div>
+
+	<!-- 발주처 start -->
+	<div class="col-md-12 col-sm-6 col-xs-12">
 	<div class="x_panel">
     <div class="x_title">
     <label for="ex3"> 발주처</label>
@@ -63,45 +165,28 @@
                       <tbody>
                         <tr>
                           <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>the Bird</td>
-                          <td>@mdo</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">2</th>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>the Bird</td>
-                          <td>@fat</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">4</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">5</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">6</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
+                          <td>
+                          	<select>
+                          		<option></option>
+		                    	<option>(주)우원엠앤이</option>
+		                    	<option>현대건설(주)</option>
+		                    	<option>선진이앤씨</option>
+		                    	<option>(주)한일엠이씨</option>
+		                    	<option>랜디자인</option>
+                  			</select>
+                          </td>
+                          <td>
+                          	<select>
+                          		<option></option>
+		                    	<option>건설사</option>
+		                    	<option>시행사</option>
+		                    	<option>공사/공단</option>
+		                    	<option>정부기관</option>
+		                    	<option>건축설계사무소</option>
+                  			</select>
+                          </td>
+                          <td><input type="text"></td>
+                          <td><input type="text"></td>
                         </tr>
                         <tr style="background-color:#ffeeaa">
                     		<th scope="row">합계</th>
@@ -113,6 +198,186 @@
                       </tbody>
                     </table>
 	</div>
+	</div>        
 	</div>
-	</th:block>
+	
+	<!-- 기성단계 start -->
+	<div class="col-md-12 col-sm-6 col-xs-12">
+	<div class="x_panel">
+    <div class="x_title">
+    	<label for="ex3"> 기성단계</label>
+      <div class="nav navbar-right panel_toolbox">
+                      <label for="ex3">추가</label>
+                       <label for="ex3">삭제</label>
+                    </div>
+                  </div>
+                  <div class="x_content">
+
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>순번</th>
+                          <th>기성단계</th>
+                          <th>단계</th>
+                          <th>금액</th>
+                          <th>수금율(%)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">1</th>
+                          <td>
+                          	<select>
+                          		<option></option>
+		                    	<option>계약 체결시</option>
+		                    	<option>심의 접수시</option>
+		                    	<option>심의 완료후</option>
+		                    	<option>건축허가(사업승인)접수시</option>
+		                    	<option>건축허가(사업승인)완료시</option>
+                  			</select>
+                          </td>
+                          <td>
+                          	<select>
+                          		<option></option>
+		                    	<option>기 획</option>
+		                    	<option>심 의</option>
+		                    	<option>허 가</option>
+		                    	<option>착 공</option>
+		                    	<option>실 시</option>
+		                    	<option>A / S</option>
+		                    	<option>준 공</option>
+		                    	<option>기 타</option>
+                  			</select>
+                          </td>
+                          <td><input type="text"></td>
+                          <td><input type="text"></td>
+                        </tr>
+                        <tr style="background-color:#ffeeaa">
+                    		<th scope="row"></th>
+                    		<th scope="row"></th>
+                    		<th scope="row">합계</th>
+                    		<th scope="row">0</th>
+                    		<th scope="row">0.00</th>
+                    	</tr>
+                      </tbody>
+                    </table>
+    </div>
+    </div>
+    </div>
+    
+    <!-- 대금지급조건 start -->
+    <div class="col-md-12 col-sm-6 col-xs-12">
+    <div class="x_panel">
+   		<div class="form-group">
+	    	<label for="ex3">대금지급조건 </label>
+	    	<select>
+	    		<option></option>
+	    		<option>현   금</option>
+	    		<option>어   음</option>
+	    		<option>현금/어음</option>
+	    	</select>
+	      	<label for="ex3">어음일수 </label>
+	        <input type="text">
+		</div>
+    </div>
+    <span>공동수급일경우에만 수급지분을 입력하세요.</span>
+	</div>
+    
+    <!-- 공동수급 start -->
+	<div class="col-md-6 col-sm-6 col-xs-12">
+	<div class="x_panel">
+		<table>
+			<tr>
+				<td>
+					<label for="ex3">당사 총계약액 </label>
+					<input type="text">원
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="ex3">PJT총계약액 </label>
+					<input type="text">원
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="ex3">변경가감액 </label>
+					<input type="text">원
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="ex3">매출잔액 </label>
+					<input type="text">원
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="ex3">부가세 여부 </label>
+					<select>
+						<option></option>
+						<option>면  세</option>
+						<option>VAT 포함</option>
+						<option>VAT 별도</option>
+						<option>일부면서</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+    </div>
+	</div>
+	
+	<!-- 을의 수급지분 start -->
+	<div class="col-md-6 col-sm-6 col-xs-12">
+	<div class="x_panel">
+		<table>
+			<tr>
+				<td>
+					1)
+					<select>
+						<option></option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select>
+					<input type="text" value="0">%
+				</td>
+			</tr>
+			<tr>
+				<td>
+					2)
+					<select>
+						<option></option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select>
+					<input type="text" value="0">%
+				</td>
+			</tr>
+			<tr>
+				<td>
+					3)
+					<select>
+						<option></option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select>
+					<input type="text" value="0">%
+				</td>
+			</tr>
+		</table>
+    </div>
+	</div>
+	<!-- Tap end -->
+			</div>
+			</div>
+			</div>
+			</div>
+			</div>
+</th:block>
 </html>
