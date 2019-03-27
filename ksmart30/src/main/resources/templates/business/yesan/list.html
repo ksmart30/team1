@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>2.1.1 사업수행 결정서 입력 화면</title>
+</th:block>
+<th:block layout:fragment="customBody">
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>
+				사업성검토 검색 <small>Custom design</small>
+			</h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+				</li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"><i
+						class="fa fa-wrench"></i></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Settings 1</a></li>
+						<li><a href="#">Settings 2</a></li>
+					</ul></li>
+				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="x_content">
+
+			<p>
+				Add class
+				<code>bulk_action</code>
+				to table for bulk actions options on row select
+			</p>
+
+			<div class="table-responsive">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th>
+								<!-- <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> -->
+							</th>
+							<th class="column-title">프로젝트명</th>
+							<th class="column-title">당선</th>
+							<th class="column-title">탈락</th>
+							<th class="column-title">무산</th>
+							<th class="column-title">실시</th>
+							<th class="column-title">위치/지번</th>
+							<th class="column-title">PM</th>
+							<th class="column-title">관리임원</th>
+							<th class="column-title">PD</th>
+							<th class="column-title">수주책임자</th>
+							<th class="column-title">부서</th>
+							<th class="column-title">발주처구분</th>
+							<th class="column-title">발주처</th>
+							<th class="column-title">수주구분</th>
+							<th class="column-title">추정계약금액</th>
+							<th class="column-title">작품제출일</th>
+							<th class="column-title">종료구분</th>
+							<th class="column-title">계약금액</th>
+							<th class="column-title">대지(평)</th>
+							<th class="column-title">연면적(평)</th>
+							<th class="column-title">건축물용도</th>
+							<th class="column-title">납품성과물</th>
+							<th class="column-title">결정서입력자</th>
+
+							<!-- <th class="column-title no-link last"><span class="nobr">Action</span> -->
+							</th>
+							<th class="bulk-actions" colspan="7"><a class="antoo"
+								style="color: #fff; font-weight: 500;">Bulk Actions ( <span
+									class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+							</th>
+						</tr>
+					</thead>
+
+
+
+					<tbody>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">문효균TEST</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">전주시 덕진구 거북바위로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부 </td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">7,777,777,777</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">0</td>
+							<td class=" ">2.12</td>
+							<td class=" ">2.12</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>                 
+						</tr>
+                          <tr class="odd pointer">
+                            <td class="a-center ">
+                             
+                            </td>
+							<td class=" ">EBS건물신축공사</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">전주시 덕진구 기린대로 446</td>
+							<td class=" ">홍승윤</td>
+							<td class=" ">윤예찬</td>
+							<td class=" ">백승한</td>
+							<td class=" ">임홍근</td>
+							<td class=" ">설계1본부 </td>
+							<td class=" ">건설사</td>
+							<td class=" ">(주)이에이치네트워크</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">10,000</td>
+							<td class=" ">2019/05/29</td>
+							<td class=" "></td>
+							<td class=" ">0</td>
+							<td class=" ">100,000</td>
+							<td class=" ">100,000</td>
+							<td class=" ">교육연구시설</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>    
+							</tr>
+                          <tr class="even pointer">
+                            <td class="a-center ">
+                              
+                            </td>
+							<td class=" ">주선태월드</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">서울시 강남구 강남대로 236</td>
+							<td class=" ">주선태</td>
+							<td class=" ">박찬업</td>
+							<td class=" ">홍승윤</td>
+							<td class=" ">윤예찬</td>
+							<td class=" ">설계5본부 </td>
+							<td class=" ">건설사</td>
+							<td class=" ">현대건설(주)</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">1,000,000,000</td>
+							<td class=" ">2019/02/22</td>
+							<td class=" "></td>
+							<td class=" ">0</td>
+							<td class=" ">2,000</td>
+							<td class=" ">2,000</td>
+							<td class=" ">복합시설</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>    
+							</tr>
+                          <tr class="odd pointer">
+                            <td class="a-center ">
+                             
+                            </td>
+							<td class=" ">ksmart1팀</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">경기 의왕시 전주남이길</td>
+							<td class=" ">이다은</td>
+							<td class=" ">오소장</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계1본부 </td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">1,000,000,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">440,000,000</td>
+							<td class=" ">99.83</td>
+							<td class=" ">99.83</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>    
+							</tr>
+                          <tr class="even pointer">
+                            <td class="a-center ">
+                             
+                            </td>
+							<td class=" ">문효균TEST</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">전주시 덕진구 거북바위로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부 </td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">800,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">0</td>
+							<td class=" ">2.12</td>
+							<td class=" ">2.12</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>    
+							</tr>
+                          <tr class="odd pointer">
+                            <td class="a-center ">
+                              
+                            </td>
+							<td class=" ">심봉리 금동마을 회관 신축공사</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">서울 광진구 중곡동</td>
+							<td class=" ">한숙계</td>
+							<td class=" ">김태우</td>
+							<td class=" ">심병선</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부 </td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">5,000,000,000</td>
+							<td class=" ">2019/01/31</td>
+							<td class=" ">계약</td>
+							<td class=" ">0</td>
+							<td class=" ">0.00</td>
+							<td class=" ">0.00</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>    
+							</tr>
+                          <tr class="even pointer">
+                            <td class="a-center ">
+                              
+                            </td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">서울 용산구 백범로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부 </td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">10,000,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">0</td>
+							<td class=" ">2.12</td>
+							<td class=" ">2.12</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>    
+							</tr>
+                          <tr class="odd pointer">
+                            <td class="a-center ">
+                              
+                            </td>
+							<td class=" ">인천서창2지구 4블럭</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">인천 남동구 걸재천로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부 </td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">2,000,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">무산</td>
+							<td class=" ">0</td>
+							<td class=" ">2.12</td>
+							<td class=" ">2.12</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>    
+							</tr>
+
+                          <tr class="even pointer">
+                            <td class="a-center ">
+                             
+                            </td>
+							<td class=" ">대전 서남부지구</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">대전 유성구 가정로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부 </td>
+							<td class=" ">건설사</td>
+							<td class=" ">현대건설</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">900,000,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">0</td>
+							<td class=" ">44,456.61</td>
+							<td class=" ">122,419.94</td>
+							<td class=" ">공동주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>    
+							</tr>
+                          <tr class="odd pointer">
+                            <td class="a-center ">
+                              
+                            </td>
+							<td class=" ">서초동 진로부지 주거단지</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">서울 서초구 강남대로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부 </td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">500,000,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">500,000,000</td>
+							<td class=" ">3,756.66</td>
+							<td class=" ">51,570.20</td>
+							<td class=" ">제2종 근린생활시설</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>    
+							</tr>
+                        </tbody>
+                      </table>
+                    </div>
+							
+						
+                  </div>
+                </div>
