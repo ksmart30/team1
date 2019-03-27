@@ -4,12 +4,69 @@
 	layout:decorator="layout/main">
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
-	<title>2.1.1 사업수행 결정서 입력 화면</title>
+	<title>2.2.3 승인된 승인 사업수행 결정서 예산 출력</title>
 </th:block>
 <th:block layout:fragment="customBody">
+
+<!-- 검색 폼 -->
+			<h3> 검색 조건</h3>
+			<form id="demo-form" action="/project/cooperation/dragon_hyunhwang"
+				method="post">
+
+				<table class="table">
+					<!-- <tr>
+						<td width="150"><label>⊙ 부서 : </label></td>
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="date" name="date1" class="form-control ">
+							</div>
+						</td>
+						<td><label>에서</label></td>
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="date" name="date2" class="form-control">
+							</div>
+						</td>
+						<td><label>까지</label></td>
+					</tr>
+ -->
+					<tr>
+						<td width="150"><label>⊙ 부서 : </label></td>
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<select class="form-control">
+									<option value="">전 사</option>
+									<option value="1">설계1본부</option>
+									<option value="2">설계2본부</option>
+									<option value="3">설계3본부</option>
+									<option value="1">설계4본부</option>
+									<option value="2">설계5본부</option>
+								</select>
+							</div>
+						</td>
+					
+						<td width="100"><label>⊙ 코드명 : </label></td>
+						<td>
+							<div class="col-md-3 col-sm-3 col-xs-3 ">
+								<input type="text" name="test" class="form-control">
+							</div>
+						</td>	
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="text" name="test" class="form-control">
+							</div>
+						</td>			
+					</tr>					
+				</table>
+			</form>
+<!-- 검색폼 끝 -->
+
+
+<!-- 출력 리스트 검색 시작 -->
+
 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Table design <small>Custom design</small></h2>
+                    <h2>사업성검토 예산 출력 <small>Custom design</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -27,7 +84,7 @@
                     </ul>
                     <div class="clearfix"></div>
                   </div>
-
+                  
                   <div class="x_content">
 
                     <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p>
@@ -125,8 +182,7 @@
                           </tr>
                         </tbody>
                       </table>
+<!-- 출력 리스트 검색 끝 -->                      
                     </div>
-							
-						
                   </div>
                 </div>
