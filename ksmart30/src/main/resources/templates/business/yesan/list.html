@@ -8,183 +8,165 @@
 </th:block>
 <th:block layout:fragment="customBody">
 
-<!-- 검색 폼 -->
-			<h3> 검색 조건</h3>
-			<form id="demo-form" action="/project/cooperation/dragon_hyunhwang"
-				method="post">
+	<!-- 검색 폼 -->
+	<h3>검색 조건</h3>
+	<form id="demo-form" action="/project/cooperation/dragon_hyunhwang"
+		method="post">
 
-				<table class="table">
-					<!-- <tr>
-						<td width="150"><label>⊙ 부서 : </label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="date" name="date1" class="form-control ">
-							</div>
-						</td>
-						<td><label>에서</label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="date" name="date2" class="form-control">
-							</div>
-						</td>
-						<td><label>까지</label></td>
-					</tr>
- -->
-					<tr>
-						<td width="150"><label>⊙ 부서 : </label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
-									<option value="">전 사</option>
-									<option value="1">설계1본부</option>
-									<option value="2">설계2본부</option>
-									<option value="3">설계3본부</option>
-									<option value="1">설계4본부</option>
-									<option value="2">설계5본부</option>
-								</select>
-							</div>
-						</td>
-					</tr>
-					
-					
-					<tr>
-										
-						<td width="100"><label>⊙ 코드명 : </label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control">
-							</div>
-						</td>
+		<table class="table">
+			<tr>
+				<td width="150"><label>⊙ 부서 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<select class="form-control">
+							<option value="">전 사</option>
+							<option value="1">설계1본부</option>
+							<option value="2">설계2본부</option>
+							<option value="3">설계3본부</option>
+							<option value="1">설계4본부</option>
+							<option value="2">설계5본부</option>
+						</select>
+					</div>
+				</td>
+			</tr>
 
-					
-					
-						<td><label for="gex3">⊙ 수주구분 : </label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
-									<option value="">ALL</option>
-									<option value="1">발주의뢰</option>
-									<option value="2">저가심의</option>
-									<option value="3">적격심사</option>
-									<option value="1">현상설계</option>
-									<option value="2">지명현상</option>
-									<option value="3">TK</option>
-									<option value="3">기술제안</option>
-								</select>
-							</div>
-						</td>
-						
-						
-						<td><label for="gex3">⊙ 종료구분 : </label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
-									<option value="">ALL</option>
-									<option value="1">진행</option>
-									<option value="2">무산</option>
-									<option value="3">계약</option>
-								</select>
-							</div>
-						</td>
-						<td colspan="2">
-						</td>
-					</tr>
-					<tr>
-						
-						<td><label>⊙ 지  번 : </label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control">
-							</div>
-						</td>
-						
-						<td><label for="gex3">⊙ 건축물용도 : </label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
-									<option value="">ALL</option>
-									<option value="1">단독주택</option>
-									<option value="2">공동주택</option>
-									<option value="3">제1종 근린생황시설</option>
-									<option value="4">제2종 근린생황시설</option>
-									<option value="5">문화 및 잡화시설</option>
-									<option value="6">판매시설</option>
-									<option value="7">잡화시설</option>
-								</select>
-							</div>
-						</td>
-						
-						<td><label>⊙ 지  번 : </label></td>
-						<td>
-							<div class="col-md-5 col-sm-5 col-xs-5 ">
-								<input type="text" name="test" class="form-control">
-							</div>
-						</td>
-						
-						<td rowspan="1">
-							<div class="col-md-5 col-sm-5 col-xs-5 ">
-								~<input type="text" name="test" class="form-control">
-							</div>
-						</td>
-						
-					</tr>
-					
-					
-					<tr>
-										
-						<td width="100"><label>⊙ 발주처 : </label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control">
-							</div>
-						</td>
 
-					
-					
-						<td><label for="gex3">⊙ 발주처구분 : </label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
-									<option value="">ALL</option>
-									<option value="1">건설사</option>
-									<option value="2">시행사</option>
-									<option value="3">공사/공단</option>
-									<option value="3">정부기관</option>
-									<option value="1">건축설계사무소</option>
-									<option value="2">외주협력업체</option>
-									<option value="3">조합(재개발,재건축)</option>
-								</select>
-							</div>
-						</td>
-						
-						
-						<td><label for="gex3">⊙ 업무범위/수준 : </label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
-									<option value="">ALL</option>
-									<option value="1">A1</option>
-									<option value="2">A2</option>
-									<option value="3">A3</option>
-									<option value="2">A4</option>
-									<option value="3">A5</option>
-								</select>
-							</div>
-						</td>
-						<td colspan="2">
-						</td>
-					</tr>
-					
-					
-				</table>
+			<tr>
+
+				<td width="100"><label>⊙ 코드명 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<input type="text" name="test" class="form-control">
+					</div>
+				</td>
+
+
+
+				<td><label for="gex3">⊙ 수주구분 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<select class="form-control">
+							<option value="">ALL</option>
+							<option value="1">발주의뢰</option>
+							<option value="2">저가심의</option>
+							<option value="3">적격심사</option>
+							<option value="1">현상설계</option>
+							<option value="2">지명현상</option>
+							<option value="3">TK</option>
+							<option value="3">기술제안</option>
+						</select>
+					</div>
+				</td>
+
+
+				<td><label for="gex3">⊙ 종료구분 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<select class="form-control">
+							<option value="">ALL</option>
+							<option value="1">진행</option>
+							<option value="2">무산</option>
+							<option value="3">계약</option>
+						</select>
+					</div>
+				</td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+
+				<td><label>⊙ 지 번 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<input type="text" name="test" class="form-control">
+					</div>
+				</td>
+
+				<td><label for="gex3">⊙ 건축물용도 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<select class="form-control">
+							<option value="">ALL</option>
+							<option value="1">단독주택</option>
+							<option value="2">공동주택</option>
+							<option value="3">제1종 근린생황시설</option>
+							<option value="4">제2종 근린생황시설</option>
+							<option value="5">문화 및 잡화시설</option>
+							<option value="6">판매시설</option>
+							<option value="7">잡화시설</option>
+						</select>
+					</div>
+				</td>
+
+				<td><label>⊙ 지 번 : </label></td>
+				<td>
+					<div class="col-md-5 col-sm-5 col-xs-5 ">
+						<input type="text" name="test" class="form-control">
+					</div>
+				</td>
+
+				<td rowspan="1">
+					<div class="col-md-5 col-sm-5 col-xs-5 ">
+						~<input type="text" name="test" class="form-control">
+					</div>
+				</td>
+
+			</tr>
+
+
+			<tr>
+
+				<td width="100"><label>⊙ 발주처 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<input type="text" name="test" class="form-control">
+					</div>
+				</td>
+
+
+
+				<td><label for="gex3">⊙ 발주처구분 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<select class="form-control">
+							<option value="">ALL</option>
+							<option value="1">건설사</option>
+							<option value="2">시행사</option>
+							<option value="3">공사/공단</option>
+							<option value="3">정부기관</option>
+							<option value="1">건축설계사무소</option>
+							<option value="2">외주협력업체</option>
+							<option value="3">조합(재개발,재건축)</option>
+						</select>
+					</div>
+				</td>
+
+
+				<td><label for="gex3">⊙ 업무범위/수준 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<select class="form-control">
+							<option value="">ALL</option>
+							<option value="1">A1</option>
+							<option value="2">A2</option>
+							<option value="3">A3</option>
+							<option value="2">A4</option>
+							<option value="3">A5</option>
+						</select>
+					</div>
+				</td>
+				<td colspan="2"></td>
+			</tr>
+
+
+		</table>
 
 
 
 
-			</form>
-<!-- 검색폼 끝 -->
+	</form>
+	<!-- 검색폼 끝 -->
 
-<!-- 결과 리스트 시작 -->
+	<!-- 결과 리스트 시작 -->
 	<div class="x_panel">
 		<div class="x_title">
 			<h2>
@@ -260,15 +242,15 @@
 							<td class="a-center "></td>
 							<td class=" ">문효균TEST</td>
 							<td class=" "><input type="checkbox"></td>
-							<td class=" "><input type="checkbox"> </td>
-							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
 							<td class=" "><input type="checkbox"></td>
 							<td class=" ">전주시 덕진구 거북바위로</td>
 							<td class=" ">문효균</td>
 							<td class=" ">이다은</td>
 							<td class=" ">김동열</td>
 							<td class=" ">임명심</td>
-							<td class=" ">설계5본부 </td>
+							<td class=" ">설계5본부</td>
 							<td class=" ">건설사</td>
 							<td class=" ">에이원건축</td>
 							<td class=" ">발주의뢰</td>
@@ -280,23 +262,21 @@
 							<td class=" ">2.12</td>
 							<td class=" ">단독주택</td>
 							<td class=" "></td>
-							<td class=" ">양소미</td>                 
+							<td class=" ">양소미</td>
 						</tr>
-                          <tr class="odd pointer">
-                            <td class="a-center ">
-                             
-                            </td>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
 							<td class=" ">EBS건물신축공사</td>
 							<td class=" "><input type="checkbox"></td>
-							<td class=" "><input type="checkbox"> </td>
-							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
 							<td class=" "><input type="checkbox"></td>
 							<td class=" ">전주시 덕진구 기린대로 446</td>
 							<td class=" ">홍승윤</td>
 							<td class=" ">윤예찬</td>
 							<td class=" ">백승한</td>
 							<td class=" ">임홍근</td>
-							<td class=" ">설계1본부 </td>
+							<td class=" ">설계1본부</td>
 							<td class=" ">건설사</td>
 							<td class=" ">(주)이에이치네트워크</td>
 							<td class=" ">발주의뢰</td>
@@ -308,23 +288,21 @@
 							<td class=" ">100,000</td>
 							<td class=" ">교육연구시설</td>
 							<td class=" "></td>
-							<td class=" ">양소미</td>    
-							</tr>
-                          <tr class="even pointer">
-                            <td class="a-center ">
-                              
-                            </td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="even pointer">
+							<td class="a-center "></td>
 							<td class=" ">주선태월드</td>
 							<td class=" "><input type="checkbox"></td>
-							<td class=" "><input type="checkbox"> </td>
-							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
 							<td class=" "><input type="checkbox"></td>
 							<td class=" ">서울시 강남구 강남대로 236</td>
 							<td class=" ">주선태</td>
 							<td class=" ">박찬업</td>
 							<td class=" ">홍승윤</td>
 							<td class=" ">윤예찬</td>
-							<td class=" ">설계5본부 </td>
+							<td class=" ">설계5본부</td>
 							<td class=" ">건설사</td>
 							<td class=" ">현대건설(주)</td>
 							<td class=" ">발주의뢰</td>
@@ -336,23 +314,21 @@
 							<td class=" ">2,000</td>
 							<td class=" ">복합시설</td>
 							<td class=" "></td>
-							<td class=" ">양소미</td>    
-							</tr>
-                          <tr class="odd pointer">
-                            <td class="a-center ">
-                             
-                            </td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
 							<td class=" ">ksmart1팀</td>
 							<td class=" "><input type="checkbox"></td>
-							<td class=" "><input type="checkbox"> </td>
-							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
 							<td class=" "><input type="checkbox"></td>
 							<td class=" ">경기 의왕시 전주남이길</td>
 							<td class=" ">이다은</td>
 							<td class=" ">오소장</td>
 							<td class=" ">김동열</td>
 							<td class=" ">임명심</td>
-							<td class=" ">설계1본부 </td>
+							<td class=" ">설계1본부</td>
 							<td class=" ">건설사</td>
 							<td class=" ">에이원건축</td>
 							<td class=" ">발주의뢰</td>
@@ -364,23 +340,21 @@
 							<td class=" ">99.83</td>
 							<td class=" ">단독주택</td>
 							<td class=" "></td>
-							<td class=" ">양소미</td>    
-							</tr>
-                          <tr class="even pointer">
-                            <td class="a-center ">
-                             
-                            </td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="even pointer">
+							<td class="a-center "></td>
 							<td class=" ">문효균TEST</td>
 							<td class=" "><input type="checkbox"></td>
-							<td class=" "><input type="checkbox"> </td>
-							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
 							<td class=" "><input type="checkbox"></td>
 							<td class=" ">전주시 덕진구 거북바위로</td>
 							<td class=" ">문효균</td>
 							<td class=" ">이다은</td>
 							<td class=" ">김동열</td>
 							<td class=" ">임명심</td>
-							<td class=" ">설계5본부 </td>
+							<td class=" ">설계5본부</td>
 							<td class=" ">건설사</td>
 							<td class=" ">에이원건축</td>
 							<td class=" ">발주의뢰</td>
@@ -392,23 +366,21 @@
 							<td class=" ">2.12</td>
 							<td class=" ">단독주택</td>
 							<td class=" "></td>
-							<td class=" ">양소미</td>    
-							</tr>
-                          <tr class="odd pointer">
-                            <td class="a-center ">
-                              
-                            </td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
 							<td class=" ">심봉리 금동마을 회관 신축공사</td>
 							<td class=" "><input type="checkbox"></td>
-							<td class=" "><input type="checkbox"> </td>
-							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
 							<td class=" "><input type="checkbox"></td>
 							<td class=" ">서울 광진구 중곡동</td>
 							<td class=" ">한숙계</td>
 							<td class=" ">김태우</td>
 							<td class=" ">심병선</td>
 							<td class=" ">임명심</td>
-							<td class=" ">설계5본부 </td>
+							<td class=" ">설계5본부</td>
 							<td class=" ">건설사</td>
 							<td class=" ">에이원건축</td>
 							<td class=" ">발주의뢰</td>
@@ -420,23 +392,21 @@
 							<td class=" ">0.00</td>
 							<td class=" ">단독주택</td>
 							<td class=" "></td>
-							<td class=" ">양소미</td>    
-							</tr>
-                          <tr class="even pointer">
-                            <td class="a-center ">
-                              
-                            </td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="even pointer">
+							<td class="a-center "></td>
 							<td class=" ">효창동 근린생활시설 신축공사</td>
 							<td class=" "><input type="checkbox"></td>
-							<td class=" "><input type="checkbox"> </td>
-							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
 							<td class=" "><input type="checkbox"></td>
 							<td class=" ">서울 용산구 백범로</td>
 							<td class=" ">문효균</td>
 							<td class=" ">이다은</td>
 							<td class=" ">김동열</td>
 							<td class=" ">임명심</td>
-							<td class=" ">설계5본부 </td>
+							<td class=" ">설계5본부</td>
 							<td class=" ">건설사</td>
 							<td class=" ">에이원건축</td>
 							<td class=" ">발주의뢰</td>
@@ -448,23 +418,21 @@
 							<td class=" ">2.12</td>
 							<td class=" ">단독주택</td>
 							<td class=" "></td>
-							<td class=" ">양소미</td>    
-							</tr>
-                          <tr class="odd pointer">
-                            <td class="a-center ">
-                              
-                            </td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
 							<td class=" ">인천서창2지구 4블럭</td>
 							<td class=" "><input type="checkbox"></td>
-							<td class=" "><input type="checkbox"> </td>
-							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
 							<td class=" "><input type="checkbox"></td>
 							<td class=" ">인천 남동구 걸재천로</td>
 							<td class=" ">문효균</td>
 							<td class=" ">이다은</td>
 							<td class=" ">김동열</td>
 							<td class=" ">임명심</td>
-							<td class=" ">설계5본부 </td>
+							<td class=" ">설계5본부</td>
 							<td class=" ">건설사</td>
 							<td class=" ">에이원건축</td>
 							<td class=" ">발주의뢰</td>
@@ -476,24 +444,22 @@
 							<td class=" ">2.12</td>
 							<td class=" ">단독주택</td>
 							<td class=" "></td>
-							<td class=" ">양소미</td>    
-							</tr>
+							<td class=" ">양소미</td>
+						</tr>
 
-                          <tr class="even pointer">
-                            <td class="a-center ">
-                             
-                            </td>
+						<tr class="even pointer">
+							<td class="a-center "></td>
 							<td class=" ">대전 서남부지구</td>
 							<td class=" "><input type="checkbox"></td>
-							<td class=" "><input type="checkbox"> </td>
-							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
 							<td class=" "><input type="checkbox"></td>
 							<td class=" ">대전 유성구 가정로</td>
 							<td class=" ">문효균</td>
 							<td class=" ">이다은</td>
 							<td class=" ">김동열</td>
 							<td class=" ">임명심</td>
-							<td class=" ">설계5본부 </td>
+							<td class=" ">설계5본부</td>
 							<td class=" ">건설사</td>
 							<td class=" ">현대건설</td>
 							<td class=" ">발주의뢰</td>
@@ -505,23 +471,21 @@
 							<td class=" ">122,419.94</td>
 							<td class=" ">공동주택</td>
 							<td class=" "></td>
-							<td class=" ">양소미</td>    
-							</tr>
-                          <tr class="odd pointer">
-                            <td class="a-center ">
-                              
-                            </td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
 							<td class=" ">서초동 진로부지 주거단지</td>
 							<td class=" "><input type="checkbox"></td>
-							<td class=" "><input type="checkbox"> </td>
-							<td class=" "><input type="checkbox"> </td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
 							<td class=" "><input type="checkbox"></td>
 							<td class=" ">서울 서초구 강남대로</td>
 							<td class=" ">문효균</td>
 							<td class=" ">이다은</td>
 							<td class=" ">김동열</td>
 							<td class=" ">임명심</td>
-							<td class=" ">설계5본부 </td>
+							<td class=" ">설계5본부</td>
 							<td class=" ">건설사</td>
 							<td class=" ">에이원건축</td>
 							<td class=" ">발주의뢰</td>
@@ -533,11 +497,11 @@
 							<td class=" ">51,570.20</td>
 							<td class=" ">제2종 근린생활시설</td>
 							<td class=" "></td>
-							<td class=" ">양소미</td>    
-							</tr>
-                        </tbody>
-                      </table>
-<!-- 결과 리스트 끝 -->
-                    </div>					
-                  </div>
-                </div>
+							<td class=" ">양소미</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- 결과 리스트 끝 -->
+			</div>
+		</div>
+	</div>

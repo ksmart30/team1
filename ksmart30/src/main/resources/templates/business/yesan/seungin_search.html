@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>2.2.2 승인된 사업수행 결정서 예산 승인</title>
+</th:block>
+<th:block layout:fragment="customBody">
+	<!-- 검색부분 start -->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">
+				<label for="ex3">검색조건</label><br>
+				<table>
+					<tr>
+						<td>년도</td>
+						<td><input type="number"></td>
+					</tr>
+					<tr>
+						<td>부서</td>
+						<td><select>
+								<option>전 사</option>
+								<option>설계1본부</option>
+								<option>설계2본부</option>
+								<option>설계3본부</option>
+								<option>설계4본부</option>
+								<option>설계5본부</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>코드명</td>
+						<td>
+							<button>검색</button>
+						</td>
+					</tr>
+				</table>
+				<!-- 검색부분 end -->
+				<div class="x_title"></div>
+				<!-- 결과부분 start -->
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>PJT코드</th>
+							<th>프로젝트명</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="background-color: #fff9df">19005</td>
+							<td>ksmart1팀</td>
+						</tr>
+						<tr>
+							<td style="background-color: #fff9df">19009</td>
+							<td>bonobonoPorori</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- 결과부분 end -->
+				<div class="x_title"></div>
+				<!-- 계약서변경현황 start -->
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>변경일자</th>
+							<th>변경구분</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="background-color: #fff9df">2019/03/21</td>
+							<td>면적정산</td>
+						</tr>
+						<tr>
+							<td style="background-color: #fff9df">2019/03/01</td>
+							<td>원계약</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- 계약서변경현황 end -->
+			</div>
+		</div>
+	</div>
+
+	<!-- 프로젝트 start -->
+	<div class="col-md-9 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>
+							사업성검토 예산 승인 <small>Bordered table subtitle</small>
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-expanded="false"><i
+									class="fa fa-wrench"></i></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#">Settings 1</a></li>
+									<li><a href="#">Settings 2</a></li>
+								</ul>
+								</li>		
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+							<button type="button" class="btn btn-default">승인</button>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+
+						<table class="table table-bordered">
+
+							<tr>
+								<th>프로젝트</th>
+								<th>19019F 문효균TEST</th>
+								<th>(코드발행일:2019/03/13)</th>
+								<th>미승인</th>
+							</tr>
+
+						</table>
+
+						<table class="table table-bordered">
+
+							<tr>
+								<th>발주처</th>
+								<th>에이원건축(법인전환)</th>
+								<th>(발주처구분: 건설사)</th>
+								<th></th>
+							</tr>
+							<tr>
+								<th>대지위치</th>
+								<th>54923 전북 전주시 덕진구 거북바우로1(금암동)</th>
+								<th></th>
+								<th></th>
+							</tr>
+							<tr>
+								<th>지역/지구/구역</th>
+								<th>전용주거지역(1층) / 전용주거지역(2층) / 자연관광지구</th>
+								<th></th>
+								<th></th>
+							</tr>
+							<tr>
+								<th>수주구분</th>
+								<th>민간-발주의뢰(사업분류:신축)</th>
+								<th>건축물용도</th>
+								<th>단독주택</th>
+							</tr>
+							<tr>
+								<th>대지면적</th>
+								<th>에이원건축(법인전환)</th>
+								<th>(발주처구분: 건설사)</th>
+								<th></th>
+							</tr>
+							<tr>
+								<th>대지면적</th>
+								<th>7m2 2.12평</th>
+								<th>규모</th>
+								<th>지하 7층 지상 7층 세대수 7</th>
+							</tr>
+							<tr>
+								<th>연면적</th>
+								<th>7m2 2.12평</th>
+								<th>규모</th>
+								<th>건폐율 7% 용적율 7%</th>
+							</tr>
+
+						</table>
+
+						<table class="table table-bordered">
+
+							<tr>
+								<th>수행부서</th>
+								<th>설계5본부 2소</th>
+								<th>정보취득자</th>
+								<th>문효균</th>
+								<th>업무범위/수준</th>
+								<th>A</th>
+							</tr>
+
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th>예산총계</th>
+								<th>0원</th>
+							</tr>
+
+						</table>
+
+
+
+
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-12 col-sm-6 col-xs-12">
+				<div class="x_panel">
+					<div class="x_content">
+						<div class="x_title">
+							<h2>
+								<i class="fa fa-bars"></i> Tabs <small>입력 수정 삭제 버튼을 추가할
+									지도 몰라 남겨둠</small>
+							</h2>
+							<ul class="nav navbar-right panel_toolbox">
+								<li><a class="collapse-link"><i
+										class="fa fa-chevron-up"></i></a></li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown" role="button" aria-expanded="false"><i
+										class="fa fa-wrench"></i></a>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="#">Settings 1</a></li>
+										<li><a href="#">Settings 2</a></li>
+									</ul></li>
+								<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+						<div class="" role="tabpanel" data-example-id="togglable-tabs">
+							<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+								<li role="presentation" class="active"><a
+									href="#tab_content1" id="home-tab" role="tab" data-toggle="tab"
+									aria-expanded="true">일정계획</a></li>
+								<li role="presentation" class=""><a href="#tab_content2"
+									role="tab" id="profile-tab" data-toggle="tab"
+									aria-expanded="false">M/H계획</a></li>
+								<li role="presentation" class=""><a href="#tab_content3"
+									role="tab" id="profile-tab2" data-toggle="tab"
+									aria-expanded="false">제조경비I</a></li>
+								<li role="presentation" class=""><a href="#tab_content4"
+									role="tab" id="profile-tab3" data-toggle="tab"
+									aria-expanded="false">제조경비II</a></li>
+								<li role="presentation" class=""><a href="#tab_content5"
+									role="tab" id="profile-tab4" data-toggle="tab"
+									aria-expanded="false">기성단계</a></li>
+								<li role="presentation" class=""><a href="#tab_content6"
+									role="tab" id="profile-tab5" data-toggle="tab"
+									aria-expanded="false">추정손익계산서</a></li>
+							</ul>
+							<div id="myTabContent" class="tab-content">
+								<div role="tabpanel" class="tab-pane fade active in"
+									id="tab_content1" aria-labelledby="home-tab">
+									<p>
+									<div class="col-md-12 col-sm-6 col-xs-12">
+										<div class="x_panel">
+											<div class="x_title">
+												<h2>
+													Boardered table <small>입력 수정 삭제 버튼을 위해 남겨둠</small>
+												</h2>
+												<ul class="nav navbar-right panel_toolbox">
+													<li><a class="collapse-link"><i
+															class="fa fa-chevron-up"></i></a></li>
+													<li class="dropdown"><a href="#"
+														class="dropdown-toggle" data-toggle="dropdown"
+														role="button" aria-expanded="false"><i
+															class="fa fa-wrench"></i></a>
+														<ul class="dropdown-menu" role="menu">
+															<li><a href="#">Settings 1</a></li>
+															<li><a href="#">Settings 2</a></li>
+														</ul></li>
+													<li><a class="close-link"><i class="fa fa-close"></i></a>
+													</li>
+												</ul>
+												<div class="clearfix"></div>
+											</div>
+											<div class="x_content">
+
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+															<th>단계</th>
+															<th>변경</th>
+															<th>착수일</th>
+															<th>완료예정일</th>
+															<th>소요기간(Day)</th>
+															<th>종료일</th>
+															<th>사유입력</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<th scope="row">1</th>
+															<td>Mark</td>
+															<td>Otto</td>
+															<td>@mdo</td>
+														</tr>
+														<tr>
+															<th scope="row" class="form-control">기획/심의/허가</th>
+															<td>Jacob</td>
+															<td><input type="date" class="form-control"></td>
+															<td><input type="date" class="form-control"></td>
+															<td>완료예정일-착수일</td>
+															<td></td>
+															<td><input type="text" class="form-control"></td>
+														</tr>
+														<tr>
+															<th scope="row">착공/실시/A/S/준공</th>
+															<td>Larry</td>
+															<td>the Bird</td>
+															<td>@twitter</td>
+														</tr>
+													</tbody>
+												</table>
+
+											</div>
+										</div>
+									</div>
+									</p>
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="tab_content2"
+									aria-labelledby="profile-tab">
+									<p></p>
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="tab_content3"
+									aria-labelledby="profile-tab">
+									<p>xxFood truck fixie locavore, accusamus mcsweeney's marfa
+										nulla single-origin coffee squid. Exercitation +1 labore
+										velit, blog sartorial PBR leggings next level wes anderson
+										artisan four loko farm-to-table craft beer twee. Qui photo
+										booth letterpress, commodo enim craft beer mlkshk</p>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	</div>
+	<!-- 프로젝트 end -->
+</th:block>
+</html>
