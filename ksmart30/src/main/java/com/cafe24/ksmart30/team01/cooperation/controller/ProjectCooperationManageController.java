@@ -31,7 +31,7 @@ public class ProjectCooperationManageController {
 	//4.2.1 완료된 프로젝트 검색 list get
 	@GetMapping("/project/last/search")
 	public String projectLastSearch() {		
-		return "project/cooperation/in";		
+		return "/project/last/search";		
 	}
 	//4.2.1 완료된 프로젝트 검색 list Post
 	@PostMapping("/project/last/search")

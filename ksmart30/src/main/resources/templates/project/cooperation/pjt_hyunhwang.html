@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>용도별 분석 현황(프로젝트)</title>
+</th:block>
+<th:block layout:fragment="customBody">
+
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>
+				<i class="fa fa-money"></i> 용도별 분석 현황(프로젝트)
+			</h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+				</li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"><i
+						class="fa fa-wrench"></i></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Settings 1</a></li>
+						<li><a href="#">Settings 2</a></li>
+					</ul></li>
+				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+
+			<!-- 검색 폼 -->
+			<h3>★ 검색 조건</h3>
+			<form id="demo-form" action="/project/cooperation/pjt_hyunhwang"
+				method="post">
+
+				<table class="table">
+					<tr>
+						<td width="150"><label>⊙ 기간 : </label></td>
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="date" name="date1" class="form-control ">
+							</div>
+						</td>
+						<td><label>에서</label></td>
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="date" name="date2" class="form-control">
+							</div>
+						</td>
+						<td><label>까지</label></td>
+					</tr>
+
+					<tr>
+						<td width="150"><label>⊙ 건축물 용도 : </label></td>
+						<td>
+							
+						</td>
+						<td width="100"><label>⊙ 연면적 : </label></td>
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="text" name="test" class="form-control">
+							</div>
+						</td>
+						<td width="80"><label>평 이상</label></td>
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="text" name="test" class="form-control">
+							</div>
+						</td>
+						<td width="80"><label>평 이하</label></td>
+					</tr>
+
+					<tr>
+						<td><label for="gex3">⊙ 수주 구분 : </label></td>
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<select class="form-control">
+									<option value="">ALL</option>
+									<option value="1">발주의뢰</option>
+									<option value="2">저가심의</option>
+									<option value="3">적격심사</option>
+									<option value="1">현상설계</option>
+									<option value="2">지명현상</option>
+									<option value="3">TK</option>
+									<option value="3">기술제안</option>
+								</select>
+							</div>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+
+
+
+
+			</form>
+			<!-- 검색폼 끝 -->
+
+		</div>
+	</div>
+	<!-- 검색 결과 화면 -->
+	<!-- <div class="table-responsive"> -->
+	<div
+		style="overflow: scroll; width: 100%; height: 100%; padding: 10px; background-color:;">
+		<table class="table">
+			<thead>
+
+				<tr>
+					<th>프로젝트</th>
+					<th>건축물 용도</th>
+					<th>수주구분</th>
+					<th>연면적(평)</th>
+					<th>계약일자</th>
+					<th>계약금액</th>
+					<th>매출액</th>
+					<th colspan="26">외주비</th>
+					<th colspan="3">모형비</th>
+					<th rowspan="2">외주합계</th>
+				</tr>
+				<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th>건축</th>
+					<th>기계</th>
+					<th>전기</th>
+					<th>토목</th>
+					<th>조경</th>
+					<th>구조</th>
+					<th>견적</th>
+					<th>교통영향평가</th>
+					<th>기타인증</th>
+					<th>지질</th>
+					<th>측량</th>
+					<th>흙막이</th>
+					<th>특수디자인</th>
+					<th>소방</th>
+					<th>환경영향</th>
+					<th>재해영향</th>
+					<th>YE_LCC</th>
+					<th>인테리어</th>
+					<th>친환경인증</th>
+					<th>타당성검토</th>
+					<th>교통성검토</th>
+					<th>사전환경검토</th>
+					<th>사전재해영향성</th>
+					<th>사전경관분석</th>
+					<th>기타</th>
+					<th>계</th>
+					<th>모형하도급</th>
+					<th>모형비</th>
+					<th>계</th>
+				</tr>
+
+
+			</thead>
+
+			<tbody>
+				<!--   <tr class="even pointer">
+                            <td class=" ">121000040</td>
+                            <td class=" ">May 23, 2014 11:47:56 PM </td>
+                            <td class=" ">121000210 <i class="success fa fa-long-arrow-up"></i></td>
+                            <td class=" ">John Blank L</td>
+                            <td class=" ">Paid</td>
+                            <td class="a-right a-right ">$7.45</td>
+                            <td class=" last"><a href="#">View</a>
+                            </td>
+                          </tr> -->
+
+			</tbody>
+		</table>
+	</div>
+
+
+
+
+</th:block>
+</html>
