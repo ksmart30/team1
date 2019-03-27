@@ -35,7 +35,6 @@
                     <ul class="nav child_menu">
                       <li><a href="/baseinfo/client/list">거래처업체</a></li>
                       <li><a href="/baseinfo/totalcode/in">종합코드</a></li>
-                      <li><a href="/baseinfo/creditcard/in">신용카드</a></li>
                       <li><a href="/baseinfo/bankaccount/in">통장계좌</a></li>
                       <li><a href="/baseinfo/businesscard/in">기업카드</a></li>
                       <li><a href="/baseinfo/accountcode/in">계정코드</a></li>
@@ -46,7 +45,6 @@
                       <li><a href="/baseInfo/departmentCode">부서코드</a></li>
                       <li><a href="/baseInfo/schoolCode">학교코드</a></li>
                       <li><a href="/baseInfo/majorCode">전공코드</a></li>
-                      <li><a href="/baseInfo/postalCode">우편번호</a></li>
                       <li><a href="/baseInfo/nationalPension">국민연금조견표</a></li>
                       <li><a href="/baseInfo/gapguense">갑근세세액조견표</a></li>
                     </ul>
@@ -73,7 +71,7 @@
                   <li><a><i class="fa fa-check-square-o"></i> 계약프로젝트 관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                     	<label style="font-size:14px; padding-left:10px">용역계약서 관리</label>
-		                      <li><a href="/project/manage/search">용역계약서 입력</a></li>
+		                      <li><a href="/project/manage/sangse">용역계약서 입력</a></li>
 		                      <li><a href="/project/manage/change/search">용역계약서 변경 입력</a></li>
 		                      <li><a href="/project/manage/change/list">용역계약서 변경 조회</a></li>
 		                      <li><a href="/project/manage/list">용역계약서 검색</a></li>
@@ -94,8 +92,8 @@
                   <li><a><i class="fa fa-money"></i> 외주 관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                     	<label style="font-size:14px; padding-left:10px">외주비 분석 현황</label>
-		                      <li><a href="/project/cooperation/dragon_hyunhwang">용도별 분석현황</a></li>
-		                      <li><a href="/project/cooperation/pjt_hyunhwang">프로젝트별 분석현황</a></li>
+		                      <li><a href="/project/cooperation/dragon/hyunhwang">용도별 분석현황</a></li>
+		                      <li><a href="/project/cooperation/pjt/hyunhwang">프로젝트별 분석현황</a></li>
                   		<label style="font-size:14px; padding-left:10px">외주협력사 관리</label>
 		                      <li><a href="/project/last/search">외주계약서 입력</a></li>
 		                      <li><a href="/project/cooperation/list">외주계약서 검색</a></li>
@@ -116,7 +114,7 @@
 		                      <li><a href="/person/yidong/list">이동자료 조회</a></li>
 		                      <li><a href="/person/yidong/register">인사발령대장</a></li>
                   		<label style="font-size:14px; padding-left:10px">이동관리</label>
-		                      <li><a href="/person/insapyeonga/list">인사평가항목</a></li>
+		                      <li><a href="/person/insapyeonga/cate">인사평가항목</a></li>
 		                      <li><a href="/person/insapyeonga/chart">인사평가표</a></li>
 		                      <li><a href="/person/insapyeonga/in">인사평가 입력</a></li>
 		                      <li><a href="/person/insapyeonga/result">인사평가 결과</a></li>
@@ -144,6 +142,7 @@
                     	<li><a href="/acc/conditionalslip/search/in"> 조건별 전표검색 </a>
                     	<li><a href="/acc/paycard/in"> 카드결재내역입력 </a>
                     	<li><a href="/acc/purchasedebt/in"> 매입채무입력 </a>
+                    	<li><a href="/acc/unpaid/in"> 미지급금입력 </a>
                     	<li><a href="/acc/slipadmit/in"> 전표승인 </a>
                     	<li><a href="/acc/excosttransfer/in"> 외주비지금전표이관 </a>
                     	<li><a href="/acc/slipendday/in"> 전표마감(일) </a>
@@ -343,6 +342,9 @@
 
     <!-- Custom Theme Scripts -->
     <script src="/build/js/custom.min.js"></script>
+    
+    <th:block layout:fragment="customJquery">
+    </th:block>
 	
   </body>
 </html>
