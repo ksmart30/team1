@@ -13,9 +13,9 @@
 					let pjtCd = $('#pjtCd').val();
 					let pjtRadioGroup = $('#pjtRadioGroup').val();
 					console.log(pjtYear);
-					console.log(bu);
+					console.log(pjtBu);
 					console.log(pjtCd);
-					console.log(radioGroup);
+					console.log(pjtRadioGroup);
 				});
 				
 				// 용역계약서 입력 - 기본사항
@@ -31,7 +31,6 @@
 		                	$('#callbackRow').html(data);}
 		            	}
 					});
-					
 					/* $(data).each(function(index,item){
 	                    $('#list').append('<tr>');
 	                    $('#list').append('<td><input type="checkbox" class="ck" value="'+item.no+'"></td>');
@@ -42,6 +41,17 @@
 	                    $('#list').append('<td>'+item.date+'</td>');
 	                    $('#list').append('</tr>');
 	                }); */
+				});
+				// 용역계약서 입력 - 기본사항 - 발주처 입력값
+				$('#ownerSaveBtn').click(function(){
+					let ownerName = $('#ownerName').val();
+					let ownerGubun = $('#ownerGubun').val();
+					let ownerShare = $('#ownerShare').val();
+					let ownerPrice = $('#ownerPrice').val();
+					console.log(ownerName);
+					console.log(ownerGubun);
+					console.log(ownerShare);
+					console.log(ownerPrice);
 				});
 			});
 		</script>
@@ -294,10 +304,6 @@
     <div class="x_title">
     <label for="ex3"> 발주처</label>
       <div class="nav navbar-right panel_toolbox">
-                      <label for="ex3">
-                      	<button type="submit" id="ownerAddBtn">추가</button>
-                      </label>
-                       <label for="ex3">삭제</label>
                        <label for="ex3">
                        	<button type="submit" id="ownerSaveBtn">저장</button>
                        </label>
@@ -350,6 +356,12 @@
                     		<th width="20%">198,411,949</th>
                     	</tr>
                     </table>
+                    <label for="ex3">
+                      	<button type="submit" id="ownerAddBtn">추가</button>
+                      </label>
+                       <label for="ex3">
+                       	<button type="submit">삭제</button>
+                       </label>
 	</div>
 	</div>        
 	</div>
@@ -545,7 +557,7 @@
 	<!-- 기본사항 end -->
 	
 	<!-- 세부사항 start  -->
-	<div role="tabpanel" class="tab-pane fade active in" id="tab_content2" aria-labelledby="home-tab">
+	<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
 	<div class="col-md-12 col-sm-6 col-xs-12">
 	<div class="x_panel" style="overflow-x:auto">
 	<div class="x_title">
