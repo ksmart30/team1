@@ -6,19 +6,18 @@
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
 	<title>2.2.4 승인된 승인 사업성검토 검색 List</title>
-	
+
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	
 
-<script>
-$(document).ready(function(){
-	$('code').on('click',function(){
-		var l = $('#l').val();
-		alert(l + '값확인');
-	});
-});
 
-</script>
+	<script>
+		$(document).ready(function() {
+			$('code').on('click', function() {
+				var l = $('#l').val();
+				alert(l + '값확인');
+			});
+		});
+	</script>
 </th:block>
 <th:block layout:fragment="customBody">
 
@@ -28,158 +27,158 @@ $(document).ready(function(){
 	<!-- <form id="demo-form" action="/project/cooperation/dragon_hyunhwang"
 		method="post"> -->
 
-		<table class="table">
-			<tr>
-				<td width="150"><label>⊙ 부서 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<select class="form-control">
-							<option value="">전 사</option>
-							<option value="1">설계1본부</option>
-							<option value="2">설계2본부</option>
-							<option value="3">설계3본부</option>
-							<option value="1">설계4본부</option>
-							<option value="2">설계5본부</option>
-						</select>
-					</div>
-				</td>
-			</tr>
+	<table class="table">
+		<tr>
+			<td width="150"><label>⊙ 부서 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<select class="form-control">
+						<option value="">전 사</option>
+						<option value="1">설계1본부</option>
+						<option value="2">설계2본부</option>
+						<option value="3">설계3본부</option>
+						<option value="1">설계4본부</option>
+						<option value="2">설계5본부</option>
+					</select>
+				</div>
+			</td>
+		</tr>
 
 
-			<tr>
+		<tr>
 
-				<td width="100"><label>⊙ 코드명 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<input type="text" id="l" name="test" class="form-control">
+			<td width="100"><label>⊙ 코드명 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<input type="text" id="l" name="test" class="form-control">
 
-					</div>
-				</td>
+				</div>
+			</td>
 
-				<td><div>
-						<button class="btn"  id="code" >검색</button>
-					</div></td>
+			<td><div>
+					<button class="btn" id="code">검색</button>
+				</div></td>
 
-				<td><label for="gex3">⊙ 수주구분 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<select class="form-control">
-							<option value="">ALL</option>
-							<option value="1">발주의뢰</option>
-							<option value="2">저가심의</option>
-							<option value="3">적격심사</option>
-							<option value="1">현상설계</option>
-							<option value="2">지명현상</option>
-							<option value="3">TK</option>
-							<option value="3">기술제안</option>
-						</select>
-					</div>
-				</td>
-
-
-				<td><label for="gex3">⊙ 종료구분 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<select class="form-control">
-							<option value="">ALL</option>
-							<option value="1">진행</option>
-							<option value="2">무산</option>
-							<option value="3">계약</option>
-						</select>
-					</div>
-				</td>
-			</tr>
-
-			<tr>
-				<td><label>⊙ 지 번 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<input type="text" name="test" class="form-control">
-					</div>
-				</td>
-
-				<td><div></div></td>
-
-				<td><label for="gex3">⊙ 건축물용도 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<select class="form-control">
-							<option value="">ALL</option>
-							<option value="1">단독주택</option>
-							<option value="2">공동주택</option>
-							<option value="3">제1종 근린생황시설</option>
-							<option value="4">제2종 근린생황시설</option>
-							<option value="5">문화 및 잡화시설</option>
-							<option value="6">판매시설</option>
-							<option value="7">잡화시설</option>
-						</select>
-					</div>
-				</td>
-
-				<td><label>⊙ 추정계약금액 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<input type="text" name="test" class="form-control">
-					</div>
-				<td>~</td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<input type="text" name="test" class="form-control">
-					</div>
-				</td>
-			</tr>
+			<td><label for="gex3">⊙ 수주구분 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<select class="form-control">
+						<option value="">ALL</option>
+						<option value="1">발주의뢰</option>
+						<option value="2">저가심의</option>
+						<option value="3">적격심사</option>
+						<option value="1">현상설계</option>
+						<option value="2">지명현상</option>
+						<option value="3">TK</option>
+						<option value="3">기술제안</option>
+					</select>
+				</div>
+			</td>
 
 
-			<tr>
+			<td><label for="gex3">⊙ 종료구분 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<select class="form-control">
+						<option value="">ALL</option>
+						<option value="1">진행</option>
+						<option value="2">무산</option>
+						<option value="3">계약</option>
+					</select>
+				</div>
+			</td>
+		</tr>
 
-				<td width="100"><label>⊙ 발주처 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<input type="text" name="test" class="form-control">
-					</div>
-				</td>
+		<tr>
+			<td><label>⊙ 지 번 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<input type="text" name="test" class="form-control">
+				</div>
+			</td>
 
-				<td><div>
-						<button class="btn">검색</button>
-					</div></td>
+			<td><div></div></td>
 
-				<td><label for="gex3">⊙ 발주처구분 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<select class="form-control">
-							<option value="">ALL</option>
-							<option value="1">건설사</option>
-							<option value="2">시행사</option>
-							<option value="3">공사/공단</option>
-							<option value="3">정부기관</option>
-							<option value="1">건축설계사무소</option>
-							<option value="2">외주협력업체</option>
-							<option value="3">조합(재개발,재건축)</option>
-						</select>
-					</div>
-				</td>
+			<td><label for="gex3">⊙ 건축물용도 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<select class="form-control">
+						<option value="">ALL</option>
+						<option value="1">단독주택</option>
+						<option value="2">공동주택</option>
+						<option value="3">제1종 근린생황시설</option>
+						<option value="4">제2종 근린생황시설</option>
+						<option value="5">문화 및 잡화시설</option>
+						<option value="6">판매시설</option>
+						<option value="7">잡화시설</option>
+					</select>
+				</div>
+			</td>
+
+			<td><label>⊙ 추정계약금액 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<input type="text" name="test" class="form-control">
+				</div>
+			<td>~</td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<input type="text" name="test" class="form-control">
+				</div>
+			</td>
+		</tr>
 
 
-				<td><label for="gex3">⊙ 업무범위/수준 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<select class="form-control">
-							<option value="">ALL</option>
-							<option value="1">A1</option>
-							<option value="2">A2</option>
-							<option value="3">A3</option>
-							<option value="2">A4</option>
-							<option value="3">A5</option>
-						</select>
-					</div>
-				</td>
-				<td colspan="2"></td>
-			</tr>
-		</table>
+		<tr>
+
+			<td width="100"><label>⊙ 발주처 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<input type="text" name="test" class="form-control">
+				</div>
+			</td>
+
+			<td><div>
+					<button class="btn">검색</button>
+				</div></td>
+
+			<td><label for="gex3">⊙ 발주처구분 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<select class="form-control">
+						<option value="">ALL</option>
+						<option value="1">건설사</option>
+						<option value="2">시행사</option>
+						<option value="3">공사/공단</option>
+						<option value="3">정부기관</option>
+						<option value="1">건축설계사무소</option>
+						<option value="2">외주협력업체</option>
+						<option value="3">조합(재개발,재건축)</option>
+					</select>
+				</div>
+			</td>
+
+
+			<td><label for="gex3">⊙ 업무범위/수준 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<select class="form-control">
+						<option value="">ALL</option>
+						<option value="1">A1</option>
+						<option value="2">A2</option>
+						<option value="3">A3</option>
+						<option value="2">A4</option>
+						<option value="3">A5</option>
+					</select>
+				</div>
+			</td>
+			<td colspan="2"></td>
+		</tr>
+	</table>
 	<!-- </form> -->
 	<!-- 검색폼 끝 -->
 	<!-- 결과 리스트 시작 -->
-<!-- <script>  
+	<!-- <script>  
 //목록
 $('#btn_list').on('click',function(){
     $.ajax({
