@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+	<th:block layout:fragment="customHead">
+		<meta charset="UTF-8">
+		<title>용역계약서 변경 입력</title>
+	</th:block>
+	<th:block layout:fragment="customBody">
+		<!-- 검색부분 start -->
+		<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="x_panel">
+		<div class="x_content">
+		<div  style="overflow-x:auto">
+			<label for="ex3">검색조건</label><br>
+			<table>
+				<tr>
+					<td>
+						년도
+					</td>
+					<td>
+						<input type="number">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						부서
+					</td>
+					<td>
+						<select>
+							<option>전     사</option>
+							<option>설계1본부</option>
+							<option>설계2본부</option>
+							<option>설계3본부</option>
+							<option>설계4본부</option>
+							<option>설계5본부</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						코드명
+					</td>
+					<td>
+						<input type="text" id="pjtCd">
+					</td>
+					<td>
+						<button type="submit" id="pjtSearchBtn">검색</button>
+					</td>
+				</tr>
+			</table>
+			</div>
+			<!-- 검색부분 end -->
+			<div class="x_title">
+			</div>
+			<!-- 결과부분 start -->
+			<table class="table table-bordered">
+				<thead>
+				<tr>
+					<th width="30%">PJT코드</th><th>프로젝트명</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td style="background-color:#fff9df">
+						19005
+					</td>
+					<td>
+						ksmart1팀
+					</td>
+				</tr>
+				<tr>
+					<td style="background-color:#fff9df">
+						19009
+					</td>
+					<td>
+						bonobonoPorori
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<!-- 결과부분 end -->
+			<div class="x_title">
+			</div>
+			<!-- 계약서변경현황 start -->
+			<table class="table table-bordered">
+				<thead>
+				<tr>
+					<th width="30%">변경일자</th><th>변경구분</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td style="background-color:#fff9df">
+						2019/03/21
+					</td>
+					<td>
+						면적정산
+					</td>
+				</tr>
+				<tr>
+					<td style="background-color:#fff9df">
+						2019/03/01
+					</td>
+					<td>
+						원계약
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<!-- 계약서변경현황 end -->
+		</div>
+		</div>
+		</div>
+		
+		<!-- 프로젝트 start -->
+		<div class="col-md-9 col-sm-6 col-xs-12">
+		<div class="x_panel">
+		<div class="x_content">
+		<table class="table table-bordered">
+			<tr>
+				<td style="background-color:#f3f3f3" width="25%">프로젝트</td>
+				<td colspan="3">19009,  bonobonoPorori</td>
+			</tr>
+			<tr>
+				<td style="background-color:#f3f3f3" width="25%">수행부서</td>
+				<td width="25%">설계1본부 1소</td>
+				<td width="25%" style="background-color:#f3f3f3">PM</td>
+				<td width="25%">이다은</td>
+			</tr>
+		</table>
+		<table class="table table-bordered">
+			<tr>
+				<td style="background-color:#f3f3f3" width="25%">변경일자</td>
+				<td width="25%"><input type="date"></td>
+				<td width="25%" style="background-color:#f3f3f3">변경구분</td>
+				<td width="25%">
+					<select>
+						<option></option>
+						<option>설계변경</option>
+						<option>중도타절</option>
+						<option>면적정산</option>
+						<option>계약금조정</option>
+						<option>기성시기변경</option>
+						<option>부서변경</option>
+						<option>승계계약</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style="background-color:#f3f3f3" width="25%">변경사유</td>
+				<td colspan="3"><input type="text" class="col-md-6"></td>
+			</tr>
+		</table>
+		<table class="table table-bordered">
+			<tr>
+				<td style="background-color:#f3f3f3" width="25%">구분</td>
+				<td style="background-color:#f3f3f3" colspan="2">원계약</td>
+				<td style="background-color:#f3f3f3" colspan="2">변경(후)</td>
+			</tr>
+			<tr>
+				<td style="background-color:#f3f3f3" width="25%">당사 총계약액</td>
+				<td colspan="2"><input type="text" class="col-md-5">원</td>
+				<td colspan="2"><input type="text" class="col-md-5">원</td>
+			</tr>
+			<tr>
+				<td style="background-color:#f3f3f3" width="25%">PJT 총계약액</td>
+				<td colspan="2"><input type="text" class="col-md-5">원</td>
+				<td colspan="2"><input type="text" class="col-md-5">원</td>
+			</tr>
+			<tr>
+				<td style="background-color:#f3f3f3" width="25%">대지면적</td>
+				<td><input type="text" class="col-md-5">평</td>
+				<td><input type="text" class="col-md-5">m²</td>
+				<td><input type="text" class="col-md-5">평</td>
+				<td><input type="text" class="col-md-5">m²</td>
+			</tr>
+			<tr>
+				<td style="background-color:#f3f3f3" width="25%">연면적</td>
+				<td><input type="text" class="col-md-5">평</td>
+				<td><input type="text" class="col-md-5">m²</td>
+				<td><input type="text" class="col-md-5">평</td>
+				<td><input type="text" class="col-md-5">m²</td>
+			</tr>
+		</table>
+		</div>
+		<!-- 발주처 -->
+		<div class="x_content">
+		<div class="x_title"></div>
+		<label for="ex3"> 발주처</label>
+		<div  style="overflow:scroll">
+		<div class="nav navbar-right panel_toolbox">
+                       <label for="ex3">
+                       	<button type="submit" id="ownerSaveBtn">저장</button>
+                       </label>
+                    </div>
+                    <table class="table table-bordered" >
+                    	<tr>
+                          <th width="20%">순번</th>
+                          <th width="20%">발주처</th>
+                          <th width="20%">발주처구분</th>
+                          <th width="20%">지분(%)</th>
+                          <th width="20%">계약금액</th>
+                        </tr>
+                        <tr>
+                          <th scope="row">1</th>
+                          <td>
+                          	<select class="col-md-10">
+                          		<option></option>
+		                    	<option>(주)우원엠앤이</option>
+		                    	<option>현대건설(주)</option>
+		                    	<option>선진이앤씨</option>
+		                    	<option>(주)한일엠이씨</option>
+		                    	<option>랜디자인</option>
+                  			</select>
+                          </td>
+                          <td>
+                          	<select class="col-md-10">
+                          		<option></option>
+		                    	<option>건설사</option>
+		                    	<option>시행사</option>
+		                    	<option>공사/공단</option>
+		                    	<option>정부기관</option>
+		                    	<option>건축설계사무소</option>
+                  			</select>
+                          </td>
+                          <td><input type="text" class="col-md-10"></td>
+                          <td><input type="text" class="col-md-10"></td>
+                        </tr>
+                    </table>
+                    <div id="callbackRow">
+                    </div>
+					<table class="table table-bordered">
+                        <tr style="background-color:#ffeeaa">
+                    		<th width="20%">합계</th>
+                    		<th width="20%"></th>
+                    		<th width="20%"></th>
+                    		<th width="20%">100.0</th>
+                    		<th width="20%">198,411,949</th>
+                    	</tr>
+                    </table>
+                    <label for="ex3">
+                      	<button type="submit" id="ownerAddBtn">추가</button>
+                      </label>
+                       <label for="ex3">
+                       	<button type="submit">삭제</button>
+                       </label>
+                  </div>
+                  </div>
+                  
+                  <div class="x_content">
+                  <div class="x_title"></div>
+                  <!-- 기성단계 -->
+                  <label for="ex3"> 기성단계</label>
+                  <div style="overflow:scroll">
+                  <div class="nav navbar-right panel_toolbox">
+                       <label for="ex3">
+                       	<button type="submit" id="ownerSaveBtn">저장</button>
+                       </label>
+                    </div>
+                    <table class="table table-bordered">
+                    	<thead>
+                        <tr>
+                          <th>순번</th>
+                          <th>기성단계</th>
+                          <th>단계</th>
+                          <th>금액</th>
+                          <th>수금율(%)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">1</th>
+                          <td>
+                          	<select>
+                          		<option></option>
+		                    	<option>계약 체결시</option>
+		                    	<option>심의 접수시</option>
+		                    	<option>심의 완료후</option>
+		                    	<option>건축허가(사업승인)접수시</option>
+		                    	<option>건축허가(사업승인)완료시</option>
+                  			</select>
+                          </td>
+                          <td>
+                          	<select>
+                          		<option></option>
+		                    	<option>기 획</option>
+		                    	<option>심 의</option>
+		                    	<option>허 가</option>
+		                    	<option>착 공</option>
+		                    	<option>실 시</option>
+		                    	<option>A / S</option>
+		                    	<option>준 공</option>
+		                    	<option>기 타</option>
+                  			</select>
+                          </td>
+                          <td><input type="text"></td>
+                          <td><input type="text"></td>
+                        </tr>
+                        <tr style="background-color:#ffeeaa">
+                    		<th scope="row"></th>
+                    		<th scope="row"></th>
+                    		<th scope="row">합 계 : </th>
+                    		<th scope="row">0</th>
+                    		<th scope="row">0.00</th>
+                    	</tr>
+                      </tbody>
+                    </table>
+                    <label for="ex3">
+                      	<button type="submit" id="ownerAddBtn">추가</button>
+                      </label>
+                       <label for="ex3">
+                       	<button type="submit">삭제</button>
+                       </label>
+                       </div>
+		</div>
+		<div class="x_title"></div>
+		</div>
+		</div>
+		<!-- 프로젝트 end -->
+	</th:block>
+</html>
