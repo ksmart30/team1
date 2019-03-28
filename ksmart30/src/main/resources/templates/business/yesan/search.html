@@ -5,8 +5,22 @@
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
 	<title>2.2.1 승인된 사업수행 결정서 검색 List</title>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+	<script>
+		//ajax확인
+		$(document).ready(function() {
+			$('#pjt_s').on('click', function() {
+				var y = $('#y').val();
+				alert(y + '값확인');
+			});
+		});
+	</script>
 </th:block>
+
 <th:block layout:fragment="customBody">
+
+
 	<!-- 검색부분 start -->
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="x_panel">
@@ -15,7 +29,7 @@
 				<table>
 					<tr>
 						<td>년도</td>
-						<td><input type="number"></td>
+						<td><input type="number" id="y"></td>
 					</tr>
 					<tr>
 						<td>부서</td>
@@ -30,9 +44,9 @@
 					</tr>
 					<tr>
 						<td>코드명</td>
-						<td>
-							<button>검색</button>
-						</td>
+						<td><div>
+								<button class="btn" id="pjt_s">검색</button>
+							</div></td>
 					</tr>
 				</table>
 				<!-- 검색부분 end -->
@@ -58,29 +72,10 @@
 				</table>
 				<!-- 결과부분 end -->
 				<div class="x_title"></div>
-				<!-- 계약서변경현황 start -->
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>변경일자</th>
-							<th>변경구분</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td style="background-color: #fff9df">2019/03/21</td>
-							<td>면적정산</td>
-						</tr>
-						<tr>
-							<td style="background-color: #fff9df">2019/03/01</td>
-							<td>원계약</td>
-						</tr>
-					</tbody>
-				</table>
-				<!-- 계약서변경현황 end -->
 			</div>
 		</div>
 	</div>
+
 
 	<!-- 프로젝트 start -->
 	<div class="col-md-9 col-sm-6 col-xs-12">
@@ -100,10 +95,9 @@
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">Settings 1</a></li>
 									<li><a href="#">Settings 2</a></li>
-								</ul>
-								</li>		
+								</ul></li>
 							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-							
+
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -321,17 +315,14 @@
 										artisan four loko farm-to-table craft beer twee. Qui photo
 										booth letterpress, commodo enim craft beer mlkshk</p>
 								</div>
-
 							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
-	</div>
+	
 	<!-- 프로젝트 end -->
 </th:block>
 </html>
