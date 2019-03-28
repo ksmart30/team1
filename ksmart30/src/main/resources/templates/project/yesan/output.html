@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>output</title>
+</th:block>
+<th:block layout:fragment="customBody">
+
+	<!-- page content -->
+
+	<!-- 검색 폼 -->
+	<h3>검색 조건</h3>
+	<form id="demo-form" action="/project/cooperation/dragon_hyunhwang"
+		method="post">
+
+		<table class="table">
+
+			<tbody>
+				<tr>
+					<td width="150"><label>⊙ 부서 : </label></td>
+					<td>
+						<div class="col-md-12 col-sm-12 col-xs-12 ">
+							<select class="form-control">
+								<option value="">전 사</option>
+								<option value="1">설계1본부</option>
+								<option value="2">설계2본부</option>
+								<option value="3">설계3본부</option>
+								<option value="4">설계4본부</option>
+								<option value="5">설계5본부</option>
+							</select>
+						</div>
+					</td>
+
+					<td width="100"><label>⊙ 코드명 : </label></td>
+					<td>
+						<div class="col-md-12 col-sm-12 col-xs-12 ">
+							<input type="text" name="test" class="form-control">
+						</div>
+
+					</td>
+					<td>
+						<div>
+							<button class="btn">검색</button>
+						</div>
+					</td>
+					<td>
+						<div class="col-md-15 col-sm-15 col-xs-15 ">
+							<input type="text" name="test" class="form-control">
+						</div>
+					</td>
+					
+					<td class="col-md-2 col-sm-3 col-xs-12">
+                         
+                          <div class="radio">
+                            <label class="">
+                              <div class="iradio_flat-green" style="position: relative;"><input type="radio" class="flat" name="iCheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Unchecked
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label class="">
+                              <div class="iradio_flat-green" style="position: relative;"><input type="radio" class="flat" name="iCheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Unchecked
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label class="">
+                              <div class="iradio_flat-green" style="position: relative;"><input type="radio" class="flat" name="iCheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Unchecked
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label class="">
+                              <div class="iradio_flat-green" style="position: relative;"><input type="radio" class="flat" name="iCheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Unchecked
+                            </label>
+                          </div>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	<!-- 검색폼 끝 -->
+
+
+	<!-- 출력 리스트 검색 시작 -->
+
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>
+				사업성검토 예산 출력 <small>Custom design</small>
+			</h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+				</li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"><i
+						class="fa fa-wrench"></i></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Settings 1</a></li>
+						<li><a href="#">Settings 2</a></li>
+					</ul></li>
+				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="x_content">
+
+			<p>
+				Add class
+				<code>bulk_action</code>
+				to table for bulk actions options on row select
+			</p>
+
+			<div class="table-responsive">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th>
+								<!-- <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; visibility: hidden;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> -->
+							</th>
+							<th class="column-title">No.</th>
+							<th class="column-title">부서</th>
+							<th class="column-title">PJT코드</th>
+							<th class="column-title">프로젝트명</th>
+							<th class="column-title">출력</th>
+							<!-- <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i> -->
+
+
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">2</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19010F</td>
+							<td class=" ">01_프로젝트_주선태극기</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">3</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19015F</td>
+							<td class=" ">KDY TEST사업</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">4</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19016F</td>
+							<td class=" ">오란씨</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">5</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19017F</td>
+							<td class=" ">성수산자연 휴양림 호텔 건축 공사</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">6</td>
+							<td class=" ">설계3본부 2소</td>
+							<td class=" ">19012F</td>
+							<td class=" ">EBS건물신축공사</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">7</td>
+							<td class=" ">설계4본부 1소</td>
+							<td class=" ">19003F</td>
+							<td class=" ">J프로젝트</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">8</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19019F</td>
+							<td class=" ">문효균TEST</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- 출력 리스트 검색 끝 -->
+			</div>
+		</div>
+	</div>
+	<!-- /page content -->
