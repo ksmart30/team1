@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>test</title>
+</th:block>
+<th:block layout:fragment="customBody">
+
+	<!-- 검색화면 start -->
+	<div class="x_panel" style="color: black;">
+
+		<div class="x_title">
+			<h3>프로젝트예산 검색</h3>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="x_content">
+			<br>
+			<form class="form-horizontal form-label-left input_mask">
+				<table id="datatable-responsive"
+					class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+					role="grid" aria-describedby="datatable-responsive_info"
+					style="width: 100%;">
+					
+					<thead>
+						<tr role="row">
+							<th class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 30%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
+								<label class="control-label">검색조건1</label>
+							</th>
+							<th class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="2" style="width: 30%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
+								<label class="control-label">검색조건2</label>
+							</th>
+							<th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 40%;" aria-label="Last name: activate to sort column ascending">
+							<label class="control-label" style="padding-left: 27px;">Sort</label></th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr role="row">
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 30%;" aria-sort="ascending"
+								aria-label="First name: activate to sort column descending">
+								<label class="control-label">년도</label> 
+								<input type="number" style="width: 20%">
+							</td>
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
+								<label class="control-label">평당단가</label>
+							</td>
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 22%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
+								<input type="text" style="width: 40%"> ~ <input type="text" style="width: 40%">
+							</td>
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 40%;" aria-sort="ascending"	aria-label="First name: activate to sort column descending">
+								<div class="radio">
+									<label style="padding-left: 50px;"><input type="radio">프로젝트</label>
+									<label style="padding-left: 50px;"><input type="radio">발주처</label>
+									<label style="padding-left: 50px;"><input type="radio">PM</label>
+									<label style="padding-left: 50px;"><input type="radio">평당단가</label>
+								</div>
+							</td>
+						</tr>
+
+						<tr role="row">
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 30%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
+								<label class="control-label">부서 <select>
+										<option>전 사</option>
+										<option>설계1본부</option>
+										<option>설계2본부</option>
+										<option>설계3본부</option>
+										<option>설계4본부</option>
+										<option>설계5본부</option>
+								</select>
+							</label>
+							</td>
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
+								<label class="control-label">연면적</label>
+							</td>
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 22%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
+								<input type="text" style="width: 40%"> ~ <input type="text" style="width: 40%">
+							</td>
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 40%;" aria-sort="ascending"	aria-label="First name: activate to sort column descending">
+								<div class="radio">
+									<label style="padding-left: 50px;"><input type="radio">연면적</label>
+									<label style="padding-left: 50px;"><input type="radio">매출액</label>
+									<label style="padding-left: 50px;"><input type="radio">매출원가</label>
+									<label style="padding-left: 50px;"><input type="radio">영업이익</label>
+								</div>
+							</td>
+						</tr>
+
+						<tr role="row">
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 30%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
+								<label class="control-label">발주처명</label> 
+								<input type="text" style="width: 20%">
+								<button><i class="fa fa-search"></i></button> 
+								<label class="control-label" style="padding-left: 20px">PM</label> 
+								<input type="text" style="width: 20%">
+								<button><i class="fa fa-search"></i></button>
+							</td>
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
+								<label class="control-label">매출액</label>
+							</td>
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 22%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
+								<input type="text" style="width: 40%"> ~ <input	type="text" style="width: 40%">
+							</td>
+							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 40%;" aria-sort="ascending"	aria-label="First name: activate to sort column descending">
+								<div class="radio">
+									<label style="padding-left: 50px; padding-right: 50px;"><input type="radio">부서</label>
+									<button>이체명세 엑셀출력</button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<!-- 검색화면 end -->
+	
+	
+	<div class="x_panel">
+			<div class="x_title">
+				<h2>
+					프로젝트예산 검색 <small>Custom design</small>
+				</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Settings 1</a></li>
+							<li><a href="#">Settings 2</a></li>
+						</ul></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+	
+			<div class="x_content">
+	
+				<p>
+					Add class
+					<code>bulk_action</code>
+					to table for bulk actions options on row select
+				</p>
+	
+				<div class="table-responsive">
+					<table class="table table-striped jambo_table bulk_action">
+						<thead>
+							<tr class="headings">
+								<!-- <th>
+									<div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; visibility: hidden;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+								</th> -->
+							
+								<th class="column-title" rowspan="2">부서명</th>
+								<th class="column-title" rowspan="2">프로젝트코드명</th>
+								<th class="column-title" rowspan="2">발주처</th>
+								<th class="column-title" rowspan="2">PM</th>								
+								<th class="column-title" rowspan="2">평당단가</th>
+								<th class="column-title" rowspan="2">연면적</th>
+								<th class="column-title" rowspan="2">매출액</th>
+								<th class="column-title" colspan="6">매출원가</th>		
+								<th class="column-title" colspan="2">영업이익</th>																						
+							</tr>
+							<tr class="headings">
+								<th class="column-title">합계</th>
+								<th class="column-title">%</th>
+								<th class="column-title">자체비용</th>
+								<th class="column-title">%</th>
+								<th class="column-title">배부비용</th>
+								<th class="column-title">%</th>
+								<th class="column-title">금액</th>
+								<th class="column-title">%</th>								
+								<!-- <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i> -->			
+							</tr>
+						</thead>
+							<tr>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+							</tr>
+						<tbody>
+						</tbody>
+					</table>
+					<!-- 출력 리스트 검색 끝 -->
+				</div>
+			</div>
+		</div>	
+</th:block>
+</html>
