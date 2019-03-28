@@ -29,9 +29,138 @@
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>General</h3>
                 <ul class="nav side-menu">
-                	<li><a><i class="fa fa-edit"></i>기준정보관리<span class="fa fa-chevron-down"></span></a>
+                	<li><a><i class="fa fa-briefcase"></i> 사업성검토 관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<label style="font-size:14px; padding-left:10px">사업수행 결정서 관리</label>
+		                      <li><a href="/business/manage/search">사업수행결정서</a></li>
+		                      <li><a href="/business/manage/seungin_search">사업수행결정서 승인</a></li>
+		                      <li><a href="/business/manage/list">사업수행결정 승인현황</a></li>
+                  		<label style="font-size:14px; padding-left:10px">사업성검토예산관리</label>
+		                      <li><a href="/business/yesan/search">사업성검토 예산 입력</a></li>
+		                      <li><a href="/business/yesan/seungin_search">사업성검토 예산 승인</a></li>
+		                      <li><a href="/business/yesan/output">사업성검토 예산 출력</a></li>
+		                      <li><a href="/business/yesan/list">사업성검토 검색1</a></li>
+		                      <li><a href="/business/yesan/list">사업성검토 검색2</a></li>
+                  		<label style="font-size:14px; padding-left:10px">사업성검토분석 현황</label>
+		                      <li><a href="/business/ing/hyunhawng">진행/종료 현황</a></li>
+		                      <li><a href="/business/ing/order/hyunhwang">발주처별 진행현황</a></li>
+		                      <li><a href="/business/success_rate">사업성검토 성공율</a></li>
+                  		</li>
+                  	</ul>
+                  <li><a><i class="fa fa-check-square-o"></i> 계약프로젝트 관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<label style="font-size:14px; padding-left:10px">용역계약서 관리</label>
+		                      <li><a href="/project/manage/sangse">용역계약서 입력</a></li>
+		                      <li><a href="/project/manage/change/search">용역계약서 변경 입력</a></li>
+		                      <li><a href="/project/manage/change/list">용역계약서 변경 조회</a></li>
+		                      <li><a href="/project/manage/list">용역계약서 검색(부사)</a></li>
+		                      <li><a href="/project/manage/depart_list">용역계약서 검색(발주처)</a></li>
+		                      <li><a href="/project/manage/hyunhwang">용역계약 현황</a></li>
+                  		<label style="font-size:14px; padding-left:10px">프로젝트예산 관리</label>
+		                      <li><a href="/project/manage/seungin_search">프로젝트예산 입력</a></li>
+		                      <li><a href="/project/yesan/search">프로젝트예산 승인</a></li>
+		                      <li><a href="/project/yesan/output">프로젝트예산 출력</a></li>
+		                      <li><a href="/project/yesan/list">프로젝트예산 검색</a></li>
+		                      <li><a href="/project/yesan/list">계약프로젝트 List</a></li>
+		                <label style="font-size:14px; padding-left:10px">프로젝트 손익관리</label>
+                  			  <li><a href="/project/last/list">프로젝트 인건비 입력</a><li>
+                  			  <li><a href="/project/sonik">인건비 실적</a></li>
+                  			  <li><a href="/project/sonik">프로젝트 예산/실적 대비</a></li>
+                  		<label style="font-size:14px; padding-left:10px">매출채권 진행관리</label>
+                  			  <li><a href="/project/last/list">프로젝트별 계약 B/S</a><li>
+                  	</ul>
+                  <li><a><i class="fa fa-money"></i> 외주 관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                  		<label style="font-size:14px; padding-left:10px">외주계약서 관리</label>
+		                      <li><a href="/project/last/search">외주계약서 입력</a></li>
+		                      <li><a href="/project/cooperation/list">외주계약서 검색</a></li>
+                  		<label style="font-size:14px; padding-left:10px">외주비 분석 현황</label>
+		                      <li><a href="/project/cooperation/dragon/hyunhwang">외주비분석현황(용도별)</a></li>
+		                      <li><a href="/project/cooperation/pjt/hyunhwang">외주비분석현황(프로젝트)</a></li>
+                       	</ul>
+                    <li><a><i class="fa fa-calendar"></i> 근태관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<li><a href="/kuntae/workTimeRecord"> 출퇴근 기록부 </a></li>
+                    	<li><a href="/kuntae/workTimeRecord"> 출퇴근기록부(개인별) </a></li>
+                    	<li><a href="/kuntae/workTimeIn"> 출퇴근 정정신청 </a></li>
+                    	<li><a href="/kuntae/breakApply"> 휴가신청 </a></li>
+                    	<li><a href="/kuntae/approval"> 근태승인처리 </a></li>
+                    	<li><a href="/kuntae/search"> 근태현황 </a></li>
+                  	</ul>
+                  	<li><a><i class="fa fa-group"></i> M/H 관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<label style="font-size:14px; padding-left:10px"> M/H 실적관리 </label>
+			                <li><a href="/manHour/result"> M/H 실적입력 </a></li>
+	                  		<li><a href="/manHour/approval"> M/H 실적승인 </a></li>
+	                  		<li><a href="/manHour/result/list"> M/H 실적(월/개인/PJ sort)</a></li>
+	                  		<li><a href="/manHour/result/list"> M/H 실적(프로젝트별 누계) </a></li>
+	                  		<li><a href="/manHour/result/list"> M/H 실적(수행유형별-전사그래프) </a></li>
+	                  		<li><a href="/manHour/result/list"> M/H 실적(수행유형별-본부그래프) </a></li>
+	                  		<li><a href="/manHour/result/list"> M/H 실적(프로젝트 인건비 누계) </a></li>
+	                  	<label style="font-size:14px; padding-left:10px"> 프로젝트 진행관리 </label>
+			                <li><a href="/manHour/result"> M/H 계획/실적(그래프) </a></li>
+	                  		<li><a href="/manHour/approval"> M/H 계획/실적(프로젝트 누계) </a></li>
+	                  		<li><a href="/manHour/result/list"> M/H 실적(월/개인/PJ sort)</a></li>
+	                  		<li><a href="/manHour/result/list"> M/H 실적(당해) </a></li>
+	                  		<li><a href="/manHour/result/list"> 프로젝트 단계완료 미입력 List </a></li>
+	                  		<li><a href="/manHour/result/list"> 프로젝트 일정관리 </a></li>
+                  	</ul>
+                  	<li><a><i class="fa fa-user"></i> 인사 / 급여 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<label style="font-size:14px; padding-left:10px"> 인력관리 </label>
+		                      <li><a href="/person/insa/personnelRecord"> 인사기록카드 등록 </a></li>
+		                      <li><a href="/person/insa/employeeSearch"> 직원 검색 </a></li>
+                  		<label style="font-size:14px; padding-left:10px">이동관리</label>
+                  			  <li><a href="/person/insapyeonga/cate"> 발령등록 </a></li>
+		                      <li><a href="/person/insapyeonga/cate"> 인사발령대장 </a></li>
+		                <label style="font-size:14px; padding-left:10px"> 인사평가관리 </label>    
+                  			  <li><a href="/person/insapyeonga/cate">인사평가항목</a></li>
+		                      <li><a href="/person/insapyeonga/chart">인사평가표</a></li>
+		                      <li><a href="/person/insapyeonga/in">인사평가 입력</a></li>
+		                      <li><a href="/person/insapyeonga/result">인사평가 결과</a></li>
+                  		<label style="font-size:14px; padding-left:10px">급여관리</label>
+                  			  <li><a href="/person/pay/register">급여 계산</a></li>
+		                      <li><a href="/person/pay/register">급여 대장</a></li>
+                  	</ul>
+                  	<li><a><i class="fa fa-university"></i> 경영정보 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<li><a href="/acc/slip/in"> 경영실적현황 </a>
+                    	<li><a href="/acc/slip/search/in"> 계약 B/S </a>
+                    	<li><a href="/acc/conditionalslip/search/in"> 계약실적 현황표 </a>
+                    	<li><a href="/acc/paycard/in"> 월별계약상세 </a>
+                    	<li><a href="/acc/purchasedebt/in"> 월별매출상세 </a>
+                  		</li>
+                  	</ul>
+                  	<li><a><i class="fa fa-krw"></i> 회계관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<li><a href="/acc/slip/in"> 전표입력 </a>
+                    	<li><a href="/acc/slip/search/in"> 전표상세검색 </a>
+                    	<li><a href="/acc/slipadmit/in"> 전표승인 </a>
+                    	<li><a href="/acc/conditionalslip/search/in"> 조건별 전표검색 </a>
+                    	<li><a href="/acc/paycard/in"> 카드결재내역입력 </a>
+                    	<li><a href="/acc/purchasedebt/in"> 매입채무입력 </a>
+                    	<li><a href="/acc/unpaid/in"> 미지급금입력 </a>
+                    	<li><a href="/acc/excosttransfer/in"> 외주비지금전표이관 </a>
+                    	<li><a href="/acc/slipendday/in"> 전표마감(일) </a>
+                    	<li><a href="/acc/slipendmonth/in"> 전표마감(월) </a>
+                    	<li><a href="/acc/slipendyear/in"> 전표마감(년) </a>
+                  		</li>
+                  	</ul>
+                  	<li><a><i class="fa fa-search"></i> 통합 검색 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    	<label style="font-size:14px; padding-left:10px"> 사업수행결정서 </label>    
+                  			  <li><a href="/business/ing/hyunhawng"> 진행/종료 현황 </a></li>
+		                      <li><a href="/business/ing/order/hyunhwang"> 발주처별 진행현황 </a></li>
+		                      <li><a href="/business/success_rate"> 사업성검토 성공율 </a></li>
+                  		<label style="font-size:14px; padding-left:10px"> 외주비 분석현황 </label>
+		                      <li><a href="/project/cooperation/dragon/hyunhwang"> 외주비분석현황(용도별) </a></li>
+		                      <li><a href="/project/cooperation/pjt/hyunhwang"> 외주비분석현황(프로젝트) </a></li>
+                   	 	<li><a href="/person/all/search"> 직원 검색 </a>
+                    	<li><a href="/search/slipdetail"> 전표 상세 검색 </a>
+                  		</li>
+                  	</ul>
+                  	<li><a><i class="fa fa-edit"></i>기준정보관리<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="/baseinfo/client/list">거래처업체</a></li>
                       <li><a href="/baseinfo/totalcode/in">종합코드</a></li>
@@ -49,114 +178,6 @@
                       <li><a href="/baseInfo/gapguense">갑근세세액조견표</a></li>
                     </ul>
                   	</li>
-                	<li><a><i class="fa fa-briefcase"></i> 사업성검토 관리 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                    	<label style="font-size:14px; padding-left:10px">사업수행 결정서 관리</label>
-		                      <li><a href="/business/manage/search">사업수행 결정서 입력</a></li>
-		                      <li><a href="/business/manage/seungin_search">사업수행 결정서 승인</a></li>
-		                      <li><a href="/business/manage/schedule_list">사업성검토 진행 일정</a></li>
-		                      <li><a href="/business/manage/list">사업성검토 List</a></li>
-                  		<label style="font-size:14px; padding-left:10px">사업성검토 예산관리</label>
-		                      <li><a href="/business/yesan/search">사업성검토 예산 입력</a></li>
-		                      <li><a href="/business/yesan/seungin_search">사업성검토 예산 승인</a></li>
-		                      <li><a href="/business/yesan/output">사업성검토 예산 출력</a></li>
-		                      <li><a href="/business/yesan/list">승인된 사업성검토 List</a></li>
-                  		<label style="font-size:14px; padding-left:10px">사업성검토 분석 현황</label>
-		                      <li><a href="/business/ing/hyunhawng">진행 현황</a></li>
-		                      <li><a href="/business/end/hyunhawng">종료 현황</a></li>
-		                      <li><a href="/business/ing/order/hyunhwang">발주처별 진행현황</a></li>
-		                      <li><a href="/business/success_rate">사업성검토 성공율</a></li>
-                  		</li>
-                  	</ul>
-                  <li><a><i class="fa fa-check-square-o"></i> 계약프로젝트 관리 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                    	<label style="font-size:14px; padding-left:10px">용역계약서 관리</label>
-		                      <li><a href="/project/manage/sangse">용역계약서 입력</a></li>
-		                      <li><a href="/project/manage/change/search">용역계약서 변경 입력</a></li>
-		                      <li><a href="/project/manage/change/list">용역계약서 변경 조회</a></li>
-		                      <li><a href="/project/manage/list">용역계약서 검색</a></li>
-		                      <li><a href="/project/manage/depart_list">부서별 용역계약서 검색</a></li>
-		                      <li><a href="/project/manage/hyunhwang">용역계약서 현황</a></li>
-                  		<label style="font-size:14px; padding-left:10px">프로젝트 예산관리</label>
-		                      <li><a href="/project/manage/seungin_search">프로젝트 예산 입력</a></li>
-		                      <li><a href="/project/yesan/search">프로젝트 예산 승인</a></li>
-		                      <li><a href="/project/yesan/output">프로젝트 예산 출력</a></li>
-		                      <li><a href="/project/yesan/list">프로젝트 예산 검색</a></li>
-                  		<label style="font-size:14px; padding-left:10px">프로젝트 수익/비용</label>
-		                      <li><a href="/project/yesan/depart_list">부서별 예산서</a></li>
-		                      <li><a href="/project/yesan/unit_price_list">인건비 및 배부단가표</a></li>
-		                <label style="font-size:14px; padding-left:10px">List / 손익관리</label>
-                  			  <li><a href="/project/last/list">계약 프로젝트 List</a><li>
-                  			  <li><a href="/project/sonik">프로젝트 손익 관리</a></li>
-                  	</ul>
-                  <li><a><i class="fa fa-money"></i> 외주 관리 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                    	<label style="font-size:14px; padding-left:10px">외주비 분석 현황</label>
-		                      <li><a href="/project/cooperation/dragon/hyunhwang">용도별 분석현황</a></li>
-		                      <li><a href="/project/cooperation/pjt/hyunhwang">프로젝트별 분석현황</a></li>
-                  		<label style="font-size:14px; padding-left:10px">외주협력사 관리</label>
-		                      <li><a href="/project/last/search">외주계약서 입력</a></li>
-		                      <li><a href="/project/cooperation/list">외주계약서 검색</a></li>
-		                      <li><a href="/cooperation/buy/search">외주비 매입 예정 입력</a></li>
-							  <li><a href="/cooperation/buy/hyunhwang_list">외주비 매입 예정 현황</a></li>
-		                      <li><a href="/cooperation/buy/slip">외주비 매입 전표</a></li>
-		                      <li><a href="/cooperation/pay/search">외주비 지급 예정 입력</a></li>
-		                      <li><a href="/cooperation/pay/hyunhwang_list">외주비 지급 예정 현황</a></li>
-                  			  <li><a href="/cooperation/pay/slip">외주비 지급 전표</a></li>
-                       	</ul>
-                  	<li><a><i class="fa fa-user"></i> 인사 / 급여 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                    	<label style="font-size:14px; padding-left:10px">인사관리</label>
-		                      <li><a href="/person/insa/personnelRecord">인사기록사항</a></li>
-		                      <li><a href="/person/insa/employeeSearch">직원검색</a></li>
-		                      <li><a href="/person/insa/personnelStats">인원현황통계</a></li>
-                  		<label style="font-size:14px; padding-left:10px">이동관리</label>
-		                      <li><a href="/person/yidong/list">이동자료 조회</a></li>
-		                      <li><a href="/person/yidong/register">인사발령대장</a></li>
-                  		<label style="font-size:14px; padding-left:10px">이동관리</label>
-		                      <li><a href="/person/insapyeonga/cate">인사평가항목</a></li>
-		                      <li><a href="/person/insapyeonga/chart">인사평가표</a></li>
-		                      <li><a href="/person/insapyeonga/in">인사평가 입력</a></li>
-		                      <li><a href="/person/insapyeonga/result">인사평가 결과</a></li>
-                  		<label style="font-size:14px; padding-left:10px">급여관리</label>
-		                      <li><a href="/person/pay/register">급여 대장</a></li>
-                  	</ul>
-                  	<li><a><i class="fa fa-calendar"></i> 근태관리 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                    	<li><a href="/kuntae/workTimeIn"> 출, 퇴근 정정 신청 </a></li>
-                    	<li><a href="/kuntae/workTimeRecord"> 출, 퇴근 기록부 </a></li>
-                    	<li><a href="/kuntae/breakApply"> 휴가 신청 </a></li>
-                    	<li><a href="/kuntae/approval"> 근태승인처리 </a></li>
-                    	<li><a href="/kuntae/search"> 근태현황(일, 월) </a></li>
-                  	</ul>
-                  	<li><a><i class="fa fa-group"></i> M/H 관리 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                    	<li><a href="/manHour/result"> M/H 실적 입력 </a></li>
-                  		<li><a href="/manHour/approval"> M/H 실적 승인 </a></li>
-                  		<li><a href="/manHour/result/list"> M/H 실적 조회 </a></li>
-                  	</ul>
-                  	<li><a><i class="fa fa-krw"></i> 회계관리 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                    	<li><a href="/acc/slip/in"> 전표입력 </a>
-                    	<li><a href="/acc/slip/search/in"> 전표상세검색 </a>
-                    	<li><a href="/acc/conditionalslip/search/in"> 조건별 전표검색 </a>
-                    	<li><a href="/acc/paycard/in"> 카드결재내역입력 </a>
-                    	<li><a href="/acc/purchasedebt/in"> 매입채무입력 </a>
-                    	<li><a href="/acc/unpaid/in"> 미지급금입력 </a>
-                    	<li><a href="/acc/slipadmit/in"> 전표승인 </a>
-                    	<li><a href="/acc/excosttransfer/in"> 외주비지금전표이관 </a>
-                    	<li><a href="/acc/slipendday/in"> 전표마감(일) </a>
-                    	<li><a href="/acc/slipendmonth/in"> 전표마감(월) </a>
-                    	<li><a href="/acc/slipendyear/in"> 전표마감(년) </a>
-                  		</li>
-                  	</ul>
-                  	<li><a><i class="fa fa-search"></i> 통합 검색 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                   	 	<li><a href="/project/all/list"> 프로젝트 통합 검색 </a>
-                   	 	<li><a href="/person/all/search"> 직원 검색 </a>
-                    	<li><a href="/search/slipdetail"> 전표 상세 검색 </a>
-                  		</li>
-                  	</ul>
                   	<li><a><i class="fa fa-cog"></i> 시스템 관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                     	<label style="font-size:14px; padding-left:10px">사용자 권한</label>
@@ -198,7 +219,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Doe
+                    사번
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">

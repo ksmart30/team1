@@ -3,12 +3,54 @@
 	<th:block layout:fragment="customHead">
 		<meta charset="UTF-8">
 		<title>변경된 용역계약서 조회</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				// 프로젝트 검색 부분
+				$('#pjtSearchBtn').click(function(){
+					let pjtYear = $('#pjtYear').val();
+					let pjtBu = $('#pjtBu').val();
+					let pjtCd = $('#pjtCd').val();
+					let pjtRadioGroup = $('#pjtRadioGroup').val();
+					console.log(pjtYear);
+					console.log(bu);
+					console.log(pjtCd);
+					console.log(radioGroup);
+				});
+				
+				// 용역계약서 입력 - 기본사항
+				// 발주처(당사분) 추가
+				$('#ownerAddBtn').click(function() {
+					
+					$.ajax({
+		                url:'owner_in',
+		                success:function(data){
+		                if( $('#callbackRow').html() != ''){
+		                	$('#callbackRow').html('');
+		                }else{
+		                	$('#callbackRow').html(data);}
+		            	}
+					});
+					
+					/* $(data).each(function(index,item){
+	                    $('#list').append('<tr>');
+	                    $('#list').append('<td><input type="checkbox" class="ck" value="'+item.no+'"></td>');
+	                    $('#list').append('<td>'+item.no+'</td>');
+	                    $('#list').append('<td>'+item.title+'</td>');
+	                    $('#list').append('<td>'+item.content+'</td>');
+	                    $('#list').append('<td>'+item.user+'</td>');
+	                    $('#list').append('<td>'+item.date+'</td>');
+	                    $('#list').append('</tr>');
+	                }); */
+				});
+			});
+		</script>
 	</th:block>
 	<th:block layout:fragment="customBody">
 		<!-- 검색부분 start -->
 		<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="x_panel">
-		<div class="x_content">
+		<div class="x_content" style="overflow-x:auto">
 			<label for="ex3">검색조건</label><br>
 			<table>
 				<tr>
@@ -16,7 +58,7 @@
 						년도
 					</td>
 					<td>
-						<input type="number">
+						<input type="number" id="pjtYear">
 					</td>
 				</tr>
 				<tr>
@@ -24,13 +66,13 @@
 						부서
 					</td>
 					<td>
-						<select>
-							<option>전     사</option>
-							<option>설계1본부</option>
-							<option>설계2본부</option>
-							<option>설계3본부</option>
-							<option>설계4본부</option>
-							<option>설계5본부</option>
+						<select id="pjtBu">
+							<option value="0">전     사</option>
+							<option value="1">설계1본부</option>
+							<option value="2">설계2본부</option>
+							<option value="3">설계3본부</option>
+							<option value="4">설계4본부</option>
+							<option value="5">설계5본부</option>
 						</select>
 					</td>
 				</tr>
@@ -39,69 +81,77 @@
 						코드명
 					</td>
 					<td>
-						<button>검색</button>
+						<input type="text" id="pjtCd">
+					</td>
+					<td>
+						<button type="submit" id="pjtSearchBtn">검색</button>
 					</td>
 				</tr>
 			</table>
-			<!-- 검색부분 end -->
-			<div class="x_title">
+			<table>
+				<tr>
+					<td>
+						<input type="radio" id="pjtRadioGroup" value="1">검토
+					</td>
+					<td>
+						<input type="radio" id="pjtRadioGroup" value="2">계약
+					</td>
+					<td>
+						<input type="radio" id="pjtRadioGroup" value="3">예산
+					</td>
+					<td>
+						<input type="radio" id="pjtRadioGroup" value="4">승인
+					</td>
+					<td>
+						<input type="radio" id="pjtRadioGroup" value="5">종료
+					</td>
+					<td>
+						<input type="radio" id="pjtRadioGroup" value="5">ALL
+					</td>
+				</tr>
+			</table>
 			</div>
+			</div>
+			<!-- 검색부분 end -->
+			<div class="x_panel">
+		<div class="x_content">
+			<div class="x_title"></div>
+			<br>
 			<!-- 결과부분 start -->
 			<table class="table table-bordered">
 				<thead>
 				<tr>
-					<th width="30%">PJT코드</th><th>프로젝트명</th>
+					<th width="30%">PJT코드</th>
+					<th width="70%">프로젝트명</th>
 				</tr>
 				</thead>
 				<tbody>
+				<tr>
+					<td style="background-color:#fff9df">
+						19003F
+					</td>
+					<td>
+						J 프로젝트
+					</td>
+				</tr>
 				<tr>
 					<td style="background-color:#fff9df">
 						19005
 					</td>
 					<td>
-						ksmart1팀
-					</td>
-				</tr>
-				<tr>
-					<td style="background-color:#fff9df">
-						19009
-					</td>
-					<td>
-						bonobonoPorori
+						kmsart1팀
 					</td>
 				</tr>
 				</tbody>
-			</table>
-			<!-- 결과부분 end -->
-			<div class="x_title">
-			</div>
-			<!-- 계약서변경현황 start -->
-			<table class="table table-bordered">
 				<thead>
 				<tr>
-					<th width="30%">변경일자</th><th>변경구분</th>
+					<td colspan="2" style="background-color:#ffeeaa">
+						개수 : 2
+					</td>
 				</tr>
 				</thead>
-				<tbody>
-				<tr>
-					<td style="background-color:#fff9df">
-						2019/03/21
-					</td>
-					<td>
-						면적정산
-					</td>
-				</tr>
-				<tr>
-					<td style="background-color:#fff9df">
-						2019/03/01
-					</td>
-					<td>
-						원계약
-					</td>
-				</tr>
-				</tbody>
 			</table>
-			<!-- 계약서변경현황 end -->
+			<!-- 결과부분 end -->
 		</div>
 		</div>
 		</div>
@@ -163,7 +213,7 @@
 	                  </div>
 	                  <br>
 	                  <div class="form-group">
-	                  <label for="ex3">수행부서코드 </label>
+	                  <label for="ex3">수행부서코드</label>
 	                  <select>
 	                    	<option>7500</option>
 	                    	<option>7530</option>
@@ -244,27 +294,29 @@
     <div class="x_title">
     <label for="ex3"> 발주처</label>
       <div class="nav navbar-right panel_toolbox">
-                      <label for="ex3">추가</label>
+                      <label for="ex3">
+                      	<button type="submit" id="ownerAddBtn">추가</button>
+                      </label>
                        <label for="ex3">삭제</label>
+                       <label for="ex3">
+                       	<button type="submit" id="ownerSaveBtn">저장</button>
+                       </label>
                     </div>
                   </div>
                   <div class="x_content">
 
                     <table class="table table-bordered">
-                      <thead>
                         <tr>
-                          <th>순번</th>
-                          <th>발주처</th>
-                          <th>발주처구분</th>
-                          <th>지분(%)</th>
-                          <th>계약금액</th>
+                          <th width="20%">순번</th>
+                          <th width="20%">발주처</th>
+                          <th width="20%">발주처구분</th>
+                          <th width="20%">지분(%)</th>
+                          <th width="20%">계약금액</th>
                         </tr>
-                      </thead>
-                      <tbody>
                         <tr>
                           <th scope="row">1</th>
                           <td>
-                          	<select>
+                          	<select class="col-md-10">
                           		<option></option>
 		                    	<option>(주)우원엠앤이</option>
 		                    	<option>현대건설(주)</option>
@@ -274,7 +326,7 @@
                   			</select>
                           </td>
                           <td>
-                          	<select>
+                          	<select class="col-md-10">
                           		<option></option>
 		                    	<option>건설사</option>
 		                    	<option>시행사</option>
@@ -283,17 +335,20 @@
 		                    	<option>건축설계사무소</option>
                   			</select>
                           </td>
-                          <td><input type="text"></td>
-                          <td><input type="text"></td>
+                          <td><input type="text" class="col-md-10"></td>
+                          <td><input type="text" class="col-md-10"></td>
                         </tr>
+                   	</table>
+                    <div id="callbackRow">
+                    </div>
+					<table class="table table-bordered">
                         <tr style="background-color:#ffeeaa">
-                    		<th scope="row">합계</th>
-                    		<th scope="row"></th>
-                    		<th scope="row"></th>
-                    		<th scope="row">100.0</th>
-                    		<th scope="row">198,411,949</th>
+                    		<th width="20%">합계</th>
+                    		<th width="20%"></th>
+                    		<th width="20%"></th>
+                    		<th width="20%">100.0</th>
+                    		<th width="20%">198,411,949</th>
                     	</tr>
-                      </tbody>
                     </table>
 	</div>
 	</div>        
