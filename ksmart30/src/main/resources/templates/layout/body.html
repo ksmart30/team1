@@ -54,7 +54,7 @@
 		                      <li><a href="/project/manage/sangse">용역계약서 입력</a></li>
 		                      <li><a href="/project/manage/change/search">용역계약서 변경 입력</a></li>
 		                      <li><a href="/project/manage/change/list">용역계약서 변경 조회</a></li>
-		                      <li><a href="/project/manage/list">용역계약서 검색(부사)</a></li>
+		                      <li><a href="/project/manage/list">용역계약서 검색(부서)</a></li>
 		                      <li><a href="/project/manage/depart_list">용역계약서 검색(발주처)</a></li>
 		                      <li><a href="/project/manage/hyunhwang">용역계약 현황</a></li>
                   		<label style="font-size:14px; padding-left:10px">프로젝트예산 관리</label>
@@ -163,27 +163,40 @@
                   	</ul>
                   	<li><a><i class="fa fa-edit"></i>기준정보관리<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="/baseinfo/client/list">거래처업체</a></li>
-                      <li><a href="/baseinfo/totalcode/in">종합코드</a></li>
+                      <li><a href="/baseinfo/totalcode/in">종합코드 입력</a></li>
+                      <label style="font-size:14px; padding-left:10px"> 프로젝트 관리2(수익/배분) </label>
+                      <li><a href="/baseinfo/client/list"> 프로젝트예산서 배부액 등록 </a></li>
+                      <li><a href="/baseinfo/client/list"> 예산서 인건비 및 배부액 단가표 </a></li>
+                      <li><a href="/baseinfo/client/list"> 프로젝트 인건비 입력 I/F </a></li>
+                      <label style="font-size:14px; padding-left:10px"> 회계관리 </label>
+                      <li><a href="/baseinfo/client/list"> 거래처코드 등록 </a></li>
+                      <li><a href="/baseinfo/client/list"> 거래처코드 리스트 출력 </a></li>
                       <li><a href="/baseinfo/bankaccount/in">통장계좌</a></li>
                       <li><a href="/baseinfo/businesscard/in">기업카드</a></li>
-                      <li><a href="/baseinfo/accountcode/in">계정코드</a></li>
+                      <li><a href="/baseinfo/accountcode/in">계정과목코드</a></li>
                       <li><a href="/baseinfo/controlitemcode/in">관리항목코드</a></li>
                       <li><a href="/baseinfo/assetclassifycode/in">자산분류코드</a></li>
                       <li><a href="/baseinfo/depreciation/in">감가상각율</a></li>
-                      <li><a href="/baseInfo/company">본사정보(시스템운영사)</a></li>
-                      <li><a href="/baseInfo/departmentCode">부서코드</a></li>
-                      <li><a href="/baseInfo/schoolCode">학교코드</a></li>
-                      <li><a href="/baseInfo/majorCode">전공코드</a></li>
                       <li><a href="/baseInfo/nationalPension">국민연금조견표</a></li>
                       <li><a href="/baseInfo/gapguense">갑근세세액조견표</a></li>
+                      <label style="font-size:14px; padding-left:10px"> 인력관리 </label>
+                      <li><a href="/baseInfo/company"> 회사정보(시스템운영사) </a></li>
+                      <li><a href="/baseInfo/departmentCode"> 부서코드등록 </a></li>
+                      <li><a href="/baseInfo/schoolCode"> 학교코드등록 </a></li>
+                      <li><a href="/baseInfo/majorCode"> 전공코드등록 </a></li>
+                      <li><a href="/baseInfo/majorCode"> 근태월력표 </a></li>
                     </ul>
                   	</li>
                   	<li><a><i class="fa fa-cog"></i> 시스템 관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                    	<label style="font-size:14px; padding-left:10px">사용자 권한</label>
-		                  	<li><a href="/system/user/authority">사용자 권한 관리</a></li>
-		                	<li><a href="/system/user/access">프로그램 접근 관리</a></li>
+                    	<label style="font-size:14px; padding-left:10px"> User-ID관리 </label>
+		                  	<li><a href="/system/user/authority"> User-ID등록 </a></li>
+		               	<label style="font-size:14px; padding-left:10px"> Program관리 </label>
+		                  	<li><a href="/system/user/access"> Program-ID등록 </a></li>
+                    	<label style="font-size:14px; padding-left:10px"> AccessGroup관리 </label>
+		                  	<li><a href="/system/user/authority"> MenuGroup등록 </a></li>
+		                  	<li><a href="/system/user/authority"> 사용자 권한검색(부서별) </a></li>
+		                	<li><a href="/system/user/access"> 사용자 권한검색(업무별)</a></li>
                   	</ul>
                 </ul>
               </div>
