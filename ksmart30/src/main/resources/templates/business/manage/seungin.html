@@ -4,149 +4,139 @@
 	layout:decorator="layout/main">
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
-	<title>2.1.1 사업수행 결정서 입력 화면</title>
+	<title>사업수행결정서 승인</title>
 </th:block>
 <th:block layout:fragment="customBody">
-	<form>
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>
-						좌 <small>사업수행 결정서 입력 화면</small>
-					</h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false"><i
-								class="fa fa-wrench"></i></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Settings 1</a></li>
-								<li><a href="#">Settings 2</a></li>
-							</ul></li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th>일련번호</th>
-								<th>11111</th>
-								<th>11111</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th scope="row">프로젝트</th>
-								<td>(프로젝트번호)</td>
-								<td><input type="text"></td>
-								<td></td>
-							</tr>
-							<tr>
-								<th scope="row">의뢰일자</th>
-								<td><input type="date"></td>
-								<td>정보취득자</td>
-								<td>취득자 검색버튼</td>
-							</tr>
-							<tr>
-								<th scope="row">완료예정일</th>
-								<td><input type="date"></td>
-								<td>수주책임자</td>
-								<td>수주책임자 검색버튼</td>
-							</tr>
-							<tr>
-								<th scope="row">완료예정일</th>
-								<td><input type="date"></td>
-								<td>수주책임자</td>
-								<td>수주책임자 검색버튼</td>
-							</tr>
-							<tr>
-								<th scope="row">사업분류</th>
-								<td><select>
-										<option>신축</option>
-										<option>증축</option>
-										<option>리모델링</option>
-										<option>재건축</option>
-										<option>재개발</option>
-								</select></td>
-								<td>관리임원</td>
-								<td>관리임원 검색버튼</td>
-							</tr>
-						</tbody>
-					</table>
-
-				</div>
+	<!-- 검색부분 start -->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">
+				<label for="ex3">검색조건</label><br>
+				<table>
+					<tr>
+						<td>년도</td>
+						<td><input type="number"></td>
+					</tr>
+					<tr>
+						<td>부서</td>
+						<td><select>
+								<option>전 사</option>
+								<option>설계1본부</option>
+								<option>설계2본부</option>
+								<option>설계3본부</option>
+								<option>설계4본부</option>
+								<option>설계5본부</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>프로젝트</td>
+						<td><div>
+								<input type="text">
+							</div></td>
+					</tr>
+				</table>
+				<!-- 검색부분 end -->
+				<div class="x_title"></div>
+				<!-- 결과부분 start -->
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>프로젝트명</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>ksmart1팀</td>
+						</tr>
+						<tr>
+							<td>bonobonoPorori</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- 결과부분 end -->
+				<div class="x_title"></div>
 			</div>
 		</div>
+	</div>
 
+	<!-- 프로젝트 start -->
+	<div class="col-md-9 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>
+							사업수행결정서 승인 <small></small>
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-expanded="false"><i
+									class="fa fa-wrench"></i></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#">Settings 1</a></li>
+									<li><a href="#">Settings 2</a></li>
+								</ul></li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>
-						우 <small>사업수행 결정서 입력 화면</small>
-					</h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false"><i
-								class="fa fa-wrench"></i></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Settings 1</a></li>
-								<li><a href="#">Settings 2</a></li>
-							</ul></li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
 
-					<table class="table table-bordered">
-						<thead>
+						<table class="table table-bordered">
+
 							<tr>
-								<th>입력일자</th>
-								<th>07/08/25</th>
-								<th>승인일자</th>
-								<th>07/08/17</th>
+								<th>일련번호</th>
+								<th>2019 - 0018</th>
+								<th>입력일자 2019/03/14</th>
+								<th>승인일자 ____/__/__/</th>
 							</tr>
-						</thead>
-						<tbody>
+
+						</table>
+
+						<table class="table table-bordered">
+
 							<tr>
-								<th scope="row">발주처</th>
-								<td>거래처코드검색 버튼</td>
-								<td><select>
-										<option>건설사</option>
-										<option>시행사</option>
-										<option>공사/공단</option>
-										<option>정부기관</option>
-										<option>건축설계사무소</option>
-										<option>외주협력업체</option>
-										<option>조합(재개발,재건축)</option>
-										<option>기타</option>
-								</select></td>
-								<td>발주처 이름</td>
+								<th>프로젝트</th>
+								<th><input type="text"></th>
+								<th colspan="2">발주처<input type="text"
+									style="width: 80px; height: 20px; font-size: 12px">
+									<button type="button" class="btn btn-primary">조회</button>
+									<input type="text"
+									style="width: 120px; height: 20px; font-size: 12px"></th>
+								<th colspan="2"><select>
+								<option>            </option>
+								<option>건설사</option>
+								<option>시행사</option>
+								<option>공사/공단</option>
+								<option>정부기관</option>
+								<option>건축설계사무소</option>
+								<option>외주협력업체</option>
+								<option>조합(재개발,재건축)</option>
+								<option>기타</option>
+						</select>
+						</th>
+							</tr>
+							
+							
+							<tr> 
+								<td>의뢰일자<input type="date"></td>
+								<td>정보취득자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button type="button" class="btn btn-primary">조회</button></td>
+								<td>담당자 <input type="text" style="width: 80px; height: 20px; font-size: 12px"></td>
+								<td colspan="3">전화:<input type="text"></td>
 							</tr>
 							<tr>
-								<th scope="row">담당자</th>
-								<td><input type="text"></td>
-								<td></td>
-								<td>전화<input type="text"></td>
-							</tr>
-							<tr>
-								<th scope="row">수주구분</th>
-								<td><select>
-										<option>공공사업</option>
+								<td>완료예정일<input type="date"></td>
+								<td>수주책임자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button type="button" class="btn btn-primary">조회</button></td>
+								<td colspan="4">수주구분<select>
+										<option>            </option>
 										<option>민간사업</option>
-								</select></td>
-
-								<td></td>
-
-								<td><select>
+										<option>공공사업</option>
+								</select> -
+								<select>
+										<option>            </option>
 										<option>발주의뢰</option>
 										<option>저가심의</option>
 										<option>적격심사</option>
@@ -157,56 +147,28 @@
 										<option>대안입찰</option>
 										<option>PF</option>
 										<option>BTL</option>
-								</select></td>
+								</select> </td>
 							</tr>
-						</tbody>
-					</table>
-
-				</div>
-			</div>
-		</div>
-
-		<div class="clearfix"></div>
-
-
-		<div class="x_panel">
-			<div class="x_title">
-				<h2>
-					하단<small>사업수행 결정서 입력 화면</small>
-				</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"><i
-							class="fa fa-wrench"></i></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Settings 1</a></li>
-							<li><a href="#">Settings 2</a></li>
-						</ul></li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-
-			<div class="x_content">
-
-
-
-				<div class="table-responsive">
-					<table class="table table-striped jambo_table bulk_action">
-						<thead>
-							<tr class="headings">
-						</thead>
-
-						<tbody>
-							<tr class="even pointer">
-								<td class="a-center ">대지위치</td>
-								<td class=" "><input type="text"></td>
-								<td class=" ">주소검색버튼</td>
-								<td class=" "><input type="text"></td>
-								<td class=" ">건축물용도</td>
-								<td class=" "><select>
+							<tr>
+								<td>사업분류<select>
+										<option>            </option>
+										<option>신축</option>
+										<option>증축</option>
+										<option>리모델링</option>
+										<option>재건축</option>
+										<option>재개발</option>
+								</select> </td>
+								<td>관리 임원<input type="text" style="width: 50px; height: 20px; font-size: 12px"><button type="button" class="btn btn-primary">조회</button></td>
+								<td colspan="4"></td>
+							</tr>
+							
+							
+							<tr>
+								<th>대지위치<button type="button" class="btn btn-primary">조회</button></th>
+								<th><input type="text"></th>
+								<th>건축물용도</th>
+								<th colspan="3" ><select>
+										<option>            </option>
 										<option>단독주택</option>
 										<option>공동주택</option>
 										<option>제1종 근린생활시설</option>
@@ -237,13 +199,14 @@
 										<option>방송통신시설</option>
 										<option>발전시설</option>
 										<option>공공업무시설</option>
-								</select></td>
-								<td></td>
-								<td></td>
+								</select></th> 
+
+					
 							</tr>
-							<tr class="odd pointer">
-								<td class="a-center ">지역/지구/구역</td>
-								<td class=" "><select>
+							<tr>
+								<th>지역/지구/구역</th>
+								<th><select>
+										<option>            </option>
 										<option>전용주거지역(1종)</option>
 										<option>전용주거지역(2종)</option>
 										<option>일반주거지역</option>
@@ -267,8 +230,9 @@
 										<option>자연환경보전지역</option>
 										<option>(구)전용주거지역</option>
 										<option>(구)준농림지역</option>
-								</select></td>
-								<td class=" "><select>
+								</select></th>
+								<th><select>
+										<option>            </option>
 										<option>자연경관지구</option>
 										<option>수변경관지구</option>
 										<option>시가지경관지구</option>
@@ -304,8 +268,9 @@
 										<option>(구)택지개발지구</option>
 										<option>(구)도시설계지구</option>
 										<option>(구)준도시취락지구</option>
-								</select></td>
-								<td class=" "><select>
+								</select></th>
+								<th><select>
+										<option>            </option>
 										<option>개발제한구역</option>
 										<option>시가화조정구역</option>
 										<option>수산자원보호구역</option>
@@ -320,59 +285,138 @@
 										<option>주택재건축사업구역</option>
 										<option>도시환경정비사업구역</option>
 										<option>군사시설보호구역</option>
-								</select></td>
-								<td class=" ">규모</td>
-								<td class=" ">지하<input type="text"
+								</select></th>
+								<td rowspan="2">규모<td rowspan="2">지하<input type="text"									
 									style="width: 20px; height: 20px; font-size: 12px">층
-								</td>
-								<td class=" ">지상<input type="text"
+									<br>지상<input type="text"
 									style="width: 20px; height: 20px; font-size: 12px">층
-								</td>
-								<td class=" ">세대수<input type="text"
+									<br>세대수<input type="text"
 									style="width: 30px; height: 20px; font-size: 12px">층
 								</td>
 							</tr>
 							<tr>
-								<td></td>
-								<td class=" ">대지면적</td>
-								<td class=" "><input type="text">(m2)</td>
-								<td class=" "><input type="text">(평)</td>
-								<td class=" ">건폐율</td>
-								<td class=" "><input type="text">(%)</td>
-								<td class=""></td>
-								<td></td>
+								<th>지역/지구/구역</th>
+								<th><select>
+										<option>            </option>
+										<option>전용주거지역(1종)</option>
+										<option>전용주거지역(2종)</option>
+										<option>일반주거지역</option>
+										<option>일반주거지역(1종)</option>
+										<option>일반주거지역(2종)</option>
+										<option>일반주거지역(3종)</option>
+										<option>준주거지역</option>
+										<option>중심상업지역</option>
+										<option>일반상업지역</option>
+										<option>근린상업지역</option>
+										<option>유통상업지역</option>
+										<option>전용공업지역</option>
+										<option>일반공업지역</option>
+										<option>준공업지역</option>
+										<option>보전녹지지역</option>
+										<option>생산녹지지역</option>
+										<option>자연녹지지역</option>
+										<option>보전관리지역</option>
+										<option>생산관리지역</option>
+										<option>농림지역</option>
+										<option>자연환경보전지역</option>
+										<option>(구)전용주거지역</option>
+										<option>(구)준농림지역</option>
+								</select></th>
+								<th><select>
+										<option>            </option>
+										<option>자연경관지구</option>
+										<option>수변경관지구</option>
+										<option>시가지경관지구</option>
+										<option>시계경관지구</option>
+										<option>문화재주변경관지구</option>
+										<option>조망경관지구</option>
+										<option>중심지미관지구</option>
+										<option>역사문화미관지구</option>
+										<option>일반미관지구</option>
+										<option>방화지구</option>
+										<option>방재지구</option>
+										<option>최고고도지구</option>
+										<option>최저고도지구</option>
+										<option>문화자원보존지구</option>
+										<option>중요시설물보존지구</option>
+										<option>생태계보존지구</option>
+										<option>자연취락지구</option>
+										<option>집단취락지구</option>
+										<option>주거개발진흥지구</option>
+										<option>상업개발진흥지구</option>
+										<option>유통개발진흥지구</option>
+										<option>관광휴양개발진흥지구</option>
+										<option>복합개발진흥지구</option>
+										<option>위락지구</option>
+										<option>리모델링지구</option>
+										<option>학교시설보호지구</option>
+										<option>공용시설보호지구</option>
+										<option>항만시설보호지구</option>
+										<option>공항시설보호지구</option>
+										<option>(구)경관지구</option>
+										<option>(구)공항지구</option>
+										<option>(구)개발촉진지구</option>
+										<option>(구)택지개발지구</option>
+										<option>(구)도시설계지구</option>
+										<option>(구)준도시취락지구</option>
+								</select></th>
+								<th><select>
+										<option>            </option>
+										<option>개발제한구역</option>
+										<option>시가화조정구역</option>
+										<option>수산자원보호구역</option>
+										<option>지구단위계획구역1종</option>
+										<option>지구단위계획구역2종</option>
+										<option>개발밀도관리구역</option>
+										<option>기반시설부담구역</option>
+										<option>개발행위허가제한지역</option>
+										<option>도시개발구역</option>
+										<option>주거환경개선사업구역</option>
+										<option>주택개발사업구역</option>
+										<option>주택재건축사업구역</option>
+										<option>도시환경정비사업구역</option>
+										<option>군사시설보호구역</option>
+								</select></th>
+							</tr>
+							<tr>							
+								<td>대지면적</td>
+								<td><input type="text">(m2)</td>
+								<td><input type="text">(평)</td>
+								<td>건폐율</td>
+								<td colspan="2"><input type="text" style="width: 30px; height: 20px; font-size: 12px">(%)</td>
 							</tr>
 							<tr>
-								<td></td>
-								<td class=" ">연면적</td>
-								<td class=" "><input type="text">(m2)</td>
-								<td class=" "><input type="text">(평)</td>
-								<td class=" ">용적율</td>
-								<td class=" "><input type="text">(%)</td>
-								<td class=""></td>
-								<td class=""></td>
+								<td>연면적</td>
+								<td><input type="text">(m2)</td>
+								<td><input type="text">(평)</td>
+								<td>용적율</td>
+								<td colspan="2"><input type="text" style="width: 30px; height: 20px; font-size: 12px">(%)</td>
 							</tr>
+
+
+						</table>
+
+						<table class="table table-bordered">
+
 							<tr>
-								<td>수주정보</td>
-								<td class=" "><TEXTAREA> </TEXTAREA></td>
-								<td class=" "></td>
-								<td class=" "></td>
-								<td class=" "></td>
-								<td class=" "></td>
-								<td class=""></td>
-								<td class=""></td>
+								<th>수주정보</th>
+								<th colspan="5"><TEXTAREA> </TEXTAREA></th>
 							</tr>
-						</tbody>
-					</table>
+						</table>
+
+
+
+
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-12 col-sm-6 col-xs-12">
+
+					<div class="col-md-12 col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<div class="x_content">
 					<div class="x_title">
 						<h2>
-							<i class="fa fa-bars"></i> 의견 <small>의견</small>
+							<i class="fa fa-bars"></i> 
 						</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -437,17 +481,17 @@
 												<tbody>
 													<tr>
 														<th><TEXTAREA> </TEXTAREA></th>
-														<td></td>
-														<td>PM<input type="text">직원조회버튼
+														
+														<td>PM<input type="text"><br>직원조회버튼
 														</td>
 														<td>PD<input type="text">직원조회버튼
 														</td>
 													</tr>
 													<tr>
-														<th scope="row" class="form-control">수행부서<input
-															type="text">부서조회버튼
+														<th colspan="2" scope="row" class="form-control">수행부서<input
+															type="text"><br>부서조회버튼
 														</th>
-														<td></td>
+														
 														<td>추정계약액<input type="text" class="form-control">원
 														</td>
 														<td>업무범위/수준<select>
@@ -459,12 +503,7 @@
 																<option>X: DROP 프로젝트</option>
 														</select></td>
 													</tr>
-													<tr>
-														<th></th>
-														<td></td>
-														<td></td>
-														<td></td>
-													</tr>
+		
 												</tbody>
 											</table>
 
@@ -489,6 +528,109 @@
 				</div>
 			</div>
 		</div>
-	</form>
+		
+		<div class="col-md-6 col-sm-6 col-xs-12">
+	<div class="x_panel">
+	<label for="ex3">◎ 경영지원실</label><br>
+		<table>
+			<tbody><tr>
+				<td width="40%">
+					<label>PM</label>
+				</td>
+				<td>
+					<input type="text">직원조회
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>PD</label>
+				</td>
+				<td>
+					<input type="text">직원조회
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>수행부서</label>
+				</td>
+				<td>
+					<input type="text">부서조회
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>처리기한</label>
+				</td>
+				<td>
+					<input type="date">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>추정계약액</label>
+				</td>
+				<td>
+					<input type="text">원
+				</td>
+			</tr>
+		</tbody></table>
+    </div>
+	</div>
+	
+	<div class="col-md-6 col-sm-6 col-xs-12">
+	<div class="x_panel">
+	<label for="ex3"></label><br>
+		<table>
+			<tbody><tr rowspan="2">
+				<td>
+					업무범위/수준
+				</td>
+				<td>A</td>
+				<td>B</td>
+				<td>C</td>
+				<td>D</td>
+				<td>X</td>
+			</tr>
+			<tr>
+			<td></td>
+			<td><input type="checkbox"></td>
+			<td><input type="checkbox"></td>
+			<td><input type="checkbox"></td>
+			<td><input type="checkbox"></td>
+			<td><input type="checkbox"></td>
+			</tr>
+			<tr>
+				<td>
+					HOLDING
+				</td>
+				<td colspan="5"><input type="checkbox"></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>
+					CANCEL
+				</td>
+				<td colspan="5"><input type="checkbox">공문발송</td>
+				<td></td>
+				<td><input type="checkbox">Drop</td>
+				<td></td>
+				<td><button type="button" class="btn btn-primary">승인처리</button></td>
+			</tr>
+		</tbody></table>
+    </div>
+    <span>공동수급일경우에만 수급지분을 입력하세요.</span>
+	</div>
+		</div>
+	</div>
+</div>
+	<!-- 프로젝트 end -->
+	
+	
+	
+	
+	
 </th:block>
 </html>
