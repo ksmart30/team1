@@ -2,1111 +2,540 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layout/main">
+
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
-	<title>2.2.1 승인된 사업수행 결정서 검색 List</title>
+	<title>2.2.4 승인된 승인 사업성검토 검색 List</title>
+
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 
+
 	<script>
-		//ajax확인
 		$(document).ready(function() {
-			$('#pjt_s').on('click', function() {
-				var y = $('#y').val();
-				alert(y + '값확인');
+			$('code').on('click', function() {
+				var l = $('#l').val();
+				alert(l + '값확인');
 			});
 		});
 	</script>
 </th:block>
-
 <th:block layout:fragment="customBody">
 
 
-	<!-- 검색부분 start -->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<div class="x_panel">
-			<div class="x_content">
-				<label for="ex3">검색조건</label><br>
-				<table>
-					<tr>
-						<td>년도</td>
-						<td><input type="number" id="y"></td>
-					</tr>
-					<tr>
-						<td>부서</td>
-						<td><select>
-								<option>전 사</option>
-								<option>설계1본부</option>
-								<option>설계2본부</option>
-								<option>설계3본부</option>
-								<option>설계4본부</option>
-								<option>설계5본부</option>
-						</select></td>
-					</tr>
-					<tr>
-						<td>코드명</td>
-						<td><div>
-								<button class="btn" id="pjt_s">검색</button>
-							</div></td>
-					</tr>
-				</table>
-				<!-- 검색부분 end -->
-				<div class="x_title"></div>
-				<!-- 결과부분 start -->
-				<table class="table table-bordered">
+	<!-- 검색 폼 -->
+	<h3>검색 조건</h3>
+	<!-- <form id="demo-form" action="/project/cooperation/dragon_hyunhwang"
+		method="post"> -->
+
+	<table class="table">
+		<tr>
+			<td width="150"><label>⊙ 부서 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<select class="form-control">
+						<option value="">전 사</option>
+						<option value="1">설계1본부</option>
+						<option value="2">설계2본부</option>
+						<option value="3">설계3본부</option>
+						<option value="1">설계4본부</option>
+						<option value="2">설계5본부</option>
+					</select>
+				</div>
+			</td>
+		</tr>
+
+
+		<tr>
+
+			<td width="100"><label>⊙ 코드명 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<input type="text" id="l" name="test" class="form-control">
+
+				</div>
+			</td>
+
+			<td><div>
+					<button class="btn" id="code">검색</button>
+				</div></td>
+
+			<td><label for="gex3">⊙ 수주구분 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<select class="form-control">
+						<option value="">ALL</option>
+						<option value="1">발주의뢰</option>
+						<option value="2">저가심의</option>
+						<option value="3">적격심사</option>
+						<option value="1">현상설계</option>
+						<option value="2">지명현상</option>
+						<option value="3">TK</option>
+						<option value="3">기술제안</option>
+					</select>
+				</div>
+			</td>
+
+
+			<td><label for="gex3">⊙ 종료구분 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<select class="form-control">
+						<option value="">ALL</option>
+						<option value="1">진행</option>
+						<option value="2">무산</option>
+						<option value="3">계약</option>
+					</select>
+				</div>
+			</td>
+		</tr>
+
+		<tr>
+			<td><label>⊙ 지 번 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<input type="text" name="test" class="form-control">
+				</div>
+			</td>
+
+			<td><div></div></td>
+
+			<td><label for="gex3">⊙ 건축물용도 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<select class="form-control">
+						<option value="">ALL</option>
+						<option value="1">단독주택</option>
+						<option value="2">공동주택</option>
+						<option value="3">제1종 근린생황시설</option>
+						<option value="4">제2종 근린생황시설</option>
+						<option value="5">문화 및 잡화시설</option>
+						<option value="6">판매시설</option>
+						<option value="7">잡화시설</option>
+					</select>
+				</div>
+			</td>
+
+			<td><label>⊙ 추정계약금액 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<input type="text" name="test" class="form-control">
+				</div>
+			<td>~</td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<input type="text" name="test" class="form-control">
+				</div>
+			</td>
+		</tr>
+
+
+		<tr>
+
+			<td width="100"><label>⊙ 발주처 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<input type="text" name="test" class="form-control">
+				</div>
+			</td>
+
+			<td><div>
+					<button class="btn">검색</button>
+				</div></td>
+
+			<td><label for="gex3">⊙ 발주처구분 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<select class="form-control">
+						<option value="">ALL</option>
+						<option value="1">건설사</option>
+						<option value="2">시행사</option>
+						<option value="3">공사/공단</option>
+						<option value="3">정부기관</option>
+						<option value="1">건축설계사무소</option>
+						<option value="2">외주협력업체</option>
+						<option value="3">조합(재개발,재건축)</option>
+					</select>
+				</div>
+			</td>
+
+
+			<td><label for="gex3">⊙ 업무범위/수준 : </label></td>
+			<td>
+				<div class="col-md-12 col-sm-12 col-xs-12 ">
+					<select class="form-control">
+						<option value="">ALL</option>
+						<option value="1">A1</option>
+						<option value="2">A2</option>
+						<option value="3">A3</option>
+						<option value="2">A4</option>
+						<option value="3">A5</option>
+					</select>
+				</div>
+			</td>
+			<td colspan="2"></td>
+		</tr>
+	</table>
+	<!-- </form> -->
+	<!-- 검색폼 끝 -->
+	<!-- 결과 리스트 시작 -->
+	<!-- <script>  
+//목록
+$('#btn_list').on('click',function(){
+    $.ajax({
+        url:'/list',
+        type:'GET',
+        success:(data)=>{
+            $('#list').empty();
+            $(data).each(function(index,item){
+                $('#list').append('<tr>');  //추가 한 행을 데이타의 갯수만큼 foreach문으로 반복
+                $('#list').append('<td><input type="checkbox" class="ck" value="'+item.board_no+'"></td>');
+                $('#list').append('<td>'+item.board_no+'</td>');
+                $('#list').append('<td>'+item.board_pw+'</td>');
+                $('#list').append('<td>'+item.board_title+'</td>');
+                $('#list').append('<td>'+item.board_content+'</td>');
+                $('#list').append('<td>'+item.board_user+'</td>');
+                $('#list').append('<td>'+item.board_date+'</td>');
+                $('#list').append('</tr>');
+            	});
+        	}
+    	});
+	});
+});
+</script>  -->
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>
+				사업성검토 검색 <small>Custom design</small>
+			</h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"><i
+						class="fa fa-wrench"></i></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Settings 1</a></li>
+						<li><a href="#">Settings 2</a></li>
+					</ul></li>
+				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="x_content">
+
+			<p>
+				Add class
+				<code>bulk_action</code>
+				to table for bulk actions options on row select
+			</p>
+
+			<div class="table-responsive">
+				<table class="table table-striped jambo_table bulk_action">
 					<thead>
-						<tr>
-							<th>PJT코드</th>
-							<th>프로젝트명</th>
+						<tr class="headings">
+							<th>
+								<!-- <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> -->
+							</th>
+							<th class="column-title">프로젝트명</th>
+							<th class="column-title">당선</th>
+							<th class="column-title">탈락</th>
+							<th class="column-title">무산</th>
+							<th class="column-title">실시</th>
+							<th class="column-title">위치/지번</th>
+							<th class="column-title">PM</th>
+							<th class="column-title">관리임원</th>
+							<th class="column-title">PD</th>
+							<th class="column-title">수주책임자</th>
+							<th class="column-title">부서</th>
+							<th class="column-title">발주처구분</th>
+							<th class="column-title">발주처</th>
+							<th class="column-title">수주구분</th>
+							<th class="column-title">추정계약금액</th>
+							<th class="column-title">작품제출일</th>
+							<th class="column-title">종료구분</th>
+							<th class="column-title">계약금액</th>
+							<th class="column-title">대지(평)</th>
+							<th class="column-title">연면적(평)</th>
+							<th class="column-title">건축물용도</th>
+							<th class="column-title">납품성과물</th>
+							<th class="column-title">결정서입력자</th>
+
+							<!-- <th class="column-title no-link last"><span class="nobr">Action</span> -->
+							</th>
+							<th class="bulk-actions" colspan="7"><a class="antoo"
+								style="color: #fff; font-weight: 500;">Bulk Actions ( <span
+									class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+							</th>
 						</tr>
 					</thead>
+
+
+
 					<tbody>
-						<tr>
-							<td style="background-color: #fff9df">19005</td>
-							<td>ksmart1팀</td>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">문효균TEST</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">전주시 덕진구 거북바위로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부</td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">7,777,777,777</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">0</td>
+							<td class=" ">2.12</td>
+							<td class=" ">2.12</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>
 						</tr>
-						<tr>
-							<td style="background-color: #fff9df">19009</td>
-							<td>bonobonoPorori</td>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">EBS건물신축공사</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">전주시 덕진구 기린대로 446</td>
+							<td class=" ">홍승윤</td>
+							<td class=" ">윤예찬</td>
+							<td class=" ">백승한</td>
+							<td class=" ">임홍근</td>
+							<td class=" ">설계1본부</td>
+							<td class=" ">건설사</td>
+							<td class=" ">(주)이에이치네트워크</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">10,000</td>
+							<td class=" ">2019/05/29</td>
+							<td class=" "></td>
+							<td class=" ">0</td>
+							<td class=" ">100,000</td>
+							<td class=" ">100,000</td>
+							<td class=" ">교육연구시설</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">주선태월드</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">서울시 강남구 강남대로 236</td>
+							<td class=" ">주선태</td>
+							<td class=" ">박찬업</td>
+							<td class=" ">홍승윤</td>
+							<td class=" ">윤예찬</td>
+							<td class=" ">설계5본부</td>
+							<td class=" ">건설사</td>
+							<td class=" ">현대건설(주)</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">1,000,000,000</td>
+							<td class=" ">2019/02/22</td>
+							<td class=" "></td>
+							<td class=" ">0</td>
+							<td class=" ">2,000</td>
+							<td class=" ">2,000</td>
+							<td class=" ">복합시설</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">ksmart1팀</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">경기 의왕시 전주남이길</td>
+							<td class=" ">이다은</td>
+							<td class=" ">오소장</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계1본부</td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">1,000,000,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">440,000,000</td>
+							<td class=" ">99.83</td>
+							<td class=" ">99.83</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">문효균TEST</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">전주시 덕진구 거북바위로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부</td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">800,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">0</td>
+							<td class=" ">2.12</td>
+							<td class=" ">2.12</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">심봉리 금동마을 회관 신축공사</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">서울 광진구 중곡동</td>
+							<td class=" ">한숙계</td>
+							<td class=" ">김태우</td>
+							<td class=" ">심병선</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부</td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">5,000,000,000</td>
+							<td class=" ">2019/01/31</td>
+							<td class=" ">계약</td>
+							<td class=" ">0</td>
+							<td class=" ">0.00</td>
+							<td class=" ">0.00</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">서울 용산구 백범로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부</td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">10,000,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">0</td>
+							<td class=" ">2.12</td>
+							<td class=" ">2.12</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">인천서창2지구 4블럭</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">인천 남동구 걸재천로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부</td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">2,000,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">무산</td>
+							<td class=" ">0</td>
+							<td class=" ">2.12</td>
+							<td class=" ">2.12</td>
+							<td class=" ">단독주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>
+						</tr>
+
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">대전 서남부지구</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">대전 유성구 가정로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부</td>
+							<td class=" ">건설사</td>
+							<td class=" ">현대건설</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">900,000,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">0</td>
+							<td class=" ">44,456.61</td>
+							<td class=" ">122,419.94</td>
+							<td class=" ">공동주택</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">서초동 진로부지 주거단지</td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" "><input type="checkbox"></td>
+							<td class=" ">서울 서초구 강남대로</td>
+							<td class=" ">문효균</td>
+							<td class=" ">이다은</td>
+							<td class=" ">김동열</td>
+							<td class=" ">임명심</td>
+							<td class=" ">설계5본부</td>
+							<td class=" ">건설사</td>
+							<td class=" ">에이원건축</td>
+							<td class=" ">발주의뢰</td>
+							<td class=" ">500,000,000</td>
+							<td class=" ">2019/03/29</td>
+							<td class=" ">계약</td>
+							<td class=" ">500,000,000</td>
+							<td class=" ">3,756.66</td>
+							<td class=" ">51,570.20</td>
+							<td class=" ">제2종 근린생활시설</td>
+							<td class=" "></td>
+							<td class=" ">양소미</td>
 						</tr>
 					</tbody>
 				</table>
-				<!-- 결과부분 end -->
-				<div class="x_title"></div>
+				<!-- 결과 리스트 끝 -->
 			</div>
 		</div>
 	</div>
-
-
-	<!-- 프로젝트 start -->
-	<div class="col-md-9 col-sm-6 col-xs-12">
-		<div class="x_panel">
-			<div class="x_content">
-				<div class="x_panel">
-					<div class="x_title">
-						<h2>
-							사업성검토 예산 입력 <small>Bordered table subtitle</small>
-						</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-expanded="false"><i
-									class="fa fa-wrench"></i></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">Settings 1</a></li>
-									<li><a href="#">Settings 2</a></li>
-								</ul></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-
-						</ul>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-
-						<table class="table table-bordered">
-
-							<tr>
-								<th>프로젝트</th>
-								<th>19019F 문효균TEST</th>
-								<th>(코드발행일:2019/03/13)</th>
-								<th>미승인</th>
-							</tr>
-
-						</table>
-
-						<table class="table table-bordered">
-
-							<tr>
-								<th>발주처</th>
-								<th>에이원건축(법인전환)</th>
-								<th>(발주처구분: 건설사)</th>
-								<th></th>
-							</tr>
-							<tr>
-								<th>대지위치</th>
-								<th>54923 전북 전주시 덕진구 거북바우로1(금암동)</th>
-								<th></th>
-								<th></th>
-							</tr>
-							<tr>
-								<th>지역/지구/구역</th>
-								<th>전용주거지역(1층) / 전용주거지역(2층) / 자연관광지구</th>
-								<th></th>
-								<th></th>
-							</tr>
-							<tr>
-								<th>수주구분</th>
-								<th>민간-발주의뢰(사업분류:신축)</th>
-								<th>건축물용도</th>
-								<th>단독주택</th>
-							</tr>
-							<tr>
-								<th>대지면적</th>
-								<th>에이원건축(법인전환)</th>
-								<th>(발주처구분: 건설사)</th>
-								<th></th>
-							</tr>
-							<tr>
-								<th>대지면적</th>
-								<th>7m2 2.12평</th>
-								<th>규모</th>
-								<th>지하 7층 지상 7층 세대수 7</th>
-							</tr>
-							<tr>
-								<th>연면적</th>
-								<th>7m2 2.12평</th>
-								<th>규모</th>
-								<th>건폐율 7% 용적율 7%</th>
-							</tr>
-
-						</table>
-
-						<table class="table table-bordered">
-
-							<tr>
-								<th>수행부서</th>
-								<th>설계5본부 2소</th>
-								<th>정보취득자</th>
-								<th>문효균</th>
-								<th>업무범위/수준</th>
-								<th>A</th>
-							</tr>
-
-							<tr>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th>예산총계</th>
-								<th>0원</th>
-							</tr>
-
-						</table>
-
-
-
-
-					</div>
-				</div>
-			</div>
-
-<!--  -->
-<!-- 프로젝트 예산 입력 start -->
-		<div class="x_panel">
-			<div class="x_title">
-				<div class="x_title">
-					<h2>
-						<i class="fa fa-bars"></i> Tabs <small>입력 수정 삭제 버튼을 추가할 지도
-							몰라 남겨둠</small>
-					</h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false"><i
-								class="fa fa-wrench"></i></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Settings 1</a></li>
-								<li><a href="#">Settings 2</a></li>
-							</ul></li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="" role="tabpanel" data-example-id="togglable-tabs">
-					<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-						<li role="presentation" class="active"><a
-							href="#tab_content1" id="home-tab" role="tab" data-toggle="tab"
-							aria-expanded="true">일정계획</a></li>
-						<li role="presentation" class=""><a href="#tab_content2"
-							role="tab" id="profile-tab" data-toggle="tab"
-							aria-expanded="false">M/H계획</a></li>
-						<li role="presentation" class=""><a href="#tab_content3"
-							role="tab" id="profile-tab2" data-toggle="tab"
-							aria-expanded="false">제조경비I</a></li>
-						<li role="presentation" class=""><a href="#tab_content4"
-							role="tab" id="profile-tab3" data-toggle="tab"
-							aria-expanded="false">제조경비II</a></li>
-						<li role="presentation" class=""><a href="#tab_content5"
-							role="tab" id="profile-tab4" data-toggle="tab"
-							aria-expanded="false">기성단계</a></li>
-						<li role="presentation" class=""><a href="#tab_content6"
-							role="tab" id="profile-tab5" data-toggle="tab"
-							aria-expanded="false">추정손익계산서</a></li>
-					</ul>
-
-					<div id="myTabContent" class="tab-content">
-						<!-- 일정계획 start -->
-						<div role="tabpanel" class="tab-pane fade active in"
-							id="tab_content1" aria-labelledby="home-tab">
-							<p>
-							<div class="col-md-12 col-sm-6 col-xs-12">
-								<div class="x_panel">
-									<div class="x_title">
-										<h2>
-											Boardered table <small>입력 수정 삭제 버튼을 위해 남겨둠</small>
-										</h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i
-													class="fa fa-chevron-up"></i></a></li>
-											<li class="dropdown"><a href="#" class="dropdown-toggle"
-												data-toggle="dropdown" role="button" aria-expanded="false"><i
-													class="fa fa-wrench"></i></a>
-												<ul class="dropdown-menu" role="menu">
-													<li><a href="#">Settings 1</a></li>
-													<li><a href="#">Settings 2</a></li>
-												</ul></li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a>
-											</li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-
-									<div class="x_content">
-										<table class="table table-bordered">
-											<thead>
-												<tr>
-													<th scope="col">단계</th>
-													<th>변경</th>
-													<th>착수일</th>
-													<th>완료예정일</th>
-													<th>소요기간(Day)</th>
-													<th>종료일</th>
-													<th>사유입력</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td scope="row">기획</td>
-													<td></td>
-													<td><input type="date"></td>
-													<td><input type="date"></td>
-													<td>완료예정일-착수일</td>
-													<td></td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td scope="row">심의</td>
-													<td></td>
-													<td><input type="date"></td>
-													<td><input type="date"></td>
-													<td>완료예정일-착수일</td>
-													<td></td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td scope="row">허가</td>
-													<td></td>
-													<td><input type="date"></td>
-													<td><input type="date"></td>
-													<td>완료예정일-착수일</td>
-													<td></td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td scope="row">착공</td>
-													<td></td>
-													<td><input type="date"></td>
-													<td><input type="date"></td>
-													<td>완료예정일-착수일</td>
-													<td></td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td scope="row">실시</td>
-													<td></td>
-													<td><input type="date"></td>
-													<td><input type="date"></td>
-													<td>완료예정일-착수일</td>
-													<td></td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td scope="row">A/S</td>
-													<td></td>
-													<td><input type="date"></td>
-													<td><input type="date"></td>
-													<td>완료예정일-착수일</td>
-													<td></td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td scope="row">준공</td>
-													<td></td>
-													<td><input type="date"></td>
-													<td><input type="date"></td>
-													<td>완료예정일-착수일</td>
-													<td></td>
-													<td><input type="text"></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-
-								</div>
-							</div>
-						</div>
-						<!-- 일정계획 end -->
-
-						<!-- M/H계획 start -->
-						<div role="tabpanel" class="tab-pane fade" id="tab_content2"
-							aria-labelledby="profile-tab">
-							<table class="table table-bordered">
-								<tr>
-									<th rowspan="12">주관부서</th>
-									<th scope="col" width="50">직급</th>
-									<th>인원</th>
-									<th>A. 기획</th>
-									<th>B. 심의</th>
-									<th>C. 허가</th>
-									<th>D. 착공</th>
-									<th>E. 실시</th>
-									<th>F. A/S</th>
-									<th>G. 준공</th>
-									<th width="50">합계</th>
-								</tr>
-								<tr>
-									<td scope="row">전무</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">상무</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">이사</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">실장</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">팀장</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">대리</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">사원</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">소계</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-							</table>
-
-
-							<table class="table table-bordered">
-								<tr>
-									<th rowspan="12">지원부서</th>
-									<th scope="col" width="50">직급</th>
-									<th>인원</th>
-									<th>A. 기획</th>
-									<th>B. 심의</th>
-									<th>C. 허가</th>
-									<th>D. 착공</th>
-									<th>E. 실시</th>
-									<th>F. A/S</th>
-									<th>G. 준공</th>
-									<th width="50">합계</th>
-								</tr>
-								<tr>
-									<td scope="row">전무</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">상무</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">이사</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">실장</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">팀장</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">대리</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">사원</td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td><input type="text" class="form-control"></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td scope="row">소계</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-							</table>
-						</div>
-						<!-- M/H계획 end -->
-
-						<!-- 제조경비1 start -->
-						<div role="tabpanel" class="tab-pane fade" id="tab_content3"
-							aria-labelledby="profile-tab">
-							<p>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<div class="x_panel">
-									<div class="x_title">
-										<h2>
-											좌 <small>제조경비1</small>
-										</h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i
-													class="fa fa-chevron-up"></i></a></li>
-											<li class="dropdown"><a href="#" class="dropdown-toggle"
-												data-toggle="dropdown" role="button" aria-expanded="false"><i
-													class="fa fa-wrench"></i></a>
-												<ul class="dropdown-menu" role="menu">
-													<li><a href="#">Settings 1</a></li>
-													<li><a href="#">Settings 2</a></li>
-												</ul></li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a>
-											</li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-									<div class="x_content">
-
-										<table class="table table-bordered">
-											<thead>
-												<tr>
-													<th>계정과목</th>
-													<th>금액</th>
-													<th>%</th>
-													<th>비고</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<th scope="row">프로젝트</th>
-													<td>(프로젝트번호)</td>
-													<td><input type="text"></td>
-													<td></td>
-												</tr>
-											</tbody>
-										</table>
-
-									</div>
-								</div>
-							</div>
-
-
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<div class="x_panel">
-									<div class="x_title">
-										<h2>
-											우 <small>제조경비1</small>
-										</h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i
-													class="fa fa-chevron-up"></i></a></li>
-											<li class="dropdown"><a href="#" class="dropdown-toggle"
-												data-toggle="dropdown" role="button" aria-expanded="false"><i
-													class="fa fa-wrench"></i></a>
-												<ul class="dropdown-menu" role="menu">
-													<li><a href="#">Settings 1</a></li>
-													<li><a href="#">Settings 2</a></li>
-												</ul></li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a>
-											</li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-									<div class="x_content">
-
-										<table class="table table-bordered">
-											<thead>
-												<tr>
-													<th>계정과목</th>
-													<th>금액</th>
-													<th>%</th>
-													<th>비고</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>국내출장비</td>
-													<td><input type="text"></td>
-													<td>0.00</td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td>국외출장비</td>
-													<td><input type="text"></td>
-													<td>0.00</td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td>보증보험료</td>
-													<td><input type="text"></td>
-													<td>0.00</td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td>합사운영비</td>
-													<td><input type="text"></td>
-													<td>0.00</td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td>인쇄비</td>
-													<td><input type="text"></td>
-													<td>0.00</td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td>지급수수료</td>
-													<td><input type="text"></td>
-													<td>0.00</td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td>모형비</td>
-													<td><input type="text"></td>
-													<td>0.00</td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td>조감도</td>
-													<td><input type="text"></td>
-													<td>0.00</td>
-													<td><input type="text"></td>
-												</tr>
-												<tr>
-													<td>국내출장비</td>
-													<td><input type="text"></td>
-													<td>0.00</td>
-													<td><input type="text"></td>
-												</tr>
-											</tbody>
-										</table>
-
-									</div>
-								</div>
-							</div>
-
-							<div class="clearfix"></div>
-						</div>
-						<!-- 제조경비1 end -->
-
-						<!-- 제조경비2 start -->
-						<div role="tabpanel" class="tab-pane fade" id="tab_content4"
-							aria-labelledby="profile-tab">
-							<p>
-							<div class="col-md-12 col-sm-12 col-xs-12">
-								<div class="x_panel">
-									<div class="x_title">
-										<h2>
-											테이블 <small>제조경비2</small>
-										</h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i
-													class="fa fa-chevron-up"></i></a></li>
-											<li class="dropdown"><a href="#" class="dropdown-toggle"
-												data-toggle="dropdown" role="button" aria-expanded="false"><i
-													class="fa fa-wrench"></i></a>
-												<ul class="dropdown-menu" role="menu">
-													<li><a href="#">Settings 1</a></li>
-													<li><a href="#">Settings 2</a></li>
-												</ul></li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a>
-											</li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-
-									<div class="x_content">
-										<table class="table table-bordered">
-											<thead>
-												<tr>
-													<th>계정과목</th>
-													<th>금액</th>
-													<th>%</th>
-													<th>거래처</th>
-													<th>실행예산</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td scope="row">프로젝트</td>
-													<td><input type="text"></td>
-													<td>0.00</td>
-													<td></td>
-													<td></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							</p>
-						</div>
-						<!-- 제조경비2 end -->
-
-						<!-- 기성단계 start -->
-						<div role="tabpanel" class="tab-pane fade" id="tab_content5"
-							aria-labelledby="profile-tab">
-							<p>
-							<div class="col-md-12 col-sm-12 col-xs-12">
-								<div class="x_panel">
-									<div class="x_title">
-										<h2>
-											테이블 <small>기성단계</small>
-										</h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i
-													class="fa fa-chevron-up"></i></a></li>
-											<li class="dropdown"><a href="#" class="dropdown-toggle"
-												data-toggle="dropdown" role="button" aria-expanded="false"><i
-													class="fa fa-wrench"></i></a>
-												<ul class="dropdown-menu" role="menu">
-													<li><a href="#">Settings 1</a></li>
-													<li><a href="#">Settings 2</a></li>
-												</ul></li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a>
-											</li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-
-									<div class="x_content">
-										<table class="table table-bordered">
-											<thead>
-												<tr>
-													<th>기성단계</th>
-													<th>단계등급</th>
-													<th>금액</th>
-													<th>수금율(%)</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>계약체결시</td>
-													<td>기획</td>
-													<td>385,000,000</td>
-													<td>50.00</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							</p>
-						</div>
-						<!-- 기성단계 end -->
-
-						<!-- 추정손익계산서 start -->
-						<div role="tabpanel" class="tab-pane fade" id="tab_content6"
-							aria-labelledby="profile-tab">
-							<p>
-							<div class="col-md-7 col-sm-6 col-xs-12">
-								<div class="x_panel">
-									<div class="x_title">
-										<h2>
-											좌 <small>합계내역</small>
-										</h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i
-													class="fa fa-chevron-up"></i></a></li>
-											<li class="dropdown"><a href="#" class="dropdown-toggle"
-												data-toggle="dropdown" role="button" aria-expanded="false"><i
-													class="fa fa-wrench"></i></a>
-												<ul class="dropdown-menu" role="menu">
-													<li><a href="#">Settings 1</a></li>
-													<li><a href="#">Settings 2</a></li>
-												</ul></li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a>
-											</li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-									<div class="x_content">
-
-										<table class="table table-bordered">
-											<thead>
-												<tr>
-													<th colspan="2">과목</th>
-													<th>금액</th>
-													<th>%</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td colspan="2">매출액</td>
-													<td>770,000,000</td>
-													<td>100.0</td>
-												</tr>
-												<tr>
-													<td rowspan="4">자체비용
-													<td>인 건비</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>제조경비1</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>제조경비2</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>소계</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td rowspan="5">배부비용</td>
-													<td>공통비1</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>간접비</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>공통비2</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>관리부문비</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>소계</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td colspan="2">비용합계</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td colspan="2">영업이익</td>
-													<td>770,000,000</td>
-													<td>100</td>
-												</tr>
-												<tr>
-													<td rowspan="5">사업성검토</td>
-													<td>인건비</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>제조경비1</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>공통비2</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>관리부문비</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>소계</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-
-
-											</tbody>
-										</table>
-
-									</div>
-								</div>
-							</div>
-
-
-							<div class="col-md-5 col-sm-6 col-xs-12">
-								<div class="x_panel">
-									<div class="x_title">
-										<h2>
-											우 <small>간접비</small>
-										</h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i
-													class="fa fa-chevron-up"></i></a></li>
-											<li class="dropdown"><a href="#" class="dropdown-toggle"
-												data-toggle="dropdown" role="button" aria-expanded="false"><i
-													class="fa fa-wrench"></i></a>
-												<ul class="dropdown-menu" role="menu">
-													<li><a href="#">Settings 1</a></li>
-													<li><a href="#">Settings 2</a></li>
-												</ul></li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a>
-											</li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-									<div class="x_content">
-
-										<table class="table table-bordered">
-											<thead>
-												<tr>
-													<th>항목</th>
-													<th>배부금액</th>
-													<th>배부율</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>빌딩</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>통신</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>전산</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>합계</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-											</tbody>
-										</table>
-
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-5 col-sm-6 col-xs-12">
-								<div class="x_panel">
-									<div class="x_title">
-										<h2>
-											우 <small>공통비1</small>
-										</h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i
-													class="fa fa-chevron-up"></i></a></li>
-											<li class="dropdown"><a href="#" class="dropdown-toggle"
-												data-toggle="dropdown" role="button" aria-expanded="false"><i
-													class="fa fa-wrench"></i></a>
-												<ul class="dropdown-menu" role="menu">
-													<li><a href="#">Settings 1</a></li>
-													<li><a href="#">Settings 2</a></li>
-												</ul></li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a>
-											</li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-									<div class="x_content">
-
-										<table class="table table-bordered">
-											<thead>
-												<tr>
-													<th>항목</th>
-													<th>배부금액</th>
-													<th>배부율</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>부문장</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>본부장</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>지원부서</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>기타</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-												<tr>
-													<td>합계</td>
-													<td>0</td>
-													<td>0</td>
-												</tr>
-											</tbody>
-										</table>
-
-									</div>
-								</div>
-							</div>
-
-							<div class="clearfix"></div>
-						</div>
-
-					</div>
-
-				</div>
-			</div>
-
-		</div>
-		<!-- 프로젝트 예산 입력 end -->
-
-
-
-
-		</div>
-	</div>
-
-	<!-- 프로젝트 end -->
-</th:block>
-</html>
