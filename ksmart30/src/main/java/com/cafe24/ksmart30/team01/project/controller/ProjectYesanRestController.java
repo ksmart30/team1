@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProjectYesanRestController {
-	
+/*	
 	//2.2.1 승인된 용역계약서 검색 List
 	@PostMapping("/project/manage/seungin_search")
 	public String projectManageSeunginSearch(Model model) {
@@ -91,6 +91,6 @@ public class ProjectYesanRestController {
 	public String projectYesanList(Model model) {
 		return "project/yesan/list";
 	}
-	
+*/
 	
 }
