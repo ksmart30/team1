@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+	<th:block layout:fragment="customHead">
+		<meta charset="UTF-8">
+		<title>프로젝트 진행 현황</title>
+	</th:block>
+	<th:block layout:fragment="customBody">
+	<div class="row">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h3>현재진행 사업성 검토</h3>
+            <div class="clearfix"></div>
+            </div>
+            <div class="x_content"><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px;"></iframe>
+              <canvas id="pieChart" width="424" height="212" style="width: 424px; height: 212px;"></canvas>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-sm-6 col-xs-12">
+           <div class="x_panel">
+             <div class="x_title">
+               <h3>본부별 사업성 검토</h3>
+             <div class="clearfix"></div>
+             </div>
+             <div class="x_content"><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px;"></iframe>
+               <canvas id="mybarChart" width="424" height="212" style="width: 424px; height: 212px;"></canvas>
+             </div>
+           </div>
+         </div>
+         
+      </div>
+      
+      <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>사업성검토</h2>
+                   
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <table class="table ">
+                      <thead>
+                        <tr>
+                          <th>수주구분</th>
+                          <th>합계</th>
+                          <th>미승인</th>
+                          <th><span style="color: green;">진행</span></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>발주의뢰</th>
+                          <td>10</td>
+                          <td>6</td>
+                          <td><span style="color: green;">4</span></td>
+                        </tr>
+                        <tr>
+                          <th>저가심의</th>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th>3</th>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                      <tr>
+                      	<td>
+                      	★★합계★★
+                      	</td>
+                      	
+                      	<td>
+                      	11
+                      	</td>
+                      	
+                      	<td>
+                      	7
+                      	</td>
+                      	
+                      	<td>
+                      	4
+                      	</td>
+                      </tr>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+      
+      
+      </div>   
+	</th:block>
+</html>

@@ -5,6 +5,33 @@
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
 	<title>변경된 용역계약서 조회</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script>
+$(document).ready(function(){
+   
+    // 서치
+    $('#pjt_btn').on('click',function(){
+    	var pjtCd = $('#pjtcode').val();
+        $.ajax({
+            url:'/test/search',//호출할 메소드
+            type:'GET',//송신 방식 
+            data:{pjtCd:pjtCd},//넘길 데이터
+            success:function(data){//받은 데이터
+            	console.log(data);
+                $('#gyhh').empty();//삭제 
+                $(data).each((index,item)=>{
+                	$('#gyhh').append('<tr>');//append추가
+                	$('#gyhh').append('<td style="background-color: #fff9df" width="20%">'+item.SCV_PART+'</td>');
+                	$('#gyhh').append('<td>'+item.CUST_NM+'</td>');
+                	$('#gyhh').append('<td>'+item.EX_WORK_AMT+'</td>');
+                	$('#gyhh').append('</tr>');
+                });              
+            }
+        });
+    });
+    
+});
+</script>
 </th:block>
 <th:block layout:fragment="customBody">
 	<!-- 검색부분 start -->
