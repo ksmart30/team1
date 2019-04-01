@@ -4,125 +4,168 @@
 	layout:decorator="layout/main">
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
-	<title>거래처코드 등록</title>
+	<title>url만들면 확인 거래처코드 리스트 출력</title>
 </th:block>
 <th:block layout:fragment="customBody">
 
-	<!-- 검색부분 start -->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<div class="x_panel">
-			<div class="x_content">
-				<label for="ex3">검색조건</label><br>
-				<table>
-					<tr>
-						<td>고객구분</td>
-						<td><select>
-								<option value="">ALL</option>
-								<option value="1">건설사</option>
-								<option value="2">시행사</option>
-								<option value="3">공사/공단</option>
-								<option value="3">정부기관</option>
-								<option value="1">건축설계사무소</option>
-								<option value="2">외주협력업체</option>
-								<option value="3">조합(재개발,재건축)</option>
-						</select></td>
-						<!-- <td>
-						<input type="number">
-					</td> -->
-					</tr>
-					<tr>
-						<td>고객명</td>
-						<td><input type="text"></td>
-					</tr>
-					<tr>
-						<td>사업자등록번호</td>
-						<td><input type="text"></td>
-						<td><button>검색</button></td>
-					</tr>
-				</table>
-				<!-- 검색부분 end -->
+	<!-- 검색 폼 -->
+	<h3>거래처코드 리스트 출력</h3>
+	<form id="demo-form" action="/project/cooperation/dragon_hyunhwang"
+		method="post">
 
-				<div class="x_title"></div>
-<!-- 결과부분 start -->
-				<table class="table table-bordered">
+		<table class="table">
+
+			<tr>
+				<td width="150"><label>⊙ 부서 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<select class="form-control">
+							<option value="">전 사</option>
+							<option value="1">설계1본부</option>
+							<option value="2">설계2본부</option>
+							<option value="3">설계3본부</option>
+							<option value="1">설계4본부</option>
+							<option value="2">설계5본부</option>
+						</select>
+					</div>
+				</td>
+
+				<td width="100"><label>⊙ 코드명 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<input type="text" name="test" class="form-control">
+					</div>
+					
+				</td>
+				<td><div><button class="btn">검색</button></div></td>
+				<td>
+					<div class="col-md-15 col-sm-15 col-xs-15 ">
+						<input type="text" name="test" class="form-control">
+					</div>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<!-- 검색폼 끝 -->
+
+
+	<!-- 출력 리스트 검색 시작 -->
+
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>
+				사업성검토 예산 출력 <small>Custom design</small>
+			</h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+				</li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"><i
+						class="fa fa-wrench"></i></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Settings 1</a></li>
+						<li><a href="#">Settings 2</a></li>
+					</ul></li>
+				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="x_content">
+
+			<p>
+				Add class
+				<code>bulk_action</code>
+				to table for bulk actions options on row select
+			</p>
+
+			<div class="table-responsive">
+				<table class="table table-striped jambo_table bulk_action">
 					<thead>
-						<tr>
-							<th width="30%">사업자등록번호</th>
-							<th>고객명</th>
+						<tr class="headings">
+							<th>
+								<!-- <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; visibility: hidden;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> -->
+							</th>
+							<th class="column-title">No.</th>
+							<th class="column-title">부서</th>
+							<th class="column-title">PJT코드</th>
+							<th class="column-title">프로젝트명</th>
+							<th class="column-title">출력</th>
+							<!-- <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i> -->
+							</a>
+							</th>
 						</tr>
 					</thead>
+
 					<tbody>
-						<tr>
-							<td style="background-color: #fff9df">1370324950</td>
-							<td>(주)가우디자인</td>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" "><input type="checkbox"></td>
 						</tr>
-						<tr>
-							<td style="background-color: #fff9df">12345647</td>
-							<td>(주)건일엠이씨</td>
+
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">2</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19010F</td>
+							<td class=" ">01_프로젝트_주선태극기</td>
+							<td class=" "><input type="checkbox"></td>
 						</tr>
-						<tr>
-							<td style="background-color: #fff9df">33018454</td>
-							<td>(주)건원도시건축</td>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">3</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19015F</td>
+							<td class=" ">KDY TEST사업</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">4</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19016F</td>
+							<td class=" ">오란씨</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">5</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19017F</td>
+							<td class=" ">성수산자연 휴양림 호텔 건축 공사</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">6</td>
+							<td class=" ">설계3본부 2소</td>
+							<td class=" ">19012F</td>
+							<td class=" ">EBS건물신축공사</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">7</td>
+							<td class=" ">설계4본부 1소</td>
+							<td class=" ">19003F</td>
+							<td class=" ">J프로젝트</td>
+							<td class=" "><input type="checkbox"></td>
+						</tr>
+						<tr class="odd pointer">
+							<td class="a-center "></td>
+							<td class=" ">8</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19019F</td>
+							<td class=" ">문효균TEST</td>
+							<td class=" "><input type="checkbox"></td>
 						</tr>
 					</tbody>
 				</table>
-				<!-- 결과부분 end -->
-				<div class="x_title"></div>
+				<!-- 출력 리스트 검색 끝 -->
 			</div>
 		</div>
 	</div>
-	
-	
-<!-- start -->
-
-<div class="col-md-9 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2><i class="fa fa-bars"></i> 거래처코드등록 <small></small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-
-
-                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                      <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">기본정보</a>
-                        </li>
-                        <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">인적사항</a>
-                        </li>
-                      </ul>
-                      <div id="myTabContent" class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-                          <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher
-                            synth. Cosby sweater eu banh mi, qui irure terr.</p>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                          <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
-                            booth letterpress, commodo enim craft beer mlkshk aliquip</p>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-<!-- end -->
-	
-
-</th:block>
-</html>

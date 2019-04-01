@@ -4,168 +4,269 @@
 	layout:decorator="layout/main">
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
-	<title>output으로 옮겨야함 거래처코드 리스트 출력</title>
+	<title>거래처코드 등록</title>
 </th:block>
 <th:block layout:fragment="customBody">
 
-	<!-- 검색 폼 -->
-	<h3>거래처코드 리스트 출력</h3>
-	<form id="demo-form" action="/project/cooperation/dragon_hyunhwang"
-		method="post">
+	<!-- 검색부분 start -->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">
+				<label for="ex3">검색조건</label><br>
+				<table>
+					<tr>
+						<td>고객구분</td>
+						<td><select>
+								<option value="">ALL</option>
+								<option value="1">건설사</option>
+								<option value="2">시행사</option>
+								<option value="3">공사/공단</option>
+								<option value="3">정부기관</option>
+								<option value="1">건축설계사무소</option>
+								<option value="2">외주협력업체</option>
+								<option value="3">조합(재개발,재건축)</option>
+						</select></td>
+						<!-- <td>
+						<input type="number">
+					</td> -->
+					</tr>
+					<tr>
+						<td>고객명</td>
+						<td><input type="text"></td>
+					</tr>
+					<tr>
+						<td>사업자등록번호</td>
+						<td><input type="text"></td>
+						<td><button>검색</button></td>
+					</tr>
+				</table>
+				<!-- 검색부분 end -->
 
-		<table class="table">
-
-			<tr>
-				<td width="150"><label>⊙ 부서 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<select class="form-control">
-							<option value="">전 사</option>
-							<option value="1">설계1본부</option>
-							<option value="2">설계2본부</option>
-							<option value="3">설계3본부</option>
-							<option value="1">설계4본부</option>
-							<option value="2">설계5본부</option>
-						</select>
-					</div>
-				</td>
-
-				<td width="100"><label>⊙ 코드명 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<input type="text" name="test" class="form-control">
-					</div>
-					
-				</td>
-				<td><div><button class="btn">검색</button></div></td>
-				<td>
-					<div class="col-md-15 col-sm-15 col-xs-15 ">
-						<input type="text" name="test" class="form-control">
-					</div>
-				</td>
-			</tr>
-		</table>
-	</form>
-	<!-- 검색폼 끝 -->
-
-
-	<!-- 출력 리스트 검색 시작 -->
-
-	<div class="x_panel">
-		<div class="x_title">
-			<h2>
-				사업성검토 예산 출력 <small>Custom design</small>
-			</h2>
-			<ul class="nav navbar-right panel_toolbox">
-				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-				</li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-expanded="false"><i
-						class="fa fa-wrench"></i></a>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Settings 1</a></li>
-						<li><a href="#">Settings 2</a></li>
-					</ul></li>
-				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-			</ul>
-			<div class="clearfix"></div>
-		</div>
-
-		<div class="x_content">
-
-			<p>
-				Add class
-				<code>bulk_action</code>
-				to table for bulk actions options on row select
-			</p>
-
-			<div class="table-responsive">
-				<table class="table table-striped jambo_table bulk_action">
+				<div class="x_title"></div>
+				<!-- 결과부분 start -->
+				<table class="table table-bordered">
 					<thead>
-						<tr class="headings">
-							<th>
-								<!-- <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; visibility: hidden;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> -->
-							</th>
-							<th class="column-title">No.</th>
-							<th class="column-title">부서</th>
-							<th class="column-title">PJT코드</th>
-							<th class="column-title">프로젝트명</th>
-							<th class="column-title">출력</th>
-							<!-- <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i> -->
-							</a>
-							</th>
+						<tr>
+							<th width="30%">사업자등록번호</th>
+							<th>고객명</th>
 						</tr>
 					</thead>
-
 					<tbody>
-						<tr class="even pointer">
-							<td class="a-center "></td>
-							<td class=" ">1</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19001F</td>
-							<td class=" ">효창동 근린생활시설 신축공사</td>
-							<td class=" "><input type="checkbox"></td>
+						<tr>
+							<td style="background-color: #fff9df">1370324950</td>
+							<td>(주)가우디자인</td>
 						</tr>
-
-						<tr class="odd pointer">
-							<td class="a-center "></td>
-							<td class=" ">2</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19010F</td>
-							<td class=" ">01_프로젝트_주선태극기</td>
-							<td class=" "><input type="checkbox"></td>
+						<tr>
+							<td style="background-color: #fff9df">12345647</td>
+							<td>(주)건일엠이씨</td>
 						</tr>
-						<tr class="even pointer">
-							<td class="a-center "></td>
-							<td class=" ">3</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19015F</td>
-							<td class=" ">KDY TEST사업</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-						<tr class="odd pointer">
-							<td class="a-center "></td>
-							<td class=" ">4</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19016F</td>
-							<td class=" ">오란씨</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-						<tr class="even pointer">
-							<td class="a-center "></td>
-							<td class=" ">5</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19017F</td>
-							<td class=" ">성수산자연 휴양림 호텔 건축 공사</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-						<tr class="odd pointer">
-							<td class="a-center "></td>
-							<td class=" ">6</td>
-							<td class=" ">설계3본부 2소</td>
-							<td class=" ">19012F</td>
-							<td class=" ">EBS건물신축공사</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-						<tr class="even pointer">
-							<td class="a-center "></td>
-							<td class=" ">7</td>
-							<td class=" ">설계4본부 1소</td>
-							<td class=" ">19003F</td>
-							<td class=" ">J프로젝트</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-						<tr class="odd pointer">
-							<td class="a-center "></td>
-							<td class=" ">8</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19019F</td>
-							<td class=" ">문효균TEST</td>
-							<td class=" "><input type="checkbox"></td>
+						<tr>
+							<td style="background-color: #fff9df">33018454</td>
+							<td>(주)건원도시건축</td>
 						</tr>
 					</tbody>
 				</table>
-				<!-- 출력 리스트 검색 끝 -->
+				<!-- 결과부분 end -->
+				<div class="x_title"></div>
 			</div>
 		</div>
 	</div>
+
+
+	<!-- start -->
+
+	<div class="col-md-9 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>
+					<i class="fa fa-bars"></i> 거래처코드등록 <small></small>
+				</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Settings 1</a></li>
+							<li><a href="#">Settings 2</a></li>
+						</ul></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			
+<!-- taps시작  -->			
+			<div class="x_content">
+
+
+				<div class="" role="tabpanel" data-example-id="togglable-tabs">
+					<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+						<li role="presentation" class="active"><a
+							href="#tab_content1" id="home-tab" role="tab" data-toggle="tab"
+							aria-expanded="true">기본정보</a></li>
+						
+						<li role="presentation" class=""><a href="#tab_content2"
+							role="tab" id="profile-tab" data-toggle="tab"
+							aria-expanded="false">인적사항</a></li>
+					</ul>
+					<!-- 기본정보 시작 -->
+
+					<div id="myTabContent" class="tab-content">
+
+						<table class="table">
+
+							<tr>
+								<td style="background-color: #f3f3f3" width="10%">부문</td>
+								<td>
+									<div class="col-md-12 col-sm-12 col-xs-12 ">
+										<select class="form-control">
+											<option value=""></option>
+											<option value="1">건축</option>
+											<option value="2">기계</option>
+											<option value="3">전기</option>
+											<option value="1">토목</option>
+											<option value="2">조경</option>
+											<option value="3">구조</option>
+											<option value="3">전경</option>
+											<option value="1">교통영향평가</option>
+											<option value="2">기타인증</option>
+											<option value="3">지질조사</option>
+											<option value="1">측량</option>
+											<option value="2">흙막이</option>
+											<option value="3">특수디자인</option>
+											<option value="3">소방</option>
+											<option value="3">환경영향평가</option>
+											<option value="3">재해영향평가</option>
+											<option value="1">VE/LCC</option>
+											<option value="2">인테리어</option>
+											<option value="3">친환경인증</option>
+											<option value="1">타당성검토</option>
+											<option value="2">교통성검토</option>
+											<option value="3">사전환경성검토</option>
+											<option value="3">사전재해영샹향성검토</option>
+											<option value="1">사전경관분석검토</option>
+											<option value="2">기타</option>
+											<option value="3">프리랜서</option>
+											<option value="3">예비비</option>
+										</select>
+									</div>
+								</td>
+								<td style="background-color: #f3f3f3" width="10%">외주처</td>
+								<td>
+									<div class="col-md-12 col-sm-12 col-xs-12 ">
+										<input type="text" name="test" class="form-control">
+									</div>
+
+								</td>
+								<td width="5%">
+									<button class="btn">검색</button>
+								</td>
+								<td colspan="2">
+									<div class="col-md-12 col-sm-12 col-xs-12 ">
+										<input type="text" name="test" class="form-control"
+											readonly="readonly">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="background-color: #f3f3f3">용역명</td>
+								<td colspan="6">
+									<div class="col-md-12 col-sm-12 col-xs-12 ">
+										<input type="text" name="test" class="form-control">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="background-color: #f3f3f3">계약일자</td>
+								<td colspan="6"><div class="col-md-4 col-sm-12 col-xs-12 ">
+										<input type="date" name="test" class="form-control">
+									</div></td>
+
+							</tr>
+
+							<tr>
+								<td style="background-color: #f3f3f3">계약일자</td>
+								<td>
+									<div class="col-md-12 col-sm-12 col-xs-12 ">
+										<input type="date" name="test" class="form-control">
+									</div>
+								</td>
+								<td colspan="2">
+									<div class="col-md-12 col-sm-12 col-xs-12 ">
+										<input type="date" name="test" class="form-control">
+									</div>
+								</td>
+								<td colspan="2">
+									<div class="col-md-12 col-sm-12 col-xs-12 ">
+										<select class="form-control">
+											<option value=""></option>
+											<option value="1">사용검사완료시(준공시)</option>
+											<option value="2">기본설계완료시</option>
+											<option value="3">최종도서(보고서)납품시</option>
+											<option value="4">실시도서납품시</option>
+											<option value="5">준공도서납품시</option>
+											<option value="6">결과발표후</option>
+											<option value="7">임시(가)사용완료시</option>
+											<option value="8">용역완료시</option>
+										</select>
+									</div>
+								</td>
+								<td>까지</td>
+
+							</tr>
+
+							<tr>
+								<td style="background-color: #f3f3f3">계약액</td>
+								<td>
+									<div class="col-md-12 col-sm-12 col-xs-12 ">
+										<input type="number" name="test" class="form-control">
+									</div>
+								</td>
+								<td colspan="6"><input type="checkbox"
+									class="icheckbox_flat-green">계약서여부</td>
+							</tr>
+
+							<tr>
+								<td style="background-color: #f3f3f3">VAT여부</td>
+								<td>
+									<div class="col-md-12 col-sm-12 col-xs-12 ">
+										<select class="form-control">
+											<option value=""></option>
+											<option value="1">면세</option>
+											<option value="2">VAT포함</option>
+											<option value="3">VAT별도</option>
+											<option value="4">일부면세</option>
+										</select>
+									</div>
+								</td>
+								<td style="background-color: #f3f3f3">면세근거</td>
+								<td colspan="2">
+									<div class="col-md-12 col-sm-12 col-xs-12 ">
+										<input type="text" name="test" class="form-control">
+									</div>
+								</td>
+								<td colspan="2">
+									<button class="btn">면세근거</button>
+								</td>
+
+							</tr>
+
+
+						</table>
+
+
+<!-- 기본정보 끝 -->
+
+					</div>
+				</div>
+
+			</div>
+<!-- taps끝  -->				
+		</div>
+	</div>
+	<!-- end -->
+
+
+</th:block>
+</html>

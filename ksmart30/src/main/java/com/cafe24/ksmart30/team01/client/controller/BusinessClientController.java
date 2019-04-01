@@ -9,19 +9,28 @@ import groovyjarjarpicocli.CommandLine.Model;
 @Controller
 public class BusinessClientController {
 	
-	//1.1 거래처 화면
-	@GetMapping("/baseInfo/client")
-	public String baseInfoClient() {
-		return "baseInfo/client";
-	}
 	
-	//1.2 거래처 입력 화면
-	@GetMapping("/baseInfo/client/in")
+	//0.1 거래처코드 등록
+	@GetMapping("/baseinfo/client/in")
 	public String baseInfoClientIn() {
 		return "baseInfo/client/in";
 	}
 	
-	//1.2 거래처 입력 처리
+	//0.2 거래처코드 리스트 출력
+	@GetMapping("/baseinfo/client/list")
+	public String baseInfoClientList() {
+		return "baseInfo/client/list";
+	}
+	
+	
+	//0.2 거래처코드 리스트 출력
+	@PostMapping("/baseinfo/client/list")
+	public String baseInfoClientList(Model model) {
+		return "baseInfo/client/list";
+	}
+
+	
+/*	//1.2 거래처 입력 처리
 	@PostMapping("/baseInfo/client/in")
 	public String baseInfoClientIn(Model model) {
 		return "baseInfo/client/in";
@@ -44,18 +53,7 @@ public class BusinessClientController {
 	public String baseInfoClientDel() {
 		return "baseInfo/client/del";
 		
-	}
+		}
+		*/
 	
-	//1.5 거래처 검색 화면
-	@GetMapping("/baseInfo/client/list")
-	public String baseInfoClientList() {
-		return "baseInfo/client/list";
-	}
-	
-	//1.5 거래처 검색 처리
-	@PostMapping("/baseInfo/client/list")
-	public String baseInfoClientList(Model model) {
-		return "baseInfo/client/list";
-	}
-
 }
