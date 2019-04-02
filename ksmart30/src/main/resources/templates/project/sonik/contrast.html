@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>프로젝트예산, 실적 대비표</title>
+</th:block>
+<th:block layout:fragment="customBody">
+
+	<!-- page content -->
+
+	<!-- 검색 폼 -->
+	<h3>검색 조건</h3>
+	<form id="demo-form" action="/project/cooperation/dragon_hyunhwang"
+		method="post">
+
+		<table class="table">
+
+			<tbody>
+				<tr>
+					<td width="150"><label>⊙ 부서 : </label></td>
+					<td>
+						<div class="col-md-5 col-sm-5 col-xs-5 ">
+							<select class="form-control">
+								<option value="">전 사</option>
+								<option value="1">도시기획본부</option>
+								<option value="2">도디본부</option>
+								<option value="2">설계1본부</option>
+								<option value="2">설계2본부</option>
+								<option value="3">설계3본부</option>
+								<option value="4">설계4본부</option>
+								<option value="5">설계5본부</option>
+								<option value="5">디자인1본부</option>
+								<option value="5">디자인2본부</option>
+							</select>
+						</div>
+					</td>
+
+					<td width="100"><label>⊙ 진행구분 : </label></td>
+					<td class="col-md-2 col-sm-3 col-xs-12">
+						<div class="radio">
+							<label class="">
+								<div class="iradio_flat-green" style="position: relative;">
+									<input type="radio" class="flat" name="iCheck"
+										style="position: absolute; opacity: 0;">
+									<ins class="iCheck-helper"
+										style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+								</div> Unchecked
+							</label>
+						</div>
+						<div class="radio">
+							<label class="">
+								<div class="iradio_flat-green" style="position: relative;">
+									<input type="radio" class="flat" name="iCheck"
+										style="position: absolute; opacity: 0;">
+									<ins class="iCheck-helper"
+										style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+								</div> Unchecked
+							</label>
+						</div>
+					</td>
+
+					<td width="100"><label>⊙ 기간구분 : </label></td>
+
+					<td>
+						<div class="col-md-12 col-sm-12 col-xs-12 ">
+							<input type="date" name="date2" class="form-control">
+						</div>
+					</td>
+					<td><label>까지</label></td>
+				</tr>
+				<tr>
+					<td width="100"><label>⊙ 코드명 : </label></td>
+					<td>
+						<div class="col-md-5 col-sm-5 col-xs-5 ">
+							<input type="text" name="test" class="form-control">
+						</div>
+
+					</td>
+					<td>
+						<div>
+							<button class="btn">검색</button>
+						</div>
+					</td>
+					<td>
+						<div class="col-md-15 col-sm-15 col-xs-15 ">
+							<input type="text" name="test" class="form-control">
+						</div>
+					</td>
+					<td>
+						
+							<p>계약일자가 2012년 이전 자료는 조회하실수 없습니다.</p>
+						
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	<!-- 검색폼 끝 -->
+
+
+	<!-- 출력 리스트 검색 시작 -->
+
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>
+				프로젝트예산, 실적 대비표 <small>Custom design</small>
+			</h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+				</li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"><i
+						class="fa fa-wrench"></i></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Settings 1</a></li>
+						<li><a href="#">Settings 2</a></li>
+					</ul></li>
+				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="x_content">
+
+
+
+			<div class="table-responsive">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th>
+								<!-- <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; visibility: hidden;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> -->
+							</th>
+							<th class="column-title">부서명</th>
+							<th class="column-title">프로젝트명</th>
+							<th class="column-title">총계약액</th>
+							<th class="column-title">구분</th>
+							<th class="column-title">합계</th>
+							<th class="column-title">인건비</th>
+							<th class="column-title">제조경비1</th>
+							<th class="column-title">제조경비2</th>
+							<th class="column-title">배부비용</th>
+							<th class="column-title">사업성검토</th>
+							<th class="column-title">조정영업이익</th>
+							<th class="column-title">%</th>
+							<!-- <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i> -->
+
+
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+						</tr>
+
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+						</tr>
+
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+						</tr>
+
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+						</tr>
+
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+						</tr>
+
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+						</tr>
+
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+						</tr>
+
+						<tr class="even pointer">
+							<td class="a-center "></td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+							<td class=" ">1</td>
+							<td class=" ">설계1본부 1소</td>
+							<td class=" ">19001F</td>
+							<td class=" ">효창동 근린생활시설 신축공사</td>
+						</tr>
+
+					</tbody>
+				</table>
+				<!-- 출력 리스트 검색 끝 -->
+			</div>
+		</div>
+	</div>
+	<!-- /page content -->
+</th:block>
+</html>
