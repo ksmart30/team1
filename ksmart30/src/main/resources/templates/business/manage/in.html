@@ -33,7 +33,9 @@
 						<td><div>
 								<input type="text">
 							</div></td>
+		
 					</tr>
+					
 				</table>
 				<!-- 검색부분 end -->
 				<div class="x_title"></div>
@@ -103,7 +105,7 @@
 								<th><input type="text"></th>
 								<th colspan="2">발주처<input type="text"
 									style="width: 80px; height: 20px; font-size: 12px">
-									<button type="button" class="btn btn-primary">조회</button>
+									<button class="btn" id="pjt_s">조회</button>
 									<input type="text"
 									style="width: 120px; height: 20px; font-size: 12px"></th>
 								<th colspan="2"><select>
@@ -123,13 +125,13 @@
 							
 							<tr> 
 								<td>의뢰일자<input type="date"></td>
-								<td>정보취득자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button type="button" class="btn btn-primary">조회</button></td>
+								<td>정보취득자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button class="btn" id="pjt_s">조회</button></td>
 								<td>담당자 <input type="text" style="width: 80px; height: 20px; font-size: 12px"></td>
 								<td colspan="3">전화:<input type="text"></td>
 							</tr>
 							<tr>
 								<td>완료예정일<input type="date"></td>
-								<td>수주책임자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button type="button" class="btn btn-primary">조회</button></td>
+								<td>수주책임자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button class="btn" id="pjt_s">조회</button></td>
 								<td colspan="4">수주구분<select>
 										<option>            </option>
 										<option>민간사업</option>
@@ -158,13 +160,13 @@
 										<option>재건축</option>
 										<option>재개발</option>
 								</select> </td>
-								<td>관리 임원<input type="text" style="width: 50px; height: 20px; font-size: 12px"><button type="button" class="btn btn-primary">조회</button></td>
+								<td>관리 임원<input type="text" style="width: 50px; height: 20px; font-size: 12px"><button class="btn" id="pjt_s">조회</button></td>
 								<td colspan="4"></td>
 							</tr>
 							
 							
 							<tr>
-								<th>대지위치<button type="button" class="btn btn-primary">조회</button></th>
+								<th>대지위치<button class="btn" id="pjt_s">조회</button></th>
 								<th><input type="text"></th>
 								<th>건축물용도</th>
 								<th colspan="3" ><select>
@@ -489,7 +491,7 @@
 													</tr>
 													<tr>
 														<th colspan="2" scope="row" class="form-control">수행부서<input
-															type="text"><br>부서조회버튼
+															type="text"><br><button class="btn" id="pjt_s">조회</button>
 														</th>
 														
 														<td>추정계약액<input type="text" class="form-control">원
