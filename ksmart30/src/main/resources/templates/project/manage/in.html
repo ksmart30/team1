@@ -8,14 +8,34 @@
 			$(document).ready(function() {
 				// 프로젝트 검색 부분
 				$('#pjtSearchBtn').click(function(){
-					let pjtYear = $('#pjtYear').val();
-					let pjtBu = $('#pjtBu').val();
-					let pjtCd = $('#pjtCd').val();
-					let pjtRadioGroup = $('#pjtRadioGroup').val();
-					console.log(pjtYear);
-					console.log(pjtBu);
-					console.log(pjtCd);
-					console.log(pjtRadioGroup);
+					// 필드로 입력받은 값들을 변수에 저장
+					let PJT_CD = $('#pjtCd').val();
+					let DEPT_CD = $('#pjtDept').val();
+					let temp = $('#pjtYear').val();
+					let YEAR = temp.substring(2, 4);
+					console.log(PJT_CD);
+					console.log(DEPT_CD);
+					console.log(YEAR);
+
+					$.ajax({
+						// ajax로 "/project/manage/in" URI를 지정 POST방식으로 data를 보낸다.
+						url:'/project/manage/in',
+						type:'POST',
+						data:{PJT_CD:PJT_CD, DEPT_CD:DEPT_CD, YEAR:YEAR},
+						success:function(data){
+							$('#pjtList').empty();
+							$('#resultLength').empty();
+							for(let i=0; i<data.length; i++) {
+								$('#pjtList').append('<tr><td style="background-color:#fff9df">'+data[i].PJT_CD+'</td><td><a href="/project/manage/in" id="pjtOneBtn">'+data[i].PJT_NM+'</a></td></tr>');
+							}
+							$('#resultLength').append(data.length);
+						}
+					});
+				});
+				
+				// 하나의 프로젝트 선택시
+				$('#pjtOneBtn').click(function(){
+					
 				});
 				
 				// 용역계약서 입력 - 기본사항
@@ -31,16 +51,6 @@
 		                	$('#callbackRow').html(data);}
 		            	}
 					});
-					/* $(data).each(function(index,item){
-	                    $('#list').append('<tr>');
-	                    $('#list').append('<td><input type="checkbox" class="ck" value="'+item.no+'"></td>');
-	                    $('#list').append('<td>'+item.no+'</td>');
-	                    $('#list').append('<td>'+item.title+'</td>');
-	                    $('#list').append('<td>'+item.content+'</td>');
-	                    $('#list').append('<td>'+item.user+'</td>');
-	                    $('#list').append('<td>'+item.date+'</td>');
-	                    $('#list').append('</tr>');
-	                }); */
 				});
 				// 용역계약서 입력 - 기본사항 - 발주처 입력값
 				$('#ownerSaveBtn').click(function(){
@@ -76,13 +86,13 @@
 						부서
 					</td>
 					<td>
-						<select id="pjtBu">
-							<option value="0">전     사</option>
-							<option value="1">설계1본부</option>
-							<option value="2">설계2본부</option>
-							<option value="3">설계3본부</option>
-							<option value="4">설계4본부</option>
-							<option value="5">설계5본부</option>
+						<select id="pjtDept">
+							<option value="">전     사</option>
+							<option value="7530">설계1본부</option>
+							<option value="7630">설계2본부</option>
+							<option value="7730">설계3본부</option>
+							<option value="7830">설계4본부</option>
+							<option value="7930">설계5본부</option>
 						</select>
 					</td>
 				</tr>
@@ -135,30 +145,14 @@
 					<th width="70%">프로젝트명</th>
 				</tr>
 				</thead>
-				<tbody>
-				<tr>
-					<td style="background-color:#fff9df">
-						19003F
-					</td>
-					<td>
-						J 프로젝트
-					</td>
-				</tr>
-				<tr>
-					<td style="background-color:#fff9df">
-						19005
-					</td>
-					<td>
-						kmsart1팀
-					</td>
-				</tr>
+				<tbody id="pjtList">
 				</tbody>
 				<thead>
-				<tr>
-					<td colspan="2" style="background-color:#ffeeaa">
-						개수 : 2
-					</td>
-				</tr>
+					<tr>
+						<td colspan="2" style="background-color:#ffeeaa">
+							<b><span id="resultLength"></span></b>
+						</td>
+					</tr>
 				</thead>
 			</table>
 			<!-- 결과부분 end -->

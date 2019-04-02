@@ -22,9 +22,14 @@ public class ProjectManageRestController {
 	ProjectManageService projectManageService;
 	
 	//3.1.1 용역계약서 입력 처리
+	/* @brief	"http://localhost/project/manage/in" 주소분기(post방식)
+	 *			화면에서 입력한 값을 ajax로 값을 넘기고 받기 위함
+	 *			@return List<Map<String, Object>>
+	 */
 	@PostMapping("/project/manage/in")
-	public String projectManageIn() {
-		return "project/manage/in";
+	public List<Map<String, Object>> projectManageAdd(String PJT_CD, String DEPT_CD, String YEAR) {
+		System.out.println("RestController projectManageAdd 메서드 실행");
+		return projectManageService.businessManagerSearch(PJT_CD, DEPT_CD, YEAR);
 	}
 	
 	//3.1.1 용역계약서 발주처 입력 처리
@@ -101,11 +106,8 @@ public class ProjectManageRestController {
 	
 	//3.1.3 용역계약서 변경 조회
 	@PostMapping("/project/manage/change/search")
-	public List<Map<String, Object>> projectManageSearch(String PJT_CD) {
-		System.out.println("RestController projectManageSearch 메서드 실행");
-		List<Map<String, Object>> resilt = projectManageService.businessManagerSearch(PJT_CD);
-		System.out.println("result -> " + resilt);
-		return resilt;
+	public String projectManageSearch() {
+		return null;
 	}
 	
 	//3.1.4 용역계약서 검색(부서)
