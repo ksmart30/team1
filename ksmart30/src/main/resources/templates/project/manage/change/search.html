@@ -3,6 +3,27 @@
 	<th:block layout:fragment="customHead">
 		<meta charset="UTF-8">
 		<title>변경된 용역계약서 조회</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('#pjtSearchBtn').click(function(){
+					let PJT_CD = $('#pjtCd').val();
+					console.log(PJT_CD);
+
+					$.ajax({
+						url:'/project/manage/change/search',
+						type:'POST',
+						data:{PJT_CD:PJT_CD},
+						success:function(data){
+							$('#pjtList').empty();
+							for(let i=0; i<data.length; i++) {
+								$('#pjtList').append('<tr><td style="background-color:#fff9df">'+data[i].PJT_CD+'</td><td>'+data[i].PJT_NM+'</td></tr>');
+							}
+						}
+					});
+				});
+			});
+		</script>
 	</th:block>
 	<th:block layout:fragment="customBody">
 		<!-- 검색부분 start -->
@@ -58,23 +79,7 @@
 					<th width="30%">PJT코드</th><th>프로젝트명</th>
 				</tr>
 				</thead>
-				<tbody>
-				<tr>
-					<td style="background-color:#fff9df">
-						19005
-					</td>
-					<td>
-						ksmart1팀
-					</td>
-				</tr>
-				<tr>
-					<td style="background-color:#fff9df">
-						19009
-					</td>
-					<td>
-						bonobonoPorori
-					</td>
-				</tr>
+				<tbody id="pjtList">
 				</tbody>
 			</table>
 			<!-- 결과부분 end -->

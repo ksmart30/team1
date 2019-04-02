@@ -1,16 +1,26 @@
 /*
- * @file	ProjectManageController.java
+ * @file	ProjectManageRestController.java
  * @brief   용역계약서 RestController
  * @author  ksmart30 YDE
  */
 package com.cafe24.ksmart30.team01.project.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.cafe24.ksmart30.team01.project.service.ProjectManageService;
 
 @RestController
 public class ProjectManageRestController {
+	@Autowired
+	ProjectManageService projectManageService;
+	
 	//3.1.1 용역계약서 입력 처리
 	@PostMapping("/project/manage/in")
 	public String projectManageIn() {
@@ -87,6 +97,15 @@ public class ProjectManageRestController {
 	@PostMapping("/project/manage/change/giseong_del")
 	public String projectManageChangeGiseongDel() {
 		return "project/manage/change/giseong_del";
+	}
+	
+	//3.1.3 용역계약서 변경 조회
+	@PostMapping("/project/manage/change/search")
+	public List<Map<String, Object>> projectManageSearch(String PJT_CD) {
+		System.out.println("RestController projectManageSearch 메서드 실행");
+		List<Map<String, Object>> resilt = projectManageService.businessManagerSearch(PJT_CD);
+		System.out.println("result -> " + resilt);
+		return resilt;
 	}
 	
 	//3.1.4 용역계약서 검색(부서)

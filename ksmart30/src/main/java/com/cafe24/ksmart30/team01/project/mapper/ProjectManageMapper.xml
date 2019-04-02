@@ -9,7 +9,7 @@
 -->
 <mapper namespace="com.cafe24.ksmart30.team01.project.mapper.ProjectManageMapper">
 	<!-- 용역계약서 입력을 위해 T_SM3000(전체 프로젝트 대장)에서 전체 프로젝트 정보를 조회한다 -->
-	<select id="businessManageSelect" resultType="java.util.Map">
+	<select id="businessManageSelect" parameterType="String" resultType="java.util.Map">
 		SELECT
 			A.PJT_CD,
 			A.PJT_NM,
@@ -25,5 +25,6 @@
 			T_P11000 B
 		WHERE
 			A.PJT_CD   = B.PJT_CD
+		AND A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
 	</select>
 </mapper>
