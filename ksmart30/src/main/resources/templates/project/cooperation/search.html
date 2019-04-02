@@ -5,6 +5,51 @@
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
 	<title>입력된 외주계약서 검색</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script>
+$(document).ready(function(){
+   
+    // 서치
+    $('#cooperationSearch').on('click',function(){
+    	var inDeptCd = $('#inDeptCd').val(); //부서코드
+    	var inContractDate = $('#inContractDate').val(); //년도검색 4 자리
+    	var inPjtCd = $('#inPjtCd').val(); // 프로젝트코드
+    	var inPjtNm = $('#inPjtNm').val(); // 프로젝트네임
+    	var inOutItem = $('#inOutItem').val(); // 외주부문(외주분야)
+    	var inCustNm = $('#inCustNm').val(); // 외주처명(발주처,거래처)
+    	var inContractNm = $('#inContractNm').val(); // 용역명(외주계약명)
+    	var inBuildType = $('#inBuildType').val(); // 건축물 유형
+        $.ajax({
+            url:'/project/cooperation/search',//호출할 메소드
+            type:'POST',//송신 방식 
+            data:{inDeptCd:inDeptCd,inContractDate:inContractDate,
+            		inPjtCd:inPjtCd,inPjtNm:inPjtNm,inOutItem:inOutItem,
+            		inCustNm:inCustNm,inContractNm:inContractNm,inBuildType:inBuildType},//넘길 데이터
+            success:function(data){//받은 데이터
+            	console.log(data);
+                $('#searchBody').empty();//삭제 
+                $(data).each((index,item)=>{
+                	$('#searchBody').append('<tr>');//append추가
+                	$('#searchBody').append('<td style="background-color: #fff9df">'+item.DEPT_NM+'</td>');//부서명
+                	$('#searchBody').append('<td>['+item.PJT_CD+']'+item.PJT_NM+'</td>');// 프로젝트 코드 프로젝트명
+                	$('#searchBody').append('<td>'+item.BUILD_TYPE_NM+'</td>');//건축물유형(빌드타입명)
+                	$('#searchBody').append('<td>'+item.PJT_E_GBN_NM+'</td>'); //(종료구분)진행여부
+                	$('#searchBody').append('<td>'+item.PJT_CONTRACT_PER+'</td>');//지분율
+                	$('#searchBody').append('<td>'+item.G_YAREA_P+'</td>'); //연면적 평
+                	$('#searchBody').append('<td>'+item.G_YAREA_M+'</td>');	//연면적 평방미터
+                	$('#searchBody').append('<td>'+item.CUST_NM+'</td>'); // 외주처 (발주처,거래처)
+                	$('#searchBody').append('<td>'+item.OUT_ITEM_NM+'</td>'); // 부문(외주분야)
+                	$('#searchBody').append('<td>'+item.CONTRACT_NM+'</td>'); //용역명
+                	$('#searchBody').append('<td>'+item.CONTRACT_DATE+'</td>');//계약일자
+                	$('#searchBody').append('<td>'+item.CONTRACT_AMT+'</td>');//계약금액
+                	$('#searchBody').append('</tr>');
+                });              
+            }
+        });
+    });
+    
+});
+</script>
 </th:block>
 <th:block layout:fragment="customBody">
 
@@ -13,132 +58,148 @@
 			<h2>
 				<i class="fa fa-money"></i> 외주계약서 검색
 			</h2>
-			<ul class="nav navbar-right panel_toolbox">
-				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-				</li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-expanded="false"><i
-						class="fa fa-wrench"></i></a>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Settings 1</a></li>
-						<li><a href="#">Settings 2</a></li>
-					</ul></li>
-				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-			</ul>
 			<div class="clearfix"></div>
 		</div>
 		<div class="x_content">
 
 			<!-- 검색 폼 -->
 			<h3>★ 검색 조건</h3>
-			<form id="demo-form" action="/project/cooperation/pjt_hyunhwang"
-				method="post">
-
+				<div align="right" style="right: 100% ">
+				<button class="btn" id="cooperationSearch">조회</button>
+				<button class="btn" id="cooperationOutPrint">출력</button>
+				</div>
 				<table class="table">
 					<tr>
-						<td width="150"><label>⊙ 년도 : </label></td>
-						<td>
-							<div class="col-md-6 col-sm-12 col-xs-12 ">
-								<input type="number" name="yyyy" class="form-control ">
+						<td width="7%"><label>⊙ 년도 : </label></td>
+						<td width="15%">
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="number" name="inContractDate" id="inContractDate" class="form-control ">
 							</div>
 						</td>
-						<td><label>⊙ 부문 :</label></td>
+						<td width="7%"><label>⊙ 부문 :</label></td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
+								<select class="form-control" name="inOutItem" id=inOutItem>
 									<option value=""></option>
-									<option value="1">건축</option>
-									<option value="2">기계</option>
-									<option value="3">전기</option>
-									<option value="1">토목</option>
-									<option value="2">조경</option>
-									<option value="3">구조</option>
-									<option value="3">전경</option>
-									<option value="1">교통영향평가</option>
-									<option value="2">기타인증</option>
-									<option value="3">지질조사</option>
-									<option value="1">측량</option>
-									<option value="2">흙막이</option>
-									<option value="3">특수디자인</option>
-									<option value="3">소방</option>
-									<option value="3">환경영향평가</option>
-									<option value="3">재해영향평가</option>
-									<option value="1">VE/LCC</option>
-									<option value="2">인테리어</option>
-									<option value="3">친환경인증</option>
-									<option value="1">타당성검토</option>
-									<option value="2">교통성검토</option>
-									<option value="3">사전환경성검토</option>
-									<option value="3">사전재해영샹향성검토</option>
-									<option value="1">사전경관분석검토</option>
-									<option value="2">기타</option>
-									<option value="3">프리랜서</option>
-									<option value="3">예비비</option>
+									<option value="01">건축</option>
+									<option value="02">기계</option>
+									<option value="03">전기</option>
+									<option value="04">토목</option>
+									<option value="05">조경</option>
+									<option value="06">구조</option>
+									<option value="07">전경</option>
+									<option value="08">교통영향평가</option>
+									<option value="09">기타인증</option>
+									<option value="10">지질조사</option>
+									<option value="11">측량</option>
+									<option value="12">흙막이</option>
+									<option value="13">특수디자인</option>
+									<option value="14">소방</option>
+									<option value="15">환경영향평가</option>
+									<option value="16">재해영향평가</option>
+									<option value="17">VE/LCC</option>
+									<option value="18">인테리어</option>
+									<option value="19">친환경인증</option>
+									<option value="20">타당성검토</option>
+									<option value="21">교통성검토</option>
+									<option value="22">사전환경성검토</option>
+									<option value="23">사전재해영샹향성검토</option>
+									<option value="24">사전경관분석검토</option>
+									<option value="29">기타</option>
+									<option value="30">프리랜서</option>
+									<option value="99">예비비</option>
 								</select>
 							</div>
 						</td>
-						<td><label>⊙ 건축물 유형 :</label></td>
-					</tr>
-
-					<tr>
-						<td width="150"><label>⊙ 건축물 용도 : </label></td>
+						<td width="10%"><label>⊙ 건축물유형 :</label></td>
 						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
-									<option value="">ALL</option>
+						<div class="col-md-8 col-sm-12 col-xs-12 ">
+								<select class="form-control" name="inBuildType" id="inBuildType">
+									<option value=""></option>
 									<option value="1">단독주택</option>
 									<option value="2">공동주택</option>
 									<option value="3">제1종 근린생활시설</option>
-									<option value="1">제1종 근린생활시설</option>
-									<option value="2">문화 및 집회시설</option>
-									<option value="3">판매시설</option>
-									<option value="3">의료시설</option>
+									<option value="4">제2종 근린생활시설</option>
+									<option value="5">문화 및 집회시설</option>
+									<option value="6">판매시설</option>
+									<option value="7">의료시설</option>
+									<option value="8">교육연구시설</option>
+									<option value="9">운동시설</option>
+									<option value="10">업무시설</option>
+									<option value="11">숙박시설</option>
+									<option value="12">위락시설</option>
+									<option value="13">공  장</option>
+									<option value="14">창고시설</option>
+									<option value="15">위험물저장 및 처리시설</option>
+									<option value="16">자동차관련시설</option>
+									<option value="17">동물 및 식물관련시설</option>
+									<option value="18">분뇨·쓰레기처리시설</option>
+									<option value="19">교정 및 군사시설</option>
+									<option value="20">묘지관련시설</option>
+									<option value="21">관광휴게시설</option>
+									<option value="22">주거복합</option>
+									<option value="23">지구단위계획</option>
+									<option value="24">종교시설</option>
+									<option value="25">운수시설</option>
+									<option value="26">노유자시설</option>
+									<option value="27">수련시설</option>
+									<option value="28">방송통신시설</option>
+									<option value="29">발전시설</option>
+									<option value="30">공공업무시설</option>
+									<option value="31">복합시설</option>
+									<option value="99">기타</option>
+								
 								</select>
 							</div>
 						</td>
-						<td width="100"><label>⊙ 연면적 : </label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control">
-							</div>
-						</td>
-						<td width="80"><label>평 이상</label></td>
-						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control">
-							</div>
-						</td>
-						<td width="80"><label>평 이하</label></td>
 					</tr>
 
 					<tr>
-						<td><label for="gex3">⊙ 수주 구분 : </label></td>
+						<td><label>⊙ 부서 :</label></td>
 						<td>
-							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
-									<option value="">ALL</option>
-									<option value="1">발주의뢰</option>
-									<option value="2">저가심의</option>
-									<option value="3">적격심사</option>
-									<option value="1">현상설계</option>
-									<option value="2">지명현상</option>
-									<option value="3">TK</option>
-									<option value="3">기술제안</option>
+						<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<select class="form-control" name="inDeptCd" id="inDeptCd">
+									<option value=""></option>
+									<option value="7500">설계1본부</option>
+									<option value="7600">설계2본부</option>
+									<option value="7700">설계3본부</option>
+									<option value="7800">설계4본부</option>
+									<option value="7900">설계5본부</option>
 								</select>
 							</div>
 						</td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td width="150"><label>⊙ 외주처 : </label></td>
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="text" name="inCustNm" class="form-control" id="inCustNm">
+							</div>
+						</td>
+						<td width="100"><label>⊙ 용역명 : </label></td>
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="text" name="inContractNm" class="form-control" id="inContractNm">
+							</div>
+						</td>
+						
+					</tr>
+
+					<tr>
+						<td><label for="gex3">⊙ 코드명 : </label></td>
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="text" name="inPjtCd" class="form-control" id="inPjtCd">
+							</div>
+						</td>
+						<td><button class="btn" id="pjtCdSearch">검색</button></td>
+						<td ><div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="text" name="inPjtNm" class="form-control" id="inPjtNm">
+							</div></td>
+						
 						<td></td>
 						<td></td>
 					</tr>
 				</table>
 
-
-
-
-			</form>
 			<!-- 검색폼 끝 -->
 
 		</div>
@@ -147,74 +208,32 @@
 	<!-- <div class="table-responsive"> -->
 	<div
 		style="overflow: scroll; width: 100%; height: 100%; padding: 10px; background-color:;">
-		<table class="table">
+		<table class="table table-striped jambo_table bulk_action">
 			<thead>
 
 				<tr>
-					<th>프로젝트</th>
-					<th>건축물 용도</th>
-					<th>수주구분</th>
-					<th>연면적(평)</th>
-					<th>계약일자</th>
-					<th>계약금액</th>
-					<th>매출액</th>
-					<th colspan="26">외주비</th>
-					<th colspan="3">모형비</th>
-					<th rowspan="2">외주합계</th>
+					<th rowspan="2" width="100">부서명</th>
+					<th rowspan="2" width="150">프로젝트명</th>
+					<th rowspan="2" width="80">건축물유형</th>
+					<th rowspan="2" width="100">종료구분</th>
+					<th rowspan="2" width="70">지분율</th>
+					<th colspan="2">연면적</th>
+					<th rowspan="2" width="200">외주처</th>
+					<th rowspan="2" width="60">부문</th>
+					<th rowspan="2" width="250">용역명</th>
+					<th rowspan="2" width="60">계약일자</th>
+					<th rowspan="2" width="90">계약금액</th>
 				</tr>
 				<tr>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th>건축</th>
-					<th>기계</th>
-					<th>전기</th>
-					<th>토목</th>
-					<th>조경</th>
-					<th>구조</th>
-					<th>견적</th>
-					<th>교통영향평가</th>
-					<th>기타인증</th>
-					<th>지질</th>
-					<th>측량</th>
-					<th>흙막이</th>
-					<th>특수디자인</th>
-					<th>소방</th>
-					<th>환경영향</th>
-					<th>재해영향</th>
-					<th>YE_LCC</th>
-					<th>인테리어</th>
-					<th>친환경인증</th>
-					<th>타당성검토</th>
-					<th>교통성검토</th>
-					<th>사전환경검토</th>
-					<th>사전재해영향성</th>
-					<th>사전경관분석</th>
-					<th>기타</th>
-					<th>계</th>
-					<th>모형하도급</th>
-					<th>모형비</th>
-					<th>계</th>
+					<th width="90">평</th>
+					<th width="90">㎡</th>			
 				</tr>
 
 
 			</thead>
 
-			<tbody>
-				<!--   <tr class="even pointer">
-                            <td class=" ">121000040</td>
-                            <td class=" ">May 23, 2014 11:47:56 PM </td>
-                            <td class=" ">121000210 <i class="success fa fa-long-arrow-up"></i></td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$7.45</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                          </tr> -->
+			<tbody id="searchBody">
+		
 
 			</tbody>
 		</table>

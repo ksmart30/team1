@@ -9,19 +9,19 @@ public class ProjectCooperationManageController {
 	
 	//3.1.1 외주계약서 입력 화면
 	@GetMapping("project/cooperation/in")
-	public String projectLastSearch() {		
+	public String projectCooperationIn() {		
 		return "/project/cooperation/in";		
 	}
 	
 	//3.1.2 입력된 외주계약서 검색
 	@GetMapping("/project/cooperation/search")
-	public String projectCooperationList() {		
+	public String projectCooperationSearch() {		
 		return "project/cooperation/search";
 	}
 		
 	//3.2.1 용도별 분석현황
 	@GetMapping("/project/cooperation/dragon_hyunhwang")
-	public String projectCooperationDragonHyunhwang() {		
+	public String projectCooperationDragon_hyunhwang() {		
 		return "project/cooperation/dragon_hyunhwang";		
 	}
 	
