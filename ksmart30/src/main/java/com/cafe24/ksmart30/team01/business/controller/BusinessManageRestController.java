@@ -21,7 +21,7 @@ public class BusinessManageRestController {
 	public List<Map<String,Object>> businessManageList(BusinessMarketVO vo) {
 		System.out.print("사업수행결정서list 검색 BusinessManageRestController 실행");
 		System.out.print("BusinessMarketVO 담긴값 : "+vo);
-		List<Map<String,Object>> re = businessManageService.businessManageSelect();
+		List<Map<String,Object>> re = businessManageService.businessManageSelect(vo);
 		
 		return re;
 	}

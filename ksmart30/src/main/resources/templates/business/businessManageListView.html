@@ -3,8 +3,12 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layout/main">
 <th:block layout:fragment="customHead">
+
 	<meta charset="UTF-8">
 	<title>2.1.4 사업성검토 List</title>
+	<th:block th:include="layout/customHead"></th:block>
+	</th:block>
+	<th:block layout:fragment="customBody">
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script>
 $(document).ready(function(){	
@@ -12,23 +16,26 @@ $(document).ready(function(){
 	//검색
 	$('#businessManageSearch').on('click',function(){
 		
+		var BUSI_YY = $('#BUSI_YY').val(); //년도
+		var UP_SU = $('#UP_SU').val();	   //지상층
+		var YAREA_P = $('#YAREA_P').val(); //연면적
 		//var inDeptCd = $('#inDeptCd').val(); //예 /project/cooperation/search
 		$.ajax({
 			url:'/business/manage/list',//호출할 메소드
             type:'POST',//송신 방식 
-           // data:{},//넘길 데이터
+            data:{BUSI_YY:BUSI_YY,UP_SU:UP_SU,YAREA_P:YAREA_P},//넘길 데이터
             success:function(data){//받은 데이터
             	console.log(data);
                 $('#searchBody').empty();//삭제 
                 $(data).each((index,item)=>{
-                	$('#searchBody').append('<tr>');//
-                	$('#searchBody').append('<td>'+item.PJT_CD+'</td>');// 
-                	$('#searchBody').append('<td>'+item.PJT_NM+'</td>');//
-                	$('#searchBody').append('<td>'+item.CUST_NM+'</td>'); //
-                	$('#searchBody').append('<td>'+item.UP_SU+'</td>'); //
-                	$('#searchBody').append('<td>'+item.DOWN_SU+'</td>'); //
-                	$('#searchBody').append('<td>'+item.AREA_P+'</td>'); //
-                	$('#searchBody').append('<td>'+item.YAREA_P+'</td>'); //
+                	$('#searchBody').append('<tr>');
+                	$('#searchBody').append('<td>'+item.PJT_CD+'</td>');// 프로젝트코드
+                	$('#searchBody').append('<td>'+item.PJT_NM+'</td>');// 프로젝트이름
+                	$('#searchBody').append('<td>'+item.CUST_NM+'</td>');//발주처
+                	$('#searchBody').append('<td>'+item.UP_SU+'</td>');  //지상층
+                	$('#searchBody').append('<td>'+item.DOWN_SU+'</td>'); //지하
+                	$('#searchBody').append('<td>'+item.AREA_P+'</td>'); //대지면적
+                	$('#searchBody').append('<td>'+item.YAREA_P+'</td>'); //연면적평
                 	$('#searchBody').append('</tr>');
                 });              
             }
@@ -50,15 +57,14 @@ $(document).ready(function(){
 		<table class="table">
 
 			<tr>
-				<td width="250"><label>⊙ 년도 : </label><input type="date"></td>
-				<td><button class="btn" id="businessManageSearch">조회</button></td>
+				<td width="250"><label>⊙ 년도 : </label><input type="number"></td>
+				<td><button class="btn" id="BUSI_YY" name="BUSI_YY" >조회</button></td>
 			</tr>
 			
 			<tr>
 				<td width="10"><label>⊙ 연면적(평) :</label>					
-						<td><input type="text" name="test" class="form-control"></td>
-						<td>~</td>
-						<td><input type="text" name="test" class="form-control"></td>
+						<td><input type="number" name="UP_SU" id="UP_SU" class="form-control"></td>
+
 				</td>
 		
 
@@ -66,9 +72,8 @@ $(document).ready(function(){
 
 				<td><label>⊙지상층 : </label></td>
 				<td>
-						<td><input type="text" name="test" class="form-control"></td>
-						<td>~</td>
-						<td><input type="text" name="test" class="form-control"></td>
+						<td><input type="number" name="YAREA_P" id="YAREA_P" class="form-control"></td>
+
 					</div>
 				</td>
 		</table>
@@ -123,16 +128,14 @@ $(document).ready(function(){
                         <tbody id="searchBody">
                           <tr class="even pointer">
                             <td class="a-center ">                              
-                            </td>
-
-                          
-                          
+                            </td>                        
                         </tbody>
                       </table>
                     </div>
-							
-						
                   </div>
                 </div>
-                </th:block>
+                	</th:block>
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
 </html>

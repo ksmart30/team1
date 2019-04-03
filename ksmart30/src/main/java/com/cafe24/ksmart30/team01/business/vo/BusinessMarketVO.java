@@ -2,9 +2,9 @@ package com.cafe24.ksmart30.team01.business.vo;
 
 public class BusinessMarketVO {
 	
-	private String BUSI_YY;
-	private long UP_SU;
-	private long YAREA_P;
+	private String BUSI_YY;  //년도
+	private long UP_SU;      //지상층수
+	private long YAREA_P;	 //연면적
 	
 	public String getBUSI_YY() {
 		return BUSI_YY;

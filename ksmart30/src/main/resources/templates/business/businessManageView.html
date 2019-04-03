@@ -4,9 +4,10 @@
 	layout:decorator="layout/main">
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
-	<title>사업수행결정서 승인</title>
-</th:block>
-<th:block layout:fragment="customBody">
+	<title>2.1.1 사업수행 결정서 검색 List</title>
+		<th:block th:include="layout/customHead"></th:block>
+	</th:block>
+	<th:block layout:fragment="customBody">
 	<!-- 검색부분 start -->
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="x_panel">
@@ -33,7 +34,9 @@
 						<td><div>
 								<input type="text">
 							</div></td>
+		
 					</tr>
+					
 				</table>
 				<!-- 검색부분 end -->
 				<div class="x_title"></div>
@@ -66,7 +69,7 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>
-							사업수행결정서 승인 <small></small>
+							사업수행결정서 입력 <small></small>
 						</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -482,14 +485,14 @@
 													<tr>
 														<th><TEXTAREA> </TEXTAREA></th>
 														
-														<td>PM<input type="text"><br><button class="btn" id="pjt_s">검색</button>
+														<td>PM<input type="text"><br>직원조회버튼
 														</td>
-														<td>PD<input type="text"><button class="btn" id="pjt_s">검색</button>
+														<td>PD<input type="text">직원조회버튼
 														</td>
 													</tr>
 													<tr>
 														<th colspan="2" scope="row" class="form-control">수행부서<input
-															type="text"><br><button class="btn" id="pjt_s">검색</button>
+															type="text"><br><button class="btn" id="pjt_s">조회</button>
 														</th>
 														
 														<td>추정계약액<input type="text" class="form-control">원
@@ -528,109 +531,13 @@
 				</div>
 			</div>
 		</div>
-		
-		<div class="col-md-6 col-sm-6 col-xs-12">
-	<div class="x_panel">
-	<label for="ex3">◎ 경영지원실</label><br>
-		<table>
-			<tbody><tr>
-				<td width="40%">
-					<label>PM</label>
-				</td>
-				<td>
-					<input type="text"><button class="btn" id="pjt_s">검색</button>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>PD</label>
-				</td>
-				<td>
-					<input type="text"><button class="btn" id="pjt_s">검색</button>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>수행부서</label>
-				</td>
-				<td>
-					<input type="text"><button class="btn" id="pjt_s">검색</button>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>처리기한</label>
-				</td>
-				<td>
-					<input type="date">
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>추정계약액</label>
-				</td>
-				<td>
-					<input type="text">원
-				</td>
-			</tr>
-		</tbody></table>
-    </div>
-	</div>
-	
-	<div class="col-md-6 col-sm-6 col-xs-12">
-	<div class="x_panel">
-	<label for="ex3"></label><br>
-		<table>
-			<tbody><tr rowspan="2">
-				<td>
-					업무범위/수준
-				</td>
-				<td>A</td>
-				<td>B</td>
-				<td>C</td>
-				<td>D</td>
-				<td>X</td>
-			</tr>
-			<tr>
-			<td></td>
-			<td><input type="checkbox"></td>
-			<td><input type="checkbox"></td>
-			<td><input type="checkbox"></td>
-			<td><input type="checkbox"></td>
-			<td><input type="checkbox"></td>
-			</tr>
-			<tr>
-				<td>
-					HOLDING
-				</td>
-				<td colspan="5"><input type="checkbox"></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>
-					CANCEL
-				</td>
-				<td colspan="5"><input type="checkbox">공문발송</td>
-				<td></td>
-				<td><input type="checkbox">Drop</td>
-				<td></td>
-				<td><button type="button" class="btn btn-primary">승인처리</button></td>
-			</tr>
-		</tbody></table>
-    </div>
-    <span>공동수급일경우에만 수급지분을 입력하세요.</span>
-	</div>
+
 		</div>
 	</div>
-</div>
+	</div>
 	<!-- 프로젝트 end -->
-	
-	
-	
-	
-	
-</th:block>
+	</th:block>
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
 </html>
