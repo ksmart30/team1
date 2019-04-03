@@ -5,6 +5,7 @@
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
 	<title>입력된 외주계약서 검색</title>
+	<th:block th:include="layout/customHead"></th:block>
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script>
 $(document).ready(function(){
@@ -29,20 +30,19 @@ $(document).ready(function(){
             	console.log(data);
                 $('#searchBody').empty();//삭제 
                 $(data).each((index,item)=>{
-                	$('#searchBody').append('<tr>');//append추가
-                	$('#searchBody').append('<td style="background-color: #fff9df">'+item.DEPT_NM+'</td>');//부서명
-                	$('#searchBody').append('<td>['+item.PJT_CD+']'+item.PJT_NM+'</td>');// 프로젝트 코드 프로젝트명
-                	$('#searchBody').append('<td>'+item.BUILD_TYPE_NM+'</td>');//건축물유형(빌드타입명)
-                	$('#searchBody').append('<td>'+item.PJT_E_GBN_NM+'</td>'); //(종료구분)진행여부
-                	$('#searchBody').append('<td>'+item.PJT_CONTRACT_PER+'</td>');//지분율
-                	$('#searchBody').append('<td>'+item.G_YAREA_P+'</td>'); //연면적 평
-                	$('#searchBody').append('<td>'+item.G_YAREA_M+'</td>');	//연면적 평방미터
-                	$('#searchBody').append('<td>'+item.CUST_NM+'</td>'); // 외주처 (발주처,거래처)
-                	$('#searchBody').append('<td>'+item.OUT_ITEM_NM+'</td>'); // 부문(외주분야)
-                	$('#searchBody').append('<td>'+item.CONTRACT_NM+'</td>'); //용역명
-                	$('#searchBody').append('<td>'+item.CONTRACT_DATE+'</td>');//계약일자
-                	$('#searchBody').append('<td>'+item.CONTRACT_AMT+'</td>');//계약금액
-                	$('#searchBody').append('</tr>');
+                	$('#searchBody').append(
+                		'<tr><td style="background-color: #fff9df">'+item.DEPT_NM+'</td><td>['//부서명
+                		+item.PJT_CD+']'+item.PJT_NM+'</td><td>'// 프로젝트 코드 프로젝트명
+                		+item.BUILD_TYPE_NM+'</td><td>'//건축물유형(빌드타입명)
+                		+item.PJT_E_GBN_NM+'</td><td>'//(종료구분)진행여부
+                		+item.PJT_CONTRACT_PER+'</td><td>'//지분율
+                		+item.G_YAREA_P+'</td><td>'//연면적 평
+                		+item.G_YAREA_M+'</td><td>'//연면적 평방미터
+                		+item.CUST_NM+'</td><td>'// 외주처 (발주처,거래처)
+                		+item.OUT_ITEM_NM+'</td><td>'//부문(외주분야)
+                		+item.CONTRACT_NM+'</td><td>'//용역명
+                		+item.CONTRACT_DATE+'</td><td>'//계약일자
+                		+item.CONTRACT_AMT+'</td></tr>');//append추가
                 });              
             }
         });
@@ -190,7 +190,7 @@ $(document).ready(function(){
 								<input type="text" name="inPjtCd" class="form-control" id="inPjtCd">
 							</div>
 						</td>
-						<td><button class="btn" id="pjtCdSearch">검색</button></td>
+						<td><button class="btn" id="pjtCdSearch">PJT검색</button></td>
 						<td ><div class="col-md-12 col-sm-12 col-xs-12 ">
 								<input type="text" name="inPjtNm" class="form-control" id="inPjtNm">
 							</div></td>
@@ -212,21 +212,21 @@ $(document).ready(function(){
 			<thead>
 
 				<tr>
-					<th rowspan="2" width="100">부서명</th>
-					<th rowspan="2" width="150">프로젝트명</th>
-					<th rowspan="2" width="80">건축물유형</th>
-					<th rowspan="2" width="100">종료구분</th>
-					<th rowspan="2" width="70">지분율</th>
+					<th rowspan="2" >부서명</th>
+					<th rowspan="2" >프로젝트명</th>
+					<th rowspan="2" >건축물유형</th>
+					<th rowspan="2" >종료구분</th>
+					<th rowspan="2" >지분율</th>
 					<th colspan="2">연면적</th>
-					<th rowspan="2" width="200">외주처</th>
-					<th rowspan="2" width="60">부문</th>
-					<th rowspan="2" width="250">용역명</th>
-					<th rowspan="2" width="60">계약일자</th>
-					<th rowspan="2" width="90">계약금액</th>
+					<th rowspan="2" >외주처</th>
+					<th rowspan="2" >부문</th>
+					<th rowspan="2" >용역명</th>
+					<th rowspan="2" >계약일자</th>
+					<th rowspan="2" >계약금액</th>
 				</tr>
 				<tr>
-					<th width="90">평</th>
-					<th width="90">㎡</th>			
+					<th >평</th>
+					<th >㎡</th>			
 				</tr>
 
 
@@ -243,4 +243,7 @@ $(document).ready(function(){
 
 
 </th:block>
+<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
 </html>

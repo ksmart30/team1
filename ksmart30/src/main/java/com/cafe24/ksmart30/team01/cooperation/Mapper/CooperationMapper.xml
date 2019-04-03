@@ -2,8 +2,12 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cafe24.ksmart30.team01.cooperation.Mapper.ProjectCooperationManageMapper">
-	<select id="cooperationList" parameterType="com.cafe24.ksmart30.team01.cooperation.vo.CooperationSearchRequestVo" resultType="java.util.Map">
+<mapper namespace="com.cafe24.ksmart30.team01.cooperation.Mapper.CooperationMapper">
+
+ <!-- 외주관리 - 외주계약서 관리 - 외주계약서 검색 쿼리 -->
+	<select id="cooperationList" 
+		parameterType="com.cafe24.ksmart30.team01.cooperation.vo.CooperationSearchRequestVo" 
+		resultType="java.util.Map">
 		SELECT 
 			A.* 
 		FROM 
@@ -42,7 +46,7 @@
     		FROM 
     			T_P12000 A, <!-- 외주계약서 -->
          		T_AC0300 B,	<!-- 발주처 -->
-         		(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '130') D,<!-- 지역  -->
+         		(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '130') D,<!-- 종료구문(기성단계?)  -->
          		T_SC1010 E, <!-- 부서 -->
          		(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '160') F,<!-- 부문 -->
          		T_P11000 G <!-- 프로제트 대장 -->
@@ -53,7 +57,7 @@
 	     	 AND 
 	     	 	A.DEPT_CD  *= E.DEPT_CD <!-- 부서코드 -->
 	     	 AND 
-	     	 	A.OUT_ITEM *= F.LEVEL2_CD <!-- 종료구분(기성단계?) 코드  -->
+	     	 	A.OUT_ITEM *= F.LEVEL2_CD <!-- 부문 코드  -->
 	     	 AND 
 	     	 	A.PJT_CD   *= G.PJT_CD <!-- 프로젝트 코드 -->
   			) A,
@@ -87,5 +91,27 @@
  			A.OUT_CORP
 
 	</select>
-
+<!-- 외주관리 - 외주계약서 관리 - 외주계약서 검색 쿼리 -->
+	<select id="cooperationInPJTSelect"
+		parameterType="String"
+		resultType="java.util.Map">
+	<!--입력 위한 PJT별 용역 역계약서 검색-->
+		SELECT 
+			 C.LEVEL2_NM as OUT_ITEM_NM <!-- 부문 -->
+			,B.CUST_NM as CUST_NM <!-- 외주처 -->
+		 	,A.contract_amt as CONTRACT_AMT <!-- 계약액 -->
+		from 
+			 T_P12000 A <!-- 외주계약서  -->
+			,T_AC0300 B <!-- 계약처(외주처) -->
+			,(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '160')C <!-- 부문  -->
+		WHERE 
+			A.out_corp *= B.CUST_CD
+			and
+			A.OUT_ITEM *= C.LEVEL2_CD
+			and
+			a.pjt_cd LIKE '%'+#{PJT_CD}+'%'
+		ORDER BY
+			OUT_ITEM
+	</select>
+	
 </mapper>

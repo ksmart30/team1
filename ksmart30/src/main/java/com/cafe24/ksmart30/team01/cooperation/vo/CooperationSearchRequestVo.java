@@ -1,14 +1,15 @@
+
 package com.cafe24.ksmart30.team01.cooperation.vo;
 
 public class CooperationSearchRequestVo {
-	String inDeptCd;
-	String inContractDate;
-	String inPjtCd;
-	String inPjtNm;
-	String inOutItem;
-	String inCustNm;
-	String inContractNm;
-	String inBuildType;
+	private String inDeptCd;
+	private String inContractDate;
+	private String inPjtCd;
+	private String inPjtNm;
+	private String inOutItem;
+	private String inCustNm;
+	private String inContractNm;
+	private String inBuildType;
 	public String getInDeptCd() {
 		return inDeptCd;
 	}
