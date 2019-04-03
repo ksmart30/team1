@@ -11,15 +11,15 @@ public class ClientController {
 
 	
 	//0.1 거래처코드 등록
-	@GetMapping("/baseInfo/ClientService/in")
-	public String baseInfoClientIn() {
-		return "baseInfo/client/in";
+	@GetMapping("/baseInfo/clientView")
+	public String clientView() {
+		return "baseInfo/clientView";
 	}
 	
 	//0.2 거래처코드 리스트 출력
-	@GetMapping("/baseinfo/ClientService/list")
-	public String baseInfoClientList() {
-		return "baseInfo/ClientService/list";
+	@GetMapping("/baseInfo/clientListView")
+	public String clientListView() {
+		return "baseInfo/clientListView";
 	}
 	
 	

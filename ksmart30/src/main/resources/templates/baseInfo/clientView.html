@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>거래처코드 등록</title>
+	<th:block th:include="layout/customHead"></th:block>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script>
+	$(document).ready(function(){
+		
+		//왼쪽 거래처검색화면에서 검색button이 클릭
+		$('#clientSearch').on('click',function(){  
+			var BUSI_TYPE = $('#BUSI_TYPE').val();//고객구분
+			var CUST_NM = $('#CUST_NM').val();//고객명
+			var CUST_CD = $('#CUST_CD').val(); //사업자등록번호 3가지 검색조건에 맞는 
+	        $.ajax({
+	            url:'/baseInfo/Client/in', //호출할 메소드 호출 
+	            type:'POST',//송신 POST 방식
+	            data:{BUSI_TYPE:BUSI_TYPE,CUST_NM:CUST_NM,CUST_CD:CUST_CD},//넘길 데이터(조건)
+	            success:function(data){//받은 데이터
+	            	console.log(data);
+	                $('#searchBody').empty();//삭제 
+	                $(data).each((index,item)=>{//반복문으로 데이터값이 있는 만큼 추가
+	                	$('#searchBody').append('<tr>');//append추가
+	                	$('#searchBody').append('<td style="background-color: #fff9df">'+item.cust_CD+'</td>');//사업자 등록번호
+	                	$('#searchBody').append('<td>'+item.cust_NM+'</td>');// 거래처명
+	                	$('#searchBody').append('</tr>');
+	                });              
+	            }
+	        });
+			
+		})
+		
+	});
+	
+	</script>
+</th:block>
+<th:block layout:fragment="customBody">
+
+	<!-- 검색부분 start -->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">
+				<label for="ex3">검색조건</label><br>
+				<table>
+					<tr>
+						<td>고객구분</td>
+						<td><select id="BUSI_TYPE">
+								<option value="">ALL</option>
+								<option value="1">건설사</option>
+								<option value="2">시행사</option>
+								<option value="3">공사/공단</option>
+								<option value="4">정부기관</option>
+								<option value="5">건축설계사무소</option>
+								<option value="6">외주협력업체</option>
+								<option value="7">조합(재개발,재건축)</option>
+						</select></td>
+						<!-- <td>
+						<input type="number">
+					</td> -->
+					</tr>
+					<tr>
+						<td>고객명</td>
+						<td><input type="text" id="CUST_NM"></td>
+					</tr>
+					<tr>
+						<td>사업자등록번호</td>
+						<td><input type="number" id="CUST_CD"></td>
+						<td><button ID="clientSearch">검색</button></td>
+					</tr>
+				</table>
+				<!-- 검색부분 end -->
+
+				<div class="x_title"></div>
+				<!-- 결과부분 start -->
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th width="30%">사업자등록번호</th>
+							<th>고객명</th>
+						</tr>
+					</thead>
+					<tbody id="searchBody">
+						<tr>
+							<td style="background-color: #fff9df">1370324950</td>
+							<td>(주)가우디자인</td>
+						</tr>
+						<tr>
+							<td style="background-color: #fff9df">12345647</td>
+							<td>(주)건일엠이씨</td>
+						</tr>
+						<tr>
+							<td style="background-color: #fff9df">33018454</td>
+							<td>(주)건원도시건축</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- 결과부분 end -->
+				<div class="x_title"></div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- start -->
+
+	<div class="col-md-9 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">
+				<div class="" role="tabpanel" data-example-id="togglable-tabs">
+					<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+						<li role="presentation" class="active"><a
+							href="#tab_content1" id="home-tab" role="tab" data-toggle="tab"
+							aria-expanded="true">기본정보</a></li>
+						<li role="presentation" class=""><a href="#tab_content2"
+							role="tab" id="profile-tab" data-toggle="tab"
+							aria-expanded="false">인적사항</a></li>
+					</ul>
+
+
+
+					<div id="myTabContent" class="tab-content">
+						<!-- 기본정보 start -->
+						<div role="tabpanel" class="tab-pane fade active in"
+							id="tab_content1" aria-labelledby="home-tab">
+
+							<!-- 1 -->
+							<table class="table">
+								<tr>
+									<td style="background-color: #f3f3f3" width="15%">사업자등록번호</td>
+									<td colspan="2">
+										<div class="col-md-12 col-sm-12 col-xs-12 ">
+											<input type="text" name="test" class="form-control">
+										</div>
+									</td>
+									<td style="background-color: #f3f3f3" width="15%">고객명</td>
+									<td colspan="6">
+										<div class="col-md-12 col-sm-12 col-xs-12 ">
+											<input type="text" name="test" class="form-control">
+										</div>
+
+									</td>
+								</tr>
+
+								<tr>
+									<td style="background-color: #f3f3f3">고객FULL명</td>
+									<td colspan="20">
+										<div class="col-md-20 col-sm-12 col-xs-12 ">
+											<input type="text" name="test" class="form-control">
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td style="background-color: #f3f3f3" width="10%">고객구분</td>
+									<td colspan="2">
+										<div class="col-md-12 col-sm-12 col-xs-12 ">
+											<input type="date" name="test" class="form-control">
+										</div>
+									</td>
+
+									<td style="background-color: #f3f3f3" width="10%">거래유형</td>
+									<td colspan="6">
+										<div class="col-md-12 col-sm-12 col-xs-12 ">
+
+											<input type="radio" name="chk_info" value="매입">매입
+											<input type="radio" name="chk_info" value="매출">매출 
+											<input type="radio" name="chk_info" value="기타">기타
+										</div>
+
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f3f3f3">집주소</td>
+									<td colspan="2">
+										<div class="col-md-12 col-sm-12 col-xs-12 ">
+											<input type="text" name="test" class="form-control">
+										</div>
+									</td>
+									<td style="background-color: #f3f3f3">우편번호찾기버튼</td>
+									<td colspan="6">
+										<div class="col-md-18 col-sm-12 col-xs-12 ">
+											<input colspan="8" type="text" name="test"
+												class="form-control">
+										</div>
+									</td>
+
+								</tr>
+
+
+								<tr>
+									<td style="background-color: #f3f3f3">취향/취미</td>
+									<td colspan="2">
+										<div class="col-md-12 col-sm-12 col-xs-12 ">
+											<input type="text" name="test" class="form-control">
+										</div>
+									</td>
+									<td style="background-color: #f3f3f3">전직장</td>
+									<td colspan="6">
+										<div class="col-md-12 col-sm-12 col-xs-12 ">
+											<input type="text" name="test" class="form-control">
+										</div>
+									</td>
+								</tr>
+
+							</table>
+
+						</div>
+						<!-- 기본정보 end -->
+
+						<!-- 인적사항 start  -->
+						<div role="tabpanel" class="tab-pane fade" id="tab_content2"
+							aria-labelledby="profile-tab">
+							<div class="col-md-12 col-sm-6 col-xs-12">
+
+
+								<table class="table">
+									<tr>
+										<td style="background-color: #f3f3f3" width="10%">성명</td>
+										<td>
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control">
+											</div>
+										</td>
+										<td style="background-color: #f3f3f3" width="10%">부서/부문</td>
+										<td>
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control">
+											</div>
+
+										</td>
+										<td colspan="2" style="background-color: #f3f3f3" width="10%">직책</td>
+										<td>
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control">
+											</div>
+
+										</td>
+
+									</tr>
+									<tr>
+										<td style="background-color: #f3f3f3" width="10%">출생년도</td>
+										<td>
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="date" name="test" class="form-control">
+											</div>
+										</td>
+
+										<td style="background-color: #f3f3f3" width="10%">집전화</td>
+										<td>
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control">
+											</div>
+
+										</td>
+										<td colspan="2" style="background-color: #f3f3f3" width="10%">핸드폰</td>
+										<td>
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control">
+											</div>
+
+										</td>
+									</tr>
+									<tr>
+										<td style="background-color: #f3f3f3">집주소</td>
+										<td><div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control">
+											</div></td>
+										<td style="background-color: #f3f3f3">우편번호찾기버튼</td>
+										<td colspan="6"><div
+												class="col-md-18 col-sm-12 col-xs-12 ">
+												<input colspan="8" type="text" name="test"
+													class="form-control">
+											</div></td>
+
+									</tr>
+
+									<tr>
+										<td style="background-color: #f3f3f3">E-MAIL</td>
+										<td colspan="20">
+											<div class="col-md-20 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control">
+											</div>
+										</td>
+
+
+									</tr>
+
+									<tr>
+										<td style="background-color: #f3f3f3">취향/취미</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control">
+											</div>
+										</td>
+										<td style="background-color: #f3f3f3">전직장</td>
+										<td colspan="6">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control">
+											</div>
+										</td>
+									</tr>
+
+
+
+
+								</table>
+
+
+
+							</div>
+						</div>
+					</div>
+
+
+					<!-- Tap end -->
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- 프로젝트 end -->
+</th:block>
+<th:block layout:fragment="customJquery">
+	<th:block th:include="layout/customJquery"></th:block>
+</th:block>
+</html>

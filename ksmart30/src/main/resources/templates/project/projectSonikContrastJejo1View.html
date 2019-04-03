@@ -5,6 +5,7 @@
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
 	<title>제조경비1 상세 검색</title>
+			<th:block th:include="layout/customHead"></th:block>
 </th:block>
 <th:block layout:fragment="customBody">
 
@@ -174,4 +175,7 @@
 		<!-- 프로젝트 예산 입력 end -->
 	</div>
 </th:block>
+<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
 </html>

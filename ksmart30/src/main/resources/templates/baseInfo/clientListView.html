@@ -5,6 +5,7 @@
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
 	<title>url만들면 확인 거래처코드 리스트 출력</title>
+	<th:block th:include="layout/customHead"></th:block>
 </th:block>
 <th:block layout:fragment="customBody">
 
@@ -169,3 +170,7 @@
 			</div>
 		</div>
 	</div>
+	</th:block>
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>

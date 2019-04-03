@@ -5,9 +5,9 @@
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
 	<title>프로젝트예산, 실적 대비표</title>
+	<th:block th:include="layout/customHead"></th:block>
 </th:block>
 <th:block layout:fragment="customBody">
-
 	<!-- page content -->
 
 	<!-- 검색 폼 -->
@@ -288,4 +288,7 @@
 	</div>
 	<!-- /page content -->
 </th:block>
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
 </html>

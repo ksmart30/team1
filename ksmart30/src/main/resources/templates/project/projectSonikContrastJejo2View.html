@@ -4,7 +4,8 @@
 	layout:decorator="layout/main">
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
-	<title>배부비용 상세 검색</title>
+	<title>제조경비2 상세 검색</title>
+	<th:block th:include="layout/customHead"></th:block>
 </th:block>
 <th:block layout:fragment="customBody">
 
@@ -997,4 +998,7 @@
 
 
 </th:block>
+<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
 </html>
