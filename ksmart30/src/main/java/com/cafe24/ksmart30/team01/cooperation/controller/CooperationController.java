@@ -8,9 +8,9 @@ public class CooperationController {
 	//동기식 view 단은 get 방식을 기본으로 해볼까?
 	
 	//3.1.1 외주계약서 입력
-	@GetMapping("/cooperation/cooperationInView")
+	@GetMapping("/cooperation/cooperationView")
 	public String projectCooperationIn() {		
-		return "cooperation/cooperationInView";		
+		return "cooperation/cooperationView";		
 	}
 	
 	//3.1.2 입력된 외주계약서 검색
