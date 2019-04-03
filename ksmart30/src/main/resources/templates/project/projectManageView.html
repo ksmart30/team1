@@ -3,6 +3,7 @@
 	<th:block layout:fragment="customHead">
 		<meta charset="UTF-8">
 		<title>용역계약서 입력</title>
+		<th:block th:include="layout/customHead"></th:block>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
 			$(document).ready(function() {
@@ -26,7 +27,7 @@
 							$('#pjtList').empty();
 							$('#resultLength').empty();
 							for(let i=0; i<data.length; i++) {
-								$('#pjtList').append('<tr><td style="background-color:#fff9df">'+data[i].PJT_CD+'</td><td><a href="/project/manage/in" id="pjtOneBtn">'+data[i].PJT_NM+'</a></td></tr>');
+								$('#pjtList').append('<tr><td style="background-color:#fff9df">'+data[i].PJT_CD+'</td><td><a href="#" id="pjtOneBtn">'+data[i].PJT_NM+'</a></td></tr>');
 							}
 							$('#resultLength').append(data.length);
 						}
@@ -821,4 +822,7 @@
 			</div>
 		<!-- 프로젝트 end -->
 	</th:block>
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
 </html>
