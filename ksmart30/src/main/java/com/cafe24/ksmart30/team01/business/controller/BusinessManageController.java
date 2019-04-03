@@ -1,7 +1,6 @@
 package com.cafe24.ksmart30.team01.business.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -34,9 +33,9 @@ public class BusinessManageController {
 	}
 	
 	//
-	@GetMapping("/business/businessSuccessRate")
-	public String businessSuccessRate() {
-		return "business/businessSuccessRate";
+	@GetMapping("/business/businessSuccessRateView")
+	public String businessSuccessRateView() {
+		return "business/businessSuccessRateView";
 	}
 	
 	//
