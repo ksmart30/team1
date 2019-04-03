@@ -3,8 +3,12 @@
 	<th:block layout:fragment="customHead">
 		<meta charset="UTF-8">
 		<title>test</title>
+		<th:block th:include="layout/customHead"></th:block>
 	</th:block>
 	<th:block layout:fragment="customBody">
-		TEST 완료
+		TEST완료
 	</th:block>
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
 </html>
