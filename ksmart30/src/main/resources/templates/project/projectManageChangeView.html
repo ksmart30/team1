@@ -3,6 +3,7 @@
 	<th:block layout:fragment="customHead">
 		<meta charset="UTF-8">
 		<title>용역계약서 변경 입력</title>
+		<th:block th:include="layout/customHead"></th:block>
 	</th:block>
 	<th:block layout:fragment="customBody">
 		<!-- 검색부분 start -->
@@ -317,4 +318,7 @@
 		</div>
 		<!-- 프로젝트 end -->
 	</th:block>
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
 </html>

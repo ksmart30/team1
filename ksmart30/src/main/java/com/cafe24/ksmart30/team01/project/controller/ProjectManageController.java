@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ProjectManageController {
 	//3.1.1 용역계약서 입력 View
-	@GetMapping("/project/manage/projectManageView")
+	@GetMapping("/project/projectManageView")
 	public String projectManageView() {
-		return "project/manage/projectManageView";
+		return "project/projectManageView";
 	}
 	
 	//3.1.2 용역계약서 변경 입력 View

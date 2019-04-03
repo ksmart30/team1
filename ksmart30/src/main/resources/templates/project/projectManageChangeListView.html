@@ -3,6 +3,7 @@
 	<th:block layout:fragment="customHead">
 		<meta charset="UTF-8">
 		<title>변경된 용역계약서 조회</title>
+		<th:block th:include="layout/customHead"></th:block>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
 			$(document).ready(function(){
@@ -271,4 +272,7 @@
 		</div>
 		<!-- 프로젝트 end -->
 	</th:block>
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
 </html>
