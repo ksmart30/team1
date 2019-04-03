@@ -4,141 +4,82 @@
 	layout:decorator="layout/main">
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
-	<title>프로젝트 예산 입력 검색</title>
+	<title>프로젝트 예산 상세(제조원가2)</title>
 </th:block>
 <th:block layout:fragment="customBody">
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>
+				프로젝트 개요 <small>뭐라뭐라</small>
+			</h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+				</li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"><i
+						class="fa fa-wrench"></i></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Settings 1</a></li>
+						<li><a href="#">Settings 2</a></li>
+					</ul></li>
 
-	<!-- 검색부분 start -->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<div class="x_panel">
-			<div class="x_content">
-				<label for="ex3">검색조건</label><br>
-				<table>
-					<tr>
-						<td>년도</td>
-						<td><input type="number"></td>
-					</tr>
-					<tr>
-						<td>부서</td>
-						<td><select>
-								<option>전 사</option>
-								<option>설계1본부</option>
-								<option>설계2본부</option>
-								<option>설계3본부</option>
-								<option>설계4본부</option>
-								<option>설계5본부</option>
-						</select></td>
-					</tr>
-					<tr>
-						<td>코드명</td>
-						<td>
-							<button>검색</button>
-						</td>
-					</tr>
-				</table>
-				<!-- 검색부분 end -->
-				<div class="x_title"></div>
-				<!-- 결과부분 start -->
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th width="30%">PJT코드</th>
-							<th>프로젝트명</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td style="background-color: #fff9df">19005</td>
-							<td>ksmart1팀</td>
-						</tr>
-						<tr>
-							<td style="background-color: #fff9df">19009</td>
-							<td>bonobonoPorori</td>
-						</tr>
-					</tbody>
-				</table>
-				<!-- 결과부분 end -->
-				<div class="x_title"></div>
-			</div>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+
+			<table class="table table-bordered">
+				<tr>
+					<th>프로젝트</th>
+					<td>18021 창원시 상남동 74-3 오피스텔 신축공사
+					<th>발주처</th>
+					<td>현대건설(주)</td>
+					<th>출력횟수</th>
+					<td>2회</td>
+					<th>미승인</th>
+				</tr>
+				<tr>
+					<th>프로젝트</th>
+					<td>업무시설</td>
+					<th>수행부서</th>
+					<td colspan="4">설계1본부 1소</td>
+				</tr>
+				<tr>
+					<td>계약일자</td>
+					<td>2018/03/02 (2018/11/02)</td>
+					<td>PM</td>
+					<td>20120015</td>
+					<td colspan="3">김인규</td>
+				</tr>
+				<tr>
+					<th>계약기간</th>
+					<td colspan="6">2018/03/02~____/__/__, 용역완료시까지</td>
+				</tr>
+				<tr>
+					<th>당사계약금액</th>
+					<td colspan="6">770,000,000원</td>
+				</tr>
+				<tr>
+					<th>대지위치</th>
+					<td>343-80</td>
+					<td colspan="5">대전 대덕구 대오길 2(오정동)</td>
+				</tr>
+				<tr>
+					<th>대지면적</th>
+					<td>2,963m²</td>
+					<td>896.31평</td>
+					<th>연면적</th>
+					<td>45,000m²</td>
+					<td colspan="2">13,612.50평</td>
+				</tr>
+			</table>
+
 		</div>
 	</div>
 
-	<!-- 프로젝트 개요 start -->
-	<div class="col-md-9 col-sm-6 col-xs-12">
+	<div class="col-md-12 col-sm-6 col-xs-12">
 		<div class="x_panel">
-			<div class="x_title">
-				<h2>
-					프로젝트 개요 <small>뭐라뭐라</small>
-				</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"><i
-							class="fa fa-wrench"></i></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Settings 1</a></li>
-							<li><a href="#">Settings 2</a></li>
-						</ul></li>
-
-				</ul>
-				<div class="clearfix"></div>
-			</div>
 			<div class="x_content">
-
-				<table class="table table-bordered">
-					<tr>
-						<th>프로젝트</th>
-						<td>18021 창원시 상남동 74-3 오피스텔 신축공사
-						<th>발주처</th>
-						<td>현대건설(주)</td>
-						<th>출력횟수</th>
-						<td>2회</td>
-						<th>미승인</th>
-					</tr>
-					<tr>
-						<th>프로젝트</th>
-						<td>업무시설</td>
-						<th>수행부서</th>
-						<td colspan="4">설계1본부 1소</td>
-					</tr>
-					<tr>
-						<td>계약일자</td>
-						<td>2018/03/02 (2018/11/02)</td>
-						<td>PM</td>
-						<td>20120015</td>
-						<td colspan="3">김인규</td>
-					</tr>
-					<tr>
-						<th>계약기간</th>
-						<td colspan="6">2018/03/02~____/__/__, 용역완료시까지</td>
-					</tr>
-					<tr>
-						<th>당사계약금액</th>
-						<td colspan="6">770,000,000원</td>
-					</tr>
-					<tr>
-						<th>대지위치</th>
-						<td>343-80</td>
-						<td colspan="5">대전 대덕구 대오길 2(오정동)</td>
-					</tr>
-					<tr>
-						<th>대지면적</th>
-						<td>2,963m²</td>
-						<td>896.31평</td>
-						<th>연면적</th>
-						<td>45,000m²</td>
-						<td colspan="2">13,612.50평</td>
-					</tr>
-				</table>
-
-			</div>
-		</div>
-		<!-- 프로젝트 개요 end -->
-
-		<!-- 프로젝트 예산 입력 start -->
-		<div class="x_panel">
-			<div class="x_title">
 				<div class="x_title">
 					<h2>
 						<i class="fa fa-bars"></i> Tabs <small>입력 수정 삭제 버튼을 추가할 지도
@@ -820,12 +761,12 @@
 													<td>100.0</td>
 												</tr>
 												<tr>
-													<td rowspan="4">자체비용
-													<td>인 건비</td>
+													<td rowspan="4">자체비용<td>인
+													건비</td>
 													<td>0</td>
 													<td>0</td>
-												</tr>
-												<tr>
+												</tr>												
+												<tr>													
 													<td>제조경비1</td>
 													<td>0</td>
 													<td>0</td>
@@ -839,14 +780,14 @@
 													<td>소계</td>
 													<td>0</td>
 													<td>0</td>
-												</tr>
+												</tr>												
 												<tr>
 													<td rowspan="5">배부비용</td>
 													<td>공통비1</td>
 													<td>0</td>
 													<td>0</td>
-												</tr>
-												<tr>
+												</tr>												
+												<tr>													
 													<td>간접비</td>
 													<td>0</td>
 													<td>0</td>
@@ -860,12 +801,12 @@
 													<td>관리부문비</td>
 													<td>0</td>
 													<td>0</td>
-												</tr>
+												</tr>		
 												<tr>
 													<td>소계</td>
 													<td>0</td>
 													<td>0</td>
-												</tr>
+												</tr>	
 												<tr>
 													<td colspan="2">비용합계</td>
 													<td>0</td>
@@ -881,8 +822,8 @@
 													<td>인건비</td>
 													<td>0</td>
 													<td>0</td>
-												</tr>
-												<tr>
+												</tr>												
+												<tr>													
 													<td>제조경비1</td>
 													<td>0</td>
 													<td>0</td>
@@ -896,15 +837,15 @@
 													<td>관리부문비</td>
 													<td>0</td>
 													<td>0</td>
-												</tr>
+												</tr>		
 												<tr>
 													<td>소계</td>
 													<td>0</td>
 													<td>0</td>
-												</tr>
-
-
-											</tbody>
+												</tr>	
+												
+																																																																															
+												</tbody>
 										</table>
 
 									</div>
@@ -963,14 +904,14 @@
 													<td>합계</td>
 													<td>0</td>
 													<td>0</td>
-												</tr>
+												</tr>											
 											</tbody>
 										</table>
 
 									</div>
 								</div>
 							</div>
-
+							
 							<div class="col-md-5 col-sm-6 col-xs-12">
 								<div class="x_panel">
 									<div class="x_title">
@@ -1027,7 +968,7 @@
 													<td>합계</td>
 													<td>0</td>
 													<td>0</td>
-												</tr>
+												</tr>																							
 											</tbody>
 										</table>
 
@@ -1044,11 +985,7 @@
 			</div>
 
 		</div>
-		<!-- 프로젝트 예산 입력 end -->
-
 	</div>
-
-
 
 </th:block>
 </html>

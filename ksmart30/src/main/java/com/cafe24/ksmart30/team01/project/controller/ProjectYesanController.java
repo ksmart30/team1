@@ -1,14 +1,35 @@
+/*
+ * @file    ProjectYesanController.java
+ * @brief   project yesan controller
+ * @author  ksmart30 임명심
+ */
+
 package com.cafe24.ksmart30.team01.project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.cafe24.ksmart30.team01.project.service.ProjectYesanService;
 
 @Controller
 public class ProjectYesanController {
+
+	@Autowired ProjectYesanService projectYesanService;
 	
 	//2.2.1 승인된 용역계약서 입력
-	@GetMapping("/project/yesan/in")
+	@GetMapping("/project/projectYesanView")
 	public String projectYesanIn() {
+		System.out.println("/project/projectYesanView 프로젝트예산 입력 화면만 Controller get");
+		return "project/projectYesanView";
+	}	
+	
+	@GetMapping("/project/yesan/in1")
+	public String projectYesanIn(Model model,String PJT_CD) {
+		model.addAttribute("model", projectYesanService.listSearch(PJT_CD));
+		System.out.println(model.toString());
+		System.out.println("/project/yesan/in 프로젝트예산 입력 요청 Controller get");
 		return "project/yesan/in";
 	}
 	
@@ -37,27 +58,27 @@ public class ProjectYesanController {
 	}		
 	
 	//2.2.2 프로젝트예산 승인
-	@GetMapping("/project/yesan/seungin")
+	@GetMapping("/project/projectYesanSeunginView")
 	public String projectYesanSeungin() {
-		return "project/yesan/seungin";
+		return "project/projectYesanSeunginView";
 	}
 	
 	//2.2.3 프로젝트예산 출력
-	@GetMapping("/project/yesan/output")
+	@GetMapping("/project/projectYesanOutputView")
 	public String projectYesanOutput() {
-		return "project/yesan/output";
+		return "project/projectYesanOutputView";
 	}
 	
 	//2.2.4 프로젝트예산 검색
-	@GetMapping("/project/yesan/search")
+	@GetMapping("/project/projectYesanSearchView")
 	public String projectYesanSearch() {
-		return "project/yesan/search";
+		return "project/projectYesanSearchView";
 	}
 	
 	//2.2.5 계약프로젝트List
-	@GetMapping("/project/yesan/list")
+	@GetMapping("/project/projectYesanListView")
 	public String projectYesanList() {
-		return "project/yesan/list";
+		return "project/projectYesanListView";
 	}	
 	
 	

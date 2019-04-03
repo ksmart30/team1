@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace = "com.cafe24.ksmart30.team01.project.mapper.ProjectYesanMapper">
+ 	<!-- 프로젝트예산입력을 위해 프로젝트 대장에서 프로젝트코드와 프로젝트명을 보여주는 쿼리문 -->
+ 	<select id="list" resultType="java.util.Map">
+		SELECT B.PJT_CD,
+		       A.PJT_NM
+		  FROM T_SM3000 A,
+		       T_P11000 B
+		WHERE B.PJT_CD=A.PJT_CD
+		ORDER BY B.PJT_CD DESC;
+  	</select>
+ 	
+ 	<!-- 프로젝트코드에 해당하는 프로젝트 개요를 보여주는 쿼리문 -->
+  	<select id="selectList" parameterType="String" resultType="com.cafe24.ksmart30.team01.project.vo.T_P11000">
+		SELECT  A.PJT_CD,
+		        A.PJT_NM,
+		        B.DEPT_CD,
+		        E.SHORT_NM DEPT_NM,
+		        (SELECT CUST_NM FROM T_AC0300 WHERE CUST_CD = C.CUST_CD) + CASE WHEN C.CNT > 1 THEN + '외' + CONVERT(VARCHAR(4), C.CNT) + '건'
+		                                                                                       ELSE '' END CUST_NM,
+		        SUBSTRING(B.CONTRACT_DATE,1,4)+'/'+SUBSTRING(B.CONTRACT_DATE,5,2)+'/'+SUBSTRING(B.CONTRACT_DATE,7,2)  CONTRACT_DATE,
+		        B.TOT_CONTRACT_AMT,
+		        CAST(B.G_AREA_P AS DECIMAL(14,2)) G_AREA_P,
+		        CAST(B.G_AREA_M AS DECIMAL(14,2)) G_AREA_M,
+		        CAST(B.G_YAREA_P AS DECIMAL(14,2)) G_YAREA_P,
+		        CAST(B.G_YAREA_M AS DECIMAL(14,2)) G_YAREA_M,
+		        B.BUILD_TYPE,
+		        (SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.BUILD_TYPE AND LEVEL1_CD = '170' AND BUSI_GB = 'J') BUILD_NM,
+		        B.PJT_YEA_YN,
+		        B.PJT_CD PJT_CCD,
+		        B.CRT_DATE,
+		        '1' TYPE_GB,
+		        (SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.PJT_E_GBN AND LEVEL1_CD = '25A' AND BUSI_GB = 'J') PJT_E_GBN,
+		        CASE ISNULL(B.PJT_E_DATE,'') WHEN ''  THEN ''
+		                                     WHEN ' ' THEN ''
+		                                              ELSE SUBSTRING(B.PJT_E_DATE,1,4)+'/'+SUBSTRING(B.PJT_E_DATE,5,2)+'/'+SUBSTRING(B.PJT_E_DATE,7,2)
+		        END PJT_E_DATE,
+		        SUBSTRING(B.CRT_DATE,1,4)+'/'+SUBSTRING(B.CRT_DATE,5,2)+'/'+SUBSTRING(B.CRT_DATE,7,2) + ' ~ ' +
+		        SUBSTRING(B.PJT_E_DATE,1,4)+'/'+SUBSTRING(B.PJT_E_DATE,5,2)+'/'+SUBSTRING(B.PJT_E_DATE,7,2)  FROM_TO,
+		        0 YEA_TOT,
+		        0 SIL_TOT,
+		        0 CHA_AMT
+		   FROM T_SM3000 A,
+		 T_P11000 B,
+		        (SELECT PJT_CD, MIN(CUST_CD) CUST_CD, COUNT(*)-1 CNT
+		           FROM T_P11010
+		          WHERE PJT_CD = #{PJT_CD}
+		          GROUP BY PJT_CD) C,
+		 SF_SC1010('03', '', '', '') E
+		 WHERE B.PJT_CD   = A.PJT_CD
+		   AND B.PJT_CD  *= C.PJT_CD
+		   AND B.DEPT_CD  = E.DEPT_CD
+		/*   AND (SELECT COUNT(J_PJT_CD) FROM T_P13000 WHERE J_PJT_CD = B.PJT_CD) = 1 */
+		   AND B.PJT_CD = #{PJT_CD}
+		
+		UNION ALL
+		
+		SELECT  F.G_PJT_CD PJT_CD,
+		        A.PJT_NM,
+		        F.G_DEPT_CD,
+		        E.SHORT_NM,
+		        (SELECT CUST_NM FROM T_AC0300 WHERE CUST_CD = C.CUST_CD) + CASE WHEN C.CNT > 1 THEN + '외' + CONVERT(VARCHAR(4), C.CNT) + '건'
+		                                                                                       ELSE '' END CUST_NM,
+		        SUBSTRING(B.CONTRACT_DATE,1,4)+'/'+SUBSTRING(B.CONTRACT_DATE,5,2)+'/'+SUBSTRING(B.CONTRACT_DATE,7,2)  CONTRACT_DATE,
+		        (F.DAN_A+F.DAN_B+F.DAN_C+F.DAN_D+F.DAN_E+F.DAN_F+F.DAN_G) TOT_CONTRACT_AMT,
+		        CAST(B.G_AREA_P AS DECIMAL(14,2)) G_AREA_P,
+		        CAST(B.G_AREA_M AS DECIMAL(14,2)) G_AREA_M,
+		        CAST(B.G_YAREA_P AS DECIMAL(14,2)) G_YAREA_P,
+		        CAST(B.G_YAREA_M AS DECIMAL(14,2)) G_YAREA_M,
+		        B.BUILD_TYPE,
+		        (SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.BUILD_TYPE AND LEVEL1_CD = '170' AND BUSI_GB = 'J') BUILD_NM,
+		        CASE F.YESAN_YN WHEN '1' THEN 'T'
+		                        WHEN '0' THEN 'F' END PJT_YEA_YN,
+		        B.PJT_CD PJT_CCD,
+		        B.CRT_DATE,
+		        '2' TYPE_GB,
+		        (SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.PJT_E_GBN AND LEVEL1_CD = '25A' AND BUSI_GB = 'J') PJT_E_GBN,
+		        CASE ISNULL(B.PJT_E_DATE,'') WHEN ''  THEN ''
+		                                     WHEN ' ' THEN ''
+		                                              ELSE SUBSTRING(B.PJT_E_DATE,1,4)+'/'+SUBSTRING(B.PJT_E_DATE,5,2)+'/'+SUBSTRING(B.PJT_E_DATE,7,2)
+		        END PJT_E_DATE,
+		        SUBSTRING(B.CRT_DATE,1,4)+'/'+SUBSTRING(B.CRT_DATE,5,2)+'/'+SUBSTRING(B.CRT_DATE,7,2) + ' ~ ' +
+		        SUBSTRING(B.PJT_E_DATE,1,4)+'/'+SUBSTRING(B.PJT_E_DATE,5,2)+'/'+SUBSTRING(B.PJT_E_DATE,7,2)  FROM_TO,
+		        0 YEA_TOT,
+		        0 SIL_TOT,
+		        0 CHA_AMT
+		   FROM T_SM3000 A,
+		        T_P11000 B,
+		        (SELECT PJT_CD, MIN(CUST_CD) CUST_CD, COUNT(*)-1 CNT
+		           FROM T_P11010
+		          WHERE PJT_CD = #{PJT_CD}
+		          GROUP BY PJT_CD) C,
+		        SF_SC1010('03', '', '', '') E,
+		        T_P13000 F
+		 WHERE B.PJT_CD    = F.J_PJT_CD
+		   AND B.PJT_CD    = A.PJT_CD
+		   AND F.G_DEPT_CD = E.DEPT_CD
+		/*   AND (SELECT COUNT(J_PJT_CD) FROM T_P13000 WHERE J_PJT_CD = B.PJT_CD) > 1 */
+		   AND F.G_PJT_CD = #{PJT_CD}
+  	</select>
+  	
+ </mapper> 	

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/main">
-<th:block layout:fragment="customHead">
-	<meta charset="UTF-8">
-	<title>test</title>
-</th:block>
-<th:block layout:fragment="customBody">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+	<th:block layout:fragment="customHead">
+		<meta charset="UTF-8">
+	<title>프로젝트 예산 검색</title>
+	<th:block th:include="layout/customHead"></th:block>	
+	</th:block>
+	
+	<th:block layout:fragment="customBody">
 	<!-- 검색화면 start -->
 	<div class="x_panel" style="color: black;">
 
@@ -198,5 +197,10 @@
 				</div>
 			</div>
 		</div>	
-</th:block>
-</html>
+	</th:block>
+	
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
+    
+</html>	

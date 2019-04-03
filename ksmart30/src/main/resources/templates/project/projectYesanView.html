@@ -1,13 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/main">
-<th:block layout:fragment="customHead">
-	<meta charset="UTF-8">
-	<title>프로젝트 예산 입력 검색</title>
-</th:block>
-<th:block layout:fragment="customBody">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+	<th:block layout:fragment="customHead">
+		<meta charset="UTF-8">
+	<title>프로젝트 예산 입력(검색, 개요, 상세입력)</title>
+		<th:block th:include="layout/customHead"></th:block>
+			<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+			<script>
+			$(document).ready(()=>{
+			    // 검색목록(프로젝트예산 입력을 위한 용역계약서 리스트)
+			    $('#btn_list').click(()=>{	//btn_list를 클릭하면
+			        $.ajax({
+			            url:'/project/yesan/yesanIn',	//url을 요청하고
+			            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
+			        	//data:{pjtCd:pjtCd},	//넘길 데이터(검색 조건 없이 우선 테스트)
+			            success:function(data){	//받은 데이터
+			                $('#list').empty();	//리스트를 비우고	               
+			                $(data).each((index,item)=>{
+			                    $('#list').append('<tr>');
+			                    $('#list').append('<td>'+item.board_no+'</td>');
+			                    $('#list').append('<td>'+item.board_title+'</td>');
+			                    $('#list').append('<td>'+item.board_content+'</td>');
+			                    $('#list').append('<td>'+item.board_user+'</td>');
+			                    $('#list').append('<td>'+item.board_date+'</td>');
+			                    $('#list').append('</tr>');
+			                });
+			            }
+			        });
+			    });
+			});
+			</script>
+    </th:block>
 
+	<th:block layout:fragment="customBody">
 	<!-- 검색부분 start -->
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="x_panel">
@@ -32,12 +56,14 @@
 					<tr>
 						<td>코드명</td>
 						<td>
-							<button>검색</button>
+						<a><button id="btn_list">검색</button></a>
+						<!-- th:href="@{/project/yesan/in1(PJT_CD=19009)}" -->
 						</td>
 					</tr>
 				</table>
 				<!-- 검색부분 end -->
 				<div class="x_title"></div>
+				
 				<!-- 결과부분 start -->
 				<table class="table table-bordered">
 					<thead>
@@ -68,28 +94,19 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					프로젝트 개요 <small>뭐라뭐라</small>
+					프로젝트 개요 <small>Project Overview</small>
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"><i
-							class="fa fa-wrench"></i></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Settings 1</a></li>
-							<li><a href="#">Settings 2</a></li>
-						</ul></li>
-
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i>숨기기</a></li>
 				</ul>
 				<div class="clearfix"></div>
 			</div>
+			
 			<div class="x_content">
-
 				<table class="table table-bordered">
 					<tr>
 						<th>프로젝트</th>
-						<td>18021 창원시 상남동 74-3 오피스텔 신축공사
+						<td th:text="${model}"></td>
 						<th>발주처</th>
 						<td>현대건설(주)</td>
 						<th>출력횟수</th>
@@ -139,25 +156,6 @@
 		<!-- 프로젝트 예산 입력 start -->
 		<div class="x_panel">
 			<div class="x_title">
-				<div class="x_title">
-					<h2>
-						<i class="fa fa-bars"></i> Tabs <small>입력 수정 삭제 버튼을 추가할 지도
-							몰라 남겨둠</small>
-					</h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false"><i
-								class="fa fa-wrench"></i></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Settings 1</a></li>
-								<li><a href="#">Settings 2</a></li>
-							</ul></li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
 				<div class="" role="tabpanel" data-example-id="togglable-tabs">
 					<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
 						<li role="presentation" class="active"><a
@@ -1050,5 +1048,10 @@
 
 
 
-</th:block>
+	</th:block>
+	
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
+    
 </html>

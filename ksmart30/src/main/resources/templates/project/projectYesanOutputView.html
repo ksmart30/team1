@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/main">
-<th:block layout:fragment="customHead">
-	<meta charset="UTF-8">
-	<title>output</title>
-</th:block>
-<th:block layout:fragment="customBody">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+	<th:block layout:fragment="customHead">
+		<meta charset="UTF-8">
+	<title>프로젝트 예산 출력</title>
+	<th:block th:include="layout/customHead"></th:block>	
+	</th:block>
 
+	<th:block layout:fragment="customBody">
 	<!-- page content -->
 
 	<!-- 검색 폼 -->
@@ -80,10 +79,9 @@
 		</table>
 	</form>
 	<!-- 검색폼 끝 -->
-
-
+	
+	
 	<!-- 출력 리스트 검색 시작 -->
-
 	<div class="x_panel">
 		<div class="x_title">
 			<h2>
@@ -203,3 +201,10 @@
 		</div>
 	</div>
 	<!-- /page content -->
+	</th:block>
+	
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>
+    
+</html>	
