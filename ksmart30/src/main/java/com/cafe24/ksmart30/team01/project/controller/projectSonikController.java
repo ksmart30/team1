@@ -34,7 +34,5 @@ public class projectSonikController {
 	@GetMapping("project/sonik/beboo")
 	public String projectSonikBecoo() {
 		return "/project/sonik/beboo";
-	}
-	
-	
+	}	
 }
