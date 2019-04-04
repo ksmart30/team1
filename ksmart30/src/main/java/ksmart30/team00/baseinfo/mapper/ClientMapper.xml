@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- @file Client.java @brief 기준정보관리-거래처등록 Controller @author ksmart30 YSM -->
+<mapper
+	namespace="ksmart30.team00.baseinfo.mapper.ClientMapper">
+	<!-- 거래처 조회를 위해 T_AC0300(고객정보)에서 사업자등록번호와 고객명 정보를 조회한다 -->
+	<select id="clientSelect"
+		parameterType="ksmart30.team00.baseinfo.domain.Client"
+		resultType="ksmart30.team00.baseinfo.domain.Client">
+
+		SELECT CUST_CD
+		,CUST_NM
+		<!--,CUST_PW ,CUST_FULL_NM ,BUSI_TYPE ,CUST_GBN ,REPRE_NM ,ZIP_CD ,ADDR 
+			,TEL_NO ,FAX_NO ,BIZ_STAT ,BIZ_ITEM ,REPRE_CUST_CD ,ESTAB_DT ,INFOM_EMP ,HOMEPAGE 
+			,USE_YN ,AUDIT_ID ,CONVERT(VARCHAR,AUDIT_TM,112) AS AUDIT_TM ,BUPIN ,FUND 
+			,BOND ,EMAIL ,DAM_NM ,ISO ,ISNULL(CO_YN,2) AS CO_YN ,CEL_NO ,REGISTER_NO 
+			,BANK_CD ,BANK_ACCNO ,BANK_OWN ,CO_SERVICE -->
+		FROM T_AC0300
+		WHERE CUST_CD LIKE '%'+#{CUST_CD}+'%'
+		and busi_type Like '%'+#{BUSI_TYPE}+'%'
+		and cust_nm Like '%'+#{CUST_NM}+'%'
+
+	</select>
+	
+	
+	<!-- 검색된 거래처의  상세페이지를 위해 T_AC0300(고객정보)에서 전체정보를 조회한다 -->
+	<select id="clientAllSelect"
+		parameterType="String"
+		resultType="ksmart30.team00.baseinfo.domain.Client">
+		
+		SELECT CUST_CD
+		,CUST_NM
+		,CUST_PW
+		,CUST_FULL_NM
+		,BUSI_TYPE
+		,CUST_GBN
+		,REPRE_NM
+		,ZIP_CD
+		,ADDR
+		,TEL_NO
+		,FAX_NO
+		,BIZ_STAT
+		,BIZ_ITEM
+		,REPRE_CUST_CD
+		,ESTAB_DT
+		,INFOM_EMP
+		,HOMEPAGE
+		,USE_YN
+		,AUDIT_ID
+		,CONVERT(VARCHAR,AUDIT_TM,112) AS AUDIT_TM
+		,BUPIN
+		,FUND
+		,BOND
+		,EMAIL
+		,DAM_NM
+		,ISO
+		,ISNULL(CO_YN,2) AS CO_YN
+		,CEL_NO
+		,REGISTER_NO
+		,BANK_CD
+		,BANK_ACCNO
+		,BANK_OWN
+		,CO_SERVICE
+		FROM T_AC0300
+		WHERE CUST_CD LIKE '%'+#{CUST_CD}+'%'
+		
+	</select>
+</mapper>

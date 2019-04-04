@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart30.team01.business.mapper.BusinessManageMapper">
+
+<!--사업수행결정서 승인 확인-->
+<select id="getBusinessManageList" parameterType="ksmart30.team01.business.domain.BusinessMarket" resultType="java.util.Map">	
+		SELECT  PJT_CD,
+				PJT_NM,
+				CUST_NM,
+				UP_SU,
+				DOWN_SU,
+				AREA_P,
+				YAREA_P
+		FROM T_PS3000	
+		WHERE BUSI_YY LIKE '%'+{BUSI_YY}+'%'
+		AND UP_SU LIKE '%'+{UP_SU}+'%'
+		AND YAREA_P LIKE '%'+{YAREA_P}+'%'
+</select>
+</mapper>

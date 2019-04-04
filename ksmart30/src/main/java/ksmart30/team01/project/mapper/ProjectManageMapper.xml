@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	@file	ProjectManageController.java
+	@brief	용역계약서 Controller
+	@author	ksmart30 YDE
+-->
+<mapper namespace="ksmart30.team01.project.mapper.ProjectManageMapper">
+	<!-- 용역계약서 입력을 위해 T_SM3000(전체 프로젝트 대장)에서 전체 프로젝트 정보를 조회한다 -->
+	<select id="businessManageSelect" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			A.PJT_CD,
+			A.PJT_NM,
+			B.DEPT_CD,
+			A.PJT_TYPE,
+			(SELECT SHORT_NM FROM T_SC1010
+			WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
+			B.TOT_CONTRACT_AMT,
+			B.PM_EMP_NO,
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = B.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = B.PM_EMP_NO) PM_EMP_NM
+		FROM
+			T_SM3000 A,
+			T_P11000 B
+		WHERE
+			A.PJT_CD   = B.PJT_CD
+		AND A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
+		AND B.DEPT_CD LIKE '%'+#{DEPT_CD}+'%'
+		AND A.PJT_CD LIKE #{YEAR}+'%'
+		ORDER BY A.PJT_CD ASC
+	</select>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart30.test.controller.TestRestMapper">
+	<select id="testSelect"
+			parameterType="String"
+			resultType="java.util.Map">
+	SELECT 	
+		A.PJT_CD as PJT_CD,
+		A.SCV_PART as SCV_PART,
+		A.EXCHANGE_NO as EXCHANGE_NO,
+		B.CUST_NM as CUST_NM,
+		A.EX_WORK_AMT as EX_WORK_AMT
+   	FROM 
+   		T_P11070 A,
+        T_AC0300 B,
+        T_P11000 C,	
+		(SELECT ORDER_YY, ORDER_SEQ, PJT_CD, OUT_ITEM, CUST_CD, RMK FROM T_P16000 WHERE PJT_CD = #{pjtCd}) D
+ 	WHERE 
+	 		A.EXCHANGE_NO *= B.CUST_CD
+	  	AND 
+	   		A.PJT_CD *= C.PJT_CD
+	   	AND 
+	   		A.PJT_CD = #{pjtCd}
+	   	AND 
+	   		A.PJT_CD *= D.PJT_CD
+	ORDER BY 
+		A.PJT_CD, 
+		A.SCV_PART, 
+		A.EXCHANGE_NO
+	
+	</select>
+
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart30.team01.cooperation.Mapper.CooperationMapper">
+
+ <!-- 외주관리 - 외주계약서 관리 - 외주계약서 검색 쿼리 -->
+	<select id="cooperationList" 
+		parameterType="ksmart30.team01.cooperation.domain.CooperationSearchRequest" 
+		resultType="java.util.Map">
+		SELECT 
+			A.* 
+		FROM 
+   		  (
+   			SELECT ISNULL((SELECT PJT_NM   FROM T_SM3000 WHERE T_SM3000.PJT_CD  = A.PJT_CD),' ') PJT_NM,<!-- 프로젝트 한글명 -->
+		        A.OUT_CORP,<!-- 사업자번호 (정렬시 필요) -->
+		        A.OUT_ITEM,<!-- 부문코드(외주분야)정렬시 필요 -->
+		        A.CONTRACT_NM,<!-- 용역 한글명 -->
+		        A.DEPT_CD,<!-- 부서코드 정렬시 필요 -->
+		        A.CONTRACT_DATE, <!-- 계약일자 -->
+		        A.CONTRACT_AMT,<!-- 계약금액 -->
+		        B.CUST_NM,<!-- 외주처(발주처,거래처) -->
+		        D.LEVEL2_NM E_RMK_NM,<!-- 종료구분(기성단계?)한글이름 -->
+		        E.DEPT_NM, <!-- 부서 한글명  -->
+		        F.LEVEL2_NM OUT_ITEM_NM,<!-- 부문 한글명 -->
+		        A.PJT_CD,<!-- 프로젝트 코드  -->
+	         	(CASE ISNULL(G.PJT_E_GBN,'') 
+	         			WHEN ''  THEN '진행'
+	                    WHEN ' ' THEN '진행'
+	                    WHEN '1' THEN '준공'
+	                    WHEN '2' THEN '중도타절' 
+	                   	END) PJT_E_GBN_NM, <!-- (종료구분)진행여부  -->
+	         	(CASE WHEN ISNULL(G.TOT_CONTRACT_AMT,0) != 0 
+	         			AND
+	                	   ISNULL(G.PJT_CONTRACT_AMT,0) != 0 
+	                	THEN 
+	                		(ISNULL(G.TOT_CONTRACT_AMT,0)/ISNULL(G.PJT_CONTRACT_AMT,0))*100
+	                    ELSE 
+	                    	0
+	         			END) 
+	         				PJT_CONTRACT_PER,<!-- 지분율 -->
+	         	G.G_YAREA_P, <!-- 연면적 (평) -->
+	         	G.G_YAREA_M, <!-- 연면적 (m) -->
+	         	G.BUILD_TYPE,
+         		(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '170' AND LEVEL2_CD = G.BUILD_TYPE) BUILD_TYPE_NM <!-- 부서 한글명 -->
+    		FROM 
+    			T_P12000 A, <!-- 외주계약서 -->
+         		T_AC0300 B,	<!-- 발주처 -->
+         		(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '130') D,<!-- 종료구문(기성단계?)  -->
+         		T_SC1010 E, <!-- 부서 -->
+         		(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '160') F,<!-- 부문 -->
+         		T_P11000 G <!-- 프로제트 대장 -->
+	  	 	WHERE 
+	  	 		A.OUT_CORP *= B.CUST_CD <!-- 외주처 코드  -->
+	     	 AND 
+	     	 	A.E_RMK    *= D.LEVEL2_CD <!-- 종료단서  기성단계-->
+	     	 AND 
+	     	 	A.DEPT_CD  *= E.DEPT_CD <!-- 부서코드 -->
+	     	 AND 
+	     	 	A.OUT_ITEM *= F.LEVEL2_CD <!-- 부문 코드  -->
+	     	 AND 
+	     	 	A.PJT_CD   *= G.PJT_CD <!-- 프로젝트 코드 -->
+  			) A,
+  		  (SELECT * FROM SF_SC1010('03', '', #{inDeptCd},'')) D  <!-- 부서코드 입력 -->
+		WHERE 
+			A.DEPT_CD = D.DEPT_CD <!-- 부서코드 -->
+   		 AND 
+   		 	A.CONTRACT_DATE LIKE #{inContractDate} + '%'  <!-- 년도검색 4 자리 입력 -->
+   		 AND 
+   		 	A.PJT_CD      
+   		 		LIKE '%' + #{inPjtCd} +'%' <!-- 프로젝트코드 입력-->
+   		 AND 
+   		 	A.PJT_NM      
+   		 		LIKE '%' + #{inPjtNm}  +'%' <!-- 프로젝트네임 입력-->
+   		 AND 
+   		 	A.OUT_ITEM    
+   		 		LIKE '%' + #{inOutItem} + '%' <!--  외주부문(외주분야) 입력-->
+   		 AND 
+   		 	A.CUST_NM     
+   		 		LIKE '%' +  #{inCustNm} + '%' <!--  외주처명(발주처,거래처) 입력-->
+   		 AND 
+   		 	A.CONTRACT_NM 
+   		 		LIKE '%' + #{inContractNm} + '%' <!--  용역명(외주계약명) 입력-->
+   		 AND 
+   		 	A.BUILD_TYPE  
+   		 		LIKE '%' + #{inBuildType} + '%' <!--  건축물 유형 입력-->
+ 		ORDER BY 
+ 			A.DEPT_CD,  <!-- 검색 정렬 순서 : 부서->프로젝트->외주분야->사업자번호 -->
+ 			A.PJT_CD, 
+ 			A.OUT_ITEM, 
+ 			A.OUT_CORP
+
+	</select>
+<!-- 외주관리 - 외주계약서 관리 - 외주계약서 검색 쿼리 -->
+	<select id="cooperationInPJTSelect"
+		parameterType="String"
+		resultType="java.util.Map">
+	<!--입력 위한 PJT별 용역 역계약서 검색-->
+		SELECT 
+			 C.LEVEL2_NM as OUT_ITEM_NM <!-- 부문 -->
+			,B.CUST_NM as CUST_NM <!-- 외주처 -->
+		 	,A.contract_amt as CONTRACT_AMT <!-- 계약액 -->
+		from 
+			 T_P12000 A <!-- 외주계약서  -->
+			,T_AC0300 B <!-- 계약처(외주처) -->
+			,(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '160')C <!-- 부문  -->
+		WHERE 
+			A.out_corp *= B.CUST_CD
+			and
+			A.OUT_ITEM *= C.LEVEL2_CD
+			and
+			a.pjt_cd LIKE '%'+#{PJT_CD}+'%'
+		ORDER BY
+			OUT_ITEM
+	</select>
+	
+</mapper>

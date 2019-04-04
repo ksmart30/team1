@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- @file Client.java @brief 기준정보관리-거래처등록 Controller @author ksmart30 YSM -->
+<mapper namespace="ksmart30.team00.baseinfo.mapper.DivisionMapper">
+</mapper>
