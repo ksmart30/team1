@@ -1,11 +1,12 @@
 package ksmart30.team00.baseinfo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import ksmart30.team00.baseinfo.domain.Client;
+import ksmart30.team00.baseinfo.domain.ClientList;
 import ksmart30.team00.baseinfo.mapper.ClientMapper;
 
 @Service
@@ -23,6 +24,11 @@ public class ClientService {
 		
 		return clientMapper.clientAllSelect(CUST_CD);
 		
+	}
+
+	public List<Map<String, Object>> clientListView(ClientList clientList) {
+		
+		return clientMapper.clientListOutput(clientList);
 	}
 	
 }

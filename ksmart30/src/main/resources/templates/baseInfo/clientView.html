@@ -16,17 +16,16 @@
 			var CUST_NM = $('#CUST_NM').val();//고객명
 			var CUST_CD = $('#CUST_CD').val(); //사업자등록번호 3가지 검색조건에 맞는 
 	        $.ajax({
-	            url:'/baseInfo/Client/in', //호출할 메소드 호출 
+	            url:'/baseInfo/clientView', //호출할 메소드 호출 
 	            type:'POST',//송신 POST 방식
 	            data:{BUSI_TYPE:BUSI_TYPE,CUST_NM:CUST_NM,CUST_CD:CUST_CD},//넘길 데이터(조건)
 	            success:function(data){//받은 데이터
 	            	console.log(data);
 	                $('#searchBody').empty();//삭제 
 	                $(data).each((index,item)=>{//반복문으로 데이터값이 있는 만큼 추가
-	                	$('#searchBody').append('<tr>');//append추가
-	                	$('#searchBody').append('<td style="background-color: #fff9df">'+item.cust_CD+'</td>');//사업자 등록번호
-	                	$('#searchBody').append('<td>'+item.cust_NM+'</td>');// 거래처명
-	                	$('#searchBody').append('</tr>');
+	                	$('#searchBody').append('<tr><td style="background-color: #fff9df">'+item.cust_CD+'</td><td>'
+	                			+item.cust_NM+'</td></tr>'
+	                	);//append추가	                	
 	                });              
 	            }
 	        });
@@ -274,7 +273,6 @@
 												<input colspan="8" type="text" name="test"
 													class="form-control">
 											</div></td>
-
 									</tr>
 
 									<tr>
@@ -284,8 +282,6 @@
 												<input type="text" name="test" class="form-control">
 											</div>
 										</td>
-
-
 									</tr>
 
 									<tr>
@@ -302,19 +298,10 @@
 											</div>
 										</td>
 									</tr>
-
-
-
-
 								</table>
-
-
-
 							</div>
 						</div>
 					</div>
-
-
 					<!-- Tap end -->
 				</div>
 			</div>
