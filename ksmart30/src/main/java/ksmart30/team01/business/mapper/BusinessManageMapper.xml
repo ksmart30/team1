@@ -14,8 +14,8 @@
 				AREA_P,
 				YAREA_P
 		FROM T_PS3000	
-		WHERE BUSI_YY LIKE '%'+{BUSI_YY}+'%'
-		AND UP_SU LIKE '%'+{UP_SU}+'%'
-		AND YAREA_P LIKE '%'+{YAREA_P}+'%'
+		WHERE BUSI_YY LIKE #{BUSI_YY}
+		AND UP_SU BETWEEN #{UP_SU} AND #{UP_SU2}
+		AND YAREA_P BETWEEN #{YAREA_P} AND #{YAREA_P2}		
 </select>
 </mapper>
