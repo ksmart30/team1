@@ -16,10 +16,10 @@ public class ProjectYesanRestController {
 	@Autowired
 	private ProjectYesanService projectYesanService;
 	
-	//2.2.1 승인된 용역계약서 입력
+	//2.2.1 승인된 용역계약서 입력(프로젝트예산입력을 위한 검색 화면 요청)
 	@PostMapping("/project/yesan/yesanIn")
 	public List<Map<String, Object>> projectYesanIn() {	
-		System.out.println("프로젝트예산입력을 위한 검색 화면 요청 RestController post");
+		System.out.println("/project/yesan/yesanIn RestController post");
 		List<Map<String,Object>> resultList = projectYesanService.search();		
 		return resultList;
 	}	

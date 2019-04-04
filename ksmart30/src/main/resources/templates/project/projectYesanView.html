@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 	<title>프로젝트 예산 입력(검색, 개요, 상세입력)</title>
 		<th:block th:include="layout/customHead"></th:block>
+			
 			<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 			<script>
 			$(document).ready(()=>{
@@ -17,11 +18,8 @@
 			                $('#list').empty();	//리스트를 비우고	               
 			                $(data).each((index,item)=>{
 			                    $('#list').append('<tr>');
-			                    $('#list').append('<td>'+item.board_no+'</td>');
-			                    $('#list').append('<td>'+item.board_title+'</td>');
-			                    $('#list').append('<td>'+item.board_content+'</td>');
-			                    $('#list').append('<td>'+item.board_user+'</td>');
-			                    $('#list').append('<td>'+item.board_date+'</td>');
+			                    $('#list').append('<td style="background-color:#fff9df">'+item.PJT_CD+'</td>');
+			                    $('#list').append('<td>'+item.PJT_NM+'</td>');
 			                    $('#list').append('</tr>');
 			                });
 			            }
@@ -72,15 +70,7 @@
 							<th>프로젝트명</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td style="background-color: #fff9df">19005</td>
-							<td>ksmart1팀</td>
-						</tr>
-						<tr>
-							<td style="background-color: #fff9df">19009</td>
-							<td>bonobonoPorori</td>
-						</tr>
+					<tbody id="list">
 					</tbody>
 				</table>
 				<!-- 결과부분 end -->
