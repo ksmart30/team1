@@ -31,7 +31,4 @@ public class CooperationController {
 		return "cooperation/cooperationPjtHyunhwangView";		
 	}
 	
-	
-
-	
 }

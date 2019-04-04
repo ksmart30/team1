@@ -9,26 +9,42 @@
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script>
 $(document).ready(function(){
-   
+	
+	   
     // 서치
     $('#pjt_btn').on('click',function(){
-    	var pjtCd = $('#pjtcode').val();
-        $.ajax({
-            url:'/test/search',//호출할 메소드
-            type:'GET',//송신 방식 
-            data:{pjtCd:pjtCd},//넘길 데이터
-            success:function(data){//받은 데이터
-            	console.log(data);
-                $('#gyhh').empty();//삭제 
-                $(data).each((index,item)=>{
-                	$('#gyhh').append('<tr>');//append추가
-                	$('#gyhh').append('<td style="background-color: #fff9df" width="20%">'+item.SCV_PART+'</td>');
-                	$('#gyhh').append('<td>'+item.CUST_NM+'</td>');
-                	$('#gyhh').append('<td>'+item.EX_WORK_AMT+'</td>');
-                	$('#gyhh').append('</tr>');
-                });              
-            }
-        });
+    	var PJT_CD = $('#PJT_CD').val();
+    	//유효성 검사
+    	if($('#PJT_CD').val().length<5){
+    		$('#PJT_CD').attr('placeholder','5자리 PJT코드입력해주세요');
+    		$('#PJT_CD').focus();
+        	return false;
+    	}else{
+	        $.ajax({
+	            url:'/cooperationPJTYesanList',//호출할 메소드
+	            type:'POST',//송신 방식 
+	            data:{PJT_CD:PJT_CD},//넘길 데이터
+	            success:function(data){	//받은 데이터
+	            	console.log(data);
+	                $('#gyhh').empty();//계약현황 내용 삭제 
+	                $('#yshh').empty();//예산현황 내용 삭제 
+	                $(data.cooperationSmallList).each((index,item)=>{
+	                	$('#gyhh').append(//계약현황에 출력시켜주기
+	                			'<tr><td style="background-color: #fff9df" width="20%">'
+	                			+item.OUT_ITEM_NM+'</td><td>' //부문
+	                			+item.CUST_NM+'</td><td>'	//외주처
+	                			+item.CONTRACT_AMT+'</td></tr>'); //계약액
+	                });
+	                $(data.cooperationYesanList).each((index,item)=>{
+	                	$('#yshh').append(//계약현황에 출력시켜주기
+	                			'<tr><td style="background-color: #fff9df" width="20%">'
+	                			+item.SCV_NM+'</td><td>' //부문
+	                			+item.EX_AMT+'</td><td>'	//계약예산
+	                			+item.EX_WORK_AMT+'</td></tr>'); //실행예산
+	                });
+	            }
+	        });
+    	}
     });
     
 });
@@ -45,7 +61,7 @@ $(document).ready(function(){
 						<th width="25%"><label>프로젝트 코드 : </label></th>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="number" name="pjtcode" id="pjtcode"
+								<input type="number" name="pjtcode" id="PJT_CD"
 									class="form-control">
 							</div>
 						</td>

@@ -92,26 +92,71 @@
 
 	</select>
 <!-- 외주관리 - 외주계약서 관리 - 외주계약서 검색 쿼리 -->
-	<select id="cooperationInPJTSelect"
+	<!--입력 위한 PJT별 용역 계약현황 검색-->
+	<select id="cooperationPJTSelect"
 		parameterType="String"
 		resultType="java.util.Map">
-	<!--입력 위한 PJT별 용역 역계약서 검색-->
+	
 		SELECT 
 			 C.LEVEL2_NM as OUT_ITEM_NM <!-- 부문 -->
 			,B.CUST_NM as CUST_NM <!-- 외주처 -->
 		 	,A.contract_amt as CONTRACT_AMT <!-- 계약액 -->
-		from 
+		FROM 
 			 T_P12000 A <!-- 외주계약서  -->
 			,T_AC0300 B <!-- 계약처(외주처) -->
 			,(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '160')C <!-- 부문  -->
 		WHERE 
 			A.out_corp *= B.CUST_CD
-			and
+			AND
 			A.OUT_ITEM *= C.LEVEL2_CD
-			and
-			a.pjt_cd LIKE '%'+#{PJT_CD}+'%'
+			AND
+			A.pjt_cd LIKE '%'+#{PJT_CD}+'%'
 		ORDER BY
 			OUT_ITEM
 	</select>
+	<!--입력 위한 PJT별 예산현황 검색-->
+	<select id="cooperationYesanSelect"
+		parameterType="String"
+		resultType="java.util.Map">
 	
+		SELECT
+		 	B.LEVEL2_NM as SCV_NM <!-- 부문 -->
+		 	,A.EX_AMT as EX_AMT <!-- 계약예산 -->
+		 	,ISNULL(A.EX_WORK_AMT,0) as EX_WORK_AMT <!-- 실행예산 -->
+		FROM 
+		 	T_P11070 A <!-- 외주용역 -->
+		 	,(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '160')B <!-- 부문출력 -->
+		WHERE 
+			A.SCV_PART *= B.LEVEL2_CD
+			AND
+			A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
+		ORDER BY
+			SCV_PART
+	</select>
+	<!-- 계약프로젝트 기본 정보 검색(프로젝트,수행부서,PM) -->
+	<select id="cooperationPJTPM"
+		parameterType="String"
+		resultType="java.util.Map">
+		SELECT 
+			A.PJT_CD as PJT_CD <!-- 프로젝트코드 -->
+			,B.PJT_NM as PJT_NM <!-- 프로젝트 한글명 -->
+			,D.DEPT_CD as DEPT_CD <!-- 수행부서 코드 -->
+			,D.DEPT_NM as DEPT_NM <!-- 수행부서 한글명 -->
+			,C.KOR_NM as PM_NM <!-- PM 한글명 -->
+		FROM 
+			 T_P11000_H A <!-- 프로젝트 히스토리(상세?) -->
+			,T_SM3000 B <!-- 프로젝트 대장 -->
+			,T_HM1000 C <!-- 사원정보 -->
+			,T_SC1010 D <!-- 수행부서 -->
+		WHERE
+			 A.PJT_CD *= B.PJT_CD
+			and
+			 A.PM_EMP_NO *= C.EMP_NO
+			and
+			 A.DEPT_CD *= D.DEPT_CD
+			and
+		  	 A.PJT_CD = #{PJT_CD}
+			and 
+			 PJT_SEQ = (SELECT max(PJT_SEQ)from T_P11000_H WHERE PJT_CD = #{PJT_CD})
+	</select>
 </mapper>

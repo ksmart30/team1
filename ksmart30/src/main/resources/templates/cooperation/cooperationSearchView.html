@@ -21,7 +21,7 @@ $(document).ready(function(){
     	var inContractNm = $('#inContractNm').val(); // 용역명(외주계약명)
     	var inBuildType = $('#inBuildType').val(); // 건축물 유형
         $.ajax({
-            url:'/project/cooperation/search',//호출할 메소드
+            url:'/cooperationSearch',//호출할 메소드
             type:'POST',//송신 방식 
             data:{inDeptCd:inDeptCd,inContractDate:inContractDate,
             		inPjtCd:inPjtCd,inPjtNm:inPjtNm,inOutItem:inOutItem,
