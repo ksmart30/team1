@@ -4,7 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- @file Client.java @brief 기준정보관리-거래처등록 Controller @author ksmart30 YSM -->
 <mapper namespace="ksmart30.team00.baseinfo.mapper.ClientMapper">
-	<!-- 거래처 조회를 위해 T_AC0300(고객정보)에서 사업자등록번호와 고객명 정보를 조회한다 -->
+	
+	
+	<!-- 10.2.1거래처 조회를 위해 T_AC0300(고객정보)에서 사업자등록번호와 고객명 정보를 조회한다 -->
 	<select id="clientSelect"
 		parameterType="ksmart30.team00.baseinfo.domain.Client"
 		resultType="ksmart30.team00.baseinfo.domain.Client">
@@ -25,7 +27,7 @@
 	</select>
 
 
-	<!-- 검색된 거래처의 상세페이지를 위해 T_AC0300(고객정보)에서 전체정보를 조회한다 -->
+<!-- 10.2.1 검색된 거래처의 상세페이지를 위해 T_AC0300(고객정보)에서 전체정보를 조회한다 -->
 	<select id="clientAllSelect" parameterType="String"
 		resultType="ksmart30.team00.baseinfo.domain.Client">
 
@@ -69,7 +71,10 @@
 		'%'+#{CUST_CD}+'%'
 
 	</select>
+	
 
+	
+<!-- 10.2.2 거래처코드 리스트 출력 검색조건에 따라 검색하는 쿼리  -->
 	<select id="clientListOutput"
 		parameterType="ksmart30.team00.baseinfo.domain.ClientList"
 		resultType="java.util.Map">

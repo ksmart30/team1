@@ -29,10 +29,11 @@ public class ClientRestController {
 	@PostMapping("/baseInfo/clientAllView")
 	public Client clientAllView(String CUST_CD) {
 		System.out.println("ClientRestController  clientAllView왔나");
-		
+		System.out.println("CUST_CD : "+ CUST_CD);
 		
 		return clientService.clientAllSearch(CUST_CD);	
 	}
+
 	
 	
 	//10.2.2 거래처코드 리스트 출력 (검색조건에 맞는 검색 후 결과 화면 )
