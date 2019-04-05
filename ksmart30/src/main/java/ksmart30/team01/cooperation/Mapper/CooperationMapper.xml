@@ -5,7 +5,7 @@
 <mapper namespace="ksmart30.team01.cooperation.Mapper.CooperationMapper">
 
  <!-- 외주관리 - 외주계약서 관리 - 외주계약서 검색 쿼리 -->
-	<select id="cooperationList" 
+	<select id="getCooperationList" 
 		parameterType="ksmart30.team01.cooperation.domain.CooperationSearchRequest" 
 		resultType="java.util.Map">
 		SELECT 
@@ -93,7 +93,7 @@
 	</select>
 <!-- 외주관리 - 외주계약서 관리 - 외주계약서 검색 쿼리 -->
 	<!--입력 위한 PJT별 용역 계약현황 검색-->
-	<select id="cooperationPJTSelect"
+	<select id="getCooperationPJT"
 		parameterType="String"
 		resultType="java.util.Map">
 	
@@ -101,6 +101,8 @@
 			 C.LEVEL2_NM as OUT_ITEM_NM <!-- 부문 -->
 			,B.CUST_NM as CUST_NM <!-- 외주처 -->
 		 	,A.contract_amt as CONTRACT_AMT <!-- 계약액 -->
+		 	,PJT_CD as PJT_CD
+		 	,A.OUT_CORP as OUT_CORP
 		FROM 
 			 T_P12000 A <!-- 외주계약서  -->
 			,T_AC0300 B <!-- 계약처(외주처) -->
@@ -115,7 +117,7 @@
 			OUT_ITEM
 	</select>
 	<!--입력 위한 PJT별 예산현황 검색-->
-	<select id="cooperationYesanSelect"
+	<select id="getCooperationYesan"
 		parameterType="String"
 		resultType="java.util.Map">
 	
@@ -134,7 +136,7 @@
 			SCV_PART
 	</select>
 	<!-- 계약프로젝트 기본 정보 검색(프로젝트,수행부서,PM) -->
-	<select id="cooperationPJTPM"
+	<select id="getCooperationPJTPM"
 		parameterType="String"
 		resultType="java.util.Map">
 		SELECT 
@@ -158,5 +160,11 @@
 		  	 A.PJT_CD = #{PJT_CD}
 			and 
 			 PJT_SEQ = (SELECT max(PJT_SEQ)from T_P11000_H WHERE PJT_CD = #{PJT_CD})
+	</select>
+	<!-- 계약서 본문 출력  -->
+	<select id="getCooperationPJTSangse"
+		parameterType="ksmart30.team01.cooperation.domain.cooperationSangseRequest"
+		resultType="java.util.Map">
+		SELECT * from T_P12000 WHERE PJT_CD = #{PJT_CD} and out_corp = #{OUT_CORP}
 	</select>
 </mapper>

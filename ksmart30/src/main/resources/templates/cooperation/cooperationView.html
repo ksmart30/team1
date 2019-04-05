@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layout/main">
@@ -6,11 +6,23 @@
 	<meta charset="UTF-8">
 	<title>외주계약서 입력</title>
 	<th:block th:include="layout/customHead"></th:block>
-	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
-$(document).ready(function(){
+	function callme(IN_PJT_CD,IN_OUT_CORP) {
+
+		console.log('callme 호출되냐??');
+		$.ajax({
+            url:'/cooperationPJTSangse', //호출할 메소드
+            type:'POST',//송신 방식 
+            data:{PJT_CD:IN_PJT_CD,OUT_CORP:IN_OUT_CORP},//넘길 데이터
+            success:function(data){
+            	console.log(data);
+            }
+		});		
+	};
 	
-	   
+$(document).ready(function(){
+		
     // 서치
     $('#pjt_btn').on('click',function(){
     	var PJT_CD = $('#PJT_CD').val();
@@ -28,20 +40,29 @@ $(document).ready(function(){
 	            	console.log(data);
 	                $('#gyhh').empty();//계약현황 내용 삭제 
 	                $('#yshh').empty();//예산현황 내용 삭제 
+	                
+	                //계약현황
 	                $(data.cooperationSmallList).each((index,item)=>{
 	                	$('#gyhh').append(//계약현황에 출력시켜주기
-	                			'<tr><td style="background-color: #fff9df" width="20%">'
+	                			'<tr onclick="callme('+PJT_CD+','+item.OUT_CORP+')"><td style="background-color: #fff9df" width="20%">'
 	                			+item.OUT_ITEM_NM+'</td><td>' //부문
 	                			+item.CUST_NM+'</td><td>'	//외주처
 	                			+item.CONTRACT_AMT+'</td></tr>'); //계약액
 	                });
+	                //예산현황
 	                $(data.cooperationYesanList).each((index,item)=>{
-	                	$('#yshh').append(//계약현황에 출력시켜주기
+	                	$('#yshh').append(//예산현황에 출력시켜주기
 	                			'<tr><td style="background-color: #fff9df" width="20%">'
 	                			+item.SCV_NM+'</td><td>' //부문
 	                			+item.EX_AMT+'</td><td>'	//계약예산
 	                			+item.EX_WORK_AMT+'</td></tr>'); //실행예산
 	                });
+	                $('#PJT_CD_NM').empty();//계약프로젝트 내용 삭제
+	                $('#PJT_DEPT_CD_NM').empty();//수행부서 내용 삭제
+	                $('#PJT_PM_NM').empty();//PM 내용 삭제
+	                $('#PJT_CD_NM').append('('+data.cooperationPJTPM.PJT_CD+') '+data.cooperationPJTPM.PJT_NM);
+	                $('#PJT_DEPT_CD_NM').append('('+data.cooperationPJTPM.DEPT_CD+') '+data.cooperationPJTPM.DEPT_NM);
+	                $('#PJT_PM_NM').append(data.cooperationPJTPM.PM_NM);
 	            }
 	        });
     	}
@@ -137,13 +158,13 @@ $(document).ready(function(){
 				<table class="table table-bordered">
 					<tr>
 						<td style="background-color: #f3f3f3" width="20%">프로젝트</td>
-						<td colspan="3">( 19009 ) ksmart1팀</td>
+						<td colspan="3" id="PJT_CD_NM">( 19009 ) ksmart1팀</td>
 					</tr>
 					<tr>
 						<td style="background-color: #f3f3f3">수행부서</td>
-						<td>( 7500 ) 설계1본부</td>
+						<td id="PJT_DEPT_CD_NM">( 7500 ) 설계1본부</td>
 						<td style="background-color: #f3f3f3">PM</td>
-						<td>이다은</td>
+						<td id="PJT_PM_NM">이다은</td>
 					</tr>
 				</table>
 
