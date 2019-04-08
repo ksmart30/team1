@@ -30,7 +30,7 @@ public class ProjectManageRestController {
 	@PostMapping("/project/projectManageListProcess")
 	public List<Map<String, Object>> projectManageListProcess(String PJT_CD, String DEPT_CD, String YEAR) {
 		System.out.println("RestController projectManageListProcess 메서드 실행");
-		return projectManageService.businessManagerListProcess(PJT_CD, DEPT_CD, YEAR);
+		return projectManageService.getBusinessManagerList(PJT_CD, DEPT_CD, YEAR);
 	}
 	
 	//3.1.1 용역계약서 발주처 입력 처리
@@ -114,21 +114,32 @@ public class ProjectManageRestController {
 	@PostMapping("/project/projectManageChangeListProcess")
 	public List<Map<String, ProjectHistory>> projectManageChangeListProcess(String PJT_CD, String DEPT_CD, String YEAR) {
 		System.out.println("RestController projectManageChangeListProcess 메서드 실행");
-		return projectManageService.projectHistoryListProcess(PJT_CD, DEPT_CD, YEAR);
+		return projectManageService.getProjectHistoryList(PJT_CD, DEPT_CD, YEAR);
 	}
 
 	//3.1.3 용역계약서 변경 조회
 	/* @brief	"http://localhost/project/projectManageChangeListView" 주소분기(post방식)
 	 *			화면에서 입력한 값을 ajax로 값을 넘기고 받기 위함
-	 *			선택한 프로젝트의 변경 현황 리스트
+	 *			선택한 용역계약서의 변경 현황 리스트
 	 *			@return List<Map<String, Object>>
 	 */
 	@PostMapping("/project/projectManageChangeHyunhwangListProcess")
 	public List<Map<String, Object>> projectManageChangeHyunhwangListProcess(String PJT_CD) {
 		System.out.println("RestController projectManageChangeHyunhwangListProcess 메서드 실행");
-		return projectManageService.projectManageChangeHyunhwangListProcess(PJT_CD);
+		return projectManageService.getProjectManageChangeHyunhwangList(PJT_CD);
 	}
-
+	
+	//3.1.3 용역계약서 변경 조회
+	/* @brief	"http://localhost/project/projectManageChangeListView" 주소분기(post방식)
+	 *			화면에서 입력한 값을 ajax로 값을 넘기고 받기 위함
+	 *			현황 리스트에서 선택한 용역계약서 상세 데이터
+	 *			@return List<Map<String, Object>>
+	 */
+	@PostMapping("/project/projectManageChangeSangseProcess")
+	public Map<String, Object> projectManageChangeSangseProcess(String PJT_CD, String PJT_SEQ) {
+		System.out.println("RestController projectManageChangeSangseProcess 메서드 실행");
+		return projectManageService.getProjectManageChangeSangse(PJT_CD, PJT_SEQ);
+	}
 	
 	//3.1.4 용역계약서 검색(부서)
 	@PostMapping("/project/manage/depart_search")

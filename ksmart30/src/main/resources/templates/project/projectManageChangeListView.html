@@ -6,6 +6,8 @@
 		<th:block th:include="layout/customHead"></th:block>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
+		
+		// 용역계약서 리스트에서 현황 리스트를 출력하는 메서드
 		function pjtOneBtn(PJT_CD) {
 			console.log(PJT_CD);
 			$.ajax({
@@ -16,31 +18,75 @@
 					console.log(data);
 					$('#pjtHistoryDetailList').empty();
 					for(let i=0; i<data.length; i++) {
-						$('#pjtHistoryDetailList').append('<tr><td>'+data[i].PJT_DATE+'</td><td>'+data[i].PJT_GB+'</td></tr>');
+						$('#pjtHistoryDetailList').append('<tr id="test" onclick="pjtSangseBtn('+data[i].PJT_CD+','+data[i].PJT_SEQ+')"><td>'+data[i].PJT_DATE+'</td><td>'+data[i].LEVEL2_NM+'</td></tr>');
 					}
+					pjtSangseBtn(data[0].PJT_CD, data[0].PJT_SEQ);
 				}
 			});
 		}
-			$(document).ready(function(){
-				$('#pjtSearchBtn').click(function(){
-					let PJT_CD = $('#pjtCd').val();
-					let YEAR = $('#pjtYear').val();
-					let DEPT_CD = $('#pjtDept').val();
-					console.log(PJT_CD+YEAR+DEPT_CD);
-					$.ajax({
-						url:'/project/projectManageChangeListProcess',
-						type:'POST',
-						data:{PJT_CD:PJT_CD, DEPT_CD:DEPT_CD, YEAR:YEAR},
-						success:function(data){
-							console.log(data);
-							$('#pjtHistoryList').empty();
-							for(let i=0; i<data.length; i++) {
-								$('#pjtHistoryList').append('<tr><td style="background-color:#fff9df">'+data[i].PJT_CD+'</td><td onclick="pjtOneBtn('+data[i].PJT_CD+')">'+data[i].PJT_NM+'</td></tr>');
-							}
+		
+		// 현황 리스트에서 해당 용역계약서의 상세 내용을 출력하는 메서드
+		function pjtSangseBtn(PJT_CD, PJT_SEQ) {
+			console.log(PJT_CD,PJT_SEQ);
+			$.ajax({
+				url:'/project/projectManageChangeSangseProcess',
+				type:'POST',
+				data:{PJT_CD:PJT_CD, PJT_SEQ:PJT_SEQ},
+				success:function(data) {
+					console.log(data);
+					$('#S_PJT_CD').empty();				// 프로젝트 코드
+					$('#S_PJT_CD').append(data.PJT_CD);
+					$('#S_PJT_NM').empty();				// 프로젝트 명
+					$('#S_PJT_NM').append(data.PJT_NM);
+					$('#S_DEPT_NM').empty();			// 수행부서명
+					$('#S_DEPT_NM').append(data.DEPT_NM);
+					$('#S_PM_EMP_NM').empty();			// PM
+					$('#S_PM_EMP_NM').append(data.PM_EMP_NM);
+					$('#S_PJT_DATE').empty();			// 변경 일자
+					$('#S_PJT_DATE').append(data.PJT_DATE);
+					$('#S_LEVEL2_NM').empty()			// 변경 구분
+					$('#S_LEVEL2_NM').append(data.LEVEL2_NM);
+					$('#S_CHANGE_SAYU').empty();		// 변경 사유
+					$('#S_CHANGE_SAYU').append(data.CHANGE_SAYU);
+					$('#AFTER_TOT_CONTRACT_AMT').empty();	// 당사총계약액 변경(후)
+					$('#AFTER_TOT_CONTRACT_AMT').append(data.TOT_CONTRACT_AMT);
+					$('#AFTER_PJT_CONTRACT_AMT').empty();	// PJT총계약액 변경(후)
+					$('#AFTER_PJT_CONTRACT_AMT').append(data.TOT_CONTRACT_AMT);
+					$('#AFTER_G_AREA_P').empty();		// 대지면적 변경(후)
+					$('#AFTER_G_AREA_P').append(data.G_AREA_P);
+					$('#AFTER_G_AREA_M').empty();
+					$('#AFTER_G_AREA_M').append(data.G_AREA_M);
+					$('#AFTER_G_YAREA_P').empty();		//연면적 변경(후)
+					$('#AFTER_G_YAREA_P').append(data.G_YAREA_P);
+					$('#AFTER_G_YAREA_M').empty();
+					$('#AFTER_G_YAREA_M').append(data.G_YAREA_M);
+				}
+			});
+		}
+		
+		// 전체 document ready
+		$(document).ready(function(){
+			$('#pjtSearchBtn').click(function(){
+				let PJT_CD = $('#pjtCd').val();
+				let YEAR = $('#pjtYear').val();
+				let DEPT_CD = $('#pjtDept').val();
+				console.log(PJT_CD+YEAR+DEPT_CD);
+				
+				$.ajax({
+					url:'/project/projectManageChangeListProcess',
+					type:'POST',
+					data:{PJT_CD:PJT_CD, DEPT_CD:DEPT_CD, YEAR:YEAR},
+					success:function(data){
+						console.log(data);
+						$('#pjtHistoryList').empty();
+						for(let i=0; i<data.length; i++) {
+							$('#pjtHistoryList').append('<tr><td style="background-color:#fff9df">'+data[i].PJT_CD+'</td><td onclick="pjtOneBtn('+data[i].PJT_CD+')">'+data[i].PJT_NM+'</td></tr>');
 						}
-					});
+						pjtOneBtn(data[0].PJT_CD);
+					}
 				});
 			});
+		});
 		</script>
 	</th:block>
 	<th:block layout:fragment="customBody">
@@ -53,7 +99,7 @@
 		</div>
     </div>
     
-    <div class="x_content" style="text-align: right">
+    <div class="x_content" style="text-align:right">
 		<div class="btn-group" >
 			<button class="btn btn-default" type="reset">입력</button>
 			<button class="btn btn-default" type="button">수정</button>
@@ -145,25 +191,25 @@
 		<table class="table table-bordered">
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">프로젝트</td>
-				<td colspan="3">19009,  bonobonoPorori</td>
+				<td colspan="3"><span id="S_PJT_CD"></span>, <span id="S_PJT_NM"></span></td>
 			</tr>
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">수행부서</td>
-				<td width="25%">설계1본부 1소</td>
+				<td width="25%"><span id="S_DEPT_NM"></span></td>
 				<td width="25%" style="background-color:#f3f3f3">PM</td>
-				<td width="25%">이다은</td>
+				<td width="25%"><span id="S_PM_EMP_NM"></span></td>
 			</tr>
 		</table>
 		<table class="table table-bordered">
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">변경일자</td>
-				<td width="25%">2019/03/21</td>
+				<td width="25%"><span id="S_PJT_DATE"></span></td>
 				<td width="25%" style="background-color:#f3f3f3">변경구분</td>
-				<td width="25%">면적정산</td>
+				<td width="25%"><span id="S_LEVEL2_NM"></span></td>
 			</tr>
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">변경사유</td>
-				<td colspan="3">계약면적 200평으로</td>
+				<td colspan="3" id="S_CHANGE_SAYU"></td>
 			</tr>
 		</table>
 		<table class="table table-bordered">
@@ -175,22 +221,22 @@
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">당사 총계약액</td>
 				<td>1,000,000,000원</td>
-				<td>1,000,000,000원</td>
+				<td><span id="AFTER_TOT_CONTRACT_AMT"></span></td>
 			</tr>
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">PJT 총계약액</td>
 				<td>1,000,000,000원</td>
-				<td>1,000,000,000원</td>
+				<td><span id="AFTER_PJT_CONTRACT_AMT"></span></td>
 			</tr>
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">대지면적</td>
 				<td>150.13평, 496.3m²</td>
-				<td>200평, 496.3m²</td>
+				<td><span id="AFTER_G_AREA_P"></span>평, <span id="AFTER_G_AREA_M"></span>m²</td>
 			</tr>
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">연면적</td>
 				<td>100.13평, 331.01m²</td>
-				<td>200평, 331.01m²</td>
+				<td><span id="AFTER_G_YAREA_P"></span>평, <span id="AFTER_G_YAREA_M"></span>m²</td>
 			</tr>
 		</table>
 		
