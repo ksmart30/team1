@@ -55,7 +55,7 @@ public class CooperationRestController {
 		return cooperationService.cooperationPJTYesanSelect(PJT_CD);		
 	}
 	// 3.1.1 외주계약서 입력 - 조회
-	//외주관리 - 외주계약서관리 - 외주계약서 입력 - 외주계약서 상세 내역 출력 
+	//외주관리 - 외주계약서관리 - 외주계약서 입력 - 외주계약서 상세 내역(기성단계,용역단계 포함) 출력 
 	/* /cooperationPJTYesanList url을 POST로 호출시 실행
 	 * @param  POST cooperationSangseRequest 으로 vo 받기
 	 * @brief    projectCooperationManageService객체의 cooperationSangseSelect 메서드 호출
@@ -64,6 +64,6 @@ public class CooperationRestController {
 	@PostMapping("/cooperationPJTSangse")
 	public Map<String,Object> cooperationPJTSangse(cooperationSangseRequest vo){
 		System.out.println("받은값 : "+vo);
-		return cooperationService.cooperationSangseSelect(vo);
+		return cooperationService.cooperationPJTSangseSelect(vo);
 	}
 }

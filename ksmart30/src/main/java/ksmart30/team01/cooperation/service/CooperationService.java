@@ -50,8 +50,22 @@ public class CooperationService {
 	
 	// 3.1.1 외주계약서 입력 - 조회
 	// 외주관리 - 외주계약서관리 - 외주계약서 입력 - 외주계약서 상세내역 가져오기
-	public Map<String,Object> cooperationSangseSelect(cooperationSangseRequest vo){
+	public Map<String,Object> cooperationPJTSangseSelect(cooperationSangseRequest vo){
+		System.out.println("cooperationSangseSelect 실행 시작");
+		Map<String,Object> cooperationPJTSangseGD = new HashMap<String, Object>();
 		
-		return cooperationMapper.getCooperationPJTSangse(vo);		
+		//1.용역계약서 상세내용 요청
+		Map<String,Object> cooperationPJTSangse = cooperationMapper.getCooperationPJTSangse(vo);
+		cooperationPJTSangseGD.put("cooperationPJTSangse", cooperationPJTSangse);
+		
+		//2.용역계약서 기성단계 요청
+		List<Map<String,Object>> cooperationPJTGisung = cooperationMapper.getCooperationPJTGisung(vo);
+		cooperationPJTSangseGD.put("cooperationPJTGisung", cooperationPJTGisung);
+		
+		//3.용역계약서 용역내용 요청
+		List<Map<String,Object>> cooperationPJTDragon = cooperationMapper.getCooperationPJTDragon(vo);
+		cooperationPJTSangseGD.put("cooperationPJTDragon", cooperationPJTDragon);
+		
+		return cooperationPJTSangseGD;	
 	}
 }

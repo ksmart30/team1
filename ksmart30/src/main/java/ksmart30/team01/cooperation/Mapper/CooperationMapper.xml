@@ -152,19 +152,84 @@
 			,T_SC1010 D <!-- 수행부서 -->
 		WHERE
 			 A.PJT_CD *= B.PJT_CD
-			and
+			AND
 			 A.PM_EMP_NO *= C.EMP_NO
-			and
+			AND
 			 A.DEPT_CD *= D.DEPT_CD
-			and
+			AND
 		  	 A.PJT_CD = #{PJT_CD}
-			and 
+			AND 
 			 PJT_SEQ = (SELECT max(PJT_SEQ)from T_P11000_H WHERE PJT_CD = #{PJT_CD})
 	</select>
-	<!-- 계약서 본문 출력  -->
+	<!-- 용역계약서 본문 출력  -->
 	<select id="getCooperationPJTSangse"
 		parameterType="ksmart30.team01.cooperation.domain.cooperationSangseRequest"
 		resultType="java.util.Map">
-		SELECT * from T_P12000 WHERE PJT_CD = #{PJT_CD} and out_corp = #{OUT_CORP}
+		SELECT
+		 	OUT_ITEM	<!-- 부문 -->
+			,E.OUT_ITEM_NM
+			,CUST_CD <!-- 외주처 -->
+			,B.CUST_NM
+			,CONTRACT_NM <!-- 용역명 -->
+			,CONVERT (DATE, A.CRT_DATE) AS CRT_DATE <!-- 계약일자 -->
+			,CONVERT (DATE, A.S_DATE) AS S_DATE <!-- 계약기간 시작 -->
+			,CONVERT (DATE, A.E_DATE) AS E_DATE <!-- 계약기간 끝 -->
+			,E_RMK <!-- 종료구문(까지) -->
+			,CON_DOC_YN <!-- 계약서 유무 0 없음 1 있음 -->
+			,CONTRACT_AMT <!-- 계약액 -->
+			,C.E_RMK_NM
+			,VAT_YN
+			,D.VAT_YN_NM
+		FROM 
+		 	T_P12000 A
+		 	,(SELECT CUST_CD,CUST_NM FROM T_AC0300) B <!-- 거래처(외주처,발주처) -->
+		 	,(SELECT LEVEL2_CD,LEVEL2_NM as E_RMK_NM FROM T_SC9100 WHERE busi_gb = 'j' and level1_cd = '130') C <!-- 종료구문(계약기간~까지) -->
+		 	,(SELECT LEVEL2_CD,LEVEL2_NM as VAT_YN_NM FROM T_SC9100 WHERE busi_gb = 'j' and level1_cd = '340') D <!-- VAT여부 -->
+		 	,(SELECT LEVEL2_CD,LEVEL2_NM as OUT_ITEM_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '160') E <!-- 부문 -->
+		WHERE
+			 A.OUT_ITEM *= E.LEVEL2_CD
+			AND
+			 A.OUT_CORP *= B.CUST_CD
+			AND
+			 A.E_RMK *= C.LEVEL2_CD	
+			AND
+			 A.VAT_YN *= D.LEVEL2_CD
+			AND
+		 	 PJT_CD = #{PJT_CD} 
+			AND 
+		 	 out_corp = #{OUT_CORP}
 	</select>
+	<!-- 용역계약서 기성단계 출력  -->
+	<select id="getCooperationPJTGisung"
+		parameterType="ksmart30.team01.cooperation.domain.cooperationSangseRequest"
+		resultType="java.util.Map">
+		SELECT
+		 	* 
+		FROM 
+		 	T_P12010 A
+		 	,(SELECT LEVEL2_CD,LEVEL2_NM AS GI_GBN_NM FROM T_SC9100 WHERE busi_gb = 'j' and level1_cd = '150') B <!-- 기성단계 -->
+		WHERE
+			 A.GI_GBN *= B.LEVEL2_CD
+			AND
+		 	 PJT_CD = #{PJT_CD} 
+			AND 
+		 	 out_corp = #{OUT_CORP}
+	</select>
+	<!-- 용역계약서 용역내용 출력  -->
+	<select id="getCooperationPJTDragon"
+		parameterType="ksmart30.team01.cooperation.domain.cooperationSangseRequest"
+		resultType="java.util.Map">
+		SELECT
+		 	* 
+		FROM 
+		 	T_P12020 A
+		 	,(SELECT LEVEL2_CD,LEVEL2_NM AS CONTRACT_MEMO_NM FROM T_SC9100 WHERE busi_gb = 'j' and level1_cd = '410') B <!-- 용역내용 -->
+		WHERE
+			 A.CONTRACT_MEMO *= B.LEVEL2_CD
+			AND
+		 	 PJT_CD = #{PJT_CD} 
+			AND 
+		 	 out_corp = #{OUT_CORP}
+	</select>
+	
 </mapper>

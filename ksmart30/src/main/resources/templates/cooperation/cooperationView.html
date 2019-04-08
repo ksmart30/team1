@@ -3,29 +3,77 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layout/main">
 <th:block layout:fragment="customHead">
-	<meta charset="UTF-8">
-	<title>외주계약서 입력</title>
-	<th:block th:include="layout/customHead"></th:block>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script>
-	function callme(IN_PJT_CD,IN_OUT_CORP) {
+<meta charset="UTF-8">
+<title>외주계약서 입력</title>
+<th:block th:include="layout/customHead"></th:block>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+//계약서 상세내용 호출 후 출력
+function callme(IN_PJT_CD,IN_OUT_CORP){
 
-		console.log('callme 호출되냐??');
+		console.log("callme호출");
+		
 		$.ajax({
             url:'/cooperationPJTSangse', //호출할 메소드
             type:'POST',//송신 방식 
             data:{PJT_CD:IN_PJT_CD,OUT_CORP:IN_OUT_CORP},//넘길 데이터
-            success:function(data){
+            success:(data)=>{
             	console.log(data);
+            	//외주계약서 상세 내용
+            	$('#OUT_ITEM').attr('value',data.cooperationPJTSangse.OUT_ITEM);
+				 $('select[id=OUT_ITEM]').val(data.cooperationPJTSangse.OUT_ITEM);
+            	$('#CUST_CD').attr('value',data.cooperationPJTSangse.CUST_CD);
+            	$('#CUST_NM').attr('value',data.cooperationPJTSangse.CUST_NM);
+            	$('#CON_DOC_YN').attr('value',data.cooperationPJTSangse.CON_DOC_YN);
+            	$('#CONTRACT_NM').attr('value',data.cooperationPJTSangse.CONTRACT_NM);            	
+            	$('#E_DATE').attr('value',data.cooperationPJTSangse.E_DATE);
+            	$('#S_DATE').attr('value',data.cooperationPJTSangse.S_DATE);
+            	$('#CRT_DATE').attr('value',data.cooperationPJTSangse.CRT_DATE);
+            	$('#E_RMK').attr('value',data.cooperationPJTSangse.E_RMK);
+            	 $('select[id=E_RMK]').val(data.cooperationPJTSangse.E_RMK);           	
+            	$('#CONTRACT_AMT').attr('value',data.cooperationPJTSangse.CONTRACT_AMT);
+            	$('#VAT_YN').attr('value',data.cooperationPJTSangse.VAT_YN);
+            	 $('select[id=VAT_YN]').val(data.cooperationPJTSangse.VAT_YN);
+            	//기성단계 출력
+            	let GI_AMT_SUM = 0;
+            	let GI_RATE_SUM = 0;
+            	$('#gisung').empty();//내용삭제
+            	$('#GI_AMT_SUM').empty();//내용삭제
+            	$('#GI_RATE_SUM').empty();//내용삭제
+            	$(data.cooperationPJTGisung).each((index,item)=>{
+            		GI_AMT_SUM = GI_AMT_SUM + item.GI_AMT; // 금액 합산
+            		GI_RATE_SUM = GI_RATE_SUM + item.GI_RATE; // % 합산
+	                	$('#gisung').append(
+	                			'<tr><td>'
+	                			+item.CRT_SEQ+'</td><td>' //순번
+	                			+item.GI_GBN_NM+'</td><td>'//기성단계
+	                			+item.GI_AMT+'</td><td>'//금액
+	                			+item.GI_RATE+'</td></tr>');//%
+	            });
+            	$('#GI_AMT_SUM').append(GI_AMT_SUM);//합산 금액
+            	$('#GI_RATE_SUM').append(GI_RATE_SUM);//합산 %
+            	//용역내용 출력
+            	$('#dragon').empty();//내용삭제
+            	$(data.cooperationPJTDragon).each((index,item)=>{
+	                	$('#dragon').append(
+	                			'<tr><td>'
+	                			+item.SEQ+'</td><td>' //순번
+	                			+item.CONTRACT_MEMO_NM+'</td></tr>');//용역내용
+	            });
             }
-		});		
+		});	
+		
 	};
 	
-$(document).ready(function(){
-		
+$(document).ready(()=>{
+	//선택 색상 변경
+	 $("#yshh tr").click(function() {
+		$("#yshh tr").css("background-color", "#ffffff");
+		$(this).css( "background-color", "#ABF200" );
+	 });		
     // 서치
-    $('#pjt_btn').on('click',function(){
-    	var PJT_CD = $('#PJT_CD').val();
+    $('#pjt_btn').on('click',()=>{
+    	let PJT_CD = $('#PJT_CD').val();
     	//유효성 검사
     	if($('#PJT_CD').val().length<5){
     		$('#PJT_CD').attr('placeholder','5자리 PJT코드입력해주세요');
@@ -36,7 +84,7 @@ $(document).ready(function(){
 	            url:'/cooperationPJTYesanList',//호출할 메소드
 	            type:'POST',//송신 방식 
 	            data:{PJT_CD:PJT_CD},//넘길 데이터
-	            success:function(data){	//받은 데이터
+	            success:(data)=>{	//받은 데이터
 	            	console.log(data);
 	                $('#gyhh').empty();//계약현황 내용 삭제 
 	                $('#yshh').empty();//예산현황 내용 삭제 
@@ -63,6 +111,8 @@ $(document).ready(function(){
 	                $('#PJT_CD_NM').append('('+data.cooperationPJTPM.PJT_CD+') '+data.cooperationPJTPM.PJT_NM);
 	                $('#PJT_DEPT_CD_NM').append('('+data.cooperationPJTPM.DEPT_CD+') '+data.cooperationPJTPM.DEPT_NM);
 	                $('#PJT_PM_NM').append(data.cooperationPJTPM.PM_NM);
+	                
+	                callme(PJT_CD,data.cooperationSmallList[0].OUT_CORP);//첫번째 외주계약서 상세내용 출력 하기위해 callme 에 값넣고 호출
 	            }
 	        });
     	}
@@ -173,7 +223,7 @@ $(document).ready(function(){
 						<td style="background-color: #f3f3f3" width="10%">부문</td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
+								<select class="form-control" id="OUT_ITEM">
 									<option value=""></option>
 									<option value="01">건축</option>
 									<option value="02">기계</option>
@@ -208,7 +258,7 @@ $(document).ready(function(){
 						<td style="background-color: #f3f3f3" width="10%">외주처</td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control">
+								<input type="text" name="test" class="form-control" id="CUST_CD">
 							</div>
 
 						</td>
@@ -218,7 +268,7 @@ $(document).ready(function(){
 						<td colspan="2">
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
 								<input type="text" name="test" class="form-control"
-									readonly="readonly">
+									readonly="readonly" id="CUST_NM">
 							</div>
 						</td>
 					</tr>
@@ -226,42 +276,42 @@ $(document).ready(function(){
 						<td style="background-color: #f3f3f3">용역명</td>
 						<td colspan="6">
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control">
+								<input type="text" name="test" class="form-control" id="CONTRACT_NM">
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<td style="background-color: #f3f3f3">계약일자</td>
 						<td colspan="6"><div class="col-md-4 col-sm-12 col-xs-12 ">
-								<input type="date" name="test" class="form-control">
+								<input type="date" name="test" class="form-control" id="CRT_DATE">
 							</div></td>
 
 					</tr>
 					
 					<tr>
-						<td style="background-color: #f3f3f3">계약일자</td>
+						<td style="background-color: #f3f3f3">계약기간</td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="date" name="test" class="form-control">
+								<input type="date" name="test" class="form-control" id="S_DATE">
 							</div>
 						</td>
 						<td colspan="2">
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="date" name="test" class="form-control">
+								<input type="date" name="test" class="form-control" id="E_DATE">
 							</div>
 						</td>
 						<td colspan="3">
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
+								<select class="form-control" id="E_RMK">
 									<option value="">까지</option>
-									<option value="1">사용검사완료시(준공시)</option>
-									<option value="2">기본설계완료시</option>
-									<option value="3">최종도서(보고서)납품시</option>
-									<option value="4">실시도서납품시</option>
-									<option value="5">준공도서납품시</option>
-									<option value="6">결과발표후</option>
-									<option value="7">임시(가)사용완료시</option>
-									<option value="8">용역완료시</option>
+									<option value="01">사용검사완료시(준공시)</option>
+									<option value="02">기본설계완료시</option>
+									<option value="03">최종도서(보고서)납품시</option>
+									<option value="04">실시도서납품시</option>
+									<option value="05">준공도서납품시</option>
+									<option value="06">결과발표후</option>
+									<option value="07">임시(가)사용완료시</option>
+									<option value="08">용역완료시</option>
 								</select>
 							</div>
 						</td>
@@ -273,17 +323,17 @@ $(document).ready(function(){
 						<td style="background-color: #f3f3f3">계약액</td>
 						<td>
 						<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="number" name="test" class="form-control">
+								<input type="number" name="test" class="form-control" id="CONTRACT_AMT">
 							</div>
 						</td>
-						<td colspan="6"><input type="checkbox" class="icheckbox_flat-green">계약서여부</td>
+						<td colspan="6"><input type="checkbox" class="icheckbox_flat-green" id="CON_DOC_YN">계약서여부</td>
 					</tr>
 					
 					<tr>
 						<td style="background-color: #f3f3f3">VAT여부</td>
 						<td>
 						<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
+								<select class="form-control" id="VAT_YN">
 									<option value=""></option>
 									<option value="1">면세</option>
 									<option value="2">VAT포함</option>
@@ -325,7 +375,7 @@ $(document).ready(function(){
 						</tr>
 					</thead>
 					
-					<tbody>
+					<tbody id="gisung">
 						<tr>
 							<td>1</td>
 							<td>견적완료시</td>
@@ -337,8 +387,8 @@ $(document).ready(function(){
 					<tr style="background-color: #ffeeaa">
 						<th ></th>
 						<th ></th>
-						<th >500,000</th>
-						<th >0</th>
+						<th id="GI_AMT_SUM">500,000</th>
+						<th id="GI_RATE_SUM">0</th>
 					</tr>
 				</table>
 				<!-- 용역내용 -->
@@ -355,7 +405,7 @@ $(document).ready(function(){
 
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="dragon">
 						<tr>
 							<td>1</td>
 							<td>대관 행정 및 업무협조</td>

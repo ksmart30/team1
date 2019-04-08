@@ -31,7 +31,16 @@ public interface CooperationMapper {
 	// 외주관리 - 외주계약서관리 - 외주계약서 입력 - 0.계약프로젝트 기본 정보 검색(프로젝트,수행부서,PM)
 	Map<String,Object> getCooperationPJTPM(String PJT_CD);
 	
-	// 3.1.1 외주계약서 입력 - 조회
-	// 외주관리 - 외주계약서관리 - 외주계약서 입력 - 1.외주 계약서 상세내역 가져오기
+	// 3.1.1 외주계약서 입력 - 조회(상세)
+	// 외주관리 - 외주계약서관리 - 외주계약서 입력 - 1-1외주 계약서 상세내역 가져오기
 	Map<String,Object> getCooperationPJTSangse(cooperationSangseRequest vo);
+	
+	// 3.1.1 외주계약서 입력 - 조회(기성)
+	// 외주관리 - 외주계약서관리 - 외주계약서 입력 - 1-2.외주 계약서 기성단계 가져오기
+	List<Map<String,Object>> getCooperationPJTGisung(cooperationSangseRequest vo);
+	
+	// 3.1.1 외주계약서 입력 - 조회(용역)
+	// 외주관리 - 외주계약서관리 - 외주계약서 입력 - 1-3.외주 계약서 용역내용 가져오기
+	List<Map<String,Object>> getCooperationPJTDragon(cooperationSangseRequest vo);
+	
 }
