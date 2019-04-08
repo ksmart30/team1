@@ -12,8 +12,17 @@
 
 	<!-- 검색 폼 -->
 	<h3>검색 조건</h3>
-	<form id="demo-form" action="/project/cooperation/dragon_hyunhwang"
-		method="post">
+	<form id="demo-form" action="/project/cooperation/dragon_hyunhwang" method="post">
+		<div class="x_content" style="text-align: right">
+			<div class="btn-group">
+				<button class="btn btn-default" type="reset">입력</button>
+				<button class="btn btn-default" type="button">수정</button>
+				<button class="btn btn-default" type="button">삭제</button>
+				<button class="btn btn-default" type="button">저장</button>
+				<button class="btn btn-default" type="button">출력</button>
+			</div>
+
+		</div>
 
 		<table class="table">
 
@@ -79,9 +88,11 @@
 
 					</td>
 					<td>
-						<div>
-							<button class="btn">검색</button>
+						<div class="x_content" style="text-align: right">
+							<button class="btn" style="color: black">검색</button>
+
 						</div>
+
 					</td>
 					<td>
 						<div class="col-md-15 col-sm-15 col-xs-15 ">
@@ -89,9 +100,9 @@
 						</div>
 					</td>
 					<td>
-						
-							<p>계약일자가 2012년 이전 자료는 조회하실수 없습니다.</p>
-						
+
+						<p>계약일자가 2012년 이전 자료는 조회하실수 없습니다.</p>
+
 					</td>
 				</tr>
 			</tbody>
@@ -288,7 +299,7 @@
 	</div>
 	<!-- /page content -->
 </th:block>
-	<th:block layout:fragment="customJquery">
-		<th:block th:include="layout/customJquery"></th:block>
-    </th:block>
+<th:block layout:fragment="customJquery">
+	<th:block th:include="layout/customJquery"></th:block>
+</th:block>
 </html>

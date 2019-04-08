@@ -49,13 +49,9 @@
 					$('#tel_NO').attr('value',data.tel_NO);
 					$('#use_YN').attr('value',data.use_YN);
 					$('#zip_CD').attr('value',data.zip_CD);
-				}
-					
-				
-			});
-		
+			}	
+		});
 	}
-	
 	$(document).ready(function(){
 		
 		//왼쪽 거래처검색화면에서 검색button이 클릭
@@ -81,543 +77,562 @@
 	});
 	
 	
-	
-	
-	
-	
-	</script>
+</script>
 </th:block>
 <th:block layout:fragment="customBody">
-
-	<!-- 검색부분 start -->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<div class="x_panel">
-			<div class="x_content">
-				<label for="ex3">검색조건</label><br>
-				<table>
-					<tr>
-						<td>고객구분</td>
-						<td><select id="BUSI_TYPE">
-								<option value="">ALL</option>
-								<option value="1">건설사</option>
-								<option value="2">시행사</option>
-								<option value="3">공사/공단</option>
-								<option value="4">정부기관</option>
-								<option value="5">건축설계사무소</option>
-								<option value="6">외주협력업체</option>
-								<option value="7">조합(재개발,재건축)</option>
-						</select></td>
-						<!-- <td>
-						<input type="number">
-					</td> -->
-					</tr>
-					<tr>
-						<td>고객명</td>
-						<td><input type="text" id="CUST_NM"></td>
-					</tr>
-					<tr>
-						<td>사업자등록번호</td>
-						<td><input type="number" id="CUST_CD"></td>
-						<td><button ID="clientSearch">검색</button></td>
-					</tr>
-				</table>
-				<!-- 검색부분 end -->
-
-				<div class="x_title"></div>
-				<!-- 결과부분 start -->
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th width="30%">사업자등록번호</th>
-							<th>고객명</th>
-						</tr>
-					</thead>
-					<tbody id="searchBody">
-						<tr>
-							<td style="background-color: #fff9df">1370324950</td>
-							<td>(주)가우디자인</td>
-						</tr>
-						<tr>
-							<td style="background-color: #fff9df">12345647</td>
-							<td>(주)건일엠이씨</td>
-						</tr>
-						<tr>
-							<td style="background-color: #fff9df">33018454</td>
-							<td>(주)건원도시건축</td>
-						</tr>
-					</tbody>
-				</table>
-				<!-- 결과부분 end -->
-				<div class="x_title"></div>
+	<div class="col-md-9 col-xs-12" style="color: black;">
+		<div class="page-title">
+			<div class="title_left">
+				<h2>
+					<b>거래처코드 등록</b>
+				</h2>
+				<h5>
+					<font color="gray"> <b>10.기준정보관리&nbsp;>&nbsp;&nbsp;10.2회계관리&nbsp;>&nbsp;&nbsp;10.2.1거래처코드등록</b>
+					</font>
+				</h5>
 			</div>
 		</div>
 	</div>
+<font color="black">
+		<div class="x_content" style="text-align: right">
+			<div class="btn-group">
+				<button class="btn btn-default" type="reset">입력</button>
+				<button class="btn btn-default" type="button">수정</button>
+				<button class="btn btn-default" type="button">삭제</button>
+				<button class="btn btn-default" type="button">저장</button>
+				<button class="btn btn-default" type="button">출력</button>
+			</div>
+		</div> 
+		
+<!-- 검색부분 start -->
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<div class="x_content">
+					<label for="ex3">검색조건</label><br>
+					<table>
+						<tr>
+							<td>고객구분</td>
+							<td><select id="BUSI_TYPE">
+									<option value="">ALL</option>
+									<option value="1">건설사</option>
+									<option value="2">시행사</option>
+									<option value="3">공사/공단</option>
+									<option value="4">정부기관</option>
+									<option value="5">건축설계사무소</option>
+									<option value="6">외주협력업체</option>
+									<option value="7">조합(재개발,재건축)</option>
+							</select></td>
+						</tr>
+						
+						<tr>
+							<td>고객명</td>
+							<td><input type="text" id="CUST_NM"></td>
+						</tr>
+						
+						<tr>
+							<td>사업자등록번호</td>
+							<td><input type="number" id="CUST_CD"></td>
+							<td>
+								<div class="x_content" style="text-align: right">
+									<button class="btn" style="color: black" id="clientSearch">검색</button>
+								</div>
+							</td>
+						</tr>
+					</table>	
+<!-- 검색부분 end -->
 
+					<div class="x_title"></div>
+<!-- 결과부분 start -->
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th width="30%">사업자등록번호</th>
+								<th>고객명</th>
+							</tr>	
+						</thead>
+						<tbody id="searchBody">
+							<tr>
+								<td style="background-color: #fff9df">1370324950</td>
+								<td>(주)가우디자인</td>
+							</tr>
+							<tr>
+								<td style="background-color: #fff9df">12345647</td>
+								<td>(주)건일엠이씨</td>
+							</tr>
+							<tr>
+								<td style="background-color: #fff9df">33018454</td>
+								<td>(주)건원도시건축</td>
+							</tr>
+						</tbody>
+					</table>
+<!-- 결과부분 end -->
 
-	<!-- start -->
+					<div class="x_title"></div>
+				</div>
+			</div>
+		</div> 
+<!-- start -->
 
-	<div class="col-md-9 col-sm-6 col-xs-12">
-		<div class="x_panel">
-			<div class="x_content">
-				<div class="" role="tabpanel" data-example-id="togglable-tabs">
-					<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-						<li role="presentation" class="active"><a
-							href="#tab_content1" id="home-tab" role="tab" data-toggle="tab"
-							aria-expanded="true">기본정보</a></li>
-						<li role="presentation" class=""><a href="#tab_content2"
-							role="tab" id="profile-tab" data-toggle="tab"
-							aria-expanded="false">인적사항</a></li>
-					</ul>
+		<div class="col-md-9 col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<div class="x_content">
+					<div class="" role="tabpanel" data-example-id="togglable-tabs">
+						<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+							<li role="presentation" class="active"><a
+								href="#tab_content1" id="home-tab" role="tab" data-toggle="tab"
+								aria-expanded="true">기본정보</a></li>
+							<li role="presentation" class=""><a href="#tab_content2"
+								role="tab" id="profile-tab" data-toggle="tab"
+								aria-expanded="false">인적사항</a></li>
+						</ul>
+						
+						<div id="myTabContent" class="tab-content">
+							<!-- 기본정보 start -->
+							<div role="tabpanel" class="tab-pane fade active in"
+								id="tab_content1" aria-labelledby="home-tab">
 
-
-
-					<div id="myTabContent" class="tab-content">
-						<!-- 기본정보 start -->
-						<div role="tabpanel" class="tab-pane fade active in"
-							id="tab_content1" aria-labelledby="home-tab">
-
-							<!-- 1 -->
-							<table class="table">
-								<tr>
-									<td style="background-color: #f3f3f3" width="15%">사업자등록번호</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control" id="cust_cd">
-										</div>
-									</td>
-									<td style="background-color: #f3f3f3" width="15%">고객명</td>
-									<td colspan="6">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control"id="cust_NM">
-										</div>
-
-									</td>
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3">고객FULL명</td>
-									<td colspan="20">
-										<div class="col-md-20 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control" id="cust_FULL_NM">
-										</div>
-									</td>
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3" width="10%">고객구분</td>
-
-
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<select class="form-control" id="cust_GBN">
-												<option value=""></option>
-												<option value="11">건설사</option>
-												<option value="12">시행사</option>
-												<option value="13">공사/공단</option>
-												<option value="14">정부기관</option>
-												<option value="15">건축설계사무소</option>
-												<option value="16">외주협력업체</option>
-												<option value="17">조합(재개발,재건축)</option>
-												<option value="99">기타</option>
-											</select>
-										</div>
-									</td>
-
-									<td style="background-color: #f3f3f3" width="10%">거래유형</td>
-									<td colspan="6">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-
-											<input type="radio" name="chk_info" value="1">매입 
-											<input type="radio" name="chk_info" value="2">매출 
-											<input type="radio" name="chk_info" value="3">기타
-										</div>
-
-									</td>
-
-								</tr>
-
-								<!-- 법인구분  BUPIN Value 알아보기  -->
-								<tr>
-									<td style="background-color: #f3f3f3" width="10%">법인구분</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<select class="form-control" id="bupin">
-												<option value=""></option>
-												<option value="01">법인</option>
-												<option value="02">개인</option>
-											</select>
-										</div>
-									</td>
-
-									<td style="background-color: #f3f3f3" width="15%">대표성명</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control" id="repre_NM">
-										</div>
-									</td>
-								</tr>
-								<!-- 우편번호 검색 기능 알아보기 -->
-								<tr>
-									<td style="background-color: #f3f3f3">주소</td>
-									<td>
-										<div class="col-md-7 col-sm-7 col-xs-7 ">
-											<input type="text" name="test" class="form-control" id="zip_CD">
-
-										</div>
-										<div>
-											<td><button>검색</button></td>
-										</div>
-									</td>
-
-									<td colspan="6">
-										<div class="col-md-20 col-sm-20 col-xs-20 ">
-											<input type="text" name="test" class="form-control" id="addr">
-										</div>
-									</td>
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3" width="15%">대표전화</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control" id="tel_NO">
-										</div>
-									</td>
-									<td style="background-color: #f3f3f3" width="15%">팩스번호</td>
-									<td colspan="6">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control" id="fax_NO">
-										</div>
-
-									</td>
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3" width="15%">업태</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control" id="biz_STAT">
-										</div>
-									</td>
-									<td style="background-color: #f3f3f3" width="15%">업종</td>
-									<td colspan="6">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control" id="biz_ITEM">
-										</div>
-
-									</td>
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3" width="15%">대표사업자번호</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control" id="repre_CUST_CD">
-										</div>
-
-									</td>
-
-									<!-- IS090000  CASE ISNULL(A.ISO  , '') WHEN '1' THEN '유' ELSE '무' END ISO_NM   -->
-
-									<td style="background-color: #f3f3f3" width="10%">IS090000</td>
-									<td colspan="6">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-
-											<input type="radio" name="chk_info" value="1" id="iso">유 
-											<input type="radio" name="chk_info" value="3">무
-
-										</div>
-
-									</td>
-								</tr>
-								<!-- SELECT LEVEL2_CD,LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'H' AND LEVEL1_CD = '190' -->
-								<tr>
-									<td style="background-color: #f3f3f3" width="10%">은행코드</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<select class="form-control" id="bank_CD">
-												<option value=""></option>
-												<option value="2">산업은행</option>
-												<option value="3">기업은행</option>
-												<option value="4">국민은행</option>
-												<option value="5">KEB하나은행(외환은행)</option>
-												<option value="7">수협은행</option>
-												<option value="8">수출입은행</option>
-												<option value="10">농협은행</option>
-												<option value="12">지역농축협</option>
-												<option value="20">우리은행</option>
-												<option value="21">신한은행</option>
-												<option value="23">SC</option>
-												<option value="25">KEB하나은행</option>
-												<option value="27">한국씨티</option>
-												<option value="31">대구은행</option>
-												<option value="32">부산은행</option>
-												<option value="34">광주은행</option>
-												<option value="35">제주</option>
-												<option value="37">전북</option>
-												<option value="39">경남은행</option>
-												<option value="45">새마을금고</option>
-												<option value="47">신협은행</option>
-												<option value="50">상호저축은행</option>
-												<option value="51">Ｙａｍａｇｕｃｈｉ</option>
-												<option value="52">모간스탠리</option>
-												<option value="54">ＨＳＢＣ</option>
-												<option value="55">도이치은행</option>
-												<option value="56">알비에스피엘씨</option>
-												<option value="57">JP모간체이스</option>
-												<option value="58">미즈호은행</option>
-												<option value="59">미쓰비시도쿄ＵＦＪ은</option>
-												<option value="60">Ｂ．Ｏ．Ａ</option>
-												<option value="61">비엔피파리바</option>
-												<option value="64">산림조합</option>
-												<option value="71">우체국</option>
-												<option value="76">신용보증기금</option>
-												<option value="77">기술신용보증기금</option>
-												<option value="209">유안타증권</option>
-												<option value="218">현대증권</option>
-												<option value="230">미래에셋증권</option>
-												<option value="238">대우증권</option>
-												<option value="240">삼성증권</option>
-												<option value="243">한국투자증권</option>
-												<option value="247">우리투자증권</option>
-												<option value="261">교보증권</option>
-												<option value="262">하이투자증권</option>
-												<option value="263">ＨＭＣ투자증권</option>
-												<option value="264">키움증권</option>
-												<option value="266">이트레이드증권</option>
-												<option value="267">에스케이증권</option>
-												<option value="268">대신증권</option>
-												<option value="268">아이엠투자증권</option>
-												<option value="270">하나대투증권</option>
-												<option value="278">신한금융투자</option>
-												<option value="279">동부증권</option>
-												<option value="280">유진투자증권</option>
-												<option value="287">메리츠종합금융증권</option>
-												<option value="289">엔에이치농협증권</option>
-												<option value="290">부국증권</option>
-												<option value="291">신영증권</option>
-												<option value="292">엘아이지투자증권</option>
-												<option value="999">현금지급</option>
-											</select>
-										</div>
-									</td>
-
-									<td style="background-color: #f3f3f3">계좌번호</td>
-									<td colspan="6">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control">
-										</div>
-									</td>
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3" width="10%">예금주</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control" id="bank_ACCNO">
-										</div>
-									</td>
-
-
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3" width="10%">자본금</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control">
-										</div>
-									</td>
-
-									<td style="background-color: #f3f3f3">채권한도액</td>
-									<td colspan="6">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control">
-										</div>
-									</td>
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3" width="10%">설립일자</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control">
-										</div>
-									</td>
-
-
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3" width="10%">담당자</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control">
-										</div>
-									</td>
-
-									<td style="background-color: #f3f3f3">E-MAIL</td>
-									<td colspan="6">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control">
-										</div>
-									</td>
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3" width="10%">정보담당자</td>
-									<td>
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control">
-
-										</div>
-										<div>
-											<td><button>검색</button></td>
-										</div>
-
-									</td>
-
-									<td style="background-color: #f3f3f3">사용유무 타절</td>
-									<td colspan="6">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="radio" name="chk_info" value="매입">유 <input
-												type="radio" name="chk_info" value="매출">무
-										</div>
-									</td>
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3" width="10%">홈페이지</td>
-									<td colspan="6">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control">
-										</div>
-										<div>
-											<td><button>검색</button></td>
-										</div>
-									</td>
-								</tr>
-
-								<tr>
-									<td style="background-color: #f3f3f3" width="10%">자본금</td>
-									<td colspan="2">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control">
-										</div>
-									</td>
-
-									<td style="background-color: #f3f3f3">채권한도액</td>
-									<td colspan="6">
-										<div class="col-md-12 col-sm-12 col-xs-12 ">
-											<input type="text" name="test" class="form-control">
-										</div>
-									</td>
-								</tr>
-
-
-							</table>
-
-						</div>
-						<!-- 기본정보 end -->
-
-						<!-- 인적사항 start  -->
-						<div role="tabpanel" class="tab-pane fade" id="tab_content2"
-							aria-labelledby="profile-tab">
-							<div class="col-md-12 col-sm-6 col-xs-12">
+<!-- 1 -->
 								<table class="table">
-
 									<tr>
-										<td style="background-color: #f3f3f3" width="10%">성명</td>
-										<td>
+										<td style="background-color: #f3f3f3" width="15%">사업자등록번호</td>
+										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
-												<input type="text" name="test" class="form-control">
+												<input type="text" name="test" class="form-control"
+													id="cust_cd">
 											</div>
 										</td>
-										<td style="background-color: #f3f3f3" width="10%">부서/부문</td>
-										<td>
+										<td style="background-color: #f3f3f3" width="15%">고객명</td>
+										<td colspan="6">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
-												<input type="text" name="test" class="form-control">
-											</div>
-										</td>
-
-										<td colspan="2" style="background-color: #f3f3f3" width="10%">직책</td>
-										<td>
-											<div class="col-md-12 col-sm-12 col-xs-12 ">
-												<input type="text" name="test" class="form-control">
+												<input type="text" name="test" class="form-control"
+													id="cust_NM">
 											</div>
 										</td>
 									</tr>
-
+<!-- 2 -->
 									<tr>
-										<td style="background-color: #f3f3f3" width="10%">출생년도</td>
-										<td>
-											<div class="col-md-12 col-sm-12 col-xs-12 ">
-												<input type="date" name="test" class="form-control">
-											</div>
-										</td>
-
-										<td style="background-color: #f3f3f3" width="10%">집전화</td>
-										<td>
-											<div class="col-md-12 col-sm-12 col-xs-12 ">
-												<input type="text" name="test" class="form-control">
-											</div>
-										</td>
-										<td colspan="2" style="background-color: #f3f3f3" width="10%">핸드폰</td>
-										<td>
-											<div class="col-md-12 col-sm-12 col-xs-12 ">
-												<input type="text" name="test" class="form-control">
-											</div>
-										</td>
-									</tr>
-
-									<tr>
-										<td style="background-color: #f3f3f3">집주소</td>
-										<td><div class="col-md-12 col-sm-12 col-xs-12 ">
-												<input type="text" name="test" class="form-control">
-											</div></td>
-										<td style="background-color: #f3f3f3">우편번호찾기버튼</td>
-										<td colspan="6"><div
-												class="col-md-18 col-sm-12 col-xs-12 ">
-												<input colspan="8" type="text" name="test"
-													class="form-control">
-											</div></td>
-									</tr>
-
-									<tr>
-										<td style="background-color: #f3f3f3">E-MAIL</td>
+										<td style="background-color: #f3f3f3">고객FULL명</td>
 										<td colspan="20">
 											<div class="col-md-20 col-sm-12 col-xs-12 ">
-												<input type="text" name="test" class="form-control">
+												<input type="text" name="test" class="form-control"
+													id="cust_FULL_NM">
+											</div>
+										</td>
+									</tr>
+<!-- 3 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="10%">고객구분</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<select class="form-control" id="cust_GBN">
+													<option value=""></option>
+													<option value="11">건설사</option>
+													<option value="12">시행사</option>
+													<option value="13">공사/공단</option>
+													<option value="14">정부기관</option>
+													<option value="15">건축설계사무소</option>
+													<option value="16">외주협력업체</option>
+													<option value="17">조합(재개발,재건축)</option>
+													<option value="99">기타</option>
+												</select>
+											</div>
+										</td>
+
+										<td style="background-color: #f3f3f3" width="10%">거래유형</td>
+										<td colspan="6">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+
+												<input type="radio" name="chk_info" value="1">매입 <input
+													type="radio" name="chk_info" value="2">매출 <input
+													type="radio" name="chk_info" value="3">기타
 											</div>
 										</td>
 									</tr>
 
+<!-- 법인구분  BUPIN Value 알아보기  -->
+<!-- 4 -->
 									<tr>
-										<td style="background-color: #f3f3f3">취향/취미</td>
+										<td style="background-color: #f3f3f3" width="10%">법인구분</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<select class="form-control" id="bupin">
+													<option value=""></option>
+													<option value="01">법인</option>
+													<option value="02">개인</option>
+												</select>
+											</div>
+										</td>
+
+										<td style="background-color: #f3f3f3" width="15%">대표성명</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="repre_NM">
+											</div>
+										</td>
+									</tr>
+<!-- 우편번호 검색 기능 알아보기 -->
+<!-- 5 -->
+									<tr>
+										<td style="background-color: #f3f3f3">주소</td>
+										<td>
+											<div class="col-md-7 col-sm-7 col-xs-7 ">
+												<input type="text" name="test" class="form-control"
+													id="zip_CD">
+
+											</div>
+											<button>
+												<i class="fa fa-search"></i>
+											</button>
+										<td colspan="6">
+											<div class="col-md-20 col-sm-20 col-xs-20 ">
+												<input type="text" name="test" class="form-control"
+													id="addr">
+											</div>
+										</td>
+									</tr>
+<!-- 6 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="15%">대표전화</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="tel_NO">
+											</div>
+										</td>
+										<td style="background-color: #f3f3f3" width="15%">팩스번호</td>
+										<td colspan="6">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="fax_NO">
+											</div>
+
+										</td>
+									</tr>
+<!-- 7 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="15%">업태</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="biz_STAT">
+											</div>
+										</td>
+										<td style="background-color: #f3f3f3" width="15%">업종</td>
+										<td colspan="6">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="biz_ITEM">
+											</div>
+
+										</td>
+									</tr>
+<!-- 8 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="15%">대표사업자번호</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="repre_CUST_CD">
+											</div>
+
+										</td>
+
+										<!-- IS090000  CASE ISNULL(A.ISO  , '') WHEN '1' THEN '유' ELSE '무' END ISO_NM   -->
+
+										<td style="background-color: #f3f3f3" width="10%">IS090000</td>
+										<td colspan="6">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+
+												<input type="radio" name="chk_info" value="1" id="iso">유
+												<input type="radio" name="chk_info" value="3">무
+
+											</div>
+
+										</td>
+									</tr>
+<!-- SELECT LEVEL2_CD,LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'H' AND LEVEL1_CD = '190' -->
+<!-- 9 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="10%">은행코드</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<select class="form-control" id="bank_CD">
+													<option value=""></option>
+													<option value="2">산업은행</option>
+													<option value="3">기업은행</option>
+													<option value="4">국민은행</option>
+													<option value="5">KEB하나은행(외환은행)</option>
+													<option value="7">수협은행</option>
+													<option value="8">수출입은행</option>
+													<option value="10">농협은행</option>
+													<option value="12">지역농축협</option>
+													<option value="20">우리은행</option>
+													<option value="21">신한은행</option>
+													<option value="23">SC</option>
+													<option value="25">KEB하나은행</option>
+													<option value="27">한국씨티</option>
+													<option value="31">대구은행</option>
+													<option value="32">부산은행</option>
+													<option value="34">광주은행</option>
+													<option value="35">제주</option>
+													<option value="37">전북</option>
+													<option value="39">경남은행</option>
+													<option value="45">새마을금고</option>
+													<option value="47">신협은행</option>
+													<option value="50">상호저축은행</option>
+													<option value="51">Ｙａｍａｇｕｃｈｉ</option>
+													<option value="52">모간스탠리</option>
+													<option value="54">ＨＳＢＣ</option>
+													<option value="55">도이치은행</option>
+													<option value="56">알비에스피엘씨</option>
+													<option value="57">JP모간체이스</option>
+													<option value="58">미즈호은행</option>
+													<option value="59">미쓰비시도쿄ＵＦＪ은</option>
+													<option value="60">Ｂ．Ｏ．Ａ</option>
+													<option value="61">비엔피파리바</option>
+													<option value="64">산림조합</option>
+													<option value="71">우체국</option>
+													<option value="76">신용보증기금</option>
+													<option value="77">기술신용보증기금</option>
+													<option value="209">유안타증권</option>
+													<option value="218">현대증권</option>
+													<option value="230">미래에셋증권</option>
+													<option value="238">대우증권</option>
+													<option value="240">삼성증권</option>
+													<option value="243">한국투자증권</option>
+													<option value="247">우리투자증권</option>
+													<option value="261">교보증권</option>
+													<option value="262">하이투자증권</option>
+													<option value="263">ＨＭＣ투자증권</option>
+													<option value="264">키움증권</option>
+													<option value="266">이트레이드증권</option>
+													<option value="267">에스케이증권</option>
+													<option value="268">대신증권</option>
+													<option value="268">아이엠투자증권</option>
+													<option value="270">하나대투증권</option>
+													<option value="278">신한금융투자</option>
+													<option value="279">동부증권</option>
+													<option value="280">유진투자증권</option>
+													<option value="287">메리츠종합금융증권</option>
+													<option value="289">엔에이치농협증권</option>
+													<option value="290">부국증권</option>
+													<option value="291">신영증권</option>
+													<option value="292">엘아이지투자증권</option>
+													<option value="999">현금지급</option>
+												</select>
+											</div>
+										</td>
+										<td style="background-color: #f3f3f3">계좌번호</td>
+										<td colspan="6">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="bank_ACCNO">
+											</div>
+										</td>
+									</tr>
+<!-- 10 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="10%">예금주</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="bank_OWN">
+											</div>
+										</td>
+									</tr>
+<!-- 11 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="10%">자본금</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="fund">
+											</div>
+										</td>
+										<td style="background-color: #f3f3f3">채권한도액</td>
+										<td colspan="6">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="bond">
+											</div>
+										</td>
+									</tr>
+<!-- 12 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="10%">설립일자</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="estab_DT">
+											</div>
+										</td>
+									</tr>
+<!-- 13 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="10%">담당자</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="dam_NM">
+											</div>
+										</td>
+										<td style="background-color: #f3f3f3">E-MAIL</td>
+										<td colspan="6">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="email">
+											</div>
+										</td>
+									</tr>
+<!-- 14 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="10%">정보담당자</td>
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control">
 											</div>
 										</td>
-										<td style="background-color: #f3f3f3">전직장</td>
+										<td style="background-color: #f3f3f3">사용유무 타절</td>
+										<td colspan="4">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="radio" name="chk_info" value="매입">유 <input
+													type="radio" name="chk_info" value="매출">무
+											</div>
+										</td>
+									</tr>
+<!-- 15 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="10%">홈페이지</td>
 										<td colspan="6">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
-												<input type="text" name="test" class="form-control">
+												<input type="text" name="test" class="form-control"
+													id="homepage">
+											</div> 
+											<td>
+												<div><button><i class="fa fa-search"></i></button></div>
+											</td>
+									</tr>
+<!-- 16 -->
+									<tr>
+										<td style="background-color: #f3f3f3" width="10%">등록자</td>
+										<td colspan="2">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="audit_ID">
+											</div>
+										</td>
+										<td style="background-color: #f3f3f3">등록일자</td>
+										<td colspan="6">
+											<div class="col-md-12 col-sm-12 col-xs-12 ">
+												<input type="text" name="test" class="form-control"
+													id="audit_TM">
 											</div>
 										</td>
 									</tr>
 								</table>
 							</div>
+<!-- 기본정보 end -->
+
+
+<!-- 인적사항 start  -->
+							<div role="tabpanel" class="tab-pane fade" id="tab_content2"
+								aria-labelledby="profile-tab">
+								<div class="col-md-12 col-sm-6 col-xs-12">
+									<table class="table">
+
+										<tr>
+											<td style="background-color: #f3f3f3" width="10%">성명</td>
+											<td>
+												<div class="col-md-12 col-sm-12 col-xs-12 ">
+													<input type="text" name="test" class="form-control">
+												</div>
+											</td>
+											<td style="background-color: #f3f3f3" width="10%">부서/부문</td>
+											<td>
+												<div class="col-md-12 col-sm-12 col-xs-12 ">
+													<input type="text" name="test" class="form-control">
+												</div>
+											</td>
+
+											<td colspan="2" style="background-color: #f3f3f3" width="10%">직책</td>
+											<td>
+												<div class="col-md-12 col-sm-12 col-xs-12 ">
+													<input type="text" name="test" class="form-control">
+												</div>
+											</td>
+										</tr>
+
+										<tr>
+											<td style="background-color: #f3f3f3" width="10%">출생년도</td>
+											<td>
+												<div class="col-md-12 col-sm-12 col-xs-12 ">
+													<input type="date" name="test" class="form-control">
+												</div>
+											</td>
+
+											<td style="background-color: #f3f3f3" width="10%">집전화</td>
+											<td>
+												<div class="col-md-12 col-sm-12 col-xs-12 ">
+													<input type="text" name="test" class="form-control">
+												</div>
+											</td>
+											<td colspan="2" style="background-color: #f3f3f3" width="10%">핸드폰</td>
+											<td>
+												<div class="col-md-12 col-sm-12 col-xs-12 ">
+													<input type="text" name="test" class="form-control">
+												</div>
+											</td>
+										</tr>
+
+										<tr>
+											<td style="background-color: #f3f3f3">집주소</td>
+											<td><div class="col-md-12 col-sm-12 col-xs-12 ">
+													<input type="text" name="test" class="form-control">
+												</div></td>
+											<td style="background-color: #f3f3f3">우편번호찾기버튼</td>
+											<td colspan="6"><div
+													class="col-md-18 col-sm-12 col-xs-12 ">
+													<input colspan="8" type="text" name="test"
+														class="form-control">
+												</div></td>
+										</tr>
+
+										<tr>
+											<td style="background-color: #f3f3f3">E-MAIL</td>
+											<td colspan="20">
+												<div class="col-md-20 col-sm-12 col-xs-12 ">
+													<input type="text" name="test" class="form-control"
+														id="email">
+												</div>
+											</td>
+										</tr>
+
+										<tr>
+											<td style="background-color: #f3f3f3">취향/취미</td>
+											<td colspan="2">
+												<div class="col-md-12 col-sm-12 col-xs-12 ">
+													<input type="text" name="test" class="form-control">
+												</div>
+											</td>
+											<td style="background-color: #f3f3f3">전직장</td>
+											<td colspan="6">
+												<div class="col-md-12 col-sm-12 col-xs-12 ">
+													<input type="text" name="test" class="form-control">
+												</div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
 						</div>
+<!-- Tap end -->
 					</div>
-					<!-- Tap end -->
 				</div>
 			</div>
 		</div>
-	</div>
-
-
-	<!-- 프로젝트 end -->
+	</font>
+<!-- 프로젝트 end -->
 </th:block>
 <th:block layout:fragment="customJquery">
 	<th:block th:include="layout/customJquery"></th:block>
