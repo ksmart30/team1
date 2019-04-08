@@ -15,16 +15,24 @@ public class BusinessManageRestController {
 	@Autowired
 	BusinessManageService businessManageService;
 	
-	//사업성검토 List
+	//사업수행결정 승인 현황
 	@PostMapping("/business/businessManageListView")
 	public List<Map<String,Object>> businessManageListView(BusinessMarket vo) {
-		System.out.print("사업수행결정서list 검색 BusinessManageRestController 실행");
-		System.out.print("BusinessMarket 담긴값 : "+vo);
+		System.out.println("사업수행결정 승인 현황 BusinessManageRestController 실행");
+		System.out.println("BusinessMarket 담긴값 : "+vo);
 		List<Map<String,Object>> re = businessManageService.businessManageSelect(vo);
 		
 		return re;
 	}
 	
+	@PostMapping("/business/businessManageViewList")
+	public List<Map<String,Object>> businessManageViewList(BusinessMarket vo) {
+		System.out.println("사업수행결정서 프로젝트 목록BusinessManageRestController 실행");
+		System.out.println("BusinessMarket 담긴값 : "+vo);
+		List<Map<String,Object>> re = businessManageService.businessManageViewSelect(vo);
+		
+		return re;
+	}
 	
 }
 

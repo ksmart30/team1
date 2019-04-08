@@ -18,4 +18,14 @@
 		AND UP_SU BETWEEN #{UP_SU} AND #{UP_SU2}
 		AND YAREA_P BETWEEN #{YAREA_P} AND #{YAREA_P2}		
 </select>
+
+<!--사업수행결정서 좌측 목록  -->
+<select id="getBusinessManageViewList" parameterType="ksmart30.team01.business.domain.BusinessMarket" resultType="java.util.Map">	
+		SELECT  PJT_CD,
+				PJT_NM		
+		FROM T_PS3000	
+		WHERE BUSI_YY LIKE #{BUSI_YY}
+		AND PJT_NM LIKE '%'+ #{PJT_NM} +'%'
+		AND DEPT_CD LIKE '%'+ #{DEPT_CD} +'%'
+</select>
 </mapper>

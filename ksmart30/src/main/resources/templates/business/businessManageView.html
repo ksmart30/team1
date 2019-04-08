@@ -1,66 +1,164 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/main">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
+	
+	
+
+	
 	<title>2.1.1 사업수행 결정서 검색 List</title>
 		<th:block th:include="layout/customHead"></th:block>
-	</th:block>
-	<th:block layout:fragment="customBody">
-	<!-- 검색부분 start -->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<div class="x_panel">
-			<div class="x_content">
-				<label for="ex3">검색조건</label><br>
-				<table>
-					<tr>
-						<td>년도</td>
-						<td><input type="number"></td>
-					</tr>
-					<tr>
-						<td>부서</td>
-						<td><select>
-								<option>전 사</option>
-								<option>설계1본부</option>
-								<option>설계2본부</option>
-								<option>설계3본부</option>
-								<option>설계4본부</option>
-								<option>설계5본부</option>
-						</select></td>
-					</tr>
-					<tr>
-						<td>프로젝트</td>
-						<td><div>
-								<input type="text">
-							</div></td>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+			<script>
+			$(document).ready(()=>{
+				console.log("안녕1");
+			    // 검색목록(프로젝트예산 입력을 위한 용역계약서 리스트)
+			    $('#pjtSearchBtn').click(()=>{
+			    	console.log("안녕2");//btn_list를 클릭하면
+			    	var BUSI_YY = $('#BUSI_YY').val();
+			    	var PJT_NM = $('#PJT_NM').val();
+			    	var DEPT_CD = $('#DEPT_CD').val();
+			    	let pjtRadioValue = $('input[name=pjtRadioValue]:checked','#radioForm').val();
+			        $.ajax({
+			            url:'/business/businessManageViewList',	//url을 요청하고
+			            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
+			        	data:{BUSI_YY:BUSI_YY,PJT_NM:PJT_NM,DEPT_CD:DEPT_CD},	//넘길 데이터(검색 조건 없이 우선 테스트)
+			            success:function(data){	//받은 데이터
+			                $('#pjtList').empty();	//리스트를 비우고	               
+			                $(data).each((index,item)=>{
+			                    $('#pjtList').append('<tr>');
+			                    $('#pjtList').append('<td style="background-color:#fff9df">'+item.PJT_CD+'</td>');
+			                    $('#pjtList').append('<td>'+item.PJT_NM+'</td>');
+			                    $('#pjtList').append('</tr>');
+			                });
+			            }
+			        });
+			    });
+			});
+			</script>
 		
-					</tr>
-					
-				</table>
-				<!-- 검색부분 end -->
-				<div class="x_title"></div>
-				<!-- 결과부분 start -->
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>프로젝트명</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>ksmart1팀</td>
-						</tr>
-						<tr>
-							<td>bonobonoPorori</td>
-						</tr>
-					</tbody>
-				</table>
-				<!-- 결과부분 end -->
-				<div class="x_title"></div>
+	</th:block>
+	
+	
+	
+	
+	
+	
+	<th:block layout:fragment="customBody">
+	<font color="black">
+<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="x_panel">
+		<div class="x_content" style="overflow-x:auto">
+			<label for="ex3">검색조건</label><br>
+			<table>
+				<tbody><tr>
+					<td>
+						년도
+					</td>
+					<td>
+				<div class="col-md-10 col-sm-10 col-xs-10 ">
+				<input type="number" name="BUSI_YY" id="BUSI_YY" class="form-control" value="2019">
+				</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						부서
+					</td>
+					<td>
+					<div class="col-md-10 col-sm-10 col-xs-10 ">
+						<select id="DEPT_CD">
+							<option value="">전     사</option>
+							<option value="75">설계1본부</option>
+							<option value="76">설계2본부</option>
+							<option value="77">설계3본부</option>
+							<option value="78">설계4본부</option>
+							<option value="79">설계5본부</option>
+						</select>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						프로젝트
+					</td>
+					<td>
+						<div class="col-md-10 col-sm-10 col-xs-10 ">
+						<input type="text" name="PJT_NM" id="PJT_NM" class="form-control" value="">
+						</div>
+					</td>
+					<td>
+						<button  id="pjtSearchBtn"><i class="fa fa-search"></i></button>
+					</td>
+				</tr>
+			</tbody></table>
+			<form id="radioForm">
+			<table>
+				<tbody><tr>
+					<td>
+						<input type="radio" name="pjtRadioValue" value="1">접수
+					</td>
+					<td>
+						<input type="radio" name="pjtRadioValue" value="2">승인
+					</td>
+					<td>
+						<input type="radio" name="pjtRadioValue" value="3">HOLD
+					</td>
+					<td>
+						<input type="radio" name="pjtRadioValue" value="4">CANCEL
+					</td>
+				</tr>
+			</tbody></table>
+			</form>
 			</div>
+			</div>
+			<!-- 검색부분 end -->
+			<div class="x_panel">
+		<div class="x_content">
+			<div class="x_title"></div>
+			<br>
+			<!-- 결과부분 start -->
+			<table class="table table-bordered">
+				<thead>
+				<tr>
+					<th width="30%">PJT코드</th>
+					<th width="70%">프로젝트명</th>
+				</tr>
+				</thead>
+				<tbody id="pjtList">
+				</tbody>
+				<thead>
+					<tr>
+						<td colspan="2" style="background-color:#ffeeaa">
+							<b><span id="resultLength"></span></b>
+						</td>
+					</tr>
+				</thead>
+			</table>
+			<!-- 결과부분 end -->
 		</div>
+		</div>
+		</div>
+				<div class="col-md-9 col-xs-12" style="color:black;">
+        <div class="page-title">
+	<div class="title_left">
+	 <h2><b>사업수행결정서</b></h2>
+	<h5><font color="gray"><b>1.사업성검토관리&nbsp;>1.1사업수행결정서관리&nbsp;>1.1.1사업수행결정서&nbsp;&nbsp;</b></font></h5>
+					
 	</div>
+	</div>
+							<div class="x_content" style="text-align: right">
+<div class="btn-group" >
+<button class="btn btn-default" type="reset">입력</button>
+<button class="btn btn-default" type="button">수정</button>
+<button class="btn btn-default" type="button">삭제</button>
+<button class="btn btn-default" type="button">저장</button>
+<button class="btn btn-default" type="button">출력</button>
+</div>
+
+</div>
+        </div>
+				
 
 	<!-- 프로젝트 start -->
 	<div class="col-md-9 col-sm-6 col-xs-12">
@@ -68,22 +166,9 @@
 			<div class="x_content">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>
-							사업수행결정서 입력 <small></small>
-						</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-expanded="false"><i
-									class="fa fa-wrench"></i></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">Settings 1</a></li>
-									<li><a href="#">Settings 2</a></li>
-								</ul></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 
-						</ul>
+						
+						
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
@@ -106,7 +191,7 @@
 								<th><input type="text"></th>
 								<th colspan="2">발주처<input type="text"
 									style="width: 80px; height: 20px; font-size: 12px">
-									<button class="btn" id="pjt_s">조회</button>
+									<button id="pjt_s"><i class="fa fa-search"></i></button>									
 									<input type="text"
 									style="width: 120px; height: 20px; font-size: 12px"></th>
 								<th colspan="2"><select>
@@ -126,13 +211,13 @@
 							
 							<tr> 
 								<td>의뢰일자<input type="date"></td>
-								<td>정보취득자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button class="btn" id="pjt_s">조회</button></td>
+								<td>정보취득자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button id="pjt_s"><i class="fa fa-search"></i></button></td>
 								<td>담당자 <input type="text" style="width: 80px; height: 20px; font-size: 12px"></td>
 								<td colspan="3">전화:<input type="text"></td>
 							</tr>
 							<tr>
 								<td>완료예정일<input type="date"></td>
-								<td>수주책임자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button class="btn" id="pjt_s">조회</button></td>
+								<td>수주책임자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button  id="pjtSearchBtn"><i class="fa fa-search"></i></button></td>
 								<td colspan="4">수주구분<select>
 										<option>            </option>
 										<option>민간사업</option>
@@ -161,13 +246,16 @@
 										<option>재건축</option>
 										<option>재개발</option>
 								</select> </td>
-								<td>관리 임원<input type="text" style="width: 50px; height: 20px; font-size: 12px"><button class="btn" id="pjt_s">조회</button></td>
+								<td>관리 임원<input type="text" style="width: 50px; height: 20px; font-size: 12px"><button  id="pjtSearchBtn"><i class="fa fa-search"></i></button></td>
 								<td colspan="4"></td>
 							</tr>
 							
 							
 							<tr>
-								<th>대지위치<button class="btn" id="pjt_s">조회</button></th>
+								
+								
+								<th>대지위치<button><i class="fa fa-search" id="pjt_s"></i></button></th>
+								
 								<th><input type="text"></th>
 								<th>건축물용도</th>
 								<th colspan="3" ><select>
@@ -421,18 +509,6 @@
 						<h2>
 							<i class="fa fa-bars"></i> 
 						</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-expanded="false"><i
-									class="fa fa-wrench"></i></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">Settings 1</a></li>
-									<li><a href="#">Settings 2</a></li>
-								</ul></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						</ul>
 						<div class="clearfix"></div>
 					</div>
 					<div class="" role="tabpanel" data-example-id="togglable-tabs">
@@ -461,20 +537,6 @@
 									<div class="x_panel">
 										<div class="x_title">
 											<h2>본부장 의견</h2>
-											<ul class="nav navbar-right panel_toolbox">
-												<li><a class="collapse-link"><i
-														class="fa fa-chevron-up"></i></a></li>
-												<li class="dropdown"><a href="#"
-													class="dropdown-toggle" data-toggle="dropdown"
-													role="button" aria-expanded="false"><i
-														class="fa fa-wrench"></i></a>
-													<ul class="dropdown-menu" role="menu">
-														<li><a href="#">Settings 1</a></li>
-														<li><a href="#">Settings 2</a></li>
-													</ul></li>
-												<li><a class="close-link"><i class="fa fa-close"></i></a>
-												</li>
-											</ul>
 											<div class="clearfix"></div>
 										</div>
 										<div class="x_content">
@@ -485,14 +547,14 @@
 													<tr>
 														<th><TEXTAREA> </TEXTAREA></th>
 														
-														<td>PM<input type="text"><br>직원조회버튼
+														<td>PM<input type="text"><br><button  id="pjtSearchBtn"><i class="fa fa-search"></i></button>
 														</td>
-														<td>PD<input type="text">직원조회버튼
+														<td>PD<input type="text"><button  id="pjtSearchBtn"><i class="fa fa-search"></i></button>
 														</td>
 													</tr>
 													<tr>
 														<th colspan="2" scope="row" class="form-control">수행부서<input
-															type="text"><br><button class="btn" id="pjt_s">조회</button>
+															type="text"><br><button  id="pjtSearchBtn"><i class="fa fa-search"></i></button>
 														</th>
 														
 														<td>추정계약액<input type="text" class="form-control">원
@@ -535,6 +597,7 @@
 		</div>
 	</div>
 	</div>
+	</font>
 	<!-- 프로젝트 end -->
 	</th:block>
 	<th:block layout:fragment="customJquery">

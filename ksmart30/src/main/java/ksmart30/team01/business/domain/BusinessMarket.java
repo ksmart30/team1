@@ -7,7 +7,21 @@ public class BusinessMarket {
 	private String UP_SU2;      //지상층수 검색때 필요
 	private String YAREA_P;	 //연면적
 	private String YAREA_P2;  //연면적 검색때 필요
+	private String PJT_NM; // 프로젝트 이름
+	private String DEPT_CD;
 	
+	public String getDEPT_CD() {
+		return DEPT_CD;
+	}
+	public void setDEPT_CD(String dEPT_CD) {
+		DEPT_CD = dEPT_CD;
+	}
+	public String getPJT_NM() {
+		return PJT_NM;
+	}
+	public void setPJT_NM(String pJT_NM) {
+		PJT_NM = pJT_NM;
+	}
 	public String getUP_SU2() {
 		return UP_SU2;
 	}
@@ -41,8 +55,11 @@ public class BusinessMarket {
 	@Override
 	public String toString() {
 		return "BusinessMarket [BUSI_YY=" + BUSI_YY + ", UP_SU=" + UP_SU + ", UP_SU2=" + UP_SU2 + ", YAREA_P=" + YAREA_P
-				+ ", YAREA_P2=" + YAREA_P2 + "]";
+				+ ", YAREA_P2=" + YAREA_P2 + ", PJT_NM=" + PJT_NM + ", DEPT_CD=" + DEPT_CD + "]";
 	}
+
+	
+
 	
 	
 }

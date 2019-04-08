@@ -10,6 +10,10 @@ import ksmart30.team01.business.domain.BusinessMarket;
 @Mapper
 public interface BusinessManageMapper {
 	
+	//1.1.3 사업수행결정 승인현황
 	List<Map<String,Object>> getBusinessManageList(BusinessMarket vo);
-
+	
+	//1.1.1 사업수행결정서 프로젝트 리스트 좌측
+	List<Map<String,Object>> getBusinessManageViewList(BusinessMarket vo);
+	
 }
