@@ -8,8 +8,8 @@
 	@author	ksmart30 YDE
 -->
 <mapper namespace="ksmart30.team01.project.mapper.ProjectManageMapper">
-	<!-- 용역계약서 입력을 위해 T_SM3000(전체 프로젝트 대장)에서 전체 프로젝트 정보를 조회한다 -->
-	<select id="businessManageSelect" parameterType="java.util.Map" resultType="java.util.Map">
+	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장과 프로젝트 대장 정보를 조회한다 -->
+	<select id="getBusinessManageList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			A.PJT_CD,
 			A.PJT_NM,
@@ -29,5 +29,38 @@
 		AND B.DEPT_CD LIKE '%'+#{DEPT_CD}+'%'
 		AND A.PJT_CD LIKE #{YEAR}+'%'
 		ORDER BY A.PJT_CD ASC
+	</select>
+	
+	<!-- 용역계약서 변경 조회를 위해 변경한 이력이 1번이라도 있는 용역계약서를 조회한다 -->
+	<select id="getProjectHistoryList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT DISTINCT
+				A.PJT_CD,
+				B.PJT_NM,
+				A.DEPT_CD,
+				A.PM_EMP_NO,
+				(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = A.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = A.PM_EMP_NO) AS PM_EMP_NM
+			FROM
+				T_P11000_H A, T_SM3000 B
+			WHERE
+				A.PJT_CD = B.PJT_CD
+			AND A.PJT_SEQ > 0
+			AND A.DEPT_CD LIKE '%'+#{DEPT_CD}+'%'
+			AND A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
+			AND A.PJT_DATE LIKE #{YEAR}+'%'
+			ORDER BY A.PJT_CD ASC
+	</select>
+	
+	<!-- 변경된 용역계약서 중 하나를 선택해 자세한 변경 현황을 조회한다 -->
+	<select id="getProjectHistoryHyunhwangList" parameterType="String" resultType="java.util.Map">
+		SELECT
+			A.PJT_DATE,
+			A.PJT_GB,
+			B.LEVEL2_NM
+		FROM
+			T_P11000_H A, T_SC9100 B
+		WHERE
+			A.PJT_GB = B.LEVEL2_CD
+		AND A.PJT_CD = #{PJT_CD}
+		AND B.LEVEL1_CD = '430'
 	</select>
 </mapper>

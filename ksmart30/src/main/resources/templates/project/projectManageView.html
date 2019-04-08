@@ -6,72 +6,50 @@
 		<th:block th:include="layout/customHead"></th:block>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
-			$(document).ready(function() {
-				// 프로젝트 검색 부분
+		function pjtOneBtn(PJT_CD,PJT_NM) {
+			console.log(PJT_CD+PJT_NM);
+			
+		}
+		
+		$(document).ready(function() {
+				// 용역계약서 입력을 위한 프로젝트 검색 부분
 				$('#pjtSearchBtn').click(function(){
 					// 필드로 입력받은 값들을 변수에 저장
 					let PJT_CD = $('#pjtCd').val();
 					let DEPT_CD = $('#pjtDept').val();
 					let temp = $('#pjtYear').val();
 					let YEAR = temp.substring(2, 4);
+					let pjtRadioValue = $('input[name=pjtRadioValue]:checked', '#radioForm').val();
 					console.log(PJT_CD);
 					console.log(DEPT_CD);
 					console.log(YEAR);
+					console.log(pjtRadioValue);
 
 					$.ajax({
 						// ajax로 "/project/manage/in" URI를 지정 POST방식으로 data를 보낸다.
-						url:'/project/manage/in',
+						url:'/project/projectManageListProcess',
 						type:'POST',
 						data:{PJT_CD:PJT_CD, DEPT_CD:DEPT_CD, YEAR:YEAR},
 						success:function(data){
 							$('#pjtList').empty();
 							$('#resultLength').empty();
-							for(let i=0; i<data.length; i++) {
-								$('#pjtList').append('<tr><td style="background-color:#fff9df">'+data[i].PJT_CD+'</td><td><a href="#" id="pjtOneBtn">'+data[i].PJT_NM+'</a></td></tr>');
-							}
+							$(data).each((index,item) => {
+								$('#pjtList').append('<tr><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td onclick="pjtOneBtn('+item.PJT_NM+item.PJT_CD+')">'+item.PJT_NM+'</td></tr>');
+							});
 							$('#resultLength').append(data.length);
 						}
 					});
-				});
-				
-				// 하나의 프로젝트 선택시
-				$('#pjtOneBtn').click(function(){
 					
-				});
-				
-				// 용역계약서 입력 - 기본사항
-				// 발주처(당사분) 추가
-				$('#ownerAddBtn').click(function() {
-					
-					$.ajax({
-		                url:'owner_in',
-		                success:function(data){
-		                if( $('#callbackRow').html() != ''){
-		                	$('#callbackRow').html('');
-		                }else{
-		                	$('#callbackRow').html(data);}
-		            	}
-					});
-				});
-				// 용역계약서 입력 - 기본사항 - 발주처 입력값
-				$('#ownerSaveBtn').click(function(){
-					let ownerName = $('#ownerName').val();
-					let ownerGubun = $('#ownerGubun').val();
-					let ownerShare = $('#ownerShare').val();
-					let ownerPrice = $('#ownerPrice').val();
-					console.log(ownerName);
-					console.log(ownerGubun);
-					console.log(ownerShare);
-					console.log(ownerPrice);
 				});
 			});
 		</script>
 	</th:block>
 	<th:block layout:fragment="customBody">
 		<!-- 검색부분 start -->
+		<font color="black">
 		<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="x_panel">
-		<div class="x_content" style="overflow-x:auto">
+		<div class="x_content" style="overflow:auto">
 			<label for="ex3">검색조건</label><br>
 			<table>
 				<tr>
@@ -88,7 +66,7 @@
 					</td>
 					<td>
 						<select id="pjtDept">
-							<option value="">전     사</option>
+							<option value="">전 사</option>
 							<option value="7530">설계1본부</option>
 							<option value="7630">설계2본부</option>
 							<option value="7730">설계3본부</option>
@@ -109,28 +87,30 @@
 					</td>
 				</tr>
 			</table>
+			<form id="radioForm">
 			<table>
 				<tr>
 					<td>
-						<input type="radio" id="pjtRadioGroup" value="1">검토
+						<input type="radio" name="pjtRadioValue" value="1">검토
 					</td>
 					<td>
-						<input type="radio" id="pjtRadioGroup" value="2">계약
+						<input type="radio" name="pjtRadioValue" value="2">계약
 					</td>
 					<td>
-						<input type="radio" id="pjtRadioGroup" value="3">예산
+						<input type="radio" name="pjtRadioValue" value="3">예산
 					</td>
 					<td>
-						<input type="radio" id="pjtRadioGroup" value="4">승인
+						<input type="radio" name="pjtRadioValue" value="4">승인
 					</td>
 					<td>
-						<input type="radio" id="pjtRadioGroup" value="5">종료
+						<input type="radio" name="pjtRadioValue" value="5">종료
 					</td>
 					<td>
-						<input type="radio" id="pjtRadioGroup" value="5">ALL
+						<input type="radio" name="pjtRadioValue" value="6" checked="checked">ALL
 					</td>
 				</tr>
 			</table>
+			</form>
 			</div>
 			</div>
 			<!-- 검색부분 end -->
@@ -139,7 +119,7 @@
 			<div class="x_title"></div>
 			<br>
 			<!-- 결과부분 start -->
-			<table class="table table-bordered">
+			<table class="table table-bordered" style="overflow:auto; height:350px">
 				<thead>
 				<tr>
 					<th width="30%">PJT코드</th>
@@ -162,9 +142,27 @@
 		</div>
 		
 		<!-- 프로젝트 start -->
+		<font color="black">
 	<div class="col-md-9 col-sm-6 col-xs-12">
 		<div class="x_panel">
-			<div class="x_content">
+		<div class="page-title">
+			<div class="title_left">
+	 			<h2><b>용역계약서 입력</b></h2>
+				<h5><fontcolor="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리</b></font></h5>			
+			</div>
+		</div>
+		
+		<div class="x_content" style="text-align: right">
+			<div class="btn-group" >
+				<button class="btn btn-default" type="reset">입력</button>
+				<button class="btn btn-default" type="button">수정</button>
+				<button class="btn btn-default" type="button">삭제</button>
+				<button class="btn btn-default" type="button">저장</button>
+				<button class="btn btn-default" type="button">출력</button>
+			</div>
+		</div>
+			
+		<div class="x_content">
 			<div class="" role="tabpanel" data-example-id="togglable-tabs">
 					<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
 						<li role="presentation" class="active">
@@ -315,16 +313,12 @@
                           <th width="20%">계약금액</th>
                         </tr>
                         <tr>
-                          <th scope="row">1</th>
+                          <th scope="row">신규</th>
                           <td>
-                          	<select class="col-md-10">
-                          		<option></option>
-		                    	<option>(주)우원엠앤이</option>
-		                    	<option>현대건설(주)</option>
-		                    	<option>선진이앤씨</option>
-		                    	<option>(주)한일엠이씨</option>
-		                    	<option>랜디자인</option>
-                  			</select>
+                          	<input type="text" class="col-md-8">
+                          	<button>
+								<i class="fa fa-search"></i>
+							</button>  	
                           </td>
                           <td>
                           	<select class="col-md-10">
@@ -334,14 +328,14 @@
 		                    	<option>공사/공단</option>
 		                    	<option>정부기관</option>
 		                    	<option>건축설계사무소</option>
+		                    	<option>조합(재개발,재건축)</option>
+		                    	<option>기 타</option>
                   			</select>
                           </td>
                           <td><input type="text" class="col-md-10"></td>
                           <td><input type="text" class="col-md-10"></td>
                         </tr>
                    	</table>
-                    <div id="callbackRow">
-                    </div>
 					<table class="table table-bordered">
                         <tr style="background-color:#ffeeaa">
                     		<th width="20%">합계</th>
@@ -820,7 +814,9 @@
 			</div>
 			</div>
 			</div>
+			</font>
 		<!-- 프로젝트 end -->
+		</font>
 	</th:block>
 	<th:block layout:fragment="customJquery">
 		<th:block th:include="layout/customJquery"></th:block>

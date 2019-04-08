@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ksmart30.team01.project.domain.ProjectHistory;
 import ksmart30.team01.project.service.ProjectManageService;
 
 @RestController
@@ -26,10 +27,10 @@ public class ProjectManageRestController {
 	 *			화면에서 입력한 값을 ajax로 값을 넘기고 받기 위함
 	 *			@return List<Map<String, Object>>
 	 */
-	@PostMapping("/project/manage/in")
-	public List<Map<String, Object>> projectManageAdd(String PJT_CD, String DEPT_CD, String YEAR) {
-		System.out.println("RestController projectManageAdd 메서드 실행");
-		return projectManageService.businessManagerSearch(PJT_CD, DEPT_CD, YEAR);
+	@PostMapping("/project/projectManageListProcess")
+	public List<Map<String, Object>> projectManageListProcess(String PJT_CD, String DEPT_CD, String YEAR) {
+		System.out.println("RestController projectManageListProcess 메서드 실행");
+		return projectManageService.businessManagerListProcess(PJT_CD, DEPT_CD, YEAR);
 	}
 	
 	//3.1.1 용역계약서 발주처 입력 처리
@@ -105,10 +106,29 @@ public class ProjectManageRestController {
 	}
 	
 	//3.1.3 용역계약서 변경 조회
-	@PostMapping("/project/manage/change/search")
-	public String projectManageSearch() {
-		return null;
+	/* @brief	"http://localhost/project/projectManageChangeListView" 주소분기(post방식)
+	 *			화면에서 입력한 값을 ajax로 값을 넘기고 받기 위함
+	 *			1번 이상 변경 이력이 있는 용역계약서 리스트 조회
+	 *			@return List<Map<String, Object>>
+	 */
+	@PostMapping("/project/projectManageChangeListProcess")
+	public List<Map<String, ProjectHistory>> projectManageChangeListProcess(String PJT_CD, String DEPT_CD, String YEAR) {
+		System.out.println("RestController projectManageChangeListProcess 메서드 실행");
+		return projectManageService.projectHistoryListProcess(PJT_CD, DEPT_CD, YEAR);
 	}
+
+	//3.1.3 용역계약서 변경 조회
+	/* @brief	"http://localhost/project/projectManageChangeListView" 주소분기(post방식)
+	 *			화면에서 입력한 값을 ajax로 값을 넘기고 받기 위함
+	 *			선택한 프로젝트의 변경 현황 리스트
+	 *			@return List<Map<String, Object>>
+	 */
+	@PostMapping("/project/projectManageChangeHyunhwangListProcess")
+	public List<Map<String, Object>> projectManageChangeHyunhwangListProcess(String PJT_CD) {
+		System.out.println("RestController projectManageChangeHyunhwangListProcess 메서드 실행");
+		return projectManageService.projectManageChangeHyunhwangListProcess(PJT_CD);
+	}
+
 	
 	//3.1.4 용역계약서 검색(부서)
 	@PostMapping("/project/manage/depart_search")

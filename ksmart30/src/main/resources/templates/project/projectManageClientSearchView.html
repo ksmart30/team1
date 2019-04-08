@@ -1,14 +1,103 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
-	<th:block layout:fragment="customHead">
-		<meta charset="UTF-8">
-		<title>test</title>
-		<th:block th:include="layout/customHead"></th:block>
-	</th:block>
-	<th:block layout:fragment="customBody">
-		projectManageClientSearchView.html
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>용역계약서 검색(발주처)</title>
+	<th:block th:include="layout/customHead"></th:block>
+</th:block>
+<th:block layout:fragment="customBody">
+
+	<!-- 검색 폼 -->
+	<h3>용역계약서 관리 - 용역계약서 검색(발주처)</h3>
+	<div><button class="btn">검색</button></div>
+		<table class="table">
+			<tr>
+				<td width="150"><label>⊙ 부서 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<select class="form-control">
+							<option value="">전 사</option>
+							<option value="1">설계1본부</option>
+							<option value="2">설계2본부</option>
+							<option value="3">설계3본부</option>
+							<option value="1">설계4본부</option>
+							<option value="2">설계5본부</option>
+						</select>
+					</div>
+				</td>
+
+				<td width="100"><label>⊙ 코드명 : </label></td>
+				<td>
+					<div class="col-md-12 col-sm-12 col-xs-12 ">
+						<input type="text" name="test" class="form-control">
+					</div>
+					
+				</td>
+				<td>
+					<div class="col-md-15 col-sm-15 col-xs-15 ">
+						<input type="text" name="test" class="form-control">
+					</div>
+				</td>
+			</tr>
+		</table>
+	<!-- 검색폼 끝 -->
+
+
+	<!-- 출력 리스트 검색 시작 -->
+
+	<div class="x_panel">
+		<div class="x_content">
+			<div class="table-responsive">
+				<table class="table table-bordered">
+					<thead>
+						<tr class="headings">
+							<th class="column-title">프로젝트코드명</th>
+							<th class="column-title">계약 일자</th>
+							<th class="column-title">발주처</th>
+							<th class="column-title">건축물유형</th>
+							<th class="column-title">최초계약금액</th>
+							<th class="column-title">계약금액</th>
+							<th class="column-title">최종계약금액</th>
+							<th class="column-title">첨부</th>
+							<th class="column-title">평당단가</th>
+							<th class="column-title">연면적</th>
+							<th class="column-title">종료구분</th>
+							<th class="column-title">종료일자</th>
+							<th class="column-title">계약구분</th>
+							<th class="column-title">위치/지역</th>
+							<th class="column-title">계약기간</th>
+							<th class="column-title">타절일자</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr class="even pointer">
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- 출력 리스트 검색 끝 -->
+			</div>
+		</div>
+	</div>
 	</th:block>
 	<th:block layout:fragment="customJquery">
 		<th:block th:include="layout/customJquery"></th:block>
     </th:block>
-</html>

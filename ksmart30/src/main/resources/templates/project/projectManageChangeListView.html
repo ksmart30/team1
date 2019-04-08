@@ -2,23 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
 	<th:block layout:fragment="customHead">
 		<meta charset="UTF-8">
-		<title>변경된 용역계약서 조회</title>
+		<title>용역계약서 변경 조회</title>
 		<th:block th:include="layout/customHead"></th:block>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
+		function pjtOneBtn(PJT_CD) {
+			console.log(PJT_CD);
+			$.ajax({
+				url:'/project/projectManageChangeHyunhwangListProcess',
+				type:'POST',
+				data:{PJT_CD:PJT_CD},
+				success:function(data) {
+					console.log(data);
+					$('#pjtHistoryDetailList').empty();
+					for(let i=0; i<data.length; i++) {
+						$('#pjtHistoryDetailList').append('<tr><td>'+data[i].PJT_DATE+'</td><td>'+data[i].PJT_GB+'</td></tr>');
+					}
+				}
+			});
+		}
 			$(document).ready(function(){
 				$('#pjtSearchBtn').click(function(){
 					let PJT_CD = $('#pjtCd').val();
-					console.log(PJT_CD);
-
+					let YEAR = $('#pjtYear').val();
+					let DEPT_CD = $('#pjtDept').val();
+					console.log(PJT_CD+YEAR+DEPT_CD);
 					$.ajax({
-						url:'/project/manage/change/search',
+						url:'/project/projectManageChangeListProcess',
 						type:'POST',
-						data:{PJT_CD:PJT_CD},
+						data:{PJT_CD:PJT_CD, DEPT_CD:DEPT_CD, YEAR:YEAR},
 						success:function(data){
-							$('#pjtList').empty();
+							console.log(data);
+							$('#pjtHistoryList').empty();
 							for(let i=0; i<data.length; i++) {
-								$('#pjtList').append('<tr><td style="background-color:#fff9df">'+data[i].PJT_CD+'</td><td>'+data[i].PJT_NM+'</td></tr>');
+								$('#pjtHistoryList').append('<tr><td style="background-color:#fff9df">'+data[i].PJT_CD+'</td><td onclick="pjtOneBtn('+data[i].PJT_CD+')">'+data[i].PJT_NM+'</td></tr>');
 							}
 						}
 					});
@@ -27,6 +44,25 @@
 		</script>
 	</th:block>
 	<th:block layout:fragment="customBody">
+	<div class="col-md-9 col-xs-12" style="color:black;">
+        <div class="page-title">
+			<div class="title_left">
+				<h2><b>전표상세검색</b></h2>
+				<h5><font color="gray"><b>8.회계관리&nbsp;>&nbsp;&nbsp;8.1회계입력&nbsp;>&nbsp;&nbsp;8.2회계입력</b></font></h5>			
+			</div>
+		</div>
+    </div>
+    
+    <div class="x_content" style="text-align: right">
+		<div class="btn-group" >
+			<button class="btn btn-default" type="reset">입력</button>
+			<button class="btn btn-default" type="button">수정</button>
+			<button class="btn btn-default" type="button">삭제</button>
+			<button class="btn btn-default" type="button">저장</button>
+			<button class="btn btn-default" type="button">출력</button>
+		</div>
+	</div>
+	<font color="black">
 		<!-- 검색부분 start -->
 		<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="x_panel">
@@ -39,7 +75,7 @@
 						년도
 					</td>
 					<td>
-						<input type="number">
+						<input type="number" id="pjtYear">
 					</td>
 				</tr>
 				<tr>
@@ -47,13 +83,13 @@
 						부서
 					</td>
 					<td>
-						<select>
-							<option>전     사</option>
-							<option>설계1본부</option>
-							<option>설계2본부</option>
-							<option>설계3본부</option>
-							<option>설계4본부</option>
-							<option>설계5본부</option>
+						<select id="pjtDept">
+							<option value="">전 사</option>
+							<option value="7530">설계1본부</option>
+							<option value="7630">설계2본부</option>
+							<option value="7730">설계3본부</option>
+							<option value="7830">설계4본부</option>
+							<option value="7930">설계5본부</option>
 						</select>
 					</td>
 				</tr>
@@ -74,17 +110,18 @@
 			<div class="x_title">
 			</div>
 			<!-- 결과부분 start -->
-			<table class="table table-bordered">
+			<table class="table table-bordered" style="overflow:auto">
 				<thead>
 				<tr>
 					<th width="30%">PJT코드</th><th>프로젝트명</th>
 				</tr>
 				</thead>
-				<tbody id="pjtList">
+				<tbody id="pjtHistoryList">
 				</tbody>
 			</table>
 			<!-- 결과부분 end -->
 			<div class="x_title">
+			<span>◎ 계약서 변경 현황</span>
 			</div>
 			<!-- 계약서변경현황 start -->
 			<table class="table table-bordered">
@@ -93,23 +130,7 @@
 					<th width="30%">변경일자</th><th>변경구분</th>
 				</tr>
 				</thead>
-				<tbody>
-				<tr>
-					<td style="background-color:#fff9df">
-						2019/03/21
-					</td>
-					<td>
-						면적정산
-					</td>
-				</tr>
-				<tr>
-					<td style="background-color:#fff9df">
-						2019/03/01
-					</td>
-					<td>
-						원계약
-					</td>
-				</tr>
+				<tbody id="pjtHistoryDetailList">
 				</tbody>
 			</table>
 			<!-- 계약서변경현황 end -->
@@ -271,6 +292,7 @@
 		</div>
 		</div>
 		<!-- 프로젝트 end -->
+		</font>
 	</th:block>
 	<th:block layout:fragment="customJquery">
 		<th:block th:include="layout/customJquery"></th:block>
