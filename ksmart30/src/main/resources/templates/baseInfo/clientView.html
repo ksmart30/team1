@@ -20,16 +20,19 @@
 					$('#cust_NM').attr('value',data.cust_NM);
 					$('#cust_FULL_NM').attr('value',data.cust_FULL_NM);
 					$('#cust_GBN').attr('value',data.cust_GBN);
+						$('select[id=cust_GBN]').val(data.cust_GBN);
 					$('#addr').attr('value',data.addr);
 					$('#audit_ID').attr('value',data.audit_ID);
 					$('#audit_TM').attr('value',data.audit_TM);
 					$('#bank_ACCNO').attr('value',data.bank_ACCNO);
 					$('#bank_CD').attr('value',data.bank_CD);
+						$('select[id=bank_CD]').val(data.bank_CD);
 					$('#bank_OWN').attr('value',data.bank_OWN);
 					$('#biz_ITEM').attr('value',data.biz_ITEM);
 					$('#biz_STAT').attr('value',data.biz_STAT);
 					$('#bond').attr('value',data.bond);
 					$('#bupin').attr('value',data.bupin);
+						$('select[id=bupin]').val(data.bupin);
 					$('#busi_TYPE').attr('value',data.busi_TYPE);
 					$('#cel_NO').attr('value',data.cel_NO);
 					$('#co_SERVICE').attr('value',data.co_SERVICE);
@@ -93,7 +96,7 @@
 			</div>
 		</div>
 	</div>
-<font color="black">
+	<font color="black">
 		<div class="x_content" style="text-align: right">
 			<div class="btn-group">
 				<button class="btn btn-default" type="reset">입력</button>
@@ -102,9 +105,7 @@
 				<button class="btn btn-default" type="button">저장</button>
 				<button class="btn btn-default" type="button">출력</button>
 			</div>
-		</div> 
-		
-<!-- 검색부분 start -->
+		</div> <!-- 검색부분 start -->
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<div class="x_content">
@@ -123,12 +124,12 @@
 									<option value="7">조합(재개발,재건축)</option>
 							</select></td>
 						</tr>
-						
+
 						<tr>
 							<td>고객명</td>
 							<td><input type="text" id="CUST_NM"></td>
 						</tr>
-						
+
 						<tr>
 							<td>사업자등록번호</td>
 							<td><input type="number" id="CUST_CD"></td>
@@ -138,7 +139,7 @@
 								</div>
 							</td>
 						</tr>
-					</table>	
+					</table>
 <!-- 검색부분 end -->
 
 					<div class="x_title"></div>
@@ -148,31 +149,18 @@
 							<tr>
 								<th width="30%">사업자등록번호</th>
 								<th>고객명</th>
-							</tr>	
+							</tr>
 						</thead>
 						<tbody id="searchBody">
-							<tr>
-								<td style="background-color: #fff9df">1370324950</td>
-								<td>(주)가우디자인</td>
-							</tr>
-							<tr>
-								<td style="background-color: #fff9df">12345647</td>
-								<td>(주)건일엠이씨</td>
-							</tr>
-							<tr>
-								<td style="background-color: #fff9df">33018454</td>
-								<td>(주)건원도시건축</td>
-							</tr>
 						</tbody>
 					</table>
-<!-- 결과부분 end -->
+					<!-- 결과부분 end -->
 
 					<div class="x_title"></div>
 				</div>
 			</div>
 		</div> 
 <!-- start -->
-
 		<div class="col-md-9 col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<div class="x_content">
@@ -185,9 +173,9 @@
 								role="tab" id="profile-tab" data-toggle="tab"
 								aria-expanded="false">인적사항</a></li>
 						</ul>
-						
+
 						<div id="myTabContent" class="tab-content">
-							<!-- 기본정보 start -->
+<!-- 기본정보 start -->
 							<div role="tabpanel" class="tab-pane fade active in"
 								id="tab_content1" aria-labelledby="home-tab">
 
@@ -248,7 +236,6 @@
 											</div>
 										</td>
 									</tr>
-
 <!-- 법인구분  BUPIN Value 알아보기  -->
 <!-- 4 -->
 									<tr>
@@ -338,7 +325,7 @@
 
 										</td>
 
-										<!-- IS090000  CASE ISNULL(A.ISO  , '') WHEN '1' THEN '유' ELSE '무' END ISO_NM   -->
+<!-- IS090000  CASE ISNULL(A.ISO  , '') WHEN '1' THEN '유' ELSE '무' END ISO_NM   -->
 
 										<td style="background-color: #f3f3f3" width="10%">IS090000</td>
 										<td colspan="6">
@@ -359,42 +346,42 @@
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<select class="form-control" id="bank_CD">
 													<option value=""></option>
-													<option value="2">산업은행</option>
-													<option value="3">기업은행</option>
-													<option value="4">국민은행</option>
-													<option value="5">KEB하나은행(외환은행)</option>
-													<option value="7">수협은행</option>
-													<option value="8">수출입은행</option>
-													<option value="10">농협은행</option>
-													<option value="12">지역농축협</option>
-													<option value="20">우리은행</option>
-													<option value="21">신한은행</option>
-													<option value="23">SC</option>
-													<option value="25">KEB하나은행</option>
-													<option value="27">한국씨티</option>
-													<option value="31">대구은행</option>
-													<option value="32">부산은행</option>
-													<option value="34">광주은행</option>
-													<option value="35">제주</option>
-													<option value="37">전북</option>
-													<option value="39">경남은행</option>
-													<option value="45">새마을금고</option>
-													<option value="47">신협은행</option>
-													<option value="50">상호저축은행</option>
-													<option value="51">Ｙａｍａｇｕｃｈｉ</option>
-													<option value="52">모간스탠리</option>
-													<option value="54">ＨＳＢＣ</option>
-													<option value="55">도이치은행</option>
-													<option value="56">알비에스피엘씨</option>
-													<option value="57">JP모간체이스</option>
-													<option value="58">미즈호은행</option>
-													<option value="59">미쓰비시도쿄ＵＦＪ은</option>
-													<option value="60">Ｂ．Ｏ．Ａ</option>
-													<option value="61">비엔피파리바</option>
-													<option value="64">산림조합</option>
-													<option value="71">우체국</option>
-													<option value="76">신용보증기금</option>
-													<option value="77">기술신용보증기금</option>
+													<option value="002">산업은행</option>
+													<option value="003">기업은행</option>
+													<option value="004">국민은행</option>
+													<option value="005">KEB하나은행(외환은행)</option>
+													<option value="007">수협은행</option>
+													<option value="008">수출입은행</option>
+													<option value="010">농협은행</option>
+													<option value="012">지역농축협</option>
+													<option value="020">우리은행</option>
+													<option value="021">신한은행</option>
+													<option value="023">SC</option>
+													<option value="025">KEB하나은행</option>
+													<option value="027">한국씨티</option>
+													<option value="031">대구은행</option>
+													<option value="032">부산은행</option>
+													<option value="034">광주은행</option>
+													<option value="035">제주</option>
+													<option value="037">전북</option>
+													<option value="039">경남은행</option>
+													<option value="045">새마을금고</option>
+													<option value="047">신협은행</option>
+													<option value="050">상호저축은행</option>
+													<option value="051">Ｙａｍａｇｕｃｈｉ</option>
+													<option value="052">모간스탠리</option>
+													<option value="054">ＨＳＢＣ</option>
+													<option value="055">도이치은행</option>
+													<option value="056">알비에스피엘씨</option>
+													<option value="057">JP모간체이스</option>
+													<option value="058">미즈호은행</option>
+													<option value="059">미쓰비시도쿄ＵＦＪ은</option>
+													<option value="060">Ｂ．Ｏ．Ａ</option>
+													<option value="061">비엔피파리바</option>
+													<option value="064">산림조합</option>
+													<option value="071">우체국</option>
+													<option value="076">신용보증기금</option>
+													<option value="077">기술신용보증기금</option>
 													<option value="209">유안타증권</option>
 													<option value="218">현대증권</option>
 													<option value="230">미래에셋증권</option>
@@ -508,10 +495,14 @@
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
 													id="homepage">
-											</div> 
-											<td>
-												<div><button><i class="fa fa-search"></i></button></div>
-											</td>
+											</div>
+										<td>
+											<div>
+												<button>
+													<i class="fa fa-search"></i>
+												</button>
+											</div>
+										</td>
 									</tr>
 <!-- 16 -->
 									<tr>
@@ -540,74 +531,86 @@
 								aria-labelledby="profile-tab">
 								<div class="col-md-12 col-sm-6 col-xs-12">
 									<table class="table">
-
+<!-- 1 -->
 										<tr>
-											<td style="background-color: #f3f3f3" width="10%">성명</td>
-											<td>
+											<td style="background-color: #f3f3f3" width="15%">성명</td>
+											<td colspan="2">
 												<div class="col-md-12 col-sm-12 col-xs-12 ">
 													<input type="text" name="test" class="form-control">
 												</div>
 											</td>
-											<td style="background-color: #f3f3f3" width="10%">부서/부문</td>
-											<td>
+											<td style="background-color: #f3f3f3" width="15%">부서/부문</td>
+											<td colspan="6">
 												<div class="col-md-12 col-sm-12 col-xs-12 ">
 													<input type="text" name="test" class="form-control">
 												</div>
-											</td>
 
-											<td colspan="2" style="background-color: #f3f3f3" width="10%">직책</td>
-											<td>
-												<div class="col-md-12 col-sm-12 col-xs-12 ">
-													<input type="text" name="test" class="form-control">
-												</div>
 											</td>
 										</tr>
+<!-- 2 -->
 
 										<tr>
-											<td style="background-color: #f3f3f3" width="10%">출생년도</td>
-											<td>
+											<td style="background-color: #f3f3f3" width="15%">직책</td>
+											<td colspan="2">
+												<div class="col-md-12 col-sm-12 col-xs-12 ">
+													<input type="text" name="test" class="form-control">
+												</div>
+											</td>
+											<td style="background-color: #f3f3f3" width="15%">출생년도</td>
+											<td colspan="6">
 												<div class="col-md-12 col-sm-12 col-xs-12 ">
 													<input type="date" name="test" class="form-control">
 												</div>
 											</td>
-
+										</tr>
+<!-- 3 -->
+										<tr>
 											<td style="background-color: #f3f3f3" width="10%">집전화</td>
-											<td>
+											<td colspan="2">
 												<div class="col-md-12 col-sm-12 col-xs-12 ">
 													<input type="text" name="test" class="form-control">
 												</div>
 											</td>
-											<td colspan="2" style="background-color: #f3f3f3" width="10%">핸드폰</td>
-											<td>
+											<td style="background-color: #f3f3f3" width="10%">핸드폰</td>
+											<td colspan="6">
 												<div class="col-md-12 col-sm-12 col-xs-12 ">
 													<input type="text" name="test" class="form-control">
 												</div>
 											</td>
 										</tr>
-
+<!-- 4 -->
 										<tr>
 											<td style="background-color: #f3f3f3">집주소</td>
-											<td><div class="col-md-12 col-sm-12 col-xs-12 ">
-													<input type="text" name="test" class="form-control">
-												</div></td>
-											<td style="background-color: #f3f3f3">우편번호찾기버튼</td>
-											<td colspan="6"><div
-													class="col-md-18 col-sm-12 col-xs-12 ">
-													<input colspan="8" type="text" name="test"
-														class="form-control">
-												</div></td>
-										</tr>
+											<td colspan="2">
+												<div class="col-md-7 col-sm-7 col-xs-7 ">
+													<input type="text" name="test" class="form-control"
+														id="zip_CD">
 
+												</div>
+												<button>
+													<i class="fa fa-search"></i>
+												</button>
+											<td colspan="8">
+												<div class="col-md-20 col-sm-20 col-xs-20 ">
+													<input type="text" name="test" class="form-control"
+														id="addr">
+												</div>
+											</td>
+										</tr>
+<!-- 5 -->
 										<tr>
 											<td style="background-color: #f3f3f3">E-MAIL</td>
-											<td colspan="20">
+											<td colspan="8">
 												<div class="col-md-20 col-sm-12 col-xs-12 ">
 													<input type="text" name="test" class="form-control"
 														id="email">
 												</div>
 											</td>
+											<td>
+												<div><button><i class="fa fa-search"></i></button></div>
+											</td>
 										</tr>
-
+<!-- 6 -->
 										<tr>
 											<td style="background-color: #f3f3f3">취향/취미</td>
 											<td colspan="2">
@@ -622,6 +625,39 @@
 												</div>
 											</td>
 										</tr>
+
+<!-- 7 -->
+										<table class="table table-bordered">
+											<tr>
+												<th>출신학교</th>
+												<th colspan="5"><TEXTAREA> </TEXTAREA></th>
+											</tr>
+										</table>
+<!-- 8 -->										
+										<table class="table table-bordered">
+											<tr>
+												<th>당사지인</th>
+												<th colspan="5"><TEXTAREA> </TEXTAREA></th>
+											</tr>
+										</table>
+<!-- 9 -->										
+										<tr>
+											<td style="background-color: #f3f3f3">관련프로젝트</td>
+											<td colspan="20">
+												<div class="col-md-20 col-sm-12 col-xs-12 ">
+													<input type="text" name="test" class="form-control"
+														id="cust_FULL_NM">
+											</div>
+											</td>
+										</tr>
+<!-- 10 -->												
+										<table class="table table-bordered">
+											<tr>
+												<th>메모</th>
+												<th colspan="5"><TEXTAREA> </TEXTAREA></th>
+											</tr>
+										</table>
+										
 									</table>
 								</div>
 							</div>
