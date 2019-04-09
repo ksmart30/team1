@@ -22,7 +22,7 @@ function callme(IN_PJT_CD,IN_OUT_CORP){
             	//외주계약서 상세 내용
             	$('#OUT_ITEM').attr('value',data.cooperationPJTSangse.OUT_ITEM);
 				 $('select[id=OUT_ITEM]').val(data.cooperationPJTSangse.OUT_ITEM);
-            	$('#CUST_CD').attr('value',data.cooperationPJTSangse.CUST_CD);
+            	$('#OUT_CORP').attr('value',data.cooperationPJTSangse.OUT_CORP);
             	$('#CUST_NM').attr('value',data.cooperationPJTSangse.CUST_NM);
             	$('#CON_DOC_YN').attr('value',data.cooperationPJTSangse.CON_DOC_YN);
             	$('#CONTRACT_NM').attr('value',data.cooperationPJTSangse.CONTRACT_NM);            	
@@ -122,6 +122,28 @@ $(document).ready(()=>{
 </script>
 </th:block>
 <th:block layout:fragment="customBody">
+<font color="black">
+
+<div class="x_content" style="text-align: right">
+<div class="btn-group" >
+<button class="btn btn-default" type="reset">입력</button>
+<button class="btn btn-default" type="button">수정</button>
+<button class="btn btn-default" type="button">삭제</button>
+<button class="btn btn-default" type="button">저장</button>
+<button class="btn btn-default" type="button">출력</button>
+</div>
+</div>
+<div class="col-md-9 col-xs-12" style="color:black;">
+        <div class="page-title">
+	<div class="title_left">
+	 <h2><b>외주관리</b></h2>
+	<h5><font color="gray"><b>3.외주관리&nbsp;>&nbsp;&nbsp;3.1외주계약서 관리&nbsp;>&nbsp;&nbsp;3.1.1외주계약서입력</b></font></h5>
+					
+	</div>
+	</div>
+        </div>
+
+
 	<!-- 검색부분 start -->
 	<div class="col-md-4 col-sm-6 col-xs-12">
 		<div class="x_panel">
@@ -258,12 +280,15 @@ $(document).ready(()=>{
 						<td style="background-color: #f3f3f3" width="10%">외주처</td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control" id="CUST_CD">
+								<input type="text" name="test" class="form-control" id="OUT_CORP">
 							</div>
 
 						</td>
 						<td width="5%">
-							<button class="btn">검색</button>
+							<button class="btn">
+								<i class="fa fa-search"></i>
+							</button>
+
 						</td>
 						<td colspan="2">
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
@@ -418,6 +443,8 @@ $(document).ready(()=>{
 		</div>
 	</div>
 	<!-- 프로젝트 end -->
+	</font>
+	
 </th:block>
 <th:block layout:fragment="customJquery">
 		<th:block th:include="layout/customJquery"></th:block>

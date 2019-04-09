@@ -99,10 +99,10 @@
 	
 		SELECT 
 			 C.LEVEL2_NM as OUT_ITEM_NM <!-- 부문 -->
-			,B.CUST_NM as CUST_NM <!-- 외주처 -->
+			,B.CUST_NM as CUST_NM <!-- 외주처 이름 -->
 		 	,A.contract_amt as CONTRACT_AMT <!-- 계약액 -->
 		 	,PJT_CD as PJT_CD
-		 	,A.OUT_CORP as OUT_CORP
+		 	,A.OUT_CORP as OUT_CORP <!-- 외주처 코드 -->
 		FROM 
 			 T_P12000 A <!-- 외주계약서  -->
 			,T_AC0300 B <!-- 계약처(외주처) -->
@@ -163,13 +163,13 @@
 	</select>
 	<!-- 용역계약서 본문 출력  -->
 	<select id="getCooperationPJTSangse"
-		parameterType="ksmart30.team01.cooperation.domain.cooperationSangseRequest"
+		parameterType="ksmart30.team01.cooperation.domain.CooperationSangseRequest"
 		resultType="java.util.Map">
 		SELECT
 		 	OUT_ITEM	<!-- 부문 -->
 			,E.OUT_ITEM_NM
-			,CUST_CD <!-- 외주처 -->
-			,B.CUST_NM
+			,A.OUT_CORP AS OUT_CORP <!-- 외주처 -->
+			,B.CUST_NM <!-- 외주처 이름 -->
 			,CONTRACT_NM <!-- 용역명 -->
 			,CONVERT (DATE, A.CRT_DATE) AS CRT_DATE <!-- 계약일자 -->
 			,CONVERT (DATE, A.S_DATE) AS S_DATE <!-- 계약기간 시작 -->
@@ -201,7 +201,7 @@
 	</select>
 	<!-- 용역계약서 기성단계 출력  -->
 	<select id="getCooperationPJTGisung"
-		parameterType="ksmart30.team01.cooperation.domain.cooperationSangseRequest"
+		parameterType="ksmart30.team01.cooperation.domain.CooperationSangseRequest"
 		resultType="java.util.Map">
 		SELECT
 		 	* 
@@ -217,7 +217,7 @@
 	</select>
 	<!-- 용역계약서 용역내용 출력  -->
 	<select id="getCooperationPJTDragon"
-		parameterType="ksmart30.team01.cooperation.domain.cooperationSangseRequest"
+		parameterType="ksmart30.team01.cooperation.domain.CooperationSangseRequest"
 		resultType="java.util.Map">
 		SELECT
 		 	* 

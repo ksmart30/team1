@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import ksmart30.team01.cooperation.Mapper.CooperationMapper;
 import ksmart30.team01.cooperation.domain.CooperationSearchRequest;
-import ksmart30.team01.cooperation.domain.cooperationSangseRequest;
+import ksmart30.team01.cooperation.domain.CooperationSangseRequest;
 
 
 @Service
@@ -50,7 +50,7 @@ public class CooperationService {
 	
 	// 3.1.1 외주계약서 입력 - 조회
 	// 외주관리 - 외주계약서관리 - 외주계약서 입력 - 외주계약서 상세내역 가져오기
-	public Map<String,Object> cooperationPJTSangseSelect(cooperationSangseRequest vo){
+	public Map<String,Object> cooperationPJTSangseSelect(CooperationSangseRequest vo){
 		System.out.println("cooperationSangseSelect 실행 시작");
 		Map<String,Object> cooperationPJTSangseGD = new HashMap<String, Object>();
 		

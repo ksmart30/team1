@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ksmart30.team01.cooperation.domain.CooperationSearchRequest;
-import ksmart30.team01.cooperation.domain.cooperationSangseRequest;
+import ksmart30.team01.cooperation.domain.CooperationSangseRequest;
 import ksmart30.team01.cooperation.service.CooperationService;
 
 
@@ -57,12 +57,12 @@ public class CooperationRestController {
 	// 3.1.1 외주계약서 입력 - 조회
 	//외주관리 - 외주계약서관리 - 외주계약서 입력 - 외주계약서 상세 내역(기성단계,용역단계 포함) 출력 
 	/* /cooperationPJTYesanList url을 POST로 호출시 실행
-	 * @param  POST cooperationSangseRequest 으로 vo 받기
+	 * @param  POST CooperationSangseRequest 으로 vo 받기
 	 * @brief    projectCooperationManageService객체의 cooperationSangseSelect 메서드 호출
 	 * @return  List<Map<String,Object>> re - json방식
 	 */
 	@PostMapping("/cooperationPJTSangse")
-	public Map<String,Object> cooperationPJTSangse(cooperationSangseRequest vo){
+	public Map<String,Object> cooperationPJTSangse(CooperationSangseRequest vo){
 		System.out.println("받은값 : "+vo);
 		return cooperationService.cooperationPJTSangseSelect(vo);
 	}

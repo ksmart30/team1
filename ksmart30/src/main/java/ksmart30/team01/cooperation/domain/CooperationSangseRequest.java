@@ -1,6 +1,6 @@
 package ksmart30.team01.cooperation.domain;
 
-public class cooperationSangseRequest {
+public class CooperationSangseRequest {
 	private String PJT_CD;
 	private String OUT_CORP;
 	public String getPJT_CD() {
@@ -17,7 +17,7 @@ public class cooperationSangseRequest {
 	}
 	@Override
 	public String toString() {
-		return "cooperationSangseRequest [PJT_CD=" + PJT_CD + ", OUT_CORP=" + OUT_CORP + "]";
+		return "CooperationSangseRequest [PJT_CD=" + PJT_CD + ", OUT_CORP=" + OUT_CORP + "]";
 	}
 	
 	

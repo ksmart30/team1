@@ -11,7 +11,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import ksmart30.team01.cooperation.domain.CooperationSearchRequest;
-import ksmart30.team01.cooperation.domain.cooperationSangseRequest;
+import ksmart30.team01.cooperation.domain.CooperationSangseRequest;
 
 @Mapper
 public interface CooperationMapper {
@@ -33,14 +33,14 @@ public interface CooperationMapper {
 	
 	// 3.1.1 외주계약서 입력 - 조회(상세)
 	// 외주관리 - 외주계약서관리 - 외주계약서 입력 - 1-1외주 계약서 상세내역 가져오기
-	Map<String,Object> getCooperationPJTSangse(cooperationSangseRequest vo);
+	Map<String,Object> getCooperationPJTSangse(CooperationSangseRequest vo);
 	
 	// 3.1.1 외주계약서 입력 - 조회(기성)
 	// 외주관리 - 외주계약서관리 - 외주계약서 입력 - 1-2.외주 계약서 기성단계 가져오기
-	List<Map<String,Object>> getCooperationPJTGisung(cooperationSangseRequest vo);
+	List<Map<String,Object>> getCooperationPJTGisung(CooperationSangseRequest vo);
 	
 	// 3.1.1 외주계약서 입력 - 조회(용역)
 	// 외주관리 - 외주계약서관리 - 외주계약서 입력 - 1-3.외주 계약서 용역내용 가져오기
-	List<Map<String,Object>> getCooperationPJTDragon(cooperationSangseRequest vo);
+	List<Map<String,Object>> getCooperationPJTDragon(CooperationSangseRequest vo);
 	
 }
