@@ -6,10 +6,8 @@
 
 package ksmart30.team01.project.domain;
 
-public class T_P11000 {
-	//발주처
-	//출력횟수
-	//미승인
+public class ProjectSangseRequest {
+	private String CUST_NM; 	//발주처
 	private String PJT_CD;		//프로젝트 코드, 프로젝트명 조인해서 가져와야
 	private String BUILD_TYPE;	//건축물 유형
 	private String BUILD_GB;	//건축물 유형 둘 중에 하나 조인해서 가져와야

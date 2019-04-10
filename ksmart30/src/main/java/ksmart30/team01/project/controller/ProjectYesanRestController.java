@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ksmart30.team01.project.domain.ProjectSangseRequest;
+import ksmart30.team01.project.domain.ProjectYesanSearchRequest;
 import ksmart30.team01.project.service.ProjectYesanService;
 
 @RestController
@@ -17,12 +20,22 @@ public class ProjectYesanRestController {
 	private ProjectYesanService projectYesanService;
 	
 	//2.2.1 승인된 용역계약서 입력(프로젝트예산입력을 위한 검색 화면 요청)
-	@PostMapping("/project/yesan/yesanIn")
-	public List<Map<String, Object>> projectYesanIn() {	
-		System.out.println("/project/yesan/yesanIn RestController post");
-		List<Map<String,Object>> resultList = projectYesanService.search();		
-		return resultList;
+	@PostMapping("/project/projectYesanView")
+	public List<Map<String, Object>> projectYesanView(ProjectYesanSearchRequest projectYesanSearchRequest) {	
+		System.out.println("/project/projectYesanView RestController post 계약서 검색 리스트");
+		System.out.println(projectYesanSearchRequest.toString()+"View에서 입력받은 값 확인");
+		List<Map<String,Object>> searchList = projectYesanService.projectYesanSearch(projectYesanSearchRequest);	
+		System.out.println(searchList+" : 받아온값");
+		return searchList;
 	}	
+	
+	//2.2.1 프로젝트코드를 입력받아 프로젝트 개요 화면을 보여주는 요청
+	@PostMapping("/project/projectYesanViewOne")
+	public Map<String, Object> projectYesanViewOne(String PJT_CD) {	
+		System.out.println("/project/projectYesanViewOne RestController post 하나의 프로젝트 개요 화면");				
+		System.out.println(PJT_CD+" : 받아온값");
+		return projectYesanService.projectYesanViewOne(PJT_CD);
+	}
 		
 	//2.2.1 승인된 용역계약서 상세
 	@GetMapping("/project/yesan/sangse")	

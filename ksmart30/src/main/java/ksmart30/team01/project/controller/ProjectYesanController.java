@@ -18,20 +18,12 @@ public class ProjectYesanController {
 
 	@Autowired ProjectYesanService projectYesanService;
 	
-	//2.2.1 승인된 용역계약서 입력
+	//2.2.1 승인된 용역계약서(프로젝트 예산) 입력
 	@GetMapping("/project/projectYesanView")
 	public String projectYesanIn() {
 		System.out.println("/project/projectYesanView 프로젝트예산 입력 화면만 Controller get");
 		return "project/projectYesanView";
 	}	
-	
-	@GetMapping("/project/yesan/in1")
-	public String projectYesanIn(Model model,String PJT_CD) {
-		model.addAttribute("model", projectYesanService.listSearch(PJT_CD));
-		System.out.println(model.toString());
-		System.out.println("/project/yesan/in 프로젝트예산 입력 요청 Controller get");
-		return "project/yesan/in";
-	}
 	
 	//2.2.1.1 승인된 용역계약서 일정계획 입력(수정) 화면
 	@GetMapping("/project/yesan/sangse/schedule_up")

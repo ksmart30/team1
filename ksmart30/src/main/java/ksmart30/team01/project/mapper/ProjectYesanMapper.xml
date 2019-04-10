@@ -3,18 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace = "ksmart30.team01.project.mapper.ProjectYesanMapper">
- 	<!-- 프로젝트예산입력을 위해 프로젝트 대장에서 프로젝트코드와 프로젝트명을 보여주는 쿼리문 -->
- 	<select id="list" resultType="java.util.Map">
+ 	<!-- 2.2.1. 프로젝트예산입력을 위해 프로젝트 대장에서 프로젝트코드와 프로젝트명을 보여주는 쿼리문 -->
+ 	<select id="getProjcetYesanSearchList" parameterType="ksmart30.team01.project.domain.ProjectYesanSearchRequest" resultType="java.util.Map">
 		SELECT B.PJT_CD,
 		       A.PJT_NM
 		  FROM T_SM3000 A,
 		       T_P11000 B
-		WHERE B.PJT_CD=A.PJT_CD
+		WHERE B.PJT_CD = A.PJT_CD
+			AND B.CONTRACT_DATE like #{CONTRACT_DATE}+'%'
 		ORDER BY B.PJT_CD DESC;
   	</select>
  	
- 	<!-- 프로젝트코드에 해당하는 프로젝트 개요를 보여주는 쿼리문 -->
-  	<select id="selectList" parameterType="String" resultType="ksmart30.team01.project.domain.T_P11000">
+ 	<!-- 2.2.1.1 프로젝트코드에 해당하는 프로젝트 개요를 보여주는 쿼리문 -->
+   	<select id="getProjectYesanSangse" parameterType="String" resultType="java.util.Map">
 		SELECT  A.PJT_CD,
 		        A.PJT_NM,
 		        B.DEPT_CD,
@@ -100,6 +101,15 @@
 		   AND F.G_DEPT_CD = E.DEPT_CD
 		/*   AND (SELECT COUNT(J_PJT_CD) FROM T_P13000 WHERE J_PJT_CD = B.PJT_CD) > 1 */
 		   AND F.G_PJT_CD = #{PJT_CD}
+  	</select>
+  	
+  	<!-- 2.2.1.2 발주처를 조회하는 쿼리문 -->
+  	<select id="getProjectYesanSangseCustNm" parameterType="String" resultType="java.util.Map">  	
+  	SELECT CUST_NM
+  		FROM T_P11010 A,
+  			T_AC0300 B
+  		WHERE A.CUST_CD = B.CUST_CD
+  			AND PJT_CD = #{PJT_CD}
   	</select>
   	
  </mapper> 	
