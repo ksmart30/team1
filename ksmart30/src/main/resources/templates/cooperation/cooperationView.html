@@ -20,19 +20,20 @@ function callme(IN_PJT_CD,IN_OUT_CORP){
             success:(data)=>{
             	console.log(data);
             	//외주계약서 상세 내용
-            	$('#OUT_ITEM').attr('value',data.cooperationPJTSangse.OUT_ITEM);
+            	$('#OUT_ITEM').attr('value',data.cooperationPJTSangse.OUT_ITEM);//부문
 				 $('select[id=OUT_ITEM]').val(data.cooperationPJTSangse.OUT_ITEM);
-            	$('#OUT_CORP').attr('value',data.cooperationPJTSangse.OUT_CORP);
-            	$('#CUST_NM').attr('value',data.cooperationPJTSangse.CUST_NM);
-            	$('#CON_DOC_YN').attr('value',data.cooperationPJTSangse.CON_DOC_YN);
-            	$('#CONTRACT_NM').attr('value',data.cooperationPJTSangse.CONTRACT_NM);            	
-            	$('#E_DATE').attr('value',data.cooperationPJTSangse.E_DATE);
-            	$('#S_DATE').attr('value',data.cooperationPJTSangse.S_DATE);
-            	$('#CRT_DATE').attr('value',data.cooperationPJTSangse.CRT_DATE);
-            	$('#E_RMK').attr('value',data.cooperationPJTSangse.E_RMK);
-            	 $('select[id=E_RMK]').val(data.cooperationPJTSangse.E_RMK);           	
-            	$('#CONTRACT_AMT').attr('value',data.cooperationPJTSangse.CONTRACT_AMT);
-            	$('#VAT_YN').attr('value',data.cooperationPJTSangse.VAT_YN);
+            	$('#OUT_CORP').attr('value',data.cooperationPJTSangse.OUT_CORP);//외주처
+            	$('#OUT_CORP_NM').attr('value',data.cooperationPJTSangse.OUT_CORP_NM);//외주처이름
+            	$('#CONTRACT_NM').attr('value',data.cooperationPJTSangse.CONTRACT_NM);//용역명        	
+            	$('#CONTRACT_DATE').attr('value',data.cooperationPJTSangse.CONTRACT_DATE);//계약일자
+            	$('#S_DATE').attr('value',data.cooperationPJTSangse.S_DATE);//계약기간 시작
+            	$('#E_DATE').attr('value',data.cooperationPJTSangse.E_DATE);//계약기간 끝
+            	$('#E_RMK').attr('value',data.cooperationPJTSangse.E_RMK);//종료구문(까지)
+            	 $('select[id=E_RMK]').val(data.cooperationPJTSangse.E_RMK);
+            	$('#CONTRACT_AMT').attr('value',data.cooperationPJTSangse.CONTRACT_AMT);//계약액
+            	$('#CON_DOC_YN').attr('value',data.cooperationPJTSangse.CON_DOC_YN);//계약서 유무
+            	 $('select[id=CON_DOC_YN]').val(data.cooperationPJTSangse.CON_DOC_YN);
+            	$('#VAT_YN').attr('value',data.cooperationPJTSangse.VAT_YN);//VAT여부
             	 $('select[id=VAT_YN]').val(data.cooperationPJTSangse.VAT_YN);
             	//기성단계 출력
             	let GI_AMT_SUM = 0;
@@ -124,25 +125,25 @@ $(document).ready(()=>{
 <th:block layout:fragment="customBody">
 <font color="black">
 
-<div class="x_content" style="text-align: right">
-<div class="btn-group" >
-<button class="btn btn-default" type="reset">입력</button>
-<button class="btn btn-default" type="button">수정</button>
-<button class="btn btn-default" type="button">삭제</button>
-<button class="btn btn-default" type="button">저장</button>
-<button class="btn btn-default" type="button">출력</button>
-</div>
-</div>
-<div class="col-md-9 col-xs-12" style="color:black;">
-        <div class="page-title">
-	<div class="title_left">
-	 <h2><b>외주관리</b></h2>
-	<h5><font color="gray"><b>3.외주관리&nbsp;>&nbsp;&nbsp;3.1외주계약서 관리&nbsp;>&nbsp;&nbsp;3.1.1외주계약서입력</b></font></h5>
-					
-	</div>
-	</div>
-        </div>
 
+<div class="col-md-9 col-xs-12" style="color:black;">
+	<div class="page-title">
+		<div class="title_left">
+		 	<h2><b>외주관리</b></h2>
+			<h5><font color="gray"><b>3.외주관리&nbsp;>&nbsp;&nbsp;3.1외주계약서 관리&nbsp;>&nbsp;&nbsp;3.1.1외주계약서입력</b></font></h5>
+						
+		</div>
+	</div>
+</div>
+<div class="x_content" style="text-align: right">
+	<div class="btn-group" >
+		<button class="btn btn-default" type="reset">입력</button>
+		<button class="btn btn-default" type="button">수정</button>
+		<button class="btn btn-default" type="button">삭제</button>
+		<button class="btn btn-default" type="button">저장</button>
+		<button class="btn btn-default" type="button">출력</button>
+	</div>
+</div>
 
 	<!-- 검색부분 start -->
 	<div class="col-md-4 col-sm-6 col-xs-12">
@@ -293,7 +294,7 @@ $(document).ready(()=>{
 						<td colspan="2">
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
 								<input type="text" name="test" class="form-control"
-									readonly="readonly" id="CUST_NM">
+									readonly="readonly" id="OUT_CORP_NM">
 							</div>
 						</td>
 					</tr>
@@ -308,7 +309,7 @@ $(document).ready(()=>{
 					<tr>
 						<td style="background-color: #f3f3f3">계약일자</td>
 						<td colspan="6"><div class="col-md-4 col-sm-12 col-xs-12 ">
-								<input type="date" name="test" class="form-control" id="CRT_DATE">
+								<input type="date" name="test" class="form-control" id="CONTRACT_DATE">
 							</div></td>
 
 					</tr>
@@ -351,7 +352,14 @@ $(document).ready(()=>{
 								<input type="number" name="test" class="form-control" id="CONTRACT_AMT">
 							</div>
 						</td>
-						<td colspan="6"><input type="checkbox" class="icheckbox_flat-green" id="CON_DOC_YN">계약서여부</td>
+						<td  style="background-color: #f3f3f3">계약서</td>
+						<td colspan="5">
+							<div class="col-md-4 col-sm-12 col-xs-12 ">
+								<select class="form-control" id="CON_DOC_YN">
+									<option value="0">없음</option>
+									<option value="1">있음</option>
+								</select>
+							</div>
 					</tr>
 					
 					<tr>

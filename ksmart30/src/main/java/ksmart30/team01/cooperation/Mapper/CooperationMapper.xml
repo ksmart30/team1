@@ -167,19 +167,19 @@
 		resultType="java.util.Map">
 		SELECT
 		 	OUT_ITEM	<!-- 부문 -->
-			,E.OUT_ITEM_NM
 			,A.OUT_CORP AS OUT_CORP <!-- 외주처 -->
-			,B.CUST_NM <!-- 외주처 이름 -->
+			,B.CUST_NM AS OUT_CORP_NM<!-- 외주처 이름 -->
 			,CONTRACT_NM <!-- 용역명 -->
-			,CONVERT (DATE, A.CRT_DATE) AS CRT_DATE <!-- 계약일자 -->
+			,CONVERT (DATE, A.CONTRACT_DATE) AS CONTRACT_DATE <!-- 계약일자 -->
 			,CONVERT (DATE, A.S_DATE) AS S_DATE <!-- 계약기간 시작 -->
 			,CONVERT (DATE, A.E_DATE) AS E_DATE <!-- 계약기간 끝 -->
 			,E_RMK <!-- 종료구문(까지) -->
 			,CON_DOC_YN <!-- 계약서 유무 0 없음 1 있음 -->
 			,CONTRACT_AMT <!-- 계약액 -->
-			,C.E_RMK_NM
-			,VAT_YN
+			,VAT_YN <!-- VAT여부 -->
 			,D.VAT_YN_NM
+			,C.E_RMK_NM
+			,E.OUT_ITEM_NM
 		FROM 
 		 	T_P12000 A
 		 	,(SELECT CUST_CD,CUST_NM FROM T_AC0300) B <!-- 거래처(외주처,발주처) -->
