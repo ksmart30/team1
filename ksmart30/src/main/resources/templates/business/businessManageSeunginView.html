@@ -6,60 +6,132 @@
 	<meta charset="UTF-8">
 	<title>사업수행결정서 승인</title>
 		<th:block th:include="layout/customHead"></th:block>
+		
+				<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+			<script>
+			$(document).ready(()=>{
+				console.log("안녕1");
+			    // 검색목록(프로젝트예산 입력을 위한 용역계약서 리스트)
+			    $('#pjtSearchBtn').click(()=>{
+			    	console.log("안녕2");//btn_list를 클릭하면
+			    	var BUSI_YY = $('#BUSI_YY').val();
+			    	var PJT_NM = $('#PJT_NM').val();
+			    	var DEPT_CD = $('#DEPT_CD').val();
+			    	let pjtRadioValue = $('input[name=pjtRadioValue]:checked','#radioForm').val();
+			        $.ajax({
+			            url:'/business/businessManageViewList',	//url을 요청하고
+			            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
+			        	data:{BUSI_YY:BUSI_YY,PJT_NM:PJT_NM,DEPT_CD:DEPT_CD},	//넘길 데이터(검색 조건 없이 우선 테스트)
+			            success:function(data){	//받은 데이터
+			                $('#pjtList').empty();	//리스트를 비우고	               
+			                $(data).each((index,item)=>{
+			                    $('#pjtList').append('<tr><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'
+			                    +item.PJT_NM+'</td></tr>');
+
+			                });
+			            }
+			        });
+			    });
+			});
+			</script>
+			
 	</th:block>
 	<th:block layout:fragment="customBody">
 	<!-- 검색부분 start -->
 	<font color="black">	
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="x_panel">
-			<div class="x_content">
-				<label for="ex3">검색조건</label><br>
-				<table>
-					<tr>
-						<td>년도</td>
-						<td><input type="number"></td>
-					</tr>
-					<tr>
-						<td>부서</td>
-						<td><select>
-								<option>전 사</option>
-								<option>설계1본부</option>
-								<option>설계2본부</option>
-								<option>설계3본부</option>
-								<option>설계4본부</option>
-								<option>설계5본부</option>
-						</select></td>
-					</tr>
-					<tr>
-						<td>프로젝트</td>
-						<td><div>
-								<input type="text">
-							</div></td>
-					</tr>
-				</table>
-				<!-- 검색부분 end -->
-				<div class="x_title"></div>
-				<!-- 결과부분 start -->
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>프로젝트명</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>ksmart1팀</td>
-						</tr>
-						<tr>
-							<td>bonobonoPorori</td>
-						</tr>
-					</tbody>
-				</table>
-				<!-- 결과부분 end -->
-				<div class="x_title"></div>
+		<div class="x_content" >
+			<label for="ex3">검색조건</label><br>
+			<table>
+				<tbody><tr>
+					<td>
+						년도
+					</td>
+					<td>
+				<div class="col-md-10 col-sm-10 col-xs-10 ">
+				<input type="number" name="BUSI_YY" id="BUSI_YY" class="form-control" value="2019">
+				</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						부서
+					</td>
+					<td>
+					<div class="col-md-10 col-sm-10 col-xs-10 ">
+						<select id="DEPT_CD">
+							<option value="">전     사</option>
+							<option value="75">설계1본부</option>
+							<option value="76">설계2본부</option>
+							<option value="77">설계3본부</option>
+							<option value="78">설계4본부</option>
+							<option value="79">설계5본부</option>
+						</select>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						프로젝트
+					</td>
+					<td>
+						<div class="col-md-10 col-sm-10 col-xs-10 ">
+						<input type="text" name="PJT_NM" id="PJT_NM" class="form-control" value="">
+						</div>
+					</td>
+					<td>
+						<button  id="pjtSearchBtn"><i class="fa fa-search"></i></button>
+					</td>
+				</tr>
+			</tbody></table>
+			<form id="radioForm">
+			<table>
+				<tbody><tr>
+					<td>
+						<input type="radio" name="pjtRadioValue" value="1">접수
+					</td>
+					<td>
+						<input type="radio" name="pjtRadioValue" value="2">승인
+					</td>
+					<td>
+						<input type="radio" name="pjtRadioValue" value="3">HOLD
+					</td>
+					<td>
+						<input type="radio" name="pjtRadioValue" value="4">CANCEL
+					</td>
+				</tr>
+			</tbody></table>
+			</form>
 			</div>
+			</div>
+			<!-- 검색부분 end -->
+			<div class="x_panel">
+		<div class="x_content">
+			<div class="x_title"></div>
+			<br>
+			<!-- 결과부분 start -->
+			<table class="table table-bordered" style="overflow:auto; height:350px">
+				<thead>
+				<tr>
+					<th width="30%">PJT코드</th>
+					<th width="70%">프로젝트명</th>
+				</tr>
+				</thead>
+				<tbody id="pjtList">
+				</tbody>
+				<thead>
+					<tr>
+						<td colspan="2" style="background-color:#ffeeaa">
+							<b><span id="resultLength"></span></b>
+						</td>
+					</tr>
+				</thead>
+			</table>
+			<!-- 결과부분 end -->
 		</div>
-	</div>
+		</div>
+		</div>
 
 				<div class="col-md-9 col-xs-12" style="color:black;">
         <div class="page-title">

@@ -8,8 +8,15 @@ public class BusinessMarket {
 	private String YAREA_P;	 //연면적
 	private String YAREA_P2;  //연면적 검색때 필요
 	private String PJT_NM; // 프로젝트 이름
-	private String DEPT_CD;
+	private String DEPT_CD; // 부서
+	private String PJT_CD; // 프로젝트 코드
 	
+	public String getPJT_CD() {
+		return PJT_CD;
+	}
+	public void setPJT_CD(String pJT_CD) {
+		PJT_CD = pJT_CD;
+	}
 	public String getDEPT_CD() {
 		return DEPT_CD;
 	}
@@ -55,8 +62,9 @@ public class BusinessMarket {
 	@Override
 	public String toString() {
 		return "BusinessMarket [BUSI_YY=" + BUSI_YY + ", UP_SU=" + UP_SU + ", UP_SU2=" + UP_SU2 + ", YAREA_P=" + YAREA_P
-				+ ", YAREA_P2=" + YAREA_P2 + ", PJT_NM=" + PJT_NM + ", DEPT_CD=" + DEPT_CD + "]";
+				+ ", YAREA_P2=" + YAREA_P2 + ", PJT_NM=" + PJT_NM + ", DEPT_CD=" + DEPT_CD + ", PJT_CD=" + PJT_CD + "]";
 	}
+
 
 	
 

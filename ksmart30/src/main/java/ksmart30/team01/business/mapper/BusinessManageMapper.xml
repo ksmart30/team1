@@ -28,4 +28,53 @@
 		AND PJT_NM LIKE '%'+ #{PJT_NM} +'%'
 		AND DEPT_CD LIKE '%'+ #{DEPT_CD} +'%'
 </select>
+
+<!-- 사업수행결정서(승인)프로젝트목록 클릭시 우측에 검색 -->
+<select id="getBusinessManageView" parameterType="ksmart30.team01.business.domain.BusinessMarket" resultType="java.util.Map">
+		SELECT
+		  
+				PJT_NM,  <!--프로젝트 이름  -->
+				CUST_CD, <!--발주처 코드  -->
+				CUST_NM, <!--발주처 이름  -->
+				CUST_GBN, <!--발주처구분  --> 
+				PLAN_DATE, <!--완료예정일  -->
+				BUSI_DATE, <!--의뢰 일자  -->
+				CUST_TEL, <!--전화번호  -->
+				BUSI_YY, <!--일련번호 년도  -->
+				BUSI_SEQ, <!--일련번호 번호  -->
+				CRT_DATE, <!-- 등록일시 -->
+				CUST_CHARGE_NM, <!--담당자  -->
+				REGION,<!--지역  -->
+				REGION2,<!--지역2  -->
+				ZONE1,<!--지구  -->
+				ZONE2,<!--지구2  -->
+				SCOPE1,<!--구역  -->
+				SCOPE2,<!--구역2  -->
+				UP_SU, <!--지상층  -->
+				DOWN_SU,<!--지하  -->
+				H_CNT, <!--세대수  -->
+				AREA_P, <!--대지면적평  -->
+				AREA_M, <!--대지면적 m  -->
+				YAREA_P,<!--연면적 평  -->
+				YAREA_M,<!--연면적 m  -->
+				ADDR, <!--대지위치  -->
+				COVERAGE, <!--건폐율  -->
+				CAPACITY, <!--용적율  -->
+				RMK_1, <!-- 수주정보 -->
+				BUILD_TYPE, <!--건축물용도  -->
+				BIZ_TYPE,  <!--수주구분1  -->
+				BIZ_GBN, <!--수주구분2  -->
+				FORECAST_AMT, <!--추정계약액  -->
+				MARKET_CLASS_GBN, <!--업무범위 수준  -->
+				RMK_2, <!--본부장의견  -->
+				RMK_3, <!--설계부문장의견  -->
+				RMK_4, <!--수주부문장의견  -->
+				RMK_5, <!--대표이사 의견  -->
+				BUILD_GB <!--사업분류 -->
+				
+			FROM T_PS3000	
+				WHERE PJT_CD LIKE #{PJT_CD}
+
+</select>
+
 </mapper>

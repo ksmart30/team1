@@ -15,5 +15,8 @@ public interface BusinessManageMapper {
 	
 	//1.1.1 사업수행결정서 프로젝트 리스트 좌측
 	List<Map<String,Object>> getBusinessManageViewList(BusinessMarket vo);
+
+	//1.1.1 사업수행결정서(승인)프로젝트목록 클릭시 우측에 검색
+	Map<String, Object> getBusinessManageView(BusinessMarket vo);
 	
 }

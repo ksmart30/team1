@@ -1,15 +1,149 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
-	
-	
 
-	
+
+
+
 	<title>2.1.1 사업수행 결정서 검색 List</title>
-		<th:block th:include="layout/customHead"></th:block>
-		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-			<script>
+	<th:block th:include="layout/customHead"></th:block>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+	<!-- 우편 시스템 -->
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script>
+		    function sample6_execDaumPostcode() {
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+		
+		                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+		                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		                var addr = ''; // 주소 변수
+		                var extraAddr = ''; // 참고항목 변수
+		
+		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		                    addr = data.roadAddress;
+		                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+		                    addr = data.jibunAddress;
+		                }
+		
+		                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+		                if(data.userSelectedType === 'R'){
+		                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+		                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+		                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                        extraAddr += data.bname;
+		                    }
+		                    // 건물명이 있고, 공동주택일 경우 추가한다.
+		                    if(data.buildingName !== '' && data.apartment === 'Y'){
+		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                    }
+		                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+		                    if(extraAddr !== ''){
+		                        extraAddr = ' (' + extraAddr + ')';
+		                    }
+		                    // 조합된 참고항목을 해당 필드에 넣는다.
+		                    document.getElementById("sample6_extraAddress").value = extraAddr;
+		                
+		                } else {
+		                    document.getElementById("sample6_extraAddress").value = '';
+		                }
+		
+		                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+		                document.getElementById('sample6_postcode').value = data.zonecode;
+		                document.getElementById("sample6_address").value = addr;
+		                // 커서를 상세주소 필드로 이동한다.
+		                document.getElementById("sample6_detailAddress").focus();
+		            }
+		        }).open();
+		    }
+
+			function mooncall(PJT_CD){
+				console.log("mooncall"+PJT_CD);
+				$.ajax({
+					url:'/business/businessManageView',
+					type:'POST',
+					data:{PJT_CD:PJT_CD},
+					success:function(data){
+					console.log(data);
+						$('#PJT_NM2').attr('value',data.PJT_NM); //프로젝트 이름
+						$('#AREA_M').attr('value',data.AREA_M); // 대지면적 m  --
+						$('#AREA_P').attr('value',data.AREA_P); // 대지면적 평 --
+						$('#BUSI_DATE').attr('value',data.BUSI_DATE); //의뢰일자
+						$('#BUSI_SEQ').empty();
+						$('#BUSI_SEQ').append(data.BUSI_SEQ); //일련번호 번호
+						$('#CUST_CD').attr('value',data.CUST_CD); //발주처 코드 --
+						$('#CUST_NM').attr('value',data.CUST_NM);//발주처 이름
+						$('#CUST_GBN').attr('value',data.CUST_GBN);//발주처 구분
+							$('select[id=CUST_GBN]').val(data.CUST_GBN);
+						$('#PLAN_DATE').attr('value',data.PLAN_DATE);//완료예정일
+						$('#CUST_TEL').attr('value',data.CUST_TEL);//전화번호
+						$('#BUSI_YY2').empty();
+						$('#BUSI_YY2').append(data.BUSI_YY); //일련번호 년도  ??
+						$('#CRT_DATE').empty();
+						$('#CRT_DATE').append(data.CRT_DATE); //등록일시
+						$('#CUST_CHARGE_NM').attr('value',data.CUST_CHARGE_NM);//담당자
+						$('#REGION').attr('value',data.REGION);//지역1
+							$('select[id=REGION]').val(data.REGION);
+						$('#REGION2').attr('value',data.REGION2); //지역2
+							$('select[id=REGION2]').val(data.REGION2);
+						$('#ZONE1').attr('value',data.ZONE1); //지구1
+							$('select[id=ZONE1]').val(data.ZONE1);
+						$('#ZONE2').attr('value',data.ZONE2); //지구2
+							$('select[id=ZONE2]').val(data.ZONE2);
+						$('#SCOPE1').attr('value',data.SCOPE1);//구역1
+							$('select[id=SCOPE1]').val(data.SCOPE1);
+						$('#SCOPE2').attr('value',data.SCOPE2); //구역2
+							$('select[id=SCOPE2]').val(data.SCOPE2);
+						$('#UP_SU').attr('value',data.UP_SU); //지상층
+						$('#DOWN_SU').attr('value',data.DOWN_SU); //지하
+						$('#H_CNT').attr('value',data.H_CNT); // 세대수
+						$('#YAREA_P').attr('value',data.YAREA_P); //연면적 평
+						$('#YAREA_M').attr('value',data.YAREA_M); //연면적 m
+						$('#sample6_address').attr('value',data.ADDR); // 대지위치
+						$('#COVERAGE').attr('value',data.COVERAGE); //건폐율
+						$('#CAPACITY').attr('value',data.CAPACITY); //용적율 RMK_1 
+						$('#BUILD_TYPE').attr('value',data.BUILD_TYPE); //건축물용도 
+							$('select[id=BUILD_TYPE]').val(data.BUILD_TYPE);
+						$('#BIZ_TYPE').attr('value',data.BIZ_TYPE);  //수주구분1 
+							$('select[id=BIZ_TYPE]').val(data.BIZ_TYPE);
+						$('#BIZ_GBN').attr('value',data.BIZ_GBN);  // 수주구분2
+							$('select[id=BIZ_GBN]').val(data.BIZ_GBN); 
+						$('#FORECAST_AMT').attr('value',data.FORECAST_AMT); //추정계약액 
+						$('#MARKET_CLASS_GBN').attr('value',data.MARKET_CLASS_GBN); //업무및 수준
+							$('select[id=MARKET_CLASS_GBN]').val(data.MARKET_CLASS_GBN);
+						$('#RMK_1').attr('value',data.RMK_1); //수주정보
+						$('#RMK_2').attr('value',data.RMK_2); //의견
+						$('#RMK_3').attr('value',data.RMK_3);
+						$('#RMK_4').attr('value',data.RMK_4);
+						$('#RMK_5').attr('value',data.RMK_5);  
+						$('#BUILD_GB').attr('value',data.BUILD_GB); // 사업분류
+							$('select[id=BUILD_GB]').val(data.BUILD_GB);
+						
+						let myElem = document.getElementById('RMK_1'); // TEXTAREA 수주정보
+							myElem.value = data.RMK_1;
+						
+						let myElem2 = document.getElementById('RMK_2'); // TEXTAREA 본부장의견
+							myElem2.value = data.RMK_2;
+							
+						let myElem3 = document.getElementById('RMK_3'); // TEXTAREA 설계부문장의견
+							myElem3.value = data.RMK_3;
+							
+						let myElem4 = document.getElementById('RMK_4'); // TEXTAREA 수주부문장의견
+							myElem4.value = data.RMK_4;
+							
+						let myElem5 = document.getElementById('RMK_5'); // TEXTAREA 대표이사 의견
+							myElem5.value = data.RMK_5;
+
+					}
+				});
+			}
+			
 			$(document).ready(()=>{
 				console.log("안녕1");
 			    // 검색목록(프로젝트예산 입력을 위한 용역계약서 리스트)
@@ -26,581 +160,621 @@
 			            success:function(data){	//받은 데이터
 			                $('#pjtList').empty();	//리스트를 비우고	               
 			                $(data).each((index,item)=>{
-			                    $('#pjtList').append('<tr>');
-			                    $('#pjtList').append('<td style="background-color:#fff9df">'+item.PJT_CD+'</td>');
-			                    $('#pjtList').append('<td>'+item.PJT_NM+'</td>');
-			                    $('#pjtList').append('</tr>');
+			                    $('#pjtList').append('<tr onclick="mooncall('+item.PJT_CD+')"><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'
+			                    +item.PJT_NM+'</td></tr>'
+			                    );
 			                });
 			            }
 			        });
 			    });
 			});
 			</script>
-		
-	</th:block>
-	
-	
-	
-	
-	
-	
-	<th:block layout:fragment="customBody">
+
+</th:block>
+
+
+
+
+
+
+<th:block layout:fragment="customBody">
+
 	<font color="black">
-<div class="col-md-3 col-sm-6 col-xs-12">
-		<div class="x_panel">
-		<div class="x_content" style="overflow-x:auto">
-			<label for="ex3">검색조건</label><br>
-			<table>
-				<tbody><tr>
-					<td>
-						년도
-					</td>
-					<td>
-				<div class="col-md-10 col-sm-10 col-xs-10 ">
-				<input type="number" name="BUSI_YY" id="BUSI_YY" class="form-control" value="2019">
-				</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						부서
-					</td>
-					<td>
-					<div class="col-md-10 col-sm-10 col-xs-10 ">
-						<select id="DEPT_CD">
-							<option value="">전     사</option>
-							<option value="75">설계1본부</option>
-							<option value="76">설계2본부</option>
-							<option value="77">설계3본부</option>
-							<option value="78">설계4본부</option>
-							<option value="79">설계5본부</option>
-						</select>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						프로젝트
-					</td>
-					<td>
-						<div class="col-md-10 col-sm-10 col-xs-10 ">
-						<input type="text" name="PJT_NM" id="PJT_NM" class="form-control" value="">
-						</div>
-					</td>
-					<td>
-						<button  id="pjtSearchBtn"><i class="fa fa-search"></i></button>
-					</td>
-				</tr>
-			</tbody></table>
-			<form id="radioForm">
-			<table>
-				<tbody><tr>
-					<td>
-						<input type="radio" name="pjtRadioValue" value="1">접수
-					</td>
-					<td>
-						<input type="radio" name="pjtRadioValue" value="2">승인
-					</td>
-					<td>
-						<input type="radio" name="pjtRadioValue" value="3">HOLD
-					</td>
-					<td>
-						<input type="radio" name="pjtRadioValue" value="4">CANCEL
-					</td>
-				</tr>
-			</tbody></table>
-			</form>
-			</div>
-			</div>
-			<!-- 검색부분 end -->
+		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="x_panel">
-		<div class="x_content">
-			<div class="x_title"></div>
-			<br>
-			<!-- 결과부분 start -->
-			<table class="table table-bordered">
-				<thead>
-				<tr>
-					<th width="30%">PJT코드</th>
-					<th width="70%">프로젝트명</th>
-				</tr>
-				</thead>
-				<tbody id="pjtList">
-				</tbody>
-				<thead>
-					<tr>
-						<td colspan="2" style="background-color:#ffeeaa">
-							<b><span id="resultLength"></span></b>
-						</td>
-					</tr>
-				</thead>
-			</table>
-			<!-- 결과부분 end -->
-		</div>
-		</div>
-		</div>
-				<div class="col-md-9 col-xs-12" style="color:black;">
-        <div class="page-title">
-	<div class="title_left">
-	 <h2><b>사업수행결정서</b></h2>
-	<h5><font color="gray"><b>1.사업성검토관리&nbsp;>1.1사업수행결정서관리&nbsp;>1.1.1사업수행결정서&nbsp;&nbsp;</b></font></h5>
-					
-	</div>
-	</div>
-							<div class="x_content" style="text-align: right">
-<div class="btn-group" >
-<button class="btn btn-default" type="reset">입력</button>
-<button class="btn btn-default" type="button">수정</button>
-<button class="btn btn-default" type="button">삭제</button>
-<button class="btn btn-default" type="button">저장</button>
-<button class="btn btn-default" type="button">출력</button>
-</div>
-
-</div>
-        </div>
-				
-
-	<!-- 프로젝트 start -->
-	<div class="col-md-9 col-sm-6 col-xs-12">
-		<div class="x_panel">
-			<div class="x_content">
-				<div class="x_panel">
-					<div class="x_title">
-
-						
-						
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-
-						<table class="table table-bordered">
-
+				<div class="x_content">
+					<label for="ex3">검색조건</label><br>
+					<table>
+						<tbody>
 							<tr>
-								<th>일련번호</th>
-								<th>2019 - 0018</th>
-								<th>입력일자 2019/03/14</th>
-								<th>승인일자 ____/__/__/</th>
-							</tr>
-
-						</table>
-
-						<table class="table table-bordered">
-
-							<tr>
-								<th>프로젝트</th>
-								<th><input type="text"></th>
-								<th colspan="2">발주처<input type="text"
-									style="width: 80px; height: 20px; font-size: 12px">
-									<button id="pjt_s"><i class="fa fa-search"></i></button>									
-									<input type="text"
-									style="width: 120px; height: 20px; font-size: 12px"></th>
-								<th colspan="2"><select>
-								<option>            </option>
-								<option>건설사</option>
-								<option>시행사</option>
-								<option>공사/공단</option>
-								<option>정부기관</option>
-								<option>건축설계사무소</option>
-								<option>외주협력업체</option>
-								<option>조합(재개발,재건축)</option>
-								<option>기타</option>
-						</select>
-						</th>
-							</tr>
-							
-							
-							<tr> 
-								<td>의뢰일자<input type="date"></td>
-								<td>정보취득자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button id="pjt_s"><i class="fa fa-search"></i></button></td>
-								<td>담당자 <input type="text" style="width: 80px; height: 20px; font-size: 12px"></td>
-								<td colspan="3">전화:<input type="text"></td>
-							</tr>
-							<tr>
-								<td>완료예정일<input type="date"></td>
-								<td>수주책임자<input type="text" style="width: 40px; height: 20px; font-size: 12px"><button  id="pjtSearchBtn"><i class="fa fa-search"></i></button></td>
-								<td colspan="4">수주구분<select>
-										<option>            </option>
-										<option>민간사업</option>
-										<option>공공사업</option>
-								</select> -
-								<select>
-										<option>            </option>
-										<option>발주의뢰</option>
-										<option>저가심의</option>
-										<option>적격심사</option>
-										<option>현상설계</option>
-										<option>지명현상</option>
-										<option>TK</option>
-										<option>기술제안</option>
-										<option>대안입찰</option>
-										<option>PF</option>
-										<option>BTL</option>
-								</select> </td>
-							</tr>
-							<tr>
-								<td>사업분류<select>
-										<option>            </option>
-										<option>신축</option>
-										<option>증축</option>
-										<option>리모델링</option>
-										<option>재건축</option>
-										<option>재개발</option>
-								</select> </td>
-								<td>관리 임원<input type="text" style="width: 50px; height: 20px; font-size: 12px"><button  id="pjtSearchBtn"><i class="fa fa-search"></i></button></td>
-								<td colspan="4"></td>
-							</tr>
-							
-							
-							<tr>
-								
-								
-								<th>대지위치<button><i class="fa fa-search" id="pjt_s"></i></button></th>
-								
-								<th><input type="text"></th>
-								<th>건축물용도</th>
-								<th colspan="3" ><select>
-										<option>            </option>
-										<option>단독주택</option>
-										<option>공동주택</option>
-										<option>제1종 근린생활시설</option>
-										<option>제2종 근린생활시설</option>
-										<option>문화 및 집회시설</option>
-										<option>판매시설</option>
-										<option>의료시설</option>
-										<option>교육연구시설</option>
-										<option>운동시설</option>
-										<option>업무시설</option>
-										<option>숙박시설</option>
-										<option>위락시설</option>
-										<option>공 장</option>
-										<option>창고시설</option>
-										<option>위험물저장 및 처리시설</option>
-										<option>자동차관련시설</option>
-										<option>동물 및 식물관련시설</option>
-										<option>분뇨 쓰레기처리시설</option>
-										<option>교정 및 군사시설</option>
-										<option>묘지관련시설</option>
-										<option>관광유게시설</option>
-										<option>주거복합</option>
-										<option>주거단위계획</option>
-										<option>종교시설</option>
-										<option>운수시설</option>
-										<option>노유자시설</option>
-										<option>수련시설</option>
-										<option>방송통신시설</option>
-										<option>발전시설</option>
-										<option>공공업무시설</option>
-								</select></th> 
-
-					
-							</tr>
-							<tr>
-								<th>지역/지구/구역</th>
-								<th><select>
-										<option>            </option>
-										<option>전용주거지역(1종)</option>
-										<option>전용주거지역(2종)</option>
-										<option>일반주거지역</option>
-										<option>일반주거지역(1종)</option>
-										<option>일반주거지역(2종)</option>
-										<option>일반주거지역(3종)</option>
-										<option>준주거지역</option>
-										<option>중심상업지역</option>
-										<option>일반상업지역</option>
-										<option>근린상업지역</option>
-										<option>유통상업지역</option>
-										<option>전용공업지역</option>
-										<option>일반공업지역</option>
-										<option>준공업지역</option>
-										<option>보전녹지지역</option>
-										<option>생산녹지지역</option>
-										<option>자연녹지지역</option>
-										<option>보전관리지역</option>
-										<option>생산관리지역</option>
-										<option>농림지역</option>
-										<option>자연환경보전지역</option>
-										<option>(구)전용주거지역</option>
-										<option>(구)준농림지역</option>
-								</select></th>
-								<th><select>
-										<option>            </option>
-										<option>자연경관지구</option>
-										<option>수변경관지구</option>
-										<option>시가지경관지구</option>
-										<option>시계경관지구</option>
-										<option>문화재주변경관지구</option>
-										<option>조망경관지구</option>
-										<option>중심지미관지구</option>
-										<option>역사문화미관지구</option>
-										<option>일반미관지구</option>
-										<option>방화지구</option>
-										<option>방재지구</option>
-										<option>최고고도지구</option>
-										<option>최저고도지구</option>
-										<option>문화자원보존지구</option>
-										<option>중요시설물보존지구</option>
-										<option>생태계보존지구</option>
-										<option>자연취락지구</option>
-										<option>집단취락지구</option>
-										<option>주거개발진흥지구</option>
-										<option>상업개발진흥지구</option>
-										<option>유통개발진흥지구</option>
-										<option>관광휴양개발진흥지구</option>
-										<option>복합개발진흥지구</option>
-										<option>위락지구</option>
-										<option>리모델링지구</option>
-										<option>학교시설보호지구</option>
-										<option>공용시설보호지구</option>
-										<option>항만시설보호지구</option>
-										<option>공항시설보호지구</option>
-										<option>(구)경관지구</option>
-										<option>(구)공항지구</option>
-										<option>(구)개발촉진지구</option>
-										<option>(구)택지개발지구</option>
-										<option>(구)도시설계지구</option>
-										<option>(구)준도시취락지구</option>
-								</select></th>
-								<th><select>
-										<option>            </option>
-										<option>개발제한구역</option>
-										<option>시가화조정구역</option>
-										<option>수산자원보호구역</option>
-										<option>지구단위계획구역1종</option>
-										<option>지구단위계획구역2종</option>
-										<option>개발밀도관리구역</option>
-										<option>기반시설부담구역</option>
-										<option>개발행위허가제한지역</option>
-										<option>도시개발구역</option>
-										<option>주거환경개선사업구역</option>
-										<option>주택개발사업구역</option>
-										<option>주택재건축사업구역</option>
-										<option>도시환경정비사업구역</option>
-										<option>군사시설보호구역</option>
-								</select></th>
-								<td rowspan="2">규모<td rowspan="2">지하<input type="text"									
-									style="width: 20px; height: 20px; font-size: 12px">층
-									<br>지상<input type="text"
-									style="width: 20px; height: 20px; font-size: 12px">층
-									<br>세대수<input type="text"
-									style="width: 30px; height: 20px; font-size: 12px">층
+								<td>년도</td>
+								<td>
+									<div class="col-md-10 col-sm-10 col-xs-10 ">
+										<input type="number" name="BUSI_YY" id="BUSI_YY"
+											class="form-control" value="2019">
+									</div>
 								</td>
 							</tr>
 							<tr>
-								<th>지역/지구/구역</th>
-								<th><select>
-										<option>            </option>
-										<option>전용주거지역(1종)</option>
-										<option>전용주거지역(2종)</option>
-										<option>일반주거지역</option>
-										<option>일반주거지역(1종)</option>
-										<option>일반주거지역(2종)</option>
-										<option>일반주거지역(3종)</option>
-										<option>준주거지역</option>
-										<option>중심상업지역</option>
-										<option>일반상업지역</option>
-										<option>근린상업지역</option>
-										<option>유통상업지역</option>
-										<option>전용공업지역</option>
-										<option>일반공업지역</option>
-										<option>준공업지역</option>
-										<option>보전녹지지역</option>
-										<option>생산녹지지역</option>
-										<option>자연녹지지역</option>
-										<option>보전관리지역</option>
-										<option>생산관리지역</option>
-										<option>농림지역</option>
-										<option>자연환경보전지역</option>
-										<option>(구)전용주거지역</option>
-										<option>(구)준농림지역</option>
-								</select></th>
-								<th><select>
-										<option>            </option>
-										<option>자연경관지구</option>
-										<option>수변경관지구</option>
-										<option>시가지경관지구</option>
-										<option>시계경관지구</option>
-										<option>문화재주변경관지구</option>
-										<option>조망경관지구</option>
-										<option>중심지미관지구</option>
-										<option>역사문화미관지구</option>
-										<option>일반미관지구</option>
-										<option>방화지구</option>
-										<option>방재지구</option>
-										<option>최고고도지구</option>
-										<option>최저고도지구</option>
-										<option>문화자원보존지구</option>
-										<option>중요시설물보존지구</option>
-										<option>생태계보존지구</option>
-										<option>자연취락지구</option>
-										<option>집단취락지구</option>
-										<option>주거개발진흥지구</option>
-										<option>상업개발진흥지구</option>
-										<option>유통개발진흥지구</option>
-										<option>관광휴양개발진흥지구</option>
-										<option>복합개발진흥지구</option>
-										<option>위락지구</option>
-										<option>리모델링지구</option>
-										<option>학교시설보호지구</option>
-										<option>공용시설보호지구</option>
-										<option>항만시설보호지구</option>
-										<option>공항시설보호지구</option>
-										<option>(구)경관지구</option>
-										<option>(구)공항지구</option>
-										<option>(구)개발촉진지구</option>
-										<option>(구)택지개발지구</option>
-										<option>(구)도시설계지구</option>
-										<option>(구)준도시취락지구</option>
-								</select></th>
-								<th><select>
-										<option>            </option>
-										<option>개발제한구역</option>
-										<option>시가화조정구역</option>
-										<option>수산자원보호구역</option>
-										<option>지구단위계획구역1종</option>
-										<option>지구단위계획구역2종</option>
-										<option>개발밀도관리구역</option>
-										<option>기반시설부담구역</option>
-										<option>개발행위허가제한지역</option>
-										<option>도시개발구역</option>
-										<option>주거환경개선사업구역</option>
-										<option>주택개발사업구역</option>
-										<option>주택재건축사업구역</option>
-										<option>도시환경정비사업구역</option>
-										<option>군사시설보호구역</option>
-								</select></th>
-							</tr>
-							<tr>							
-								<td>대지면적</td>
-								<td><input type="text">(m2)</td>
-								<td><input type="text">(평)</td>
-								<td>건폐율</td>
-								<td colspan="2"><input type="text" style="width: 30px; height: 20px; font-size: 12px">(%)</td>
+								<td>부서</td>
+								<td>
+									<div class="col-md-10 col-sm-10 col-xs-10 ">
+										<select id="DEPT_CD">
+											<option value="">전 사</option>
+											<option value="75">설계1본부</option>
+											<option value="76">설계2본부</option>
+											<option value="77">설계3본부</option>
+											<option value="78">설계4본부</option>
+											<option value="79">설계5본부</option>
+										</select>
+									</div>
+								</td>
 							</tr>
 							<tr>
-								<td>연면적</td>
-								<td><input type="text">(m2)</td>
-								<td><input type="text">(평)</td>
-								<td>용적율</td>
-								<td colspan="2"><input type="text" style="width: 30px; height: 20px; font-size: 12px">(%)</td>
+								<td>프로젝트</td>
+								<td>
+									<div class="col-md-10 col-sm-10 col-xs-10 ">
+										<input type="text" name="PJT_NM" id="PJT_NM"
+											class="form-control" value="">
+									</div>
+								</td>
+								<td>
+									<button id="pjtSearchBtn">
+										<i class="fa fa-search"></i>
+									</button>
+								</td>
 							</tr>
-
-
+						</tbody>
+					</table>
+					<form id="radioForm">
+						<table>
+							<tbody>
+								<tr>
+									<td><input type="radio" name="pjtRadioValue" value="1">접수
+									</td>
+									<td><input type="radio" name="pjtRadioValue" value="2">승인
+									</td>
+									<td><input type="radio" name="pjtRadioValue" value="3">HOLD
+									</td>
+									<td><input type="radio" name="pjtRadioValue" value="4">CANCEL
+									</td>
+								</tr>
+							</tbody>
 						</table>
-
-						<table class="table table-bordered">
-
-							<tr>
-								<th>수주정보</th>
-								<th colspan="5"><TEXTAREA> </TEXTAREA></th>
-							</tr>
-						</table>
-
-
-
-
-					</div>
+					</form>
 				</div>
 			</div>
-
-					<div class="col-md-12 col-sm-6 col-xs-12">
+			<!-- 검색부분 end -->
 			<div class="x_panel">
 				<div class="x_content">
-					<div class="x_title">
-						<h2>
-							<i class="fa fa-bars"></i> 
-						</h2>
-						<div class="clearfix"></div>
+					<div class="x_title"></div>
+					<br>
+					<!-- 결과부분 start -->
+					<table class="table table-bordered"
+						style="overflow: auto; height: 350px">
+						<thead>
+							<tr>
+								<th width="30%">PJT코드</th>
+								<th width="70%">프로젝트명</th>
+							</tr>
+						</thead>
+						<tbody id="pjtList">
+						</tbody>
+						<thead>
+							<tr>
+								<td colspan="2" style="background-color: #ffeeaa"><b><span
+										id="resultLength"></span></b></td>
+							</tr>
+						</thead>
+					</table>
+					<!-- 결과부분 end -->
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9 col-xs-12" style="color: black;">
+			<div class="page-title">
+				<div class="title_left">
+					<h2>
+						<b>사업수행결정서</b>
+					</h2>
+					<h5>
+						<font color="gray"><b>1.사업성검토관리&nbsp;>1.1사업수행결정서관리&nbsp;>1.1.1사업수행결정서&nbsp;&nbsp;</b></font>
+					</h5>
+
+				</div>
+			</div>
+			<div class="x_content" style="text-align: right">
+				<div class="btn-group">
+					<button class="btn btn-default" type="reset">입력</button>
+					<button class="btn btn-default" type="button">수정</button>
+					<button class="btn btn-default" type="button">삭제</button>
+					<button class="btn btn-default" type="button">저장</button>
+					<button class="btn btn-default" type="button">출력</button>
+				</div>
+
+			</div>
+		</div> <!-- 프로젝트 start -->
+		<div class="col-md-9 col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<div class="x_content">
+					<div class="x_panel">
+						<div class="x_title">
+
+
+
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+
+							<table class="table table-bordered">
+
+								<tr>
+									<th>일련번호</th>
+									<th><span id="BUSI_YY2"></span> - <span id="BUSI_SEQ"></span></th>
+									<th>입력일자 - <span id="CRT_DATE"></span></th>
+									<th>승인일자 ____/__/__/</th>
+								</tr>
+
+							</table>
+
+							<table class="table table-bordered">
+
+								<tr>
+									<th>프로젝트</th>
+									<th><input type="text" id="PJT_NM2"></th>
+									<th colspan="2">발주처<input type="text" id="CUST_CD"
+										style="width: 80px; height: 20px; font-size: 12px">
+										<button id="pjt_s">
+											<i class="fa fa-search"></i>
+										</button> <input type="text" id="CUST_NM"
+										style="width: 120px; height: 20px; font-size: 12px"></th>
+									<th colspan="2"><select id="CUST_GBN">
+											<option></option>
+											<option value="11">건설사</option>
+											<option value="12">시행사</option>
+											<option value="13">공사/공단</option>
+											<option value="14">정부기관</option>
+											<option value="15">건축설계사무소</option>
+											<option value="16">외주협력업체</option>
+											<option value="17">조합(재개발,재건축)</option>
+											<option value="99">기타</option>
+									</select></th>
+								</tr>
+
+
+								<tr>
+									<td>의뢰일자<input type="date"></td>
+									<td>정보취득자<input type="text"
+										style="width: 40px; height: 20px; font-size: 12px">
+									<button id="pjt_s">
+											<i class="fa fa-search"></i>
+										</button></td>
+									<td>담당자 <input type="text" id="CUST_CHARGE_NM"
+										style="width: 80px; height: 20px; font-size: 12px"></td>
+									<td colspan="3">전화:<input type="text" id="CUST_TEL"></td>
+								</tr>
+								<tr>
+									<td>완료예정일<input type="date" id="PLAN_DATE"></td>
+									<td>수주책임자<input type="text"
+										style="width: 40px; height: 20px; font-size: 12px">
+									<button id="pjtSearchBtn">
+											<i class="fa fa-search"></i>
+										</button></td>
+									<td colspan="4">수주구분<select id="BIZ_TYPE">
+											<option value=""></option>
+											<option value="1">민간사업</option>
+											<option value="2">공공사업</option>
+									</select> - <select id="BIZ_GBN">
+											<option value=""></option>
+											<option value="01">발주의뢰</option>
+											<option value="06">저가심의</option>
+											<option value="10">적격심사</option>
+											<option value="16">현상설계</option>
+											<option value="20">지명현상</option>
+											<option value="26">TK</option>
+											<option value="30">기술제안</option>
+											<option value="36">대안입찰</option>
+											<option value="40">PF</option>
+											<option value="46">BTL</option>
+									</select>
+									</td>
+								</tr>
+								<tr>
+									<td>사업분류<select id="BUILD_GB">
+											<option value=""></option>
+											<option value="10">신축</option>
+											<option value="20">증축</option>
+											<option value="30">리모델링</option>
+											<option value="40">재건축</option>
+											<option value="50">재개발</option>
+									</select>
+									</td>
+									<td>관리 임원<input type="text"
+										style="width: 50px; height: 20px; font-size: 12px">
+									<button id="pjtSearchBtn">
+											<i class="fa fa-search"></i>
+										</button></td>
+									<td colspan="4"></td>
+								</tr>
+
+
+								<tr>
+
+
+									<th>대지위치
+										<button onclick="sample6_execDaumPostcode()">
+											<i class="fa fa-search" id="pjt_s"></i>
+										</button>
+									</th>
+
+									<input type="hidden" id="sample6_postcode" placeholder="우편번호">
+									<input type="hidden" id="sample6_detailAddress"
+										placeholder="상세주소">
+									<input type="hidden" id="sample6_extraAddress"
+										placeholder="참고항목">
+
+									<th><input type="text" id="sample6_address"></th>
+									
+									<th>건축물용도</th>
+									<th colspan="3"><select id="BUILD_TYPE">
+											<option value=""></option>
+											<option value="01">단독주택</option>
+											<option value="02">공동주택</option>
+											<option value="03">제1종 근린생활시설</option>
+											<option value="04">제2종 근린생활시설</option>
+											<option value="05">문화 및 집회시설</option>
+											<option value="06">판매시설</option>
+											<option value="07">의료시설</option>
+											<option value="08">교육연구시설</option>
+											<option value="09">운동시설</option>
+											<option value="10">업무시설</option>
+											<option value="11">숙박시설</option>
+											<option value="12">위락시설</option>
+											<option value="13">공 장</option>
+											<option value="14">창고시설</option>
+											<option value="15">위험물저장 및 처리시설</option>
+											<option value="16">자동차관련시설</option>
+											<option value="17">동물 및 식물관련시설</option>
+											<option value="18">분뇨 쓰레기처리시설</option>
+											<option value="19">교정 및 군사시설</option>
+											<option value="20">묘지관련시설</option>
+											<option value="21">관광유게시설</option>
+											<option value="22">주거복합</option>
+											<option value="23">주거단위계획</option>
+											<option value="24">종교시설</option>
+											<option value="25">운수시설</option>
+											<option value="26">노유자시설</option>
+											<option value="27">수련시설</option>
+											<option value="28">방송통신시설</option>
+											<option value="29">발전시설</option>
+											<option value="30">공공업무시설</option>
+											<option value="31">복합시설</option>
+											<option value="99">기타</option>
+									</select></th>
+
+
+								</tr>
+								<tr>
+									<th>지역/지구/구역</th>
+									<th><select id="REGION">
+											<option value=""></option>
+											<option value="011">전용주거지역(1종)</option>
+											<option value="012">전용주거지역(2종)</option>
+											<option value="013">일반주거지역</option>
+											<option value="014">일반주거지역(1종)</option>
+											<option value="015">일반주거지역(2종)</option>
+											<option value="016">일반주거지역(3종)</option>
+											<option value="017">준주거지역</option>
+											<option value="018">중심상업지역</option>
+											<option value="019">일반상업지역</option>
+											<option value="020">근린상업지역</option>
+											<option value="021">유통상업지역</option>
+											<option value="022">전용공업지역</option>
+											<option value="023">일반공업지역</option>
+											<option value="024">준공업지역</option>
+											<option value="025">보전녹지지역</option>
+											<option value="026">생산녹지지역</option>
+											<option value="027">자연녹지지역</option>
+											<option value="028">보전관리지역</option>
+											<option value="029">생산관리지역</option>
+											<option value="030">농림지역</option>
+											<option value="031">자연환경보전지역</option>
+											<option value="032">(구)전용주거지역</option>
+											<option value="033">(구)준농림지역</option>
+									</select></th>
+									<th><select id="ZONE1">
+											<option value=""></option>
+											<option value="011">자연경관지구</option>
+											<option value="012">수변경관지구</option>
+											<option value="013">시가지경관지구</option>
+											<option value="014">시계경관지구</option>
+											<option value="015">문화재주변경관지구</option>
+											<option value="016">조망경관지구</option>
+											<option value="021">중심지미관지구</option>
+											<option value="022">역사문화미관지구</option>
+											<option value="023">일반미관지구</option>
+											<option value="031">방화지구</option>
+											<option value="041">방재지구</option>
+											<option value="051">최고고도지구</option>
+											<option value="052">최저고도지구</option>
+											<option value="061">문화자원보존지구</option>
+											<option value="062">중요시설물보존지구</option>
+											<option value="063">생태계보존지구</option>
+											<option value="071">자연취락지구</option>
+											<option value="072">집단취락지구</option>
+											<option value="081">주거개발진흥지구</option>
+											<option value="082">상업개발진흥지구</option>
+											<option value="083">유통개발진흥지구</option>
+											<option value="084">관광휴양개발진흥지구</option>
+											<option value="085">복합개발진흥지구</option>
+											<option value="091">위락지구</option>
+											<option value="101">리모델링지구</option>
+											<option value="111">학교시설보호지구</option>
+											<option value="112">공용시설보호지구</option>
+											<option value="113">항만시설보호지구</option>
+											<option value="114">공항시설보호지구</option>
+											<option value="700">(구)경관지구</option>
+											<option value="710">(구)공항지구</option>
+											<option value="720">(구)개발촉진지구</option>
+											<option value="730">(구)아파트지구</option>
+											<option value="740">(구)택지개발지구</option>
+											<option value="750">(구)도시설계지구</option>
+											<option value="760">(구)준도시취락지구</option>
+									</select></th>
+									<th><select id="SCOPE1">
+											<option value=""></option>
+											<option value="010">개발제한구역</option>
+											<option value="020">시가화조정구역</option>
+											<option value="030">수산자원보호구역</option>
+											<option value="040">지구단위계획구역1종</option>
+											<option value="050">지구단위계획구역2종</option>
+											<option value="060">개발밀도관리구역</option>
+											<option value="070">기반시설부담구역</option>
+											<option value="080">개발행위허가제한지역</option>
+											<option value="090">도시개발구역</option>
+											<option value="100">주거환경개선사업구역</option>
+											<option value="110">주택개발사업구역</option>
+											<option value="120">주택재건축사업구역</option>
+											<option value="130">도시환경정비사업구역</option>
+											<option value="140">군사시설보호구역</option>
+									</select></th>
+									<td rowspan="2">규모
+									<td rowspan="2">지하<input type="text" id="DOWN_SU"
+										style="width: 20px; height: 20px; font-size: 12px">층 <br>지상<input
+										type="text" id="UP_SU"
+										style="width: 20px; height: 20px; font-size: 12px">층 <br>세대수<input
+										type="text" id="H_CNT"
+										style="width: 30px; height: 20px; font-size: 12px">
+									</td>
+								</tr>
+								<tr>
+									<th>지역/지구/구역</th>
+									<th><select id="REGION2">
+											<option value=""></option>
+											<option value="011">전용주거지역(1종)</option>
+											<option value="012">전용주거지역(2종)</option>
+											<option value="013">일반주거지역</option>
+											<option value="014">일반주거지역(1종)</option>
+											<option value="015">일반주거지역(2종)</option>
+											<option value="016">일반주거지역(3종)</option>
+											<option value="017">준주거지역</option>
+											<option value="018">중심상업지역</option>
+											<option value="019">일반상업지역</option>
+											<option value="020">근린상업지역</option>
+											<option value="021">유통상업지역</option>
+											<option value="022">전용공업지역</option>
+											<option value="023">일반공업지역</option>
+											<option value="024">준공업지역</option>
+											<option value="025">보전녹지지역</option>
+											<option value="026">생산녹지지역</option>
+											<option value="027">자연녹지지역</option>
+											<option value="028">보전관리지역</option>
+											<option value="029">생산관리지역</option>
+											<option value="030">농림지역</option>
+											<option value="031">자연환경보전지역</option>
+											<option value="032">(구)전용주거지역</option>
+											<option value="033">(구)준농림지역</option>
+									</select></th>
+									<th><select id="ZONE2">
+											<option value=""></option>
+											<option value="011">자연경관지구</option>
+											<option value="012">수변경관지구</option>
+											<option value="013">시가지경관지구</option>
+											<option value="014">시계경관지구</option>
+											<option value="015">문화재주변경관지구</option>
+											<option value="016">조망경관지구</option>
+											<option value="021">중심지미관지구</option>
+											<option value="022">역사문화미관지구</option>
+											<option value="023">일반미관지구</option>
+											<option value="031">방화지구</option>
+											<option value="041">방재지구</option>
+											<option value="051">최고고도지구</option>
+											<option value="052">최저고도지구</option>
+											<option value="061">문화자원보존지구</option>
+											<option value="062">중요시설물보존지구</option>
+											<option value="063">생태계보존지구</option>
+											<option value="071">자연취락지구</option>
+											<option value="072">집단취락지구</option>
+											<option value="081">주거개발진흥지구</option>
+											<option value="082">상업개발진흥지구</option>
+											<option value="083">유통개발진흥지구</option>
+											<option value="084">관광휴양개발진흥지구</option>
+											<option value="085">복합개발진흥지구</option>
+											<option value="091">위락지구</option>
+											<option value="101">리모델링지구</option>
+											<option value="111">학교시설보호지구</option>
+											<option value="112">공용시설보호지구</option>
+											<option value="113">항만시설보호지구</option>
+											<option value="114">공항시설보호지구</option>
+											<option value="700">(구)경관지구</option>
+											<option value="710">(구)공항지구</option>
+											<option value="720">(구)개발촉진지구</option>
+											<option value="730">(구)아파트지구</option>
+											<option value="740">(구)택지개발지구</option>
+											<option value="750">(구)도시설계지구</option>
+											<option value="760">(구)준도시취락지구</option>
+									</select></th>
+									<th><select id="SCOPE2">
+											<option value=""></option>
+											<option value="010">개발제한구역</option>
+											<option value="020">시가화조정구역</option>
+											<option value="030">수산자원보호구역</option>
+											<option value="040">지구단위계획구역1종</option>
+											<option value="050">지구단위계획구역2종</option>
+											<option value="060">개발밀도관리구역</option>
+											<option value="070">기반시설부담구역</option>
+											<option value="080">개발행위허가제한지역</option>
+											<option value="090">도시개발구역</option>
+											<option value="100">주거환경개선사업구역</option>
+											<option value="110">주택개발사업구역</option>
+											<option value="120">주택재건축사업구역</option>
+											<option value="130">도시환경정비사업구역</option>
+											<option value="140">군사시설보호구역</option>
+									</select></th>
+								</tr>
+								<tr>
+									<td>대지면적</td>
+									<td><input type="text" id="AREA_M">(m2)</td>
+									<td><input type="text" id="AREA_P">(평)</td>
+									<td>건폐율</td>
+									<td colspan="2"><input type="text" id="COVERAGE"
+										style="width: 30px; height: 20px; font-size: 12px">(%)</td>
+								</tr>
+								<tr>
+									<td>연면적</td>
+									<td><input type="text" id="YAREA_M">(m2)</td>
+									<td><input type="text" id="YAREA_P">(평)</td>
+									<td>용적율</td>
+									<td colspan="2"><input type="text" id="CAPACITY"
+										style="width: 30px; height: 20px; font-size: 12px">(%)</td>
+								</tr>
+
+
+							</table>
+
+							<table class="table table-bordered">
+
+								<tr>
+									<th>수주정보</th>
+									<th colspan="5"><TEXTAREA id="RMK_1"> </TEXTAREA></th>
+								</tr>
+							</table>
+
+
+
+
+						</div>
 					</div>
-					<div class="" role="tabpanel" data-example-id="togglable-tabs">
-						<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-							<li role="presentation" class="active"><a
-								href="#tab_content1" id="home-tab" role="tab" data-toggle="tab"
-								aria-expanded="true">본부장 의견</a></li>
+				</div>
 
-							<li role="presentation" class=""><a href="#tab_content2"
-								role="tab" id="profile-tab" data-toggle="tab"
-								aria-expanded="false">설계부문장 의견</a></li>
+				<div class="col-md-12 col-sm-6 col-xs-12">
+					<div class="x_panel">
+						<div class="x_content">
+							<div class="x_title">
+								<h2>
+									<i class="fa fa-bars"></i>
+								</h2>
+								<div class="clearfix"></div>
+							</div>
+							<div class="" role="tabpanel" data-example-id="togglable-tabs">
+								<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+									<li role="presentation" class="active"><a
+										href="#tab_content1" id="home-tab" role="tab"
+										data-toggle="tab" aria-expanded="true">본부장 의견</a></li>
 
-							<li role="presentation" class=""><a href="#tab_content3"
-								role="tab" id="profile-tab2" data-toggle="tab"
-								aria-expanded="false">수주부문장 의견</a></li>
+									<li role="presentation" class=""><a href="#tab_content2"
+										role="tab" id="profile-tab" data-toggle="tab"
+										aria-expanded="false">설계부문장 의견</a></li>
 
-							<li role="presentation" class=""><a href="#tab_content4"
-								role="tab" id="profile-tab3" data-toggle="tab"
-								aria-expanded="false">대표이사 의견</a></li>
-						</ul>
-						<div id="myTabContent" class="tab-content">
-							<div role="tabpanel" class="tab-pane fade active in"
-								id="tab_content1" aria-labelledby="home-tab">
-								<p>
-								<div class="col-md-12 col-sm-6 col-xs-12">
-									<div class="x_panel">
-										<div class="x_title">
-											<h2>본부장 의견</h2>
-											<div class="clearfix"></div>
-										</div>
-										<div class="x_content">
+									<li role="presentation" class=""><a href="#tab_content3"
+										role="tab" id="profile-tab2" data-toggle="tab"
+										aria-expanded="false">수주부문장 의견</a></li>
 
-											<table class="table table-bordered">
+									<li role="presentation" class=""><a href="#tab_content4"
+										role="tab" id="profile-tab3" data-toggle="tab"
+										aria-expanded="false">대표이사 의견</a></li>
+								</ul>
+								<div id="myTabContent" class="tab-content">
+									<div role="tabpanel" class="tab-pane fade active in"
+										id="tab_content1" aria-labelledby="home-tab">
+										<p>
+										<div class="col-md-12 col-sm-6 col-xs-12">
+											<div class="x_panel">
+												<div class="x_title">
+													<h2>본부장 의견</h2>
+													<div class="clearfix"></div>
+												</div>
+												<div class="x_content">
 
-												<tbody>
-													<tr>
-														<th><TEXTAREA> </TEXTAREA></th>
-														
-														<td>PM<input type="text"><br><button  id="pjtSearchBtn"><i class="fa fa-search"></i></button>
-														</td>
-														<td>PD<input type="text"><button  id="pjtSearchBtn"><i class="fa fa-search"></i></button>
-														</td>
-													</tr>
-													<tr>
-														<th colspan="2" scope="row" class="form-control">수행부서<input
-															type="text"><br><button  id="pjtSearchBtn"><i class="fa fa-search"></i></button>
-														</th>
-														
-														<td>추정계약액<input type="text" class="form-control">원
-														</td>
-														<td>업무범위/수준<select>
-																<option>개발제한구역</option>
-																<option>A: 현상,PF,TK,기술제안 등 경쟁프로젝트</option>
-																<option>B: 계약전 외주비(제조1,2)발생</option>
-																<option>C: 사업성검토 외주비(제조1)발생</option>
-																<option>D: 사업성검토 인건비 발생</option>
-																<option>X: DROP 프로젝트</option>
-														</select></td>
-													</tr>
-		
-												</tbody>
-											</table>
+													<table class="table table-bordered">
 
+														<tbody>
+															<tr>
+																<th><TEXTAREA id="RMK_2"> </TEXTAREA></th>
+
+																<td>PM<input type="text"><br>
+																<button id="pjtSearchBtn">
+																		<i class="fa fa-search"></i>
+																	</button>
+																</td>
+																<td>PD<input type="text">
+																<button id="pjtSearchBtn">
+																		<i class="fa fa-search"></i>
+																	</button>
+																</td>
+															</tr>
+															<tr>
+																<th colspan="2" scope="row" class="form-control">수행부서<input
+																	type="text"><br>
+																<button id="pjtSearchBtn">
+																		<i class="fa fa-search"></i>
+																	</button>
+																</th>
+
+																<td>추정계약액<input type="text" id="FORECAST_AMT" class="form-control">원
+																</td>
+																<td>업무범위/수준<select id="MARKET_CLASS_GBN">
+																		<option value=""></option>
+																		<option value="11">A: 현상,PF,TK,기술제안 등 경쟁프로젝트</option>
+																		<option value="12">B: 계약전 외주비(제조1,2)발생</option>
+																		<option value="13">C: 사업성검토 외주비(제조1)발생</option>
+																		<option value="14">D: 사업성검토 인건비 발생</option>
+																		<option value="15">X: DROP 프로젝트</option>
+																</select></td>
+															</tr>
+
+														</tbody>
+													</table>
+
+												</div>
+											</div>
 										</div>
 									</div>
+									<div role="tabpanel" class="tab-pane fade" id="tab_content2"
+										aria-labelledby="profile-tab">
+										<th><TEXTAREA id="RMK_3"> </TEXTAREA></th>
+									</div>
+									<div role="tabpanel" class="tab-pane fade" id="tab_content3"
+										aria-labelledby="profile-tab">
+										<th><TEXTAREA id="RMK_4"> </TEXTAREA></th>
+									</div>
+									<div role="tabpanel" class="tab-pane fade" id="tab_content4"
+										aria-labelledby="profile-tab">
+										<th><TEXTAREA id="RMK_5"> </TEXTAREA></th>
+									</div>
 								</div>
-							</div>
-							<div role="tabpanel" class="tab-pane fade" id="tab_content2"
-								aria-labelledby="profile-tab">
-								<th><TEXTAREA> </TEXTAREA></th>
-							</div>
-							<div role="tabpanel" class="tab-pane fade" id="tab_content3"
-								aria-labelledby="profile-tab">
-								<th><TEXTAREA> </TEXTAREA></th>
-							</div>
-							<div role="tabpanel" class="tab-pane fade" id="tab_content4"
-								aria-labelledby="profile-tab">
-								<th><TEXTAREA> </TEXTAREA></th>
 							</div>
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
-
 		</div>
-	</div>
-	</div>
 	</font>
 	<!-- 프로젝트 end -->
-	</th:block>
-	<th:block layout:fragment="customJquery">
-		<th:block th:include="layout/customJquery"></th:block>
-    </th:block>
+</th:block>
+<th:block layout:fragment="customJquery">
+	<th:block th:include="layout/customJquery"></th:block>
+</th:block>
 </html>
