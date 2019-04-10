@@ -133,6 +133,7 @@ public class ProjectManageRestController {
 	/* @brief	"http://localhost/project/projectManageChangeListView" 주소분기(post방식)
 	 *			화면에서 입력한 값을 ajax로 값을 넘기고 받기 위함
 	 *			현황 리스트에서 선택한 용역계약서 상세 데이터
+	 *			발주처, 기성단계 상세 포함
 	 *			@return List<Map<String, Object>>
 	 */
 	@PostMapping("/project/projectManageChangeSangseProcess")

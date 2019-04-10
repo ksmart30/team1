@@ -93,4 +93,130 @@
 			AND A.PJT_CD = #{PJT_CD}
 			ORDER BY A.PJT_CD ASC
 	</select>
+	
+	<!-- 원계약의 총계약액, 대지면적, 연면적을 조회한다 -->
+	<select id="getProjectManageChangeSangseOne" parameterType="String" resultType="java.util.Map">
+		SELECT
+			PJT_CD,
+			PJT_CONTRACT_AMT,
+			TOT_CONTRACT_AMT,
+			G_AREA_P,
+			G_AREA_M,
+			G_YAREA_P,
+			G_YAREA_M
+		FROM
+			T_P11000_H
+		WHERE
+			PJT_CD = #{PJT_CD}
+		AND PJT_SEQ = '0'
+	</select>
+	
+	<!-- 변경 전 발주처 이름과 계약금액을 조회한다 -->
+	<select id="getProjectManageChangeOwnerBefore" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT DISTINCT
+			B.CUST_CD,
+			(SELECT CUST_NM FROM T_AC0300 WHERE CUST_CD = B.CUST_CD) AS CUST_NM,
+			B.PJT_SEQ,
+			B.CONTRACT_AMT,
+			B.N_RATE,
+			C.CONTRACT_AMT_SUM
+		FROM
+			T_P11010 A,
+			T_P11010_H B,
+			(SELECT SUM (CONTRACT_AMT) AS CONTRACT_AMT_SUM FROM T_P11010_H WHERE PJT_CD = #{PJT_CD} AND PJT_SEQ = #{PJT_SEQ_BEFORE}) C
+		WHERE
+			A.PJT_CD = B.PJT_CD
+		AND B.PJT_CD = #{PJT_CD}
+		AND B.PJT_SEQ = #{PJT_SEQ_BEFORE}
+	</select>
+	
+	<!-- 변경 후 발주처 이름과 계약금액을 조회한다 -->
+	<select id="getProjectManageChangeOwnerAfter" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT DISTINCT
+			B.CUST_CD,
+			(SELECT CUST_NM FROM T_AC0300 WHERE CUST_CD = B.CUST_CD) AS CUST_NM,
+			B.PJT_SEQ,
+			B.CONTRACT_AMT,
+			B.N_RATE,
+			C.CONTRACT_AMT_SUM,
+			C.N_RATE_SUM
+		FROM
+			T_P11010 A,
+			T_P11010_H B,
+			(SELECT SUM(CONTRACT_AMT) AS CONTRACT_AMT_SUM, SUM(N_RATE) AS N_RATE_SUM FROM T_P11010_H WHERE PJT_CD = #{PJT_CD} AND PJT_SEQ = #{PJT_SEQ}) C
+		WHERE
+			A.PJT_CD = B.PJT_CD
+		AND B.PJT_CD = #{PJT_CD}
+		AND B.PJT_SEQ = #{PJT_SEQ}
+	</select>
+	
+	<!-- 변경 전, 후 모두 기성단계 및 금액을 조회한다 -->
+	<select id="getProjectManageChangeGiseong" parameterType="java.util.Map" resultType="java.util.Map">
+	SELECT
+		A.PJT_CD,
+		A.PJT_SEQ,
+		A.RM_SEQ,
+		A.RM_STEP,
+		(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '150' AND LEVEL2_CD = A.RM_STEP) RM_STEP_NM,
+		A.SALE_STEP,
+		(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '110' AND LEVEL2_CD = A.SALE_STEP) SALE_STEP_NM,
+		A.RM_AMT,
+		A.SUGUM_RATE,
+		A.RM_SEQ OLD_RM_SEQ,
+		B.RM_AMT_SUM_BEFORE,
+		B.SUGUM_RATE_SUM_BEFORE,
+		C.RM_AMT_SUM_AFTER,
+		C.SUGUM_RATE_SUM_AFTER
+	FROM T_P11030_H A,
+		(SELECT SUM(RM_AMT) AS RM_AMT_SUM_BEFORE, SUM(SUGUM_RATE) AS SUGUM_RATE_SUM_BEFORE FROM T_P11030_H WHERE PJT_CD = #{PJT_CD} AND PJT_SEQ = #{PJT_SEQ_BEFORE}) AS B,
+		(SELECT SUM(RM_AMT) AS RM_AMT_SUM_AFTER, SUM(SUGUM_RATE) AS SUGUM_RATE_SUM_AFTER FROM T_P11030_H WHERE PJT_CD = #{PJT_CD} AND PJT_SEQ = #{PJT_SEQ}) AS C
+	WHERE A.PJT_CD = #{PJT_CD}
+	AND A.PJT_SEQ BETWEEN #{PJT_SEQ_BEFORE} AND #{PJT_SEQ}
+	ORDER BY
+		PJT_SEQ ASC,
+		RM_SEQ ASC
+		</select>
+		
+	<!-- 변경 전 기성단계 및 금액을 조회한다  -->
+	<select id="getProjectManageChangeGiseongBefore" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			A.PJT_CD,
+			A.PJT_SEQ,
+			A.RM_SEQ,
+			A.RM_STEP,
+			(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '150' AND LEVEL2_CD = A.RM_STEP) RM_STEP_NM,
+			A.SALE_STEP,
+			(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '110' AND LEVEL2_CD = A.SALE_STEP) SALE_STEP_NM,
+			A.RM_AMT,
+			A.SUGUM_RATE,
+			A.RM_SEQ OLD_RM_SEQ,
+			B.RM_AMT_SUM,
+			B.SUGUM_RATE_SUM
+		FROM T_P11030_H A,
+			(SELECT SUM(RM_AMT) AS RM_AMT_SUM, SUM(SUGUM_RATE) AS SUGUM_RATE_SUM FROM T_P11030_H WHERE PJT_CD = #{PJT_CD} AND PJT_SEQ = #{PJT_SEQ_BEFORE}) AS B
+		WHERE A.PJT_CD = #{PJT_CD}
+		AND A.PJT_SEQ = #{PJT_SEQ_BEFORE}
+	</select>
+	
+	<!-- 변경 후 기성단계 및 금액을 조회한다  -->
+	<select id="getProjectManageChangeGiseongAfter" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			A.PJT_CD,
+			A.PJT_SEQ,
+			A.RM_SEQ,
+			A.RM_STEP,
+			(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '150' AND LEVEL2_CD = A.RM_STEP) RM_STEP_NM,
+			A.SALE_STEP,
+			(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '110' AND LEVEL2_CD = A.SALE_STEP) SALE_STEP_NM,
+			A.RM_AMT,
+			A.SUGUM_RATE,
+			A.RM_SEQ OLD_RM_SEQ,
+			B.RM_AMT_SUM,
+			B.SUGUM_RATE_SUM
+		FROM T_P11030_H A,
+			(SELECT SUM(RM_AMT) AS RM_AMT_SUM, SUM(SUGUM_RATE) AS SUGUM_RATE_SUM FROM T_P11030_H WHERE PJT_CD = #{PJT_CD} AND PJT_SEQ = #{PJT_SEQ}) AS B
+		WHERE A.PJT_CD = #{PJT_CD}
+		AND A.PJT_SEQ = #{PJT_SEQ}
+	</select>
+	
 </mapper>

@@ -13,7 +13,7 @@
 			$.ajax({
 				url:'/project/projectManageChangeHyunhwangListProcess',
 				type:'POST',
-				data:{PJT_CD:PJT_CD},
+				data:{PJT_CD:PJT_CD},	// 프로젝트 코드
 				success:function(data) {
 					console.log(data);
 					$('#pjtHistoryDetailList').empty();
@@ -31,39 +31,100 @@
 			$.ajax({
 				url:'/project/projectManageChangeSangseProcess',
 				type:'POST',
-				data:{PJT_CD:PJT_CD, PJT_SEQ:PJT_SEQ},
+				data:{PJT_CD:PJT_CD, PJT_SEQ:PJT_SEQ},		// 프로젝트 코드, 프로젝트 시퀀스
 				success:function(data) {
 					console.log(data);
 					$('#S_PJT_CD').empty();				// 프로젝트 코드
-					$('#S_PJT_CD').append(data.PJT_CD);
+					$('#S_PJT_CD').append(data.sangse.PJT_CD);
 					$('#S_PJT_NM').empty();				// 프로젝트 명
-					$('#S_PJT_NM').append(data.PJT_NM);
+					$('#S_PJT_NM').append(data.sangse.PJT_NM);
 					$('#S_DEPT_NM').empty();			// 수행부서명
-					$('#S_DEPT_NM').append(data.DEPT_NM);
+					$('#S_DEPT_NM').append(data.sangse.DEPT_NM);
 					$('#S_PM_EMP_NM').empty();			// PM
-					$('#S_PM_EMP_NM').append(data.PM_EMP_NM);
+					$('#S_PM_EMP_NM').append(data.sangse.PM_EMP_NM);
 					$('#S_PJT_DATE').empty();			// 변경 일자
-					$('#S_PJT_DATE').append(data.PJT_DATE);
+					$('#S_PJT_DATE').append(data.sangse.PJT_DATE);
 					$('#S_LEVEL2_NM').empty()			// 변경 구분
-					$('#S_LEVEL2_NM').append(data.LEVEL2_NM);
+					$('#S_LEVEL2_NM').append(data.sangse.LEVEL2_NM);
 					$('#S_CHANGE_SAYU').empty();		// 변경 사유
-					$('#S_CHANGE_SAYU').append(data.CHANGE_SAYU);
-					$('#AFTER_TOT_CONTRACT_AMT').empty();	// 당사총계약액 변경(후)
-					$('#AFTER_TOT_CONTRACT_AMT').append(data.TOT_CONTRACT_AMT);
-					$('#AFTER_PJT_CONTRACT_AMT').empty();	// PJT총계약액 변경(후)
-					$('#AFTER_PJT_CONTRACT_AMT').append(data.TOT_CONTRACT_AMT);
-					$('#AFTER_G_AREA_P').empty();		// 대지면적 변경(후)
-					$('#AFTER_G_AREA_P').append(data.G_AREA_P);
-					$('#AFTER_G_AREA_M').empty();
-					$('#AFTER_G_AREA_M').append(data.G_AREA_M);
-					$('#AFTER_G_YAREA_P').empty();		//연면적 변경(후)
-					$('#AFTER_G_YAREA_P').append(data.G_YAREA_P);
-					$('#AFTER_G_YAREA_M').empty();
-					$('#AFTER_G_YAREA_M').append(data.G_YAREA_M);
+					$('#S_CHANGE_SAYU').append(data.sangse.CHANGE_SAYU);
+					// 원계약 정보
+					$('#TOT_CONTRACT_AMT_ONE').empty();	// 당사총계약액 (원)
+					$('#TOT_CONTRACT_AMT_ONE').append(data.one.TOT_CONTRACT_AMT);
+					$('#PJT_CONTRACT_AMT_ONE').empty();	// PJT총계약액 (원)
+					$('#PJT_CONTRACT_AMT_ONE').append(data.one.TOT_CONTRACT_AMT);
+					$('#G_AREA_P_ONE').empty();		// 대지면적 (원)
+					$('#G_AREA_P_ONE').append(data.one.G_AREA_P);
+					$('#G_AREA_M_ONE').empty();
+					$('#G_AREA_M_ONE').append(data.one.G_AREA_M);
+					$('#G_YAREA_P_ONE').empty();		//연면적 (원)
+					$('#G_YAREA_P_ONE').append(data.one.G_YAREA_P);
+					$('#G_YAREA_M_ONE').empty();
+					$('#G_YAREA_M_ONE').append(data.one.G_YAREA_M);
+					// 변경 (후)
+					$('#TOT_CONTRACT_AMT_AFTER').empty();	// 당사총계약액 변경(후)
+					$('#TOT_CONTRACT_AMT_AFTER').append(data.sangse.TOT_CONTRACT_AMT);
+					$('#PJT_CONTRACT_AMT_AFTER').empty();	// PJT총계약액 변경(후)
+					$('#PJT_CONTRACT_AMT_AFTER').append(data.sangse.TOT_CONTRACT_AMT);
+					$('#G_AREA_P_AFTER').empty();		// 대지면적 변경(후)
+					$('#G_AREA_P_AFTER').append(data.sangse.G_AREA_P);
+					$('#G_AREA_M_AFTER').empty();
+					$('#G_AREA_M_AFTER').append(data.sangse.G_AREA_M);
+					$('#G_YAREA_P_AFTER').empty();		//연면적 변경(후)
+					$('#G_YAREA_P_AFTER').append(data.sangse.G_YAREA_P);
+					$('#G_YAREA_M_AFTER').empty();
+					$('#G_YAREA_M_AFTER').append(data.sangse.G_YAREA_M);
+					
+					$('#ownerSumAfter').empty();		// 변경(후) 금액 합계
+					$('#ownerSumAfter').append(data.owner_after[0].CONTRACT_AMT_SUM);
+					$('#ownerRateSumAfter').empty();	// 변경(후) 지분 합계
+					$('#ownerRateSumAfter').append(data.owner_after[0].N_RATE_SUM);
+					// 발주처
+					// 변경(전)
+					$('#pjtOwnerListBefore').empty();
+					$(data.owner_before).each((index, item) => {
+						$('#pjtOwnerListBefore').append('<tr><td></td><td>'+item.CUST_NM+'</td><td>'+item.N_RATE+'</td><td>'+item.CONTRACT_AMT+'</td><td></td><td></td></tr>');
+					});
+					// 변경(후)
+					$('#pjtOwnerListAfter').empty();
+					$(data.owner_after).each((index, item) => {
+						$('#pjtOwnerListAfter').append('<tr><td></td><td>'+item.CUST_NM+'</td><td></td><td></td><td>'+item.N_RATE+'</td><td>'+item.CONTRACT_AMT+'</td></tr>');
+					});
+					// 기성단계
+					// 변경(전)
+					$('#pjtGiseongBeforeList').empty();
+					$(data.giseong_before).each((index, item) => {
+						$('#pjtGiseongBeforeList').append('<tr><td>'+item.RM_SEQ+'</td><td>'+item.RM_STEP_NM+'</td><td>'+item.SALE_STEP_NM+'</td><td>'+item.RM_AMT+'</td><td>'+item.SUGUM_RATE+'</td><td></td><td></td></tr>');
+					});
+					// 변경(후)
+					$('#pjtGiseongAfterList').empty();
+					$(data.giseong_after).each((index, item) => {
+						$('#pjtGiseongAfterList').append('<tr><td>'+item.RM_SEQ+'</td><td>'+item.RM_STEP_NM+'</td><td>'+item.SALE_STEP_NM+'</td><td></td><td></td><td>'+item.RM_AMT+'</td><td>'+item.SUGUM_RATE+'</td></tr>');
+					});
+					// 수고했어 백승한ㅠㅠ
+					/* if(item.PJT_SEQ==PJT_SEQ) {
+						console.log('됐나?');
+						$('#pjtGiseongList').append('<tr>');
+						$('#pjtGiseongList').append('<td>'+item.RM_SEQ+'</td><td>'+item.RM_STEP_NM+'</td><td>'+item.SALE_STEP_NM+'</td>');
+						$('#pjtGiseongList').append('<td>'+item.RM_AMT+'</td><td>'+item.SUGUM_RATE+'</td>')
+						if(item.RE_SEQ==PJT_SEQ) {
+						}else{	
+							$('#pjtGiseongList').append('<td>'+item.RM_AMT+'</td><td>'+item.SUGUM_RATE+'</td>')
+							$('#pjtGiseongList').append('</tr>');
+						}
+					}if(item.PJT_SEQ!=PJT_SEQ) {
+						console.log('안됐나?');
+						$('#pjtGiseongList').append('<td>'+item.RM_AMT+'</td><td>'+item.SUGUM_RATE+'</td>');
+						if(item.RE_SEQ!=PJT_SEQ) {
+						}else{
+							$('#pjtGiseongList').append('<td>'+item.RM_AMT+'</td><td>'+item.SUGUM_RATE+'</td>');
+							$('#pjtGiseongList').append('</tr>');
+						}
+					} */
 				}
 			});
 		}
-		
+
 		// 전체 document ready
 		$(document).ready(function(){
 			$('#pjtSearchBtn').click(function(){
@@ -93,8 +154,8 @@
 	<div class="col-md-9 col-xs-12" style="color:black;">
         <div class="page-title">
 			<div class="title_left">
-				<h2><b>전표상세검색</b></h2>
-				<h5><font color="gray"><b>8.회계관리&nbsp;>&nbsp;&nbsp;8.1회계입력&nbsp;>&nbsp;&nbsp;8.2회계입력</b></font></h5>			
+				<h2><b>용역계약서 변경 조회</b></h2>
+				<h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리</b></font></h5>			
 			</div>
 		</div>
     </div>
@@ -220,23 +281,23 @@
 			</tr>
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">당사 총계약액</td>
-				<td>1,000,000,000원</td>
-				<td><span id="AFTER_TOT_CONTRACT_AMT"></span></td>
+				<td><span id="TOT_CONTRACT_AMT_ONE"></span></td>
+				<td><span id="TOT_CONTRACT_AMT_AFTER"></span></td>
 			</tr>
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">PJT 총계약액</td>
-				<td>1,000,000,000원</td>
-				<td><span id="AFTER_PJT_CONTRACT_AMT"></span></td>
+				<td><span id="PJT_CONTRACT_AMT_ONE"></span></td>
+				<td><span id="PJT_CONTRACT_AMT_AFTER"></span></td>
 			</tr>
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">대지면적</td>
-				<td>150.13평, 496.3m²</td>
-				<td><span id="AFTER_G_AREA_P"></span>평, <span id="AFTER_G_AREA_M"></span>m²</td>
+				<td><span id="G_AREA_P_ONE"></span>평, <span id="G_AREA_M_ONE"></span>m²</td>
+				<td><span id="G_AREA_P_AFTER"></span>평, <span id="G_AREA_M_AFTER"></span>m²</td>
 			</tr>
 			<tr>
 				<td style="background-color:#f3f3f3" width="25%">연면적</td>
-				<td>100.13평, 331.01m²</td>
-				<td><span id="AFTER_G_YAREA_P"></span>평, <span id="AFTER_G_YAREA_M"></span>m²</td>
+				<td><span id="G_YAREA_P_ONE"></span>평, <span id="G_YAREA_M_ONE"></span>m²</td>
+				<td><span id="G_YAREA_P_AFTER"></span>평, <span id="G_YAREA_M_AFTER"></span>m²</td>
 			</tr>
 		</table>
 		
@@ -259,22 +320,18 @@
                     		<th>계약금액</th>
                     	</tr>
                     	</thead>
-                    	<tbody>
-                    		<tr>
-                    			<td>1</td>
-                    			<td>현대건설(주)</td>
-                    			<td>0.00</td>
-                    			<td>1,000,000,000</td>
-                    			<td>0.00</td>
-                    			<td>1,000,000,000</td>
-                    		</tr>
+                    	<tbody id="pjtOwnerListBefore">
                     	</tbody>
+                    	<tbody id="pjtOwnerListAfter">
+                    	</tbody>
+                    	<!-- 합계 아직 미구현 -->
                     	<tr style="background-color:#ffeeaa">
 	                    	<th colspan="2">합계</th>
 	                    	<th scope="row">0.00</th>
 	                    	<th scope="row">1,000,000,000</th>
-	                    	<th scope="row">0.00</th>
-	                    	<th scope="row">1,000,000,000</th>
+	                    	<th><span id=ownerRateSumAfter></span></th>
+	                    	<!-- 왜 안되는지 해결 못함 -->
+	                    	<th><span id="ownerSumAfter"></span></th>
                     	</tr>
                     </table>
                   </div>
@@ -297,34 +354,9 @@
                     		<th>수금(%)</th>
                     	</tr>
                     	</thead>
-                    	<tbody>
-                    		<tr>
-                    			<td>1</td>
-                    			<td>심의 완료후</td>
-                    			<td>심 의</td>
-                    			<td>100,000,000</td>
-                    			<td>0.00</td>
-                    			<td>100,000,000</td>
-                    			<td>0.00</td>
-                    		</tr>
-                    		<tr>
-                    			<td>1</td>
-                    			<td>건축허가(사업승인)완료시</td>
-                    			<td>착 공</td>
-                    			<td>600,000,000</td>
-                    			<td>0.00</td>
-                    			<td>600,000,000</td>
-                    			<td>0.00</td>
-                    		</tr>
-                    		<tr>
-                    			<td>1</td>
-                    			<td>최종 자체검사 완료시</td>
-                    			<td>실 시</td>
-                    			<td>300,000,000</td>
-                    			<td>0.00</td>
-                    			<td>300,000,000</td>
-                    			<td>0.00</td>
-                    		</tr>
+                    	<tbody id="pjtGiseongBeforeList">
+                    	</tbody>
+                    	<tbody id="pjtGiseongAfterList">
                     	</tbody>
                     	<tr style="background-color:#ffeeaa">
 	                    	<th colspan="3">합계 </th>

@@ -52,10 +52,32 @@ public class ProjectManageService {
 	// 변경된 용역계약서 현황에서 하나를 선택하면, 해당하는 변경 구분의 상세 페이지를 조회하는 메서드
 	public Map<String, Object> getProjectManageChangeSangse(String PJT_CD, String PJT_SEQ) {
 		System.out.println("Service getProjectManageChangeSangse 메서드 실행");
-		System.out.println(PJT_CD+", PJT_SEQ : "+PJT_SEQ);
+		// 매개변수 저장용 Map
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("PJT_CD", PJT_CD);
 		map.put("PJT_SEQ", PJT_SEQ);
-		return projectManageMapper.getProjectManageChangeSangse(map);
+		// 결과 리턴용 Map
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		// 변경 현황별로 용역계약서 상세 조회
+		resultMap.put("sangse", projectManageMapper.getProjectManageChangeSangse(map));
+		// 원계약 정보 조회
+		resultMap.put("one", projectManageMapper.getProjectManageChangeSangseOne(PJT_CD));
+		// 이전(변경전) 시퀀스 생성
+		// 현재의 시퀀스에서 1만큼을 빼 이전 시퀀스로 만든다.
+		int temp = Integer.parseInt(PJT_SEQ) - 1;
+		String PJT_SEQ_BEFORE = String.valueOf(temp);
+		// 매개변수 map 이전 시퀀스 저장
+		map.put("PJT_SEQ_BEFORE", PJT_SEQ_BEFORE);
+		// 발주처 변경 전 조회 결과
+		resultMap.put("owner_before", projectManageMapper.getProjectManageChangeOwnerBefore(map));
+		// 발주처 변경 후 조회 결과
+		resultMap.put("owner_after", projectManageMapper.getProjectManageChangeOwnerAfter(map));
+		// 기성단계 변경 전,후 조회 결과
+		resultMap.put("giseongList", projectManageMapper.getProjectManageChangeGiseong(map));
+		// 기성단계 변경 전 조회 결과
+		resultMap.put("giseong_before", projectManageMapper.getProjectManageChangeGiseongBefore(map));
+		// 기성단계 변경 후 조회 결과
+		resultMap.put("giseong_after", projectManageMapper.getProjectManageChangeGiseongAfter(map));
+		return resultMap;
 	}
 }
