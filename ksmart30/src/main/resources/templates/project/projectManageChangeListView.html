@@ -75,32 +75,45 @@
 					$('#G_YAREA_M_AFTER').empty();
 					$('#G_YAREA_M_AFTER').append(data.sangse.G_YAREA_M);
 					
-					$('#ownerSumAfter').empty();		// 변경(후) 금액 합계
-					$('#ownerSumAfter').append(data.owner_after[0].CONTRACT_AMT_SUM);
-					$('#ownerRateSumAfter').empty();	// 변경(후) 지분 합계
-					$('#ownerRateSumAfter').append(data.owner_after[0].N_RATE_SUM);
 					// 발주처
 					// 변경(전)
 					$('#pjtOwnerListBefore').empty();
 					$(data.owner_before).each((index, item) => {
 						$('#pjtOwnerListBefore').append('<tr><td></td><td>'+item.CUST_NM+'</td><td>'+item.N_RATE+'</td><td>'+item.CONTRACT_AMT+'</td><td></td><td></td></tr>');
 					});
+					$('#ownerSumBefore').empty();		// 금액 합계
+					$('#ownerSumBefore').append(data.owner_before[0].CONTRACT_AMT_SUM);
+					$('#ownerRateSumBefore').empty();		// 지분 합계
+					$('#ownerRateSumBefore').append(data.owner_before[0].N_RATE_SUM);
 					// 변경(후)
 					$('#pjtOwnerListAfter').empty();
 					$(data.owner_after).each((index, item) => {
 						$('#pjtOwnerListAfter').append('<tr><td></td><td>'+item.CUST_NM+'</td><td></td><td></td><td>'+item.N_RATE+'</td><td>'+item.CONTRACT_AMT+'</td></tr>');
 					});
+					$('#ownerSumAfter').empty();		// 금액 합계
+					$('#ownerSumAfter').append(data.owner_after[0].CONTRACT_AMT_SUM);
+					$('#ownerRateSumAfter').empty();	// 지분 합계
+					$('#ownerRateSumAfter').append(data.owner_after[0].N_RATE_SUM);
+					
 					// 기성단계
 					// 변경(전)
 					$('#pjtGiseongBeforeList').empty();
 					$(data.giseong_before).each((index, item) => {
 						$('#pjtGiseongBeforeList').append('<tr><td>'+item.RM_SEQ+'</td><td>'+item.RM_STEP_NM+'</td><td>'+item.SALE_STEP_NM+'</td><td>'+item.RM_AMT+'</td><td>'+item.SUGUM_RATE+'</td><td></td><td></td></tr>');
 					});
+					$('#giseongSumBefore').empty();		// 금액 합계
+					$('#giseongSumBefore').append(data.giseong_before[0].RM_AMT_SUM);
+					$('#giseongRateSumBefore').empty();		// 수금 합계
+					$('#giseongRateSumBefore').append(data.giseong_before[0].SUGUM_RATE_SUM);
 					// 변경(후)
 					$('#pjtGiseongAfterList').empty();
 					$(data.giseong_after).each((index, item) => {
 						$('#pjtGiseongAfterList').append('<tr><td>'+item.RM_SEQ+'</td><td>'+item.RM_STEP_NM+'</td><td>'+item.SALE_STEP_NM+'</td><td></td><td></td><td>'+item.RM_AMT+'</td><td>'+item.SUGUM_RATE+'</td></tr>');
 					});
+					$('#giseongSumAfter').empty();		// 금액 합계
+					$('#giseongSumAfter').append(data.giseong_after[0].RM_AMT_SUM);
+					$('#giseongRateSumAfter').empty();		// 수금 합계
+					$('#giseongRateSumAfter').append(data.giseong_after[0].SUGUM_RATE_SUM);
 					// 수고했어 백승한ㅠㅠ
 					/* if(item.PJT_SEQ==PJT_SEQ) {
 						console.log('됐나?');
@@ -162,6 +175,7 @@
     
     <div class="x_content" style="text-align:right">
 		<div class="btn-group" >
+			<button class="btn btn-default" type="submit" id="pjtSearchBtn">조회</button>
 			<button class="btn btn-default" type="reset">입력</button>
 			<button class="btn btn-default" type="button">수정</button>
 			<button class="btn btn-default" type="button">삭제</button>
@@ -208,7 +222,7 @@
 						<input type="text" id="pjtCd">
 					</td>
 					<td>
-						<button type="submit" id="pjtSearchBtn">검색</button>
+						<button type="submit" id="pjtSearchBtn"><i class="fa fa-search"></i></button>
 					</td>
 				</tr>
 			</table>
@@ -327,10 +341,9 @@
                     	<!-- 합계 아직 미구현 -->
                     	<tr style="background-color:#ffeeaa">
 	                    	<th colspan="2">합계</th>
-	                    	<th scope="row">0.00</th>
-	                    	<th scope="row">1,000,000,000</th>
+	                    	<th><span id="ownerRateSumBefore"></span></th>
+	                    	<th><span id="ownerSumBefore"></span></th>
 	                    	<th><span id=ownerRateSumAfter></span></th>
-	                    	<!-- 왜 안되는지 해결 못함 -->
 	                    	<th><span id="ownerSumAfter"></span></th>
                     	</tr>
                     </table>
@@ -360,10 +373,10 @@
                     	</tbody>
                     	<tr style="background-color:#ffeeaa">
 	                    	<th colspan="3">합계 </th>
-	                    	<th scope="row">1,000,000,000</th>
-	                    	<th scope="row">0.00</th>
-	                    	<th scope="row">1,000,000,000</th>
-	                    	<th scope="row">0.00</th>
+	                    	<th><span id="giseongSumBefore"></span></th>
+	                    	<th><span id="giseongRateSumBefore"></span></th>
+	                    	<th><span id="giseongSumAfter"></span></th>
+	                    	<th><span id="giseongRateSumAfter"></span></th>
                     	</tr>
                     </table>
 		</div>

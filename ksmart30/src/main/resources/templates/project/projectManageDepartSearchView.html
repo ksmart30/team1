@@ -7,47 +7,203 @@
 </th:block>
 <th:block layout:fragment="customBody">
 	<!-- 검색 폼 -->
-	<h3>용역계약서 관리 - 용역계약서 검색(부서)</h3>
-	<div><button class="btnSearch">검색</button></div>
-		<table class="table">
-			<tr>
-				<td width="150"><label>⊙ 부서 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
+	<div class="col-md-9 col-xs-12" style="color:black;">
+	   	<div class="page-title">
+			<div class="title_left">
+				<h2><b>용역계약서 검색(부서)</b></h2>
+				<h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리</b></font></h5>		
+			</div>
+		</div>
+	</div>
+	<div class="x_content" style="text-align: right">
+		<div class="btn-group" >
+			<button class="btn btn-default" type="reset">입력</button>
+			<button class="btn btn-default" type="button">수정</button>
+			<button class="btn btn-default" type="button">삭제</button>
+			<button class="btn btn-default" type="button">저장</button>
+			<button class="btn btn-default" type="button">출력</button>
+		</div>
+	</div>
+	<font color="black">
+	<div class="col-md-8 col-sm-6 col-xs-12">
+	<div class="x_panel">
+		<div class="x_content">
+		<label>⊙ 검색조건</label>
+			<table class="table table table-striped table-bordered">
+				<tr>
+					<td width="150"><span>부서 : </span></td>
+					<td>
+						<div class="col-md-12 col-sm-12 col-xs-12 ">
+							<select class="form-control">
+								<option value="">전 사</option>
+								<option value="7500">설계1본부</option>
+								<option value="7600">설계2본부</option>
+								<option value="7700">설계3본부</option>
+								<option value="7800">설계4본부</option>
+								<option value="7900">설계5본부</option>
+							</select>
+						</div>
+					</td>
+	
+					<td width="100">
+						<span>계약일자 : </span>
+					</td>
+					<td>
+						<div class="col-md-12 col-sm-12 col-xs-12 ">
+							<input type="date" name="test" class="form-control">
+						</div>
+						
+					</td>
+					<td>
+						<div class="col-md-12 col-sm-15 col-xs-15 ">
+							<input type="date" name="test" class="form-control">
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>종료구분 : </span>
+					</td>
+					<td>
 						<select class="form-control">
-							<option value="">전 사</option>
+							<option value="">ALL</option>
 							<option value="7500">설계1본부</option>
 							<option value="7600">설계2본부</option>
 							<option value="7700">설계3본부</option>
 							<option value="7800">설계4본부</option>
 							<option value="7900">설계5본부</option>
 						</select>
-					</div>
-				</td>
-
-				<td width="100"><label>⊙ 계약일자 : </label></td>
-				<td>
-					<div class="col-md-12 col-sm-12 col-xs-12 ">
-						<input type="date" name="test" class="form-control">
-					</div>
-					
-				</td>
-				<td>
-					<div class="col-md-12 col-sm-15 col-xs-15 ">
-						<input type="date" name="test" class="form-control">
-					</div>
-				</td>
-			</tr>
-		</table>
+					</td>
+					<td>
+						<span>발주처 : </span>
+					</td>
+					<td colspan="2">
+						<input type="text">
+						<button><i class="fa fa-search"></i></button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>계약구분 : </span>
+					</td>
+					<td>
+						<select class="form-control">
+							<option value="">ALL</option>
+							<option value="7500">설계1본부</option>
+							<option value="7600">설계2본부</option>
+							<option value="7700">설계3본부</option>
+							<option value="7800">설계4본부</option>
+							<option value="7900">설계5본부</option>
+						</select>
+					</td>
+					<td>
+						<span>계약금액 : </span>
+					</td>
+					<td>
+						<input type="text">
+						<span>원이상</span>
+					</td>
+					<td>
+						<input type="text">
+						<span>원이상</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>위치지역 : </span>
+					</td>
+					<td>
+						<select class="form-control">
+							<option value="">ALL</option>
+							<option value="7500">설계1본부</option>
+							<option value="7600">설계2본부</option>
+							<option value="7700">설계3본부</option>
+							<option value="7800">설계4본부</option>
+							<option value="7900">설계5본부</option>
+						</select>
+					</td>
+					<td>
+						<span>평당단가 : </span>
+					</td>
+					<td>
+						<input type="text">
+						<span>원이상</span>
+					</td>
+					<td>
+						<input type="text">
+						<span>원이상</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>건축물유형 : </span>
+					</td>
+					<td>
+						<select class="form-control">
+							<option value="">ALL</option>
+							<option value="7500">설계1본부</option>
+							<option value="7600">설계2본부</option>
+							<option value="7700">설계3본부</option>
+							<option value="7800">설계4본부</option>
+							<option value="7900">설계5본부</option>
+						</select>
+					</td>
+					<td>
+						<span>연면적 : </span>
+					</td>
+					<td>
+						<input type="text">
+						<span>평이상</span>
+					</td>
+					<td>
+						<input type="text">
+						<span>평이상</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	</div>
 	<!-- 검색폼 끝 -->
-
+	
+	<!-- sort 시작 -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="x_panel">
+		<div class="x_content">
+		<label>⊙ Sort</label>
+			<table class="table table-striped table-bordered">
+				<tr>
+					<td><input type="radio">부서</td>
+					<td><input type="radio">계약일자</td>
+				</tr>
+				<tr>
+					<td><input type="radio">종료구분</td>
+					<td><input type="radio">발주처</td>
+				</tr>
+				<tr>
+					<td><input type="radio">계약구분</td>
+					<td><input type="radio">계약금액</td>
+				</tr>
+				<tr>
+					<td><input type="radio">위치지역</td>
+					<td><input type="radio">평당단가</td>
+				</tr>
+				<tr>
+					<td><input type="radio">건축물유형</td>
+					<td><input type="radio">연면적</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	</div>
+	<!-- sort 끝 -->
 
 	<!-- 출력 리스트 검색 시작 -->
 
 	<div class="x_panel">
 		<div class="x_content">
 			<div class="table-responsive">
-				<table class="table table-bordered">
+				<table class="table table table-striped jambo_table bulk_action">
 					<thead>
 						<tr class="headings">
 							<th class="column-title">프로젝트코드명</th>
@@ -89,11 +245,16 @@
 							<td></td>
 						</tr>
 					</tbody>
+					
+					<!-- 합계 부분 -->
+					<tbody>
+					</tbody>
 				</table>
 				<!-- 출력 리스트 검색 끝 -->
 			</div>
 		</div>
 	</div>
+	</font>
 	</th:block>
 	<th:block layout:fragment="customJquery">
 		<th:block th:include="layout/customJquery"></th:block>
