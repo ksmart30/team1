@@ -22,6 +22,13 @@ public class ProjectManageRestController {
 	@Autowired
 	ProjectManageService projectManageService;
 	
+	// 전체 프로젝트 검색
+	@PostMapping("/project/projectManageSearchProcess")
+	public List<Map<String, Object>> projectManageSearchProcess(String PJT_CD, String PJT_NM) {
+		System.out.println("RestController projectManageSearchProcess 메서드 실행");
+		return null;
+	}
+	
 	//3.1.1 용역계약서 입력 처리
 	/* @brief	"http://localhost/project/manage/in" 주소분기(post방식)
 	 *			화면에서 입력한 값을 ajax로 값을 넘기고 받기 위함
