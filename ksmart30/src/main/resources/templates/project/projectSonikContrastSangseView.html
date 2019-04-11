@@ -1,14 +1,384 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
-	<th:block layout:fragment="customHead">
-		<meta charset="UTF-8">
-		<title>상세내역</title>
-		<th:block th:include="layout/customHead"></th:block>
-	</th:block>
-	<th:block layout:fragment="customBody">
-		depart_search.html
-	</th:block>
-	<th:block layout:fragment="customJquery">
-		<th:block th:include="layout/customJquery"></th:block>
-    </th:block>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>2.3.4프로젝트손익관리_예산/실적대비표_상세화면</title>
+	<th:block th:include="layout/customHead"></th:block>
+</th:block>
+<th:block layout:fragment="customBody">
+<font color="black">
+
+	<!-- 프로젝트 개요 start -->
+	<div class="col-md-9 col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>
+					프로젝트 개요 <small></small>
+				</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Settings 1</a></li>
+							<li><a href="#">Settings 2</a></li>
+						</ul></li>
+
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+
+				<table class="table table-bordered">
+					<tr>
+						<th>프로젝트</th>
+						<td>18021 창원시 상남동 74-3 오피스텔 신축공사
+						<th>발주처</th>
+						<td>현대건설(주)</td>
+						<th>출력횟수</th>
+						<td>2회</td>
+						<th>미승인</th>
+					</tr>
+					<tr>
+						<th>프로젝트</th>
+						<td>업무시설</td>
+						<th>수행부서</th>
+						<td colspan="4">설계1본부 1소</td>
+					</tr>
+					<tr>
+						<td>계약일자</td>
+						<td>2018/03/02 (2018/11/02)</td>
+						<td>PM</td>
+						<td>20120015</td>
+						<td colspan="3">김인규</td>
+					</tr>
+					<tr>
+						<th>계약기간</th>
+						<td colspan="6">2018/03/02~____/__/__, 용역완료시까지</td>
+					</tr>
+					<tr>
+						<th>당사계약금액</th>
+						<td colspan="6">770,000,000원</td>
+					</tr>
+					<tr>
+						<th>대지위치</th>
+						<td>343-80</td>
+						<td colspan="5">대전 대덕구 대오길 2(오정동)</td>
+					</tr>
+					<tr>
+						<th>대지면적</th>
+						<td>2,963m²</td>
+						<td>896.31평</td>
+						<th>연면적</th>
+						<td>45,000m²</td>
+						<td colspan="2">13,612.50평</td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+		<!-- 프로젝트 개요 end -->
+
+		<!-- 추정손익계산서 start -->
+		<div class="x_panel">
+			<div class="x_title">
+				<div class="x_title">
+					<h2>
+						<i class="fa fa-bars"></i> Tabs <small>입력 수정 삭제 버튼을 추가할 지도
+							몰라 남겨둠</small>
+					</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false"><i
+								class="fa fa-wrench"></i></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Settings 1</a></li>
+								<li><a href="#">Settings 2</a></li>
+							</ul></li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div class="" role="tabpanel" data-example-id="togglable-tabs">
+					<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+						<li role="presentation" class=""><a href="#tab_content6"
+							role="tab" id="profile-tab5" data-toggle="tab"
+							aria-expanded="false">추정손익계산서</a></li>
+					</ul>
+
+					<div role="tabpanel" class="tab-pane fade" id="tab_content6"
+						aria-labelledby="profile-tab">
+						<p>
+						<div class="col-md-7 col-sm-6 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>
+										좌 <small>합계내역</small>
+									</h2>
+									<ul class="nav navbar-right panel_toolbox">
+										<li><a class="collapse-link"><i
+												class="fa fa-chevron-up"></i></a></li>
+										<li class="dropdown"><a href="#" class="dropdown-toggle"
+											data-toggle="dropdown" role="button" aria-expanded="false"><i
+												class="fa fa-wrench"></i></a>
+											<ul class="dropdown-menu" role="menu">
+												<li><a href="#">Settings 1</a></li>
+												<li><a href="#">Settings 2</a></li>
+											</ul></li>
+										<li><a class="close-link"><i class="fa fa-close"></i></a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th colspan="2">과목</th>
+												<th>금액</th>
+												<th>%</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="2">매출액</td>
+												<td>770,000,000</td>
+												<td>100.0</td>
+											</tr>
+											<tr>
+												<td rowspan="4">자체비용
+												<td>인 건비</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>제조경비1</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>제조경비2</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>소계</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td rowspan="5">배부비용</td>
+												<td>공통비1</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>간접비</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>공통비2</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>관리부문비</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>소계</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td colspan="2">비용합계</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td colspan="2">영업이익</td>
+												<td>770,000,000</td>
+												<td>100</td>
+											</tr>
+											<tr>
+												<td rowspan="5">사업성검토</td>
+												<td>인건비</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>제조경비1</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>공통비2</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>관리부문비</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>소계</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+
+
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-md-5 col-sm-6 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>
+										우 <small>간접비</small>
+									</h2>
+									<ul class="nav navbar-right panel_toolbox">
+										<li><a class="collapse-link"><i
+												class="fa fa-chevron-up"></i></a></li>
+										<li class="dropdown"><a href="#" class="dropdown-toggle"
+											data-toggle="dropdown" role="button" aria-expanded="false"><i
+												class="fa fa-wrench"></i></a>
+											<ul class="dropdown-menu" role="menu">
+												<li><a href="#">Settings 1</a></li>
+												<li><a href="#">Settings 2</a></li>
+											</ul></li>
+										<li><a class="close-link"><i class="fa fa-close"></i></a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>항목</th>
+												<th>배부금액</th>
+												<th>배부율</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>빌딩</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>통신</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>전산</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>합계</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-5 col-sm-6 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>
+										우 <small>공통비1</small>
+									</h2>
+									<ul class="nav navbar-right panel_toolbox">
+										<li><a class="collapse-link"><i
+												class="fa fa-chevron-up"></i></a></li>
+										<li class="dropdown"><a href="#" class="dropdown-toggle"
+											data-toggle="dropdown" role="button" aria-expanded="false"><i
+												class="fa fa-wrench"></i></a>
+											<ul class="dropdown-menu" role="menu">
+												<li><a href="#">Settings 1</a></li>
+												<li><a href="#">Settings 2</a></li>
+											</ul></li>
+										<li><a class="close-link"><i class="fa fa-close"></i></a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>항목</th>
+												<th>배부금액</th>
+												<th>배부율</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>부문장</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>본부장</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>지원부서</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>기타</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>합계</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="clearfix"></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</font>
+
+</th:block>
+<th:block layout:fragment="customJquery">
+	<th:block th:include="layout/customJquery"></th:block>
+</th:block>
 </html>
