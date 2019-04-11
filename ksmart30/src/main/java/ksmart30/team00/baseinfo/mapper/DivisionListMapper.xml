@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- @file Client.java @brief 기준정보관리-거래처등록 Controller @author ksmart30 YSM -->
+<mapper namespace="ksmart30.team00.baseinfo.mapper.DivisionListMapper">
+	
+	<!-- 10.2.2 회계연도를 입력받고 직급별 단가를 조회한다 -->
+	<select id="getJikgupDangaList"
+		parameterType="String"
+		resultType="java.util.Map">
+
+		 SELECT
+		    A.MAX_PAY,
+		    A.RETI_MONTH,
+		    A.AMT,
+		    A.BNS_MONTH,
+		    A.MD_PAY_DAN,
+		    A.MD_RETI_DAN,
+		   (A.MD_PAY_DAN + A.MD_RETI_DAN) PAY_DAN,
+		    A.MD_BNS_DAN,
+		    G.LEVEL2_NM  JIKGUP_NM
+		  FROM T_PS9000 A,
+		       T_SC9100 G
+		 WHERE REG_YYMM like #{REG_YYMM}+'00'
+		   AND ((A.JIKGUB  *= G.LEVEL2_CD)
+		   AND (G.LEVEL1_CD = '110' AND G.BUSI_GB = 'H')) 
+
+	</select>	
+
+	<!-- 10.2.2 회계연도를 입력받고 배부 단가를 조회한다 -->
+	<select id="getDivisionDangaList"
+		parameterType="String"
+		resultType="java.util.Map">
+		
+			SELECT A.DIV_AMT11, A.DIV_AMT12, A.DIV_AMT13,
+			       A.DIV_AMT10, A.DIV_AMT20, A.DIV_AMT30,
+			       A.DIV_AMT41, A.DIV_AMT42, A.DIV_AMT43, A.DIV_AMT44, 
+			       A.DIV_AMT40, A.DIV_AMT45
+			  FROM T_AC7300 A,
+			       T_SC1010 B
+			 WHERE A.DEPT_CD  *= B.DEPT_CD
+			   AND A.ACC_UNIT  = '01'
+			   AND A.ACC_YYMM LIKE #{REG_YYMM} + '12'
+			   AND A.DEPT_CD = (SELECT MIN(DEPT_CD) 
+			   						FROM T_AC7300
+									WHERE ACC_YYMM LIKE #{REG_YYMM} + '12')
+			 <!-- ORDER BY A.ACC_YYMM, B.SYS_COD -->						  		   	
+	</select>	
+	
+	<!-- 10.2.2. 회계연도를 입력받고 제조경비1 자동계산을 조회한다 -->
+	<select id="getJejo1DangaList"
+		parameterType="String"
+		resultType="java.util.Map">
+			SELECT *
+			FROM T_PS9100
+			WHERE REG_YY LIKE #{REG_YYMM} + '12'	
+			ORDER BY DAN_RATE
+	</select>	
+
+</mapper>

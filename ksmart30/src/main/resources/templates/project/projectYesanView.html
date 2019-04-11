@@ -18,19 +18,32 @@
 	        	data:{PJT_CD:PJT_CD},	//넘길 데이터
 	            success:(data)=>{
 	            	console.log(data);
+	            	
 	            	//프로젝트 개요
+	            	$('#PJT_CD2').empty();
 	                $('#PJT_CD2').append(data.projectYesanSangse.PJT_CD);	//프로젝트코드
-	                $('#PJT_NM2').append(data.projectYesanSangse.PJT_NM);	//프로젝트명		           
-	                $('#BUILD_NM').append(data.projectYesanSangse.BUILD_NM);	//건축물 유형		           
-	                $('#DEPT_NM').append(data.projectYesanSangse.DEPT_NM);	//부서명		           
-	                $('#CONTRACT_DATE').append(data.projectYesanSangse.CONTRACT_DATE);	//계약일		           
-	                $('#CRT_DATE').append('('+data.projectYesanSangse.CRT_DATE+')');	//프로젝트 개요		           
-	                $('#FROM_TO').append(data.projectYesanSangse.FROM_TO);	//프로젝트 개요		           
-	                $('#TOT_CONTRACT_AMT').append(data.projectYesanSangse.TOT_CONTRACT_AMT+'원');	//총계약금액		           
-	                $('#G_AREA_M').append(data.projectYesanSangse.G_AREA_M+'m²');	//프로젝트 개요		           
-	                $('#G_AREA_P').append(data.projectYesanSangse.G_AREA_P+'평');	//프로젝트 개요		           
-	                $('#G_YAREA_M').append(data.projectYesanSangse.G_YAREA_M+'m²');	//프로젝트 개요		           
-	                $('#G_YAREA_P').append(data.projectYesanSangse.G_YAREA_P+'평');	//프로젝트 개요		  
+	            	$('#PJT_NM2').empty();	                
+	                $('#PJT_NM2').append(data.projectYesanSangse.PJT_NM);	//프로젝트명	
+	                $('#BUILD_NM').empty();
+	                $('#BUILD_NM').append(data.projectYesanSangse.BUILD_NM);	//건축물 유형	
+	                $('#DEPT_NM').empty();
+	                $('#DEPT_NM').append(data.projectYesanSangse.DEPT_NM);	//부서명	
+	                $('#CONTRACT_DATE').empty();
+	                $('#CONTRACT_DATE').append(data.projectYesanSangse.CONTRACT_DATE);	//계약일		
+	                $('#CRT_DATE').empty();
+	                $('#CRT_DATE').append('('+data.projectYesanSangse.CRT_DATE+')');	//프로젝트 개요	
+	                $('#FROM_TO').empty();
+	                $('#FROM_TO').append(data.projectYesanSangse.FROM_TO);	//프로젝트 개요		
+	                $('#TOT_CONTRACT_AMT').empty();
+	                $('#TOT_CONTRACT_AMT').append(data.projectYesanSangse.TOT_CONTRACT_AMT+'원');	//프로젝트총계약액
+	                $('#G_AREA_M').empty();
+	                $('#G_AREA_M').append(data.projectYesanSangse.G_AREA_M+'m²');	//계약면적_M
+	                $('#G_AREA_P').empty();
+	                $('#G_AREA_P').append(data.projectYesanSangse.G_AREA_P+'평');	//계약면적_평	
+	                $('#G_YAREA_M').empty();
+	                $('#G_YAREA_M').append(data.projectYesanSangse.G_YAREA_M+'m²');	//계약연면적_M
+	                $('#G_YAREA_P').empty();
+	                $('#G_YAREA_P').append(data.projectYesanSangse.G_YAREA_P+'평');	//계약연면적_평		  
 	                
 	                //발주처
      	                $(data.projectYesanSangseCustNm).each((index,item)=>{

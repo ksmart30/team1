@@ -1,291 +1,380 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
-	<th:block layout:fragment="customHead">
-		<meta charset="UTF-8">
-		<title>divisionListView</title>
-		<th:block th:include="layout/customHead"></th:block>
-	</th:block>
-	<th:block layout:fragment="customBody">
-	
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>divisionListView</title>
+	<th:block th:include="layout/customHead"></th:block>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script>
+		//회계연도를 입력받아 직급별 단가와 배부 단가를 보여준다
+		$(document).ready(()=>{
+		    $('#btn').click(()=>{	//btn을 클릭하면
+				// 필드로 입력받은 값들을 변수에 저장
+				let REG_YYMM = $('#REG_YYMM').val();
+				console.log(REG_YYMM);
+		    	$.ajax({
+		            url:'/baseInfo/divisionListView',	//url을 요청하고
+		            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
+		        	data:{REG_YYMM:REG_YYMM},	//넘길 데이터
+		            success:(data)=>{	//받은 데이터
+		            	console.log(data);
+		            	//직급별 단가 조회
+		                $('#jikgupDangaList').empty();	//리스트를 비우고	               
+		                $(data.jikgupDangaList).each((index,item)=>{
+		                    $('#jikgupDangaList').append(
+		                    		'<tr><td>'+item.JIKGUP_NM+'</td><td>'		                    		
+		                    		+item.MAX_PAY+'</td><td>'
+		                    		+item.RETI_MONTH+'</td><td>'
+		                    		+item.AMT+'</td><td>'
+		                    		+item.BNS_MONTH+'</td><td>'
+		                    		+item.MD_PAY_DAN+'</td><td>'
+		                    		+item.MD_RETI_DAN+'</td><td>'
+		                    		+item.PAY_DAN+'</td><td>'
+		                    		+item.MD_BNS_DAN+'</td></tr>');		                   
+		                });
+	                	
+		                //배부 단가 조회
+	                	$('#DIV_AMT11').empty();
+	                	$('#DIV_AMT11').append(data.divisionDangaList.DIV_AMT11);	//빌딩
+	                	$('#DIV_AMT13').empty();
+	                	$('#DIV_AMT13').append(data.divisionDangaList.DIV_AMT13);	//전산
+	                	$('#DIV_AMT12').empty();
+	                	$('#DIV_AMT12').append(data.divisionDangaList.DIV_AMT12);	//통신
+	                	$('#DIV_AMT10').empty();
+	                	$('#DIV_AMT10').append(data.divisionDangaList.DIV_AMT10);	//간접비 소계
+	                	$('#DIV_AMT20').empty();
+	                	$('#DIV_AMT20').append(data.divisionDangaList.DIV_AMT20);	//공통비2
+	                	$('#DIV_AMT30').empty();
+	                	$('#DIV_AMT30').append(data.divisionDangaList.DIV_AMT30);	//관리부문비
+	                	$('#DIV_AMT44').empty();
+	                	$('#DIV_AMT44').append(data.divisionDangaList.DIV_AMT44);	//설계 부문
+	                	$('#DIV_AMT43').empty();
+	                	$('#DIV_AMT43').append(data.divisionDangaList.DIV_AMT43);	//지원 부서
+	                	$('#DIV_AMT41').empty();
+	                	$('#DIV_AMT41').append(data.divisionDangaList.DIV_AMT41);	//본부장
+	                	$('#DIV_AMT42').empty();
+	                	$('#DIV_AMT42').append(data.divisionDangaList.DIV_AMT42);	//본부(부)
+	                	$('#DIV_AMT40').empty();
+	                	$('#DIV_AMT40').append(data.divisionDangaList.DIV_AMT40);	//공통비1 소계        
+	                	
+	                	//제조경비1 단가 조회
+	                	
+		        	}
+		    	});			    	
+		    });			    
+		});
+		</script>
+</th:block>
+<th:block layout:fragment="customBody">
+
 	<!-- 검색화면 start -->
-	<div class="x_panel" style="color: black;">
+	<font color="black"> 
+		<!-- 목차 상단에 추가 -->
+			<div class="col-md-12 col-xs-12">
+				<div class="page-title">
+					<div class="title_left">
+						<h2>
+							<b>예산서 인건비 및 배부 단가표</b>
+						</h2>
+						<h5>
+							<font color="gray"><b>10. 기준정보관리&nbsp;&gt; 10.2. 프로젝트관리2(수익/배분)&nbsp;&gt; 10.2.2. 예산서 인건비 및 배부 단가표&nbsp;&nbsp;</b></font>
+						</h5>
+					</div>
+				</div>
+				<div class="x_content" style="text-align: right">
+					<div class="btn-group">
+						<button class="btn btn-default" type="reset">입력</button>
+						<button class="btn btn-default" type="button">수정</button>
+						<button class="btn btn-default" type="button">삭제</button>
+						<button class="btn btn-default" type="button">저장</button>
+						<button class="btn btn-default" type="button">출력</button>
+					</div>
+				</div>
+			</div> 
+		<!-- 목차 상단에 추가 end -->
 
-		<div class="x_title">
-			<h3>예산서 인건비 및 배부 단가표</h3>
-			<div class="clearfix"></div>
-		</div>
+			<div class="x_panel">
 
-		<div class="x_content">
-			<br>
-			<form class="form-horizontal form-label-left input_mask">
-				<table id="datatable-responsive"
-					class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
-					role="grid" aria-describedby="datatable-responsive_info"
-					style="width: 100%;">
-					
-					<thead>
-						<tr role="row">
-							<th class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="6" style="width: 100%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<label class="control-label">검색조건</label>
-							</th>
-						</tr>
-					</thead>
-					
-					<tbody>
-						<tr role="row">
-							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 100%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<label class="control-label">회계년도</label><input type="number">
-							</td>										
-						</tr>
+				<div class="x_title">
+					<h3>예산서 인건비 및 배부 단가표</h3>
+					<div class="clearfix"></div>
+				</div>
 
-					</tbody>
-				</table>
-			</form>
-		</div>
-	</div>
-	<!-- 검색화면 end -->	
+				<div class="x_content">
+					<br>
+						<table id="datatable-responsive"
+							class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+							role="grid" aria-describedby="datatable-responsive_info"
+							style="width: 100%;">
+
+							<thead>
+								<tr role="row">
+									<th class="sorting_asc" tabindex="0"
+										aria-controls="datatable-responsive" rowspan="1" colspan="6"
+										style="width: 100%;" aria-sort="ascending"
+										aria-label="First name: activate to sort column descending">
+										<label class="control-label">검색조건</label>
+									</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr role="row">
+									<td class="sorting_asc" tabindex="0"
+										aria-controls="datatable-responsive" rowspan="1" colspan="1"
+										style="width: 100%;" aria-sort="ascending"
+										aria-label="First name: activate to sort column descending">
+										<label class="control-label">회계년도</label><input type="number" id="REG_YYMM">
+									</td>
+									<td><div class="x_content" style="text-align: right"><button class="btn" id="btn">검색</button></div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+				</div>
+			</div> 
+			<!-- 검색화면 end -->
+			
+			<!-- 직급별 단가, 배부단가 조회결과 start -->
+			<div class="row">
+				<div class="col-md-8 col-sm-6 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+							<h2>
+								직급별 단가<small></small>
+							</h2>
+							<ul class="nav navbar-right panel_toolbox">
+								<li><a class="collapse-link"><i
+										class="fa fa-chevron-up"></i></a></li>
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th rowspan="2">직급</th>
+										<th colspan="3">최고 인건비(1개월)</th>
+										<th rowspan="2">상여금</th>
+										<th colspan="4">MH당 단가</th>
+									</tr>
+									<tr>
+										<th>급료</th>
+										<th>퇴직금</th>
+										<th>계</th>
+										<th>급료</th>
+										<th>퇴직금</th>
+										<th>계</th>
+										<th>상여금</th>
+									</tr>
+								</thead>
+								<tbody id="jikgupDangaList">
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-4 col-sm-6 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+							<h2>
+								배부 단가<small></small>
+							</h2>
+							<ul class="nav navbar-right panel_toolbox">
+								<li><a class="collapse-link"><i
+										class="fa fa-chevron-up"></i></a></li>
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th colspan="2">과목</th>
+										<th>배부금액</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th rowspan="4">간접비</th>
+										<td>빌딩</td>
+										<td id="DIV_AMT11">0</td>
+									</tr>
+									<tr>
+										<td>전산</td>
+										<td id="DIV_AMT13">0</td>
+									</tr>
+									<tr>
+										<td>통신</td>
+										<td id="DIV_AMT12">0</td>
+									</tr>
+									<tr>
+										<td>소계</td>
+										<td id="DIV_AMT10">0</td>
+									</tr>
+									<tr>
+										<td colspan="2">공통비2</td>
+										<td id="DIV_AMT20">0</td>
+									</tr>
+									<tr>
+										<td colspan="2">관리부문비</td>
+										<td id="DIV_AMT30">0</td>
+									</tr>
+									<tr>
+										<th rowspan="5">공통비1</th>
+										<td>설계 부문</td>
+										<td id="DIV_AMT44">0</td>
+									</tr>
+									<tr>
+										<td>지원 부서</td>
+										<td id="DIV_AMT43">0</td>
+									</tr>
+									<tr>
+										<td>본부장</td>
+										<td id="DIV_AMT41">0</td>
+									</tr>
+									<tr>
+										<td>본부(부)</td>
+										<td id="DIV_AMT42">0</td>
+									</tr>
+									<tr>
+										<td>소계</td>
+										<td id="DIV_AMT40">0</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="clearfix"></div>
+			</div> 
+			<!-- 조회결과 end --> 
+			
+			<!-- 제조경비1 start -->
+				<div class="col-md-8 col-sm-6 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+							<h2>
+								제조경비1<small> 자동계산</small>
+							</h2>
+							<ul class="nav navbar-right panel_toolbox">
+								<li><a class="collapse-link"><i
+										class="fa fa-chevron-up"></i></a></li>
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+
+							<table class="table table-bordered">
+								<tr>
+									<th>상여금:</th>
+									<td id="DAN_RATE">급료의 100%</td>
+									<th>기타복리후생비:</th>
+									<td id="DAN_RATE">333원/MH</td>
+								</tr>
+								<tr>
+									<th>야근 비용:</th>
+									<td id="DAN_RATE">급료의 0%</td>
+									<th>기타:</th>
+									<td id="DAN_RATE">557원/MH</td>
+								</tr>
+								<tr>
+									<th>건강보험외:</th>
+									<td id="DAN_RATE">급료의 3.1%</td>
+									<th>교제비:</th>
+									<td id="DAN_RATE">매출액의 0.30%(프로젝트예산서에만 적용)</td>
+								</tr>
+								<tr>
+									<th>국민 연금:</th>
+									<td id="DAN_RATE">급료의 4.5%</td>
+								</tr>
+							</table>
+
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-4 col-sm-6 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+							<h2>
+								제조경비2<small> 자동계산</small>
+							</h2>
+							<ul class="nav navbar-right panel_toolbox">
+								<li><a class="collapse-link"><i
+										class="fa fa-chevron-up"></i></a></li>
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+
+							<table class="table table-bordered">
+								<tr>
+									<th>예비비:</th>
+									<td>매출액의 2%</td>
+								<tr>
+								<tr>
+									<th></th>
+									<td>(프로젝트예산서에만 적용)</td>
+								</tr>
+							</table>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="clearfix"></div>
+			<!-- 제조경비 end -->
+			
+			<!-- MH START -->
+			<div class="col-md-12 col-sm-6 col-xs-12">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>
+							M/H<small></small>
+						</h2>						
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+
+						<table class="table table-bordered">
+							<tr>
+								<td>주중일수:</td>
+								<td>244일</td>
+								<td>1,952시간</td>
+								<td>(8시간 기준)</td>
+							</tr>
+						</table>
+
+					</div>
+				</div>
+			</div> 
+			<!-- MH END -->
+	</font>
 	
-	<!-- 조회결과 start -->
-		<div class="row">
-            <div class="col-md-8 col-sm-6 col-xs-12">
-              <div class="x_panel">
-                <div class="x_title">
-                  <h2>직급별 단가<small></small></h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>                    
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th rowspan="2">직급</th>
-                        <th colspan="3">최고 인건비(1개월)</th>
-                        <th rowspan="2">상여금</th>
-                        <th colspan="4">MH당 단가</th>
-                      </tr>
-                      <tr>
-                      	<th>급료</th>
-                      	<th>퇴직금</th>
-                        <th>계</th>
-                        <th>급료</th>
-                      	<th>퇴직금</th>
-                      	<th>계</th>
-                      	<th>상여금</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td scope="row">전무</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                      </tr>
-                      <tr>
-                        <td scope="row">상사</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>45,985</td>
-                        <td>3,832</td>
-                        <td>49,817</td>
-                        <td>3,832</td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                </div>
-              </div>
-            </div>
-
-
-            <div class="col-md-4 col-sm-6 col-xs-12">
-              <div class="x_panel">
-                <div class="x_title">
-                  <h2>배부 단가<small></small></h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th colspan="2">과목</th>
-                        <th>배부금액</th>                        
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row" rowspan="4">간접비</th>
-                        <td>빌딩</td>
-                        <td>0</td>
-                      </tr>
-                      <tr>
-                        <td>전산</td>
-                        <td>0</td>
-                      </tr>
-					  <tr>
-                        <td>통신</td>
-                        <td>0</td>
-                      </tr> 
-					  <tr>
-                        <td>소계</td>
-                        <td>0</td>
-                      </tr>  
-					  <tr>
-                        <td colspan="2">공통비2</td>
-                        <td>939</td>
-                      </tr>  
-					  <tr>
-                        <td colspan="2">관리부문비</td>
-                        <td>14,225</td>
-                      </tr>                                                                                     
-                      <tr>
-                        <th scope="row" rowspan="5">공통비1</th>
-                        <td>설계 부문</td>
-                        <td>2,607</td>
-                      </tr>
-                      <tr>
-                        <td>지원 부서</td>
-                        <td>0</td>
-                      </tr>
-					  <tr>
-                        <td>본부장</td>
-                        <td>2,390</td>
-                      </tr> 
-					  <tr>
-                        <td>본부(부)</td>
-                        <td>1,083</td>
-                      </tr>
-					  <tr>
-                        <td>소계</td>
-                        <td>6,080</td>
-                      </tr>                          
-                    </tbody>
-                  </table>
-                  
-                </div>
-              </div>
-            </div>
-
-            <div class="clearfix"></div>
-          </div>
-	<!-- 조회결과 end -->			
-		
-	<!-- 단가를 직접 입력해서 우선 보여주자 start -->
-		<div class="row">
-            <div class="col-md-8 col-sm-6 col-xs-12">
-              <div class="x_panel">
-                <div class="x_title">
-                  <h2>제조경비1<small> 자동계산</small></h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>                    
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-
-                  <table class="table table-bordered">                
-                      <tr>
-                        <th>상여금: </th>
-                        <td>급료의 100%</td>
-                        <th>기타복리후생비: </th>
-                        <td>333원/MH</td>
-                      </tr>                              
-                      <tr>
-                        <th scope="row">야근 비용: </th>
-                        <td>급료의 0%</td>
-                        <th>기타: </th>
-                        <td>557원/MH</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">건강보험외: </th>
-                        <td>급료의 3.1%</td>
-                        <th>교제비: </th>
-                        <td>매출액의 0.30%(프로젝트예산서에만 적용)</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">국민 연금: </th>
-                        <td>급료의 4.5%</td>
-                      </tr>                  
-                  </table>
-
-                </div>
-              </div>
-            </div>
-
-
-            <div class="col-md-4 col-sm-6 col-xs-12">
-              <div class="x_panel">
-                <div class="x_title">
-                  <h2>제조경비2<small> 자동계산</small></h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-
-                  <table class="table table-bordered">                    
-                      <tr>
-                        <th>예비비: </th>
-                        <td>매출액의 2%</td>
-                      <tr>  
-                      <tr>  
-                        <th></th>
-                        <td>(프로젝트예산서에만 적용)</td>
-                       </tr>                                                      
-                  </table>
-                  
-                </div>
-              </div>
-            </div>
-
-            <div class="clearfix"></div>
-          </div>	
-          
-            <div class="col-md-12 col-sm-6 col-xs-12">
-              <div class="x_panel">
-                <div class="x_title">
-                  <h2>M/H<small></small></h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>                    
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-
-                  <table class="table table-bordered">                 
-                      <tr>
-                        <td>주중일수: </td>
-                        <td>244일</td>
-                        <td>1,952시간</td>
-                        <td>(8시간 기준)</td>
-                      </tr>                                     
-                  </table>
-
-                </div>
-              </div>
-            </div>          
-	<!-- 단가를 직접 입력해서 우선 보여주자 end -->
-	</th:block>
-	<th:block layout:fragment="customJquery">
-		<th:block th:include="layout/customJquery"></th:block>
-    </th:block>
+</th:block>
+<th:block layout:fragment="customJquery">
+	<th:block th:include="layout/customJquery"></th:block>
+</th:block>
 </html>
