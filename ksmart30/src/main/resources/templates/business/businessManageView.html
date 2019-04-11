@@ -63,12 +63,12 @@
 		        }).open();
 		    }
 
-			function mooncall(PJT_CD){
-				console.log("mooncall"+PJT_CD);
+			function mooncall(PJT_NM){
+				console.log("mooncall"+PJT_NM);
 				$.ajax({
 					url:'/business/businessManageView',
 					type:'POST',
-					data:{PJT_CD:PJT_CD},
+					data:{PJT_NM:PJT_NM},
 					success:function(data){
 					console.log(data);
 						$('#PJT_NM2').attr('value',data.PJT_NM); //프로젝트 이름
@@ -86,7 +86,9 @@
 						$('#BUSI_YY2').empty();
 						$('#BUSI_YY2').append(data.BUSI_YY); //일련번호 년도  ??
 						$('#CRT_DATE').empty();
-						$('#CRT_DATE').append(data.CRT_DATE); //등록일시
+						$('#CRT_DATE').append(data.CRT_DATE); //등록일시 
+						$('#CD_REG_DATE').empty();
+						$('#CD_REG_DATE').append(data.CD_REG_DATE); //승인일시
 						$('#CUST_CHARGE_NM').attr('value',data.CUST_CHARGE_NM);//담당자
 						$('#REGION').attr('value',data.REGION);//지역1
 							$('select[id=REGION]').val(data.REGION);
@@ -146,22 +148,22 @@
 			
 			$(document).ready(()=>{
 				console.log("안녕1");
-			    // 검색목록(프로젝트예산 입력을 위한 용역계약서 리스트)
+			   
 			    $('#pjtSearchBtn').click(()=>{
 			    	console.log("안녕2");//btn_list를 클릭하면
 			    	var BUSI_YY = $('#BUSI_YY').val();
 			    	var PJT_NM = $('#PJT_NM').val();
 			    	var DEPT_CD = $('#DEPT_CD').val();
-			    	let pjtRadioValue = $('input[name=pjtRadioValue]:checked','#radioForm').val();
+			    	let END_GBN = $('input[name=pjtRadioValue]:checked','#radioForm').val();
 			        $.ajax({
 			            url:'/business/businessManageViewList',	//url을 요청하고
 			            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
-			        	data:{BUSI_YY:BUSI_YY,PJT_NM:PJT_NM,DEPT_CD:DEPT_CD},	//넘길 데이터(검색 조건 없이 우선 테스트)
+			        	data:{BUSI_YY:BUSI_YY,PJT_NM:PJT_NM,DEPT_CD:DEPT_CD,END_GBN:END_GBN},	//넘길 데이터(검색 조건 없이 우선 테스트)
 			            success:function(data){	//받은 데이터
 			                $('#pjtList').empty();	//리스트를 비우고	               
 			                $(data).each((index,item)=>{
-			                    $('#pjtList').append('<tr onclick="mooncall('+item.PJT_CD+')"><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'
-			                    +item.PJT_NM+'</td></tr>'
+			                    $('#pjtList').append('<tr onclick="mooncall(&#39'+item.PJT_NM+'&#39)"><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'
+			                    +item.PJT_NM+'</td></tr>' // 문자열
 			                    );
 			                });
 			            }
@@ -201,11 +203,16 @@
 									<div class="col-md-10 col-sm-10 col-xs-10 ">
 										<select id="DEPT_CD">
 											<option value="">전 사</option>
-											<option value="75">설계1본부</option>
-											<option value="76">설계2본부</option>
-											<option value="77">설계3본부</option>
-											<option value="78">설계4본부</option>
-											<option value="79">설계5본부</option>
+											<option value="7530">설계1본부 1소</option>
+											<option value="7540">설계1본부 2소</option>
+											<option value="7630">설계2본부 1소</option>
+											<option value="7640">설계2본부 2소</option>
+											<option value="7730">설계3본부 1소</option>
+											<option value="7740">설계3본부 2소</option>
+											<option value="7830">설계4본부 1소</option>
+											<option value="7840">설계4본부 2소</option>
+											<option value="7930">설계5본부 1소</option>
+											<option value="7940">설계5본부 2소</option>
 										</select>
 									</div>
 								</td>
@@ -230,13 +237,15 @@
 						<table>
 							<tbody>
 								<tr>
-									<td><input type="radio" name="pjtRadioValue" value="1">접수
+									<td><input type="radio" name="pjtRadioValue" checked value="1">접수
 									</td>
 									<td><input type="radio" name="pjtRadioValue" value="2">승인
 									</td>
-									<td><input type="radio" name="pjtRadioValue" value="3">HOLD
+									<td><input type="radio" name="pjtRadioValue" value="11">HOLD
 									</td>
-									<td><input type="radio" name="pjtRadioValue" value="4">CANCEL
+									<td><input type="radio" name="pjtRadioValue" value="21">CANCEL
+									</td>
+									<td><input type="radio" name="pjtRadioValue" value="22">DROP
 									</td>
 								</tr>
 							</tbody>
@@ -312,7 +321,7 @@
 									<th>일련번호</th>
 									<th><span id="BUSI_YY2"></span> - <span id="BUSI_SEQ"></span></th>
 									<th>입력일자 - <span id="CRT_DATE"></span></th>
-									<th>승인일자 ____/__/__/</th>
+									<th>승인일자 - <span id="CD_REG_DATE"></span></th>
 								</tr>
 
 							</table>
@@ -767,7 +776,6 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 		</div>

@@ -10,7 +10,14 @@ public class BusinessMarket {
 	private String PJT_NM; // 프로젝트 이름
 	private String DEPT_CD; // 부서
 	private String PJT_CD; // 프로젝트 코드
+	private String END_GBN; // HOLDING/CANCEL
 	
+	public String getEND_GBN() {
+		return END_GBN;
+	}
+	public void setEND_GBN(String eND_GBN) {
+		END_GBN = eND_GBN;
+	}
 	public String getPJT_CD() {
 		return PJT_CD;
 	}
@@ -59,12 +66,15 @@ public class BusinessMarket {
 	public void setYAREA_P(String yAREA_P) {
 		YAREA_P = yAREA_P;
 	}
+	
 	@Override
 	public String toString() {
 		return "BusinessMarket [BUSI_YY=" + BUSI_YY + ", UP_SU=" + UP_SU + ", UP_SU2=" + UP_SU2 + ", YAREA_P=" + YAREA_P
-				+ ", YAREA_P2=" + YAREA_P2 + ", PJT_NM=" + PJT_NM + ", DEPT_CD=" + DEPT_CD + ", PJT_CD=" + PJT_CD + "]";
+				+ ", YAREA_P2=" + YAREA_P2 + ", PJT_NM=" + PJT_NM + ", DEPT_CD=" + DEPT_CD + ", PJT_CD=" + PJT_CD
+				+ ", END_GBN=" + END_GBN + "]";
 	}
 
+	
 
 	
 

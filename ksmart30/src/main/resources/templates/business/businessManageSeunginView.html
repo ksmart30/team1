@@ -9,126 +9,220 @@
 		
 				<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 			<script>
+			function mooncall(PJT_NM){
+				console.log("mooncall"+PJT_NM);
+				$.ajax({
+					url:'/business/businessManageView',
+					type:'POST',
+					data:{PJT_NM:PJT_NM},
+					success:function(data){
+					console.log(data);
+						$('#PJT_NM2').attr('value',data.PJT_NM); //프로젝트 이름
+						$('#AREA_M').attr('value',data.AREA_M); // 대지면적 m  --
+						$('#AREA_P').attr('value',data.AREA_P); // 대지면적 평 --
+						$('#BUSI_DATE').attr('value',data.BUSI_DATE); //의뢰일자
+						$('#BUSI_SEQ').empty();
+						$('#BUSI_SEQ').append(data.BUSI_SEQ); //일련번호 번호
+						$('#CUST_CD').attr('value',data.CUST_CD); //발주처 코드 --
+						$('#CUST_NM').attr('value',data.CUST_NM);//발주처 이름
+						$('#CUST_GBN').attr('value',data.CUST_GBN);//발주처 구분
+							$('select[id=CUST_GBN]').val(data.CUST_GBN);
+						$('#PLAN_DATE').attr('value',data.PLAN_DATE);//완료예정일
+						$('#CUST_TEL').attr('value',data.CUST_TEL);//전화번호
+						$('#BUSI_YY2').empty();
+						$('#BUSI_YY2').append(data.BUSI_YY); //일련번호 년도  ??
+						$('#CRT_DATE').empty();
+						$('#CRT_DATE').append(data.CRT_DATE); //등록일시 
+						$('#CD_REG_DATE').empty();
+						$('#CD_REG_DATE').append(data.CD_REG_DATE); //승인일시
+						$('#CUST_CHARGE_NM').attr('value',data.CUST_CHARGE_NM);//담당자
+						$('#REGION').attr('value',data.REGION);//지역1
+							$('select[id=REGION]').val(data.REGION);
+						$('#REGION2').attr('value',data.REGION2); //지역2
+							$('select[id=REGION2]').val(data.REGION2);
+						$('#ZONE1').attr('value',data.ZONE1); //지구1
+							$('select[id=ZONE1]').val(data.ZONE1);
+						$('#ZONE2').attr('value',data.ZONE2); //지구2
+							$('select[id=ZONE2]').val(data.ZONE2);
+						$('#SCOPE1').attr('value',data.SCOPE1);//구역1
+							$('select[id=SCOPE1]').val(data.SCOPE1);
+						$('#SCOPE2').attr('value',data.SCOPE2); //구역2
+							$('select[id=SCOPE2]').val(data.SCOPE2);
+						$('#UP_SU').attr('value',data.UP_SU); //지상층
+						$('#DOWN_SU').attr('value',data.DOWN_SU); //지하
+						$('#H_CNT').attr('value',data.H_CNT); // 세대수
+						$('#YAREA_P').attr('value',data.YAREA_P); //연면적 평
+						$('#YAREA_M').attr('value',data.YAREA_M); //연면적 m
+						$('#sample6_address').attr('value',data.ADDR); // 대지위치
+						$('#COVERAGE').attr('value',data.COVERAGE); //건폐율
+						$('#CAPACITY').attr('value',data.CAPACITY); //용적율 RMK_1 
+						$('#BUILD_TYPE').attr('value',data.BUILD_TYPE); //건축물용도 
+							$('select[id=BUILD_TYPE]').val(data.BUILD_TYPE);
+						$('#BIZ_TYPE').attr('value',data.BIZ_TYPE);  //수주구분1 
+							$('select[id=BIZ_TYPE]').val(data.BIZ_TYPE);
+						$('#BIZ_GBN').attr('value',data.BIZ_GBN);  // 수주구분2
+							$('select[id=BIZ_GBN]').val(data.BIZ_GBN); 
+						$('#FORECAST_AMT').attr('value',data.FORECAST_AMT); //추정계약액 
+						$('#MARKET_CLASS_GBN').attr('value',data.MARKET_CLASS_GBN); //업무및 수준
+							$('select[id=MARKET_CLASS_GBN]').val(data.MARKET_CLASS_GBN);
+						$('#RMK_1').attr('value',data.RMK_1); //수주정보
+						$('#RMK_2').attr('value',data.RMK_2); //의견
+						$('#RMK_3').attr('value',data.RMK_3);
+						$('#RMK_4').attr('value',data.RMK_4);
+						$('#RMK_5').attr('value',data.RMK_5);  
+						$('#BUILD_GB').attr('value',data.BUILD_GB); // 사업분류
+							$('select[id=BUILD_GB]').val(data.BUILD_GB);
+						
+						let myElem = document.getElementById('RMK_1'); // TEXTAREA 수주정보
+							myElem.value = data.RMK_1;
+						
+						let myElem2 = document.getElementById('RMK_2'); // TEXTAREA 본부장의견
+							myElem2.value = data.RMK_2;
+							
+						let myElem3 = document.getElementById('RMK_3'); // TEXTAREA 설계부문장의견
+							myElem3.value = data.RMK_3;
+							
+						let myElem4 = document.getElementById('RMK_4'); // TEXTAREA 수주부문장의견
+							myElem4.value = data.RMK_4;
+							
+						let myElem5 = document.getElementById('RMK_5'); // TEXTAREA 대표이사 의견
+							myElem5.value = data.RMK_5;
+
+					}
+				});
+			}
+			
 			$(document).ready(()=>{
 				console.log("안녕1");
-			    // 검색목록(프로젝트예산 입력을 위한 용역계약서 리스트)
+			   
 			    $('#pjtSearchBtn').click(()=>{
 			    	console.log("안녕2");//btn_list를 클릭하면
 			    	var BUSI_YY = $('#BUSI_YY').val();
 			    	var PJT_NM = $('#PJT_NM').val();
 			    	var DEPT_CD = $('#DEPT_CD').val();
-			    	let pjtRadioValue = $('input[name=pjtRadioValue]:checked','#radioForm').val();
+			    	let END_GBN = $('input[name=pjtRadioValue]:checked','#radioForm').val();
 			        $.ajax({
 			            url:'/business/businessManageViewList',	//url을 요청하고
 			            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
-			        	data:{BUSI_YY:BUSI_YY,PJT_NM:PJT_NM,DEPT_CD:DEPT_CD},	//넘길 데이터(검색 조건 없이 우선 테스트)
+			        	data:{BUSI_YY:BUSI_YY,PJT_NM:PJT_NM,DEPT_CD:DEPT_CD,END_GBN:END_GBN},	//넘길 데이터(검색 조건 없이 우선 테스트)
 			            success:function(data){	//받은 데이터
 			                $('#pjtList').empty();	//리스트를 비우고	               
 			                $(data).each((index,item)=>{
-			                    $('#pjtList').append('<tr><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'
-			                    +item.PJT_NM+'</td></tr>');
-
+			                    $('#pjtList').append('<tr onclick="mooncall(&#39'+item.PJT_NM+'&#39)"><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'
+			                    +item.PJT_NM+'</td></tr>' // 문자열
+			                    );
 			                });
 			            }
 			        });
 			    });
 			});
 			</script>
-			
-	</th:block>
-	<th:block layout:fragment="customBody">
-	<!-- 검색부분 start -->
-	<font color="black">	
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<div class="x_panel">
-		<div class="x_content" >
-			<label for="ex3">검색조건</label><br>
-			<table>
-				<tbody><tr>
-					<td>
-						년도
-					</td>
-					<td>
-				<div class="col-md-10 col-sm-10 col-xs-10 ">
-				<input type="number" name="BUSI_YY" id="BUSI_YY" class="form-control" value="2019">
+
+</th:block>
+
+
+
+
+
+
+<th:block layout:fragment="customBody">
+
+	<font color="black">
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<div class="x_content">
+					<label for="ex3">검색조건</label><br>
+					<table>
+						<tbody>
+							<tr>
+								<td>년도</td>
+								<td>
+									<div class="col-md-10 col-sm-10 col-xs-10 ">
+										<input type="number" name="BUSI_YY" id="BUSI_YY"
+											class="form-control" value="2019">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>부서</td>
+								<td>
+									<div class="col-md-10 col-sm-10 col-xs-10 ">
+										<select id="DEPT_CD">
+											<option value="">전 사</option>
+											<option value="7530">설계1본부 1소</option>
+											<option value="7540">설계1본부 2소</option>
+											<option value="7630">설계2본부 1소</option>
+											<option value="7640">설계2본부 2소</option>
+											<option value="7730">설계3본부 1소</option>
+											<option value="7740">설계3본부 2소</option>
+											<option value="7830">설계4본부 1소</option>
+											<option value="7840">설계4본부 2소</option>
+											<option value="7930">설계5본부 1소</option>
+											<option value="7940">설계5본부 2소</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>프로젝트</td>
+								<td>
+									<div class="col-md-10 col-sm-10 col-xs-10 ">
+										<input type="text" name="PJT_NM" id="PJT_NM"
+											class="form-control" value="">
+									</div>
+								</td>
+								<td>
+									<button id="pjtSearchBtn">
+										<i class="fa fa-search"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<form id="radioForm">
+						<table>
+							<tbody>
+								<tr>
+									<td><input type="radio" name="pjtRadioValue" checked value="1">접수
+									</td>
+									<td><input type="radio" name="pjtRadioValue" value="2">승인
+									</td>
+									<td><input type="radio" name="pjtRadioValue" value="11">HOLD
+									</td>
+									<td><input type="radio" name="pjtRadioValue" value="21">CANCEL
+									</td>
+									<td><input type="radio" name="pjtRadioValue" value="22">DROP
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
 				</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						부서
-					</td>
-					<td>
-					<div class="col-md-10 col-sm-10 col-xs-10 ">
-						<select id="DEPT_CD">
-							<option value="">전     사</option>
-							<option value="75">설계1본부</option>
-							<option value="76">설계2본부</option>
-							<option value="77">설계3본부</option>
-							<option value="78">설계4본부</option>
-							<option value="79">설계5본부</option>
-						</select>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						프로젝트
-					</td>
-					<td>
-						<div class="col-md-10 col-sm-10 col-xs-10 ">
-						<input type="text" name="PJT_NM" id="PJT_NM" class="form-control" value="">
-						</div>
-					</td>
-					<td>
-						<button  id="pjtSearchBtn"><i class="fa fa-search"></i></button>
-					</td>
-				</tr>
-			</tbody></table>
-			<form id="radioForm">
-			<table>
-				<tbody><tr>
-					<td>
-						<input type="radio" name="pjtRadioValue" value="1">접수
-					</td>
-					<td>
-						<input type="radio" name="pjtRadioValue" value="2">승인
-					</td>
-					<td>
-						<input type="radio" name="pjtRadioValue" value="3">HOLD
-					</td>
-					<td>
-						<input type="radio" name="pjtRadioValue" value="4">CANCEL
-					</td>
-				</tr>
-			</tbody></table>
-			</form>
-			</div>
 			</div>
 			<!-- 검색부분 end -->
 			<div class="x_panel">
-		<div class="x_content">
-			<div class="x_title"></div>
-			<br>
-			<!-- 결과부분 start -->
-			<table class="table table-bordered" style="overflow:auto; height:350px">
-				<thead>
-				<tr>
-					<th width="30%">PJT코드</th>
-					<th width="70%">프로젝트명</th>
-				</tr>
-				</thead>
-				<tbody id="pjtList">
-				</tbody>
-				<thead>
-					<tr>
-						<td colspan="2" style="background-color:#ffeeaa">
-							<b><span id="resultLength"></span></b>
-						</td>
-					</tr>
-				</thead>
-			</table>
-			<!-- 결과부분 end -->
+				<div class="x_content">
+					<div class="x_title"></div>
+					<br>
+					<!-- 결과부분 start -->
+					<table class="table table-bordered"
+						style="overflow: auto; height: 350px">
+						<thead>
+							<tr>
+								<th width="30%">PJT코드</th>
+								<th width="70%">프로젝트명</th>
+							</tr>
+						</thead>
+						<tbody id="pjtList">
+						</tbody>
+						<thead>
+							<tr>
+								<td colspan="2" style="background-color: #ffeeaa"><b><span
+										id="resultLength"></span></b></td>
+							</tr>
+						</thead>
+					</table>
+					<!-- 결과부분 end -->
 		</div>
 		</div>
 		</div>
