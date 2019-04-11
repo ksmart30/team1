@@ -3,7 +3,7 @@
  * @brief    cooperation Mapper
  * @author   ksmart30 김동열
  */
-package ksmart30.team01.cooperation.Mapper;
+package ksmart30.team01.cooperation.mapper;
 
 import java.util.List;
 import java.util.Map;

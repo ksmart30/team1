@@ -12,8 +12,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ksmart30.team01.cooperation.Mapper.CooperationMapper;
 import ksmart30.team01.cooperation.domain.CooperationSearchRequest;
+import ksmart30.team01.cooperation.mapper.CooperationMapper;
 import ksmart30.team01.cooperation.domain.CooperationSangseRequest;
 
 
