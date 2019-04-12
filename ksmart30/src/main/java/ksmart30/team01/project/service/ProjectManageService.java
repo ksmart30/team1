@@ -20,6 +20,22 @@ public class ProjectManageService {
 	@Autowired
 	ProjectManageMapper projectManageMapper;
 	
+	// 전체 발주처를 조회하는 메서드
+	public List<Map<String, Object>> getCustList(String column, String columnValue) {
+		System.out.println("Service getClientList 메서드 실행");
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		System.out.println("column : " + column);
+		System.out.println("columnValue : " + columnValue);
+		if(column.equals("CUST_CD")) {
+			System.out.println("CUST_CD입니당");
+			searchMap.put("CUST_CD", columnValue);
+		} else {
+			System.out.println("CUST_NM입니당");
+			searchMap.put("CUST_NM", columnValue);
+		}
+		return projectManageMapper.getCustList(searchMap);
+	}
+	
 	// 전체 사업수행결정서를 조회하는 메서드
 	public List<Map<String, Object>> getBusinessManagerList(String PJT_CD, String DEPT_CD, String YEAR) {
 		System.out.println("Service getBusinessManagerList 메서드 실행");

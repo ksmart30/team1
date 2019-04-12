@@ -8,6 +8,20 @@
 	@author	ksmart30 YDE
 -->
 <mapper namespace="ksmart30.team01.project.mapper.ProjectManageMapper">
+	<!-- 거래처 조회  -->
+	<select id="getCustList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			CUST_CD,
+			CUST_NM
+		FROM
+			T_AC0300
+		WHERE
+			CUST_CD LIKE '%'+#{CUST_CD}+'%'
+			AND CUST_NM LIKE '%'+#{CUST_NM}+'%'
+		ORDER BY
+			CUST_CD ASC;
+	</select>
+	
 	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장과 프로젝트 대장 정보를 조회한다 -->
 	<select id="getBusinessManageList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT

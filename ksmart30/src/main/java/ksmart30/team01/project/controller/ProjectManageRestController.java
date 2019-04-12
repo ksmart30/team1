@@ -29,6 +29,13 @@ public class ProjectManageRestController {
 		return null;
 	}
 	
+	// 전체 발주처 검색
+	@PostMapping("/project/projectManageCustSearchProcess")
+	public List<Map<String, Object>> projectManageCustSearchProcess(String column, String columnValue) {
+		System.out.println("RestController projectManageCustSearchProcess 메서드 실행");
+		return projectManageService.getCustList(column, columnValue);
+	}
+	
 	//3.1.1 용역계약서 입력 처리
 	/* @brief	"http://localhost/project/manage/in" 주소분기(post방식)
 	 *			화면에서 입력한 값을 ajax로 값을 넘기고 받기 위함

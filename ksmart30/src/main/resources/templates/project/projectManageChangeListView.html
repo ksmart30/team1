@@ -140,7 +140,7 @@
 
 		// 전체 document ready
 		$(document).ready(function(){
-			$('#pjtSearchBtn').click(function(){
+			$('#Search').click(function(){
 				let PJT_CD = $('#pjtCd').val();
 				let YEAR = $('#pjtYear').val();
 				let DEPT_CD = $('#pjtDept').val();
@@ -162,7 +162,7 @@
 			});
 			
 			// 모달 테스트 (사용방법 연구중 ㅜㅜ)
-			$('#PjtSearchBtn').click(()=>{
+			$('#pjtSearchBtn').click(()=>{
     			let column = $('#selectedPjtItem option:selected').val();
     			let columnValue = $('#pjtValue').val();
     			let subvalue = columnValue.substr(0,1);
@@ -173,7 +173,7 @@
     			}else{
     				console.log('검색 값 : ');
 	    			console.log(columnValue);
-	    			$.ajax({
+	    			/* $.ajax({
 						url:'/project/projectManageSearchProcess',
 				        type:'POST',
 						data:{column:column, columnValue:columnValue},
@@ -187,7 +187,7 @@
 								$('#custModal').click();
 				    		});
 						}
-	    			});
+	    			}); */
 				}
 			});
 			$('#pjtSearchList').delegate('tr', 'click', function(){
@@ -212,7 +212,7 @@
     
     <div class="x_content" style="text-align:right">
 		<div class="btn-group" >
-			<button class="btn btn-default" type="submit" id="pjtSearchBtn">조회</button>
+			<button class="btn btn-default" type="submit" id="Search">조회</button>
 			<button class="btn btn-default" type="reset">입력</button>
 			<button class="btn btn-default" type="button">수정</button>
 			<button class="btn btn-default" type="button">삭제</button>
@@ -299,7 +299,7 @@
 																			<td><label class="control-label">검색조건</label></td>
 																			<td>
 																				<input type="text" id="pjtValue">
-																				<button type="button" id="PjtSearchBtn"><i class="fa fa-search"></i></button>																	
+																				<button type="button" id="pjtSearchBtn"><i class="fa fa-search"></i></button>																	
 																			</td>
 																		</tr>
 																	</tbody>																	

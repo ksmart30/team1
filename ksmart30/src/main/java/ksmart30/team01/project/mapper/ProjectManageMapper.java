@@ -17,6 +17,9 @@ public interface ProjectManageMapper {
 	// 전체 프로젝트 대장을 검색 쿼리를 호출하는 메서드
 	List<Map<String, Object>> getBusinessManageList(Map<String, Object> searchMap);
 	
+	// 전체 발주처 검색 쿼리를 호출하는 메서드
+	List<Map<String, Object>> getCustList(Map<String, Object> searchMap);
+	
 	// 변경된 용역계약서 리스트를 검색 쿼리를 호출하는 메서드
 	List<Map<String, ProjectHistory>> getProjectHistoryList(Map<String, Object> searchMap);
 	
