@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart30.team01.project.mapper.ProjectSonikMapper"> 
+
+
+
+
+
+
+<!-- 제조경비2 상세화면을위한 검색 쿼리 작성 (계정과목, 예산) -->
+<!-- <select id="jejo2YesanSearch"
+		parameterType="String"
+		resultType="java.util.Map">
+		
+SELECT PJT_CD, SCV_PART, EXCHANGE_NO, EX_AMT, EX_RATE, EX_WORK_AMT 
+FROM T_P11070 
+WHERE PJT_CD = #{PJT_CD}
+
+</select> -->
+
+<!-- 제조경비2 상세화면을위한 검색 쿼리 작성 (당기누계, 전기누계) -->
+<!-- <select id="jejo2YesanSearch"
+		parameterType="String"
+		resultType="java.util.Map">
+		
+SELECT * from T_P12010 WHERE PJT_CD = #{PJT_CD}
+
+</select>
+ -->
+
+
+</mapper>

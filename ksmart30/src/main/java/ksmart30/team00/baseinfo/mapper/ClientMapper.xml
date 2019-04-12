@@ -67,8 +67,8 @@
 		,CO_SERVICE
 		FROM
 		T_AC0300
-		WHERE CUST_CD LIKE
-		'%'+#{CUST_CD}+'%'
+		WHERE CUST_CD =
+		#{CUST_CD}
 
 	</select>
 	

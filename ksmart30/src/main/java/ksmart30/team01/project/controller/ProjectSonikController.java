@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class projectSonikController {
+public class ProjectSonikController {
 
 	//3.4 프로젝트 예산, 실적 대비표 화면
 	@GetMapping("project/projectSonikContrastView")
