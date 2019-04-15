@@ -14,12 +14,22 @@ import ksmart30.team01.project.domain.ProjectHistory;
 
 @Mapper
 public interface ProjectManageMapper {
-	// 전체 프로젝트 대장을 검색 쿼리를 호출하는 메서드
-	List<Map<String, Object>> getBusinessManageList(Map<String, Object> searchMap);
 	
 	// 전체 발주처 검색 쿼리를 호출하는 메서드
-	List<Map<String, Object>> getCustList(Map<String, Object> searchMap);
+	List<Map<String, Object>> getCustList(Map<String, String> searchMap);
 	
+	// 용역계약서 작성을 위해 전체 프로젝트 대장 검색 쿼리를 호출하는 메서드 (예산)
+	List<Map<String, Object>> getProjectManageYesanList(Map<String, Object> searchMap);
+	
+	// 용역계약서 작성을 위해 전체 프로젝트 대장 검색 쿼리를 호출하는 메서드 (승인)
+	List<Map<String, Object>> getProjectManageSeunginList(Map<String, Object> searchMap);
+	
+	// 용역계약서 작성을 위해 전체 프로젝트 대장 검색 쿼리를 호출하는 메서드 (종료)
+	List<Map<String, Object>> getProjectManageEndList(Map<String, Object> searchMap);
+	
+	// 용역계약서 작성을 위해 전체 프로젝트 대장 검색 쿼리를 호출하는 메서드 (ALL)
+	List<Map<String, Object>> getProjectManageList(Map<String, Object> searchMap);
+
 	// 변경된 용역계약서 리스트를 검색 쿼리를 호출하는 메서드
 	List<Map<String, ProjectHistory>> getProjectHistoryList(Map<String, Object> searchMap);
 	

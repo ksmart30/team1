@@ -6,29 +6,24 @@
 	<th:block th:include="layout/customHead"></th:block>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
-		$(document).ready(function() {
+ 		$(document).ready(function() {
 			// 발주처 검색
 			$('#custSearchBtn').click(()=>{
     			let column = $('#selectedCustItem option:selected').val();
     			let columnValue = $('#custValue').val();
-    			let subvalue = columnValue.substr(0,1);
-    				console.log('검색 값 : ');
-	    			console.log(columnValue);
-	    			$.ajax({
-						url:'/project/projectManageCustSearchProcess',
-				        type:'POST',
-						data:{column:column, columnValue:columnValue},
-						success:(data)=>{
-							console.log(data);
-							$('#custSearchList').delegate('tr', 'dblclick', function(){
-								let tr = $(this);
-								let td = tr.children();
-								$('#CUST_CD').val(td.eq(0).text());
-								$('#CUST_NM').text(td.eq(1).text());
-								$('#custModal').click();
-				    		});
-						}
-	    			});
+    			console.log('검색 값 : ');
+	    		console.log(columnValue);
+	    		$.ajax({
+					url:'/project/projectManageCustSearchProcess',
+				    type:'POST',
+					data:{column:column, columnValue:columnValue},
+					success:(data)=>{
+						console.log(data);
+						$(data).each((index, item) =>{
+						$('#custSearchList').append('<tr><td>'+data.CUST_CD+'</td><td>'+data.CUST_NM+'</td></tr>');
+						});
+					}
+	    		});
 			});
 		});
 	</script>
@@ -125,7 +120,6 @@
 															<td>
 																<select class="form-control" style="width: 40%" id="selectedCustItem">
 																	<option selected="selected"  value="CUST_CD">발주처코드</option>
-																	<option value="CUST_NM">발주처명</option>
 																</select>
 															</td>
 														</tr>
@@ -150,10 +144,6 @@
 														</tr>
 													</thead>
 													<tbody id="custSearchList">
-														<tr>
-															<td></td>
-															<td></td>
-														</tr>
 													</tbody>																	
 												</table>
 											</div>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 
 	@file	ProjectManageController.java
 	@brief	용역계약서 Controller
@@ -17,13 +15,31 @@
 			T_AC0300
 		WHERE
 			CUST_CD LIKE '%'+#{CUST_CD}+'%'
-			AND CUST_NM LIKE '%'+#{CUST_NM}+'%'
-		ORDER BY
-			CUST_CD ASC;
 	</select>
 	
-	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장과 프로젝트 대장 정보를 조회한다 -->
+	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (전체) -->
 	<select id="getBusinessManageList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			A.PJT_CD,
+			A.PJT_NM,
+			B.DEPT_CD,
+			A.PJT_TYPE,
+			(SELECT SHORT_NM FROM T_SC1010
+			WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
+			B.PM_EMP_NO,
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = B.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = B.PM_EMP_NO) PM_EMP_NM
+		FROM
+			T_SM3000 A,
+			T_PS1000 B
+		WHERE
+			A.PJT_CD = B.PJT_CD
+		AND A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
+		AND B.DEPT_CD LIKE '%'+#{DEPT_CD}+'%'
+		ORDER BY A.PJT_CD DESC
+	</select>
+	
+	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (예산) -->
+	<select id="getBusinessManageYesanList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			A.PJT_CD,
 			A.PJT_NM,
@@ -33,16 +49,70 @@
 			WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
 			B.TOT_CONTRACT_AMT,
 			B.PM_EMP_NO,
-			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = B.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = B.PM_EMP_NO) PM_EMP_NM
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = B.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = B.PM_EMP_NO) PM_EMP_NM,
+			B.PJT_E_GBN,
+			B.PJT_YEA_YN
+		FROM
+			T_SM3000 A,
+			T_P11000 B
+		WHERE
+			A.PJT_CD = B.PJT_CD
+		AND A.PJT_CD LIKE '%%'
+		AND B.DEPT_CD LIKE '%%'
+		AND A.PJT_CD LIKE '%'
+		AND B.PJT_YEA_YN = 'F'
+		ORDER BY A.PJT_CD DESC
+	</select>
+	
+	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (승인) -->
+	<select id="getBusinessManageSeunginList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			A.PJT_CD,
+			A.PJT_NM,
+			B.DEPT_CD,
+			A.PJT_TYPE,
+			(SELECT SHORT_NM FROM T_SC1010
+			WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
+			B.TOT_CONTRACT_AMT,
+			B.PM_EMP_NO,
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = B.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = B.PM_EMP_NO) PM_EMP_NM,
+			B.PJT_E_GBN,
+			B.PJT_YEA_YN
+		FROM
+			T_SM3000 A,
+			T_P11000 B
+		WHERE
+			A.PJT_CD = B.PJT_CD
+		AND A.PJT_CD LIKE '%%'
+		AND B.DEPT_CD LIKE '%%'
+		AND A.PJT_CD LIKE '%'
+		AND B.PJT_YEA_YN = 'T'
+		ORDER BY A.PJT_CD DESC
+	</select>
+	
+	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (종료) -->
+	<select id="getBusinessManageEndList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			A.PJT_CD,
+			A.PJT_NM,
+			B.DEPT_CD,
+			A.PJT_TYPE,
+			(SELECT SHORT_NM FROM T_SC1010
+			WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
+			B.TOT_CONTRACT_AMT,
+			B.PM_EMP_NO,
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = B.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = B.PM_EMP_NO) PM_EMP_NM,
+			B.PJT_E_GBN
 		FROM
 			T_SM3000 A,
 			T_P11000 B
 		WHERE
 			A.PJT_CD   = B.PJT_CD
-		AND A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
-		AND B.DEPT_CD LIKE '%'+#{DEPT_CD}+'%'
-		AND A.PJT_CD LIKE #{YEAR}+'%'
-		ORDER BY A.PJT_CD ASC
+		AND A.PJT_CD LIKE '%%'
+		AND B.DEPT_CD LIKE '%%'
+		AND A.PJT_CD LIKE '%'
+		AND B.PJT_E_GBN = '1'
+		ORDER BY A.PJT_CD DESC
 	</select>
 	
 	<!-- 용역계약서 변경 조회를 위해 변경한 이력이 1번이라도 있는 용역계약서를 조회한다 -->

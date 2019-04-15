@@ -19,13 +19,13 @@ import ksmart30.team01.project.mapper.ProjectManageMapper;
 public class ProjectManageService {
 	@Autowired
 	ProjectManageMapper projectManageMapper;
-	
+
 	// 전체 발주처를 조회하는 메서드
 	public List<Map<String, Object>> getCustList(String column, String columnValue) {
 		System.out.println("Service getClientList 메서드 실행");
-		Map<String, Object> searchMap = new HashMap<String, Object>();
+		Map<String, String> searchMap = new HashMap<String, String>();
 		System.out.println("column : " + column);
-		System.out.println("columnValue : " + columnValue);
+		System.out.println("columnValue : "+ columnValue);
 		if(column.equals("CUST_CD")) {
 			System.out.println("CUST_CD입니당");
 			searchMap.put("CUST_CD", columnValue);
@@ -36,35 +36,68 @@ public class ProjectManageService {
 		return projectManageMapper.getCustList(searchMap);
 	}
 	
-	// 전체 사업수행결정서를 조회하는 메서드
-	public List<Map<String, Object>> getBusinessManagerList(String PJT_CD, String DEPT_CD, String YEAR) {
+	
+	// ===================================================용역계약서 입력을 위한 프로젝트 조회 START===================================================
+	// 전체 프로젝트 대장을 조회하는 메서드
+	public List<Map<String, Object>> getBusinessManagerList(String PJT_CD, String DEPT_CD, String YEAR, String pjtRadioValue) {
 		System.out.println("Service getBusinessManagerList 메서드 실행");
-		System.out.println(PJT_CD+DEPT_CD+YEAR);
+		System.out.println(PJT_CD + DEPT_CD + YEAR + pjtRadioValue);
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("PJT_CD", PJT_CD);
 		searchMap.put("DEPT_CD", DEPT_CD);
 		searchMap.put("YEAR", YEAR);
-		return projectManageMapper.getBusinessManageList(searchMap);
+		List<Map<String, Object>> resultMap = null;
+		switch(pjtRadioValue) {
+			case "1":
+				// 검토
+				break;
+			case "2":
+				// 계약
+				break;
+			case "3":
+				// 예산
+				resultMap = projectManageMapper.getProjectManageYesanList(searchMap);
+				break;
+			case "4":
+				// 승인
+				resultMap = projectManageMapper.getProjectManageSeunginList(searchMap);
+				break;
+			case "5":
+				// 종료
+				resultMap = projectManageMapper.getProjectManageEndList(searchMap);
+				break;
+			case "6":
+				// ALL
+				resultMap = projectManageMapper.getProjectManageList(searchMap);
+				break;	
+			default:
+				resultMap = projectManageMapper.getProjectManageList(searchMap);
+				break;
+		}
+		return resultMap;
 	}
-	
+	// ===================================================용역계약서 입력을 위한 프로젝트 조회 END===================================================
+
 	// 1번 이상 변경된 이력이 있는 용역계약서를 조회하는 메서드
 	public List<Map<String, ProjectHistory>> getProjectHistoryList(String PJT_CD, String DEPT_CD, String YEAR) {
 		System.out.println("Service getProjectManageHistoryList 메서드 실행");
-		System.out.println(PJT_CD+DEPT_CD+YEAR);
+		System.out.println(PJT_CD);
+		System.out.println(DEPT_CD);
+		System.out.println(YEAR);
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("PJT_CD", PJT_CD);
 		searchMap.put("DEPT_CD", DEPT_CD);
 		searchMap.put("YEAR", YEAR);
 		return projectManageMapper.getProjectHistoryList(searchMap);
 	}
-	
+
 	// 변경된 용역계약서 중 하나를 선택하면, 그에 대한 변경 현황 리스트를 조회하는 메서드
 	public List<Map<String, Object>> getProjectManageChangeHyunhwangList(String PJT_CD) {
 		System.out.println("Service getProjectManageChangeHyunhwangList 메서드 실행");
 		System.out.println(PJT_CD);
 		return projectManageMapper.getProjectManageHistoryHyunhwangList(PJT_CD);
 	}
-	
+
 	// 변경된 용역계약서 현황에서 하나를 선택하면, 해당하는 변경 구분의 상세 페이지를 조회하는 메서드
 	public Map<String, Object> getProjectManageChangeSangse(String PJT_CD, String PJT_SEQ) {
 		System.out.println("Service getProjectManageChangeSangse 메서드 실행");

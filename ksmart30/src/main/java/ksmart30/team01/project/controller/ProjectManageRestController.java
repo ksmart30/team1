@@ -42,9 +42,9 @@ public class ProjectManageRestController {
 	 *			@return List<Map<String, Object>>
 	 */
 	@PostMapping("/project/projectManageListProcess")
-	public List<Map<String, Object>> projectManageListProcess(String PJT_CD, String DEPT_CD, String YEAR) {
+	public List<Map<String, Object>> projectManageListProcess(String PJT_CD, String DEPT_CD, String YEAR, String pjtRadioValue) {
 		System.out.println("RestController projectManageListProcess 메서드 실행");
-		return projectManageService.getBusinessManagerList(PJT_CD, DEPT_CD, YEAR);
+		return projectManageService.getBusinessManagerList(PJT_CD, DEPT_CD, YEAR, pjtRadioValue);
 	}
 	
 	//3.1.1 용역계약서 발주처 입력 처리

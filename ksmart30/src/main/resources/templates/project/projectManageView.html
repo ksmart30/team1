@@ -8,11 +8,11 @@
 		<script>
 		function pjtOneBtn(PJT_CD,PJT_NM) {
 			console.log(PJT_CD+PJT_NM);
-			
 		}
+		
 		$(document).ready(function() {
 				// 용역계약서 입력을 위한 프로젝트 검색 부분
-				$('#pjtSearchBtn').click(function(){
+				$('#search').click(function(){
 					// 필드로 입력받은 값들을 변수에 저장
 					let PJT_CD = $('#pjtCd').val();
 					let DEPT_CD = $('#pjtDept').val();
@@ -44,6 +44,26 @@
 		</script>
 	</th:block>
 	<th:block layout:fragment="customBody">
+	<div class="col-md-9 col-xs-12" style="color:black;">
+    <div class="page-title">
+	<div class="title_left">
+	 <h2><b>전표상세검색</b></h2>
+	<h5><font color="gray"><b>8.회계관리&nbsp;>&nbsp;&nbsp;8.1회계입력&nbsp;>&nbsp;&nbsp;8.2회계입력</b></font></h5>			
+	</div>
+	</div>
+    </div>
+	
+	<div class="x_content" style="text-align: right">
+		<div class="btn-group" >
+		<button class="btn btn-default" type="reset" id="search">조회</button>
+		<button class="btn btn-default" type="reset">입력</button>
+		<button class="btn btn-default" type="button">수정</button>
+		<button class="btn btn-default" type="button">삭제</button>
+		<button class="btn btn-default" type="button">저장</button>
+		<button class="btn btn-default" type="button">출력</button>
+		</div>
+	</div>
+	
 		<!-- 검색부분 start -->
 		<font color="black">
 		<div class="col-md-3 col-sm-6 col-xs-12">
@@ -114,11 +134,11 @@
 			</div>
 			<!-- 검색부분 end -->
 			<div class="x_panel">
-		<div class="x_content">
+		<div class="x_content" style="overflow:scroll; width:100%; height:700px; background-color:;">
 			<div class="x_title"></div>
 			<br>
 			<!-- 결과부분 start -->
-			<table class="table table-bordered" style="overflow:auto; height:350px">
+			<table class="table table-bordered">
 				<thead>
 				<tr>
 					<th width="30%">PJT코드</th>
@@ -144,23 +164,6 @@
 		<font color="black">
 	<div class="col-md-9 col-sm-6 col-xs-12">
 		<div class="x_panel">
-		<div class="page-title">
-			<div class="title_left">
-	 			<h2><b>용역계약서 입력</b></h2>
-				<h5><fontcolor="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리</b></font></h5>			
-			</div>
-		</div>
-		
-		<div class="x_content" style="text-align: right">
-			<div class="btn-group" >
-				<button class="btn btn-default" type="reset">입력</button>
-				<button class="btn btn-default" type="button">수정</button>
-				<button class="btn btn-default" type="button">삭제</button>
-				<button class="btn btn-default" type="button">저장</button>
-				<button class="btn btn-default" type="button">출력</button>
-			</div>
-		</div>
-			
 		<div class="x_content">
 			<div class="" role="tabpanel" data-example-id="togglable-tabs">
 					<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
