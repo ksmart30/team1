@@ -1,219 +1,343 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
-	<th:block layout:fragment="customHead">
-		<meta charset="UTF-8">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
 	<title>프로젝트 예산 출력</title>
-	<th:block th:include="layout/customHead"></th:block>	
-	</th:block>
+	<th:block th:include="layout/customHead"></th:block>
+		<!-- jquery -->
+	    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script>
+	
+	$(document).ready(()=>{	
+    // 프로젝트코드와 프로젝트명 검색	
+		$('#pjtCdSearchBtn').click(()=>{
+			console.log('pjtCdSearchBtn 버튼확인');
+			
+			let CONTRACT_DATE_YYMMDD = $('#CONTRACT_DATE').val();
+			let CONTRACT_DATE = CONTRACT_DATE_YYMMDD.substr(0,4);
+			let selectedOption = $('#selectedOption option:selected').val();
+			let inputValue = $('#inputValue').val();
+			console.log(CONTRACT_DATE + ' :입력받은 검색연도');
+			console.log(selectedOption + ' :입력받은 검색항목');
+			console.log(inputValue + ' :입력받은 검색조건');
 
-	<th:block layout:fragment="customBody">
-<font color="black">	
-	<!-- 목차 상단에 추가 --> 
-	<div class="col-md-12 col-xs-12">
-		<div class="page-title">
-			<div class="title_left">
-			 <h2><b>프로젝트예산 입력</b></h2>
-			<h5><font color="gray"><b>2. 계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.2. 프로젝트예산 관리&nbsp;>&nbsp;&nbsp;2.2.3. 프로젝트예산 출력</b></font></h5>				
-			</div>
-		</div>
-		<div class="x_content" style="text-align: right">
-			<div class="btn-group">
-			<button class="btn btn-default" type="reset">입력</button>
-			<button class="btn btn-default" type="button">수정</button>
-			<button class="btn btn-default" type="button">삭제</button>
-			<button class="btn btn-default" type="button">저장</button>
-			<button class="btn btn-default" type="button">출력</button>
-			</div>
-		</div>
-	</div>
-	<!-- 목차 상단에 추가 end -->	
-
-	<!-- 검색 폼 -->
-<div class="x_panel">
-
-		<div class="x_content">
-			<br>
-			<form class="form-horizontal form-label-left input_mask" method="post">
-				<table id="datatable-responsive" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
-					
-					<thead>
-						<tr role="row">
-							<th class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="6" style="width: 100%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<label class="control-label">검색조건</label>
-							</th>
-						</tr>
-					</thead>
-					
-					<tbody>
-						<tr role="row">
-							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<label class="control-label">기간</label>
-							</td>
-							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 30%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<input type="date" style="width: 40%"> ~ <input type="date" style="width: 40%">
-							</td>
-							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<label class="control-label">부서</label>
-							</td>
-							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 20%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">				
-								<div class="col-md-12 col-sm-12 col-xs-12 ">
-									<select class="form-control">
-										<option value="">전 사</option>
-										<option value="1">설계1본부</option>
-										<option value="2">설계2본부</option>
-										<option value="3">설계3본부</option>
-										<option value="4">설계4본부</option>
-										<option value="5">설계5본부</option>
-									</select>
-								</div>					
-							</td>
-							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<label class="control-label">코드명</label>
-							</td>
-							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 20%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<input type="text" style="width: 20%"> <button><i class="fa fa-search"></i></button> <input type="text" style="width: 60%">
-							</td>											
-						</tr>
-						<tr>
-							<td colspan="5">
-							 	<div class="radio">
-									<label style="padding-left: 50px;"><input type="radio">계약</label>
-									<label style="padding-left: 50px;"><input type="radio">미승인</label>
-									<label style="padding-left: 50px;"><input type="radio">승인</label>
-									<label style="padding-left: 50px;"><input type="radio">종료</label>
-									<label style="padding-left: 50px;"><input type="radio">ALL</label>
-								</div>
-							</td>
-							<td>
-								<div class="x_content" style="text-align: right"><button class="btn" style="color:black">검색</button></div>
-							</td>
-						</tr>
-
-					</tbody>
-				</table>
-			</form>
-		</div>
-	</div>
+			$.ajax({
+	            url:'/project/projectYesanOutputPjtSearch',
+	            type:'POST',
+	            data:{CONTRACT_DATE:CONTRACT_DATE, selectedOption:selectedOption, inputValue:inputValue},
+	      
+	            success:(list)=>{
+	            	console.log(list);
+	            	let tr='';
+	            	$(list).each((index,item)=>{
+	            		$('#projectList').empty();
+	            		tr += '<tr>';
+						tr += '<td>'+item.PJT_CD+'</td>';
+						tr += '<td>'+item.PJT_NM+'</td>';
+						tr += '</tr>';
+	            	});
+	            	$('#projectList').append(tr);
+	            }
+	            
+	        });
+			
+		});
+	});
+	$('#projectList').delegate('tr', 'dblclick', function(){
+		let tr = $(this);
+		let td = tr.children();
+		$('#PJT_CD').val(td.eq(0).text());
+		$('#PJT_NM').val(td.eq(1).text());
+		$('#accountValue').val('');
+		$('#accountModal').click();
+	});
 	
 	
-	<!-- 출력 리스트 검색 시작 -->
-	<div class="x_panel">
-		<div class="x_title">
-			<h2>
-				사업성검토 예산 출력 <small></small>
-			</h2>
-			<ul class="nav navbar-right panel_toolbox">
-				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-				</li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-expanded="false"><i
-						class="fa fa-wrench"></i></a>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Settings 1</a></li>
-						<li><a href="#">Settings 2</a></li>
-					</ul></li>
-				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-			</ul>
-			<div class="clearfix"></div>
-		</div>
+	</script>
+</th:block>
 
-		<div class="x_content">
+<th:block layout:fragment="customBody">
+	<font color="black"> 
+	
+	<!-- 목차 상단에 추가 -->
+		<div class="col-md-12 col-xs-12">
+			<div class="page-title">
+				<div class="title_left">
+					<h2>
+						<b>프로젝트예산 출력</b>
+					</h2>
+					<h5>
+						<font color="gray"><b>2. 계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.2. 프로젝트예산 관리&nbsp;>&nbsp;&nbsp;2.2.3. 프로젝트예산 출력</b></font>
+					</h5>
+				</div>
+			</div>
+			<div class="x_content" style="text-align: right">
+				<div class="btn-group">
+					<button class="btn btn-default" type="reset">입력</button>
+					<button class="btn btn-default" type="button">수정</button>
+					<button class="btn btn-default" type="button">삭제</button>
+					<button class="btn btn-default" type="button">저장</button>
+					<button class="btn btn-default" type="button">출력</button>
+				</div>
+			</div>
+		</div> 
+		<!-- 목차 상단에 추가 end --> 
+		
+		<!-- 검색 폼 start -->
+		<div class="x_panel">
 
-			<div class="table-responsive">
-				<table class="table table-striped jambo_table bulk_action">
-					<thead>
-						<tr class="headings">
-							<th>
-								<!-- <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; visibility: hidden;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> -->
-							</th>
-							<th class="column-title">No.</th>
-							<th class="column-title">부서</th>
-							<th class="column-title">PJT코드</th>
-							<th class="column-title">프로젝트명</th>
-							<th class="column-title">출력</th>
-							<!-- <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i> -->
+			<div class="x_content">
+				<br>
+				<form class="form-horizontal form-label-left input_mask"
+					method="post">
+					<table id="datatable-responsive"
+						class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+						role="grid" aria-describedby="datatable-responsive_info"
+						style="width: 100%;">
 
+						<thead>
+							<tr role="row">
+								<th class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="6" style="width: 100%;" aria-sort="ascending"
+									aria-label="First name: activate to sort column descending">
+									<label class="control-label">검색조건</label>
+								</th>
+							</tr>
+						</thead>
 
-						</tr>
-					</thead>
+						<tbody>
+							<tr role="row">
+								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending"
+									aria-label="First name: activate to sort column descending">
+									<label class="control-label">기간</label>
+								</td>
+								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 30%;" aria-sort="ascending"
+									aria-label="First name: activate to sort column descending">
+									<input type="date" style="width: 40%"> ~ <input	type="date" style="width: 40%">
+								</td>
+								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending"
+									aria-label="First name: activate to sort column descending">
+									<label class="control-label">부서</label>
+								</td>
+								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 20%;" aria-sort="ascending"
+									aria-label="First name: activate to sort column descending">
+									<div class="col-md-12 col-sm-12 col-xs-12 ">
+										<select class="form-control">
+											<option value="">전 사</option>
+											<option value="1">설계1본부</option>
+											<option value="2">설계2본부</option>
+											<option value="3">설계3본부</option>
+											<option value="4">설계4본부</option>
+											<option value="5">설계5본부</option>
+										</select>
+									</div>
+								</td>
+								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending"
+									aria-label="First name: activate to sort column descending">
+									<label class="control-label">코드명</label>
+								</td>
+								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 20%;" aria-sort="ascending"
+									aria-label="First name: activate to sort column descending">
+									<input type="number" id="PJT_CD" style="width: 20%"> <button type="button" data-toggle="modal" data-target=".bs-example-modal-lg1"><i class="fa fa-search"></i></button> <input type="text" id="PJT_NM" style="width: 60%">
+									
+									<!-- 프로젝트 코드 조회 modal 시작 -->																				
+										<div class="modal fade bs-example-modal-lg1" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<form class="form-horizontal">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" id="accountModal"><span aria-hidden="true">X</span>
+															</button>
+															<h4 class="modal-title" id="myModalLabel"><b>프로젝트코드 조회</b></h4><br>
+															<!-- <div class="table-responsive"> -->
+																<table class="table table-bordered">
+																	<tbody>
+																		<tr>
+																			<td><label class="control-label">계약연도</label></td>
+																			<td>
+																				<input type="number" id="CONTRACT_DATE" placeholder="____">
+																			</td>
+																		</tr>																	
+																		<tr>
+																			<td><label class="control-label">검색항목</label></td>
+																			<td>
+																				<select class="form-control" style="width: 40%" id="selectedOption">
+																					<option value="PJT_CD">프로젝트코드</option>
+																					<option selected="selected" value="PJT_NM">프로젝트명</option>
+																					<option value="DEPT_CD">부서코드</option>
+																					<option value="DEPT_NM">부서명</option>
+																				</select>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td><label class="control-label">검색조건</label></td>
+																			<td>
+																				<input type="text" id="inputValue">
+																				<button id="pjtCdSearchBtn" type="button"><i class="fa fa-search"></i></button>																	
+																			</td>
+																		</tr>
+																	</tbody>																	
+																</table>
+															<!-- </div> -->
+														</div>
+														<div class="modal-body">
+															<div class="table-responsive" style="overflow: auto; height: 400px;">
+															<table class="table table-bordered table-hover jambo_table">
+																<thead>
+																	<tr>
+																		<th>프로젝트코드</th>
+																		<th>프로젝트명</th>
+																	</tr>
+																</thead>
+																<tbody id="projectList">
+																	<tr>
+																		<td></td>
+																		<td></td>
+																	</tr>																	
+																</tbody>																	
+															</table>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									<!-- 프로젝트코드와 프로젝트명 조회 modal 끝 -->								
+								</td>
+							</tr>
+							<tr>
+								<td colspan="5">
+									<div class="radio">
+										<label style="padding-left: 50px;"><input type="radio">계약</label>
+										<label style="padding-left: 50px;"><input type="radio">미승인</label>
+										<label style="padding-left: 50px;"><input type="radio">승인</label>
+										<label style="padding-left: 50px;"><input type="radio">종료</label>
+										<label style="padding-left: 50px;"><input type="radio">ALL</label>
+									</div>
+								</td>
+								<td>
+									<div class="x_content" style="text-align: right">
+										<button class="btn" style="color: black">검색</button>
+									</div>
+								</td>
+							</tr>
 
-					<tbody>
-						<tr class="even pointer">
-							<td class="a-center "></td>
-							<td class=" ">1</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19001F</td>
-							<td class=" ">효창동 근린생활시설 신축공사</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div> 
+		<!-- 검색 폼 end -->
+		
+		<!-- 출력 리스트 검색 시작 -->
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>
+					사업성검토 예산 출력 <small></small>
+				</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i>숨기기</a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
 
-						<tr class="odd pointer">
-							<td class="a-center "></td>
-							<td class=" ">2</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19010F</td>
-							<td class=" ">01_프로젝트_주선태극기</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-						<tr class="even pointer">
-							<td class="a-center "></td>
-							<td class=" ">3</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19015F</td>
-							<td class=" ">KDY TEST사업</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-						<tr class="odd pointer">
-							<td class="a-center "></td>
-							<td class=" ">4</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19016F</td>
-							<td class=" ">오란씨</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-						<tr class="even pointer">
-							<td class="a-center "></td>
-							<td class=" ">5</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19017F</td>
-							<td class=" ">성수산자연 휴양림 호텔 건축 공사</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-						<tr class="odd pointer">
-							<td class="a-center "></td>
-							<td class=" ">6</td>
-							<td class=" ">설계3본부 2소</td>
-							<td class=" ">19012F</td>
-							<td class=" ">EBS건물신축공사</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-						<tr class="even pointer">
-							<td class="a-center "></td>
-							<td class=" ">7</td>
-							<td class=" ">설계4본부 1소</td>
-							<td class=" ">19003F</td>
-							<td class=" ">J프로젝트</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-						<tr class="odd pointer">
-							<td class="a-center "></td>
-							<td class=" ">8</td>
-							<td class=" ">설계1본부 1소</td>
-							<td class=" ">19019F</td>
-							<td class=" ">문효균TEST</td>
-							<td class=" "><input type="checkbox"></td>
-						</tr>
-					</tbody>
-				</table>
-				<!-- 출력 리스트 검색 끝 -->
+			<div class="x_content">
+
+				<div class="table-responsive">
+					<table class="table table-striped jambo_table bulk_action">
+						<thead>
+							<tr class="headings">
+								<th>
+									<!-- <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; visibility: hidden;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> -->
+								</th>
+								<th class="column-title">No.</th>
+								<th class="column-title">부서</th>
+								<th class="column-title">PJT코드</th>
+								<th class="column-title">프로젝트명</th>
+								<th class="column-title">출력</th>
+								<!-- <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i> -->
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr class="even pointer">
+								<td class="a-center "></td>
+								<td class=" ">1</td>
+								<td class=" ">설계1본부 1소</td>
+								<td class=" ">19001F</td>
+								<td class=" ">효창동 근린생활시설 신축공사</td>
+								<td class=" "><input type="checkbox"></td>
+							</tr>
+
+							<tr class="odd pointer">
+								<td class="a-center "></td>
+								<td class=" ">2</td>
+								<td class=" ">설계1본부 1소</td>
+								<td class=" ">19010F</td>
+								<td class=" ">01_프로젝트_주선태극기</td>
+								<td class=" "><input type="checkbox"></td>
+							</tr>
+							<tr class="even pointer">
+								<td class="a-center "></td>
+								<td class=" ">3</td>
+								<td class=" ">설계1본부 1소</td>
+								<td class=" ">19015F</td>
+								<td class=" ">KDY TEST사업</td>
+								<td class=" "><input type="checkbox"></td>
+							</tr>
+							<tr class="odd pointer">
+								<td class="a-center "></td>
+								<td class=" ">4</td>
+								<td class=" ">설계1본부 1소</td>
+								<td class=" ">19016F</td>
+								<td class=" ">오란씨</td>
+								<td class=" "><input type="checkbox"></td>
+							</tr>
+							<tr class="even pointer">
+								<td class="a-center "></td>
+								<td class=" ">5</td>
+								<td class=" ">설계1본부 1소</td>
+								<td class=" ">19017F</td>
+								<td class=" ">성수산자연 휴양림 호텔 건축 공사</td>
+								<td class=" "><input type="checkbox"></td>
+							</tr>
+							<tr class="odd pointer">
+								<td class="a-center "></td>
+								<td class=" ">6</td>
+								<td class=" ">설계3본부 2소</td>
+								<td class=" ">19012F</td>
+								<td class=" ">EBS건물신축공사</td>
+								<td class=" "><input type="checkbox"></td>
+							</tr>
+							<tr class="even pointer">
+								<td class="a-center "></td>
+								<td class=" ">7</td>
+								<td class=" ">설계4본부 1소</td>
+								<td class=" ">19003F</td>
+								<td class=" ">J프로젝트</td>
+								<td class=" "><input type="checkbox"></td>
+							</tr>
+							<tr class="odd pointer">
+								<td class="a-center "></td>
+								<td class=" ">8</td>
+								<td class=" ">설계1본부 1소</td>
+								<td class=" ">19019F</td>
+								<td class=" ">문효균TEST</td>
+								<td class=" "><input type="checkbox"></td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- 출력 리스트 검색 끝 -->
+				</div>
 			</div>
 		</div>
-	</div>
-</font>
-	</th:block>
-	
-	<th:block layout:fragment="customJquery">
-		<th:block th:include="layout/customJquery"></th:block>
-    </th:block>
-    
-</html>	
+	</font>
+</th:block>
+
+<th:block layout:fragment="customJquery">
+	<th:block th:include="layout/customJquery"></th:block>
+</th:block>
+
+</html>

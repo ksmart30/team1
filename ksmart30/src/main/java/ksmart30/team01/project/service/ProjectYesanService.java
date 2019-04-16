@@ -42,6 +42,13 @@ public class ProjectYesanService {
 		
 		return projectYesanSangseAll;
 	}
+
+	//2.2.3.1 프로젝트예산 출력을 위한 프로젝트코드 조회
+	public List<Map<String, Object>> projectYesanOutputPjtSearch(String CONTRACT_DATE, String selectedOption, String inputValue) {
+		System.out.println("projectYesanOutputPjtSearch 서비스 확인");
+		List<Map<String, Object>> pjtList = projectYesanMapper.getProjectYesanOutputPjtList(CONTRACT_DATE, selectedOption, inputValue);
+		return pjtList;
+	}
 	
 	
 }

@@ -96,6 +96,16 @@ public class ProjectYesanRestController {
 	public String projectYesanOutput(Model model) {
 		return "project/yesan/output";
 	}	
+	
+	//2.2.3.1 프로젝트예산 출력을 위한 프로젝트코드 조회
+	@PostMapping("/project/projectYesanOutputPjtSearch")
+	public List<Map<String, Object>> projectYesanOutputPjtSearch(String CONTRACT_DATE, String selectedOption, String inputValue) {
+		System.out.println("/project/projectYesanOutputPjtSearch 프로젝트코드조회 요청 RestController get");
+		System.out.println(CONTRACT_DATE + " :계약일 확인 RestController get");
+		System.out.println(selectedOption + " :항목 확인 RestController get");
+		System.out.println(inputValue + " :입력값 확인 RestController get");
+		return projectYesanService.projectYesanOutputPjtSearch(CONTRACT_DATE, selectedOption, inputValue);
+	}	
 
 	//2.2.4 예산 입력한 용역계약서 검색 list
 	@PostMapping("/project/yesan/search")

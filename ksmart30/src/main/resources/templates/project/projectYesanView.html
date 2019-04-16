@@ -5,6 +5,7 @@
 	<title>프로젝트 예산 입력(검색, 개요, 상세입력)</title>
 		<th:block th:include="layout/customHead"></th:block>
 		
+		<!-- jquery 추가 -->
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script>
 		
@@ -18,7 +19,6 @@
 	        	data:{PJT_CD:PJT_CD},	//넘길 데이터
 	            success:(data)=>{
 	            	console.log(data);
-	            	
 	            	//프로젝트 개요
 	            	$('#PJT_CD2').empty();
 	                $('#PJT_CD2').append(data.projectYesanSangse.PJT_CD);	//프로젝트코드
@@ -53,27 +53,41 @@
 	            }
 			});	
 			
-		};		    
+		};	
 		
+		//엔터키 방지
+    	$(document).keypress((e)=>{
+    		if (e.keyCode == 13){
+    			e.preventDefault();
+    		}
+    	});				
 		
 		$(document).ready(()=>{
 		    // 검색목록(프로젝트예산 입력을 위한 용역계약서 리스트)
-		    $('#btn_list').click(()=>{	//btn_list를 클릭하면
+		    $('#list_btn').click(()=>{	//list_btn를 클릭하면
 				// 필드로 입력받은 값들을 변수에 저장
-				let CONTRACT_DATE = $('#contractDate').val();
+				let CONTRACT_DATE = $('#CONTRACT_DATE').val();
+		    	let DEPT_CD = $('#DEPT_CD').val();
 		    	let PJT_CD = $('#PJT_CD').val();
-				console.log(CONTRACT_DATE);		
+		    	let radioValue = $('.pjtRadio:checked').val();
+		    	console.log(CONTRACT_DATE);	
+		    	console.log(DEPT_CD);
 				console.log(PJT_CD);
+				console.log(radioValue);
 		    	$.ajax({
 		            url:'/project/projectYesanView',	//url을 요청하고
 		            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
-		        	data:{PJT_CD:PJT_CD,CONTRACT_DATE:CONTRACT_DATE},	//넘길 데이터
+		        	data:{CONTRACT_DATE:CONTRACT_DATE, DEPT_CD:DEPT_CD, PJT_CD:PJT_CD, radioValue:radioValue},	//넘길 데이터
 		            success:(data)=>{	//받은 데이터
 		            	console.log(data);
 		                $('#list').empty();	//리스트를 비우고	               
 		                $(data).each((index,item)=>{
-		                    $('#list').append('<tr onclick="mscall('+item.PJT_CD+')"><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'+item.PJT_NM+'</td></tr>');		                   
+		                    $('#list').append('<tr onclick="mscall('+item.PJT_CD+')"><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'+item.PJT_NM+'</td></tr>');               
 		                });
+		                
+		                //리스트의 길이
+		                $('#listLength').empty();
+		                $('#listLength').append(data.length);
 		        	}
 		    	});			    	
 		    });			    
@@ -83,6 +97,7 @@
 
 	<th:block layout:fragment="customBody">
 	<font color="black">	
+	
 	<!-- 목차 상단에 추가 -->
 	<div class="col-md-12 col-xs-12" style="color:black;">
 		<div class="page-title">
@@ -111,32 +126,46 @@
 				<table>
 					<tr>
 						<td>년도</td>
-						<td><input type="number" id="contractDate"></td>
+						<td><input type="number" id="CONTRACT_DATE" placeholder="____"></td>
 					</tr>
 					<tr>
 						<td>부서</td>
-						<td><select>
-								<option>전 사</option>
-								<option>설계1본부</option>
-								<option>설계2본부</option>
-								<option>설계3본부</option>
-								<option>설계4본부</option>
-								<option>설계5본부</option>
-						</select></td>
+						<td>
+							<select id="DEPT_CD">
+									<option value="">전 사</option>
+									<option value="1100">감사</option>
+									<option value="3000">설계부문</option>
+									<option value="3100">설계1본부</option>
+									<option value="3101">설계1본부-남석우</option>
+									<option value="3102">설계1본부-김광식</option>
+									<option value="3103">설계1본부-박상현</option>
+									<option value="3104">설계1본부-전창국</option>
+									<option value="3105">설계1본부-김승국</option>
+									<option value="3200">설계2본부</option>
+									<option value="3201">설계2본부-장홍만</option>
+									<option value="3202">설계2본부-장미진</option>
+									<option value="3203">설계2본부-김재원</option>
+									<option value="3204">설계2본부-우상훈</option>
+									<option value="3205">설계2본부-윤호진</option>
+									<option value="3300">PD전략부</option>
+									<option value="3400">설계지원</option>
+									<option value="5000">건설사업관리</option>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td>코드명</td>
-						<td><input type="number" id="PJT_CD"></td>
-						<td><a><button id="btn_list">검색</button></a></td>					
+						<td><input type="number" placeholder="코드 5자리를 입력해 주세요." id="PJT_CD"></td>
+						<td><a><button id="list_btn">검색</button></a></td>			
 					</tr>
 					<table>
-					<tr>
-						<td><input type="radio" id="pjtRadioGroup" value="1" name="actStat">계약</td>
-						<td><input type="radio" id="pjtRadioGroup" value="2" name="actStat">미승인</td>
-						<td><input type="radio" id="pjtRadioGroup" value="3" name="actStat">승인</td>
-						<td><input type="radio" id="pjtRadioGroup" value="4" name="actStat">종료</td>
-						<td><input type="radio" id="pjtRadioGroup" value="5" name="actStat">ALL</td>
-					</tr>
+						<tr>
+							<td><input type="radio" class="pjtRadio" name="pjtRadio" value="F">계약</td>
+							<td><input type="radio" class="pjtRadio" name="pjtRadio" value="F">미승인</td>
+							<td><input type="radio" class="pjtRadio" name="pjtRadio" value="T">승인</td>
+							<td><input type="radio" class="pjtRadio" name="pjtRadio" value="1">종료</td>
+							<td><input type="radio" class="pjtRadio" name="pjtRadio" value="" checked="checked">ALL</td>
+						</tr>
 					</table>
 				</table>
 				<!-- 검색부분 end -->
@@ -152,6 +181,9 @@
 					</thead>
 					<tbody id="list">
 					</tbody>
+						<tr>
+							<td colspan="2" style="text-align: right"><span id="listLength"></span></td>
+						</tr>
 				</table>
 				<!-- 결과부분 end -->
 				<div class="x_title"></div>
@@ -281,20 +313,11 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										Boardered table <small>입력 수정 삭제 버튼을 위해 남겨둠</small>
+										일정계획 <small></small>
 									</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">Settings 1</a></li>
-												<li><a href="#">Settings 2</a></li>
-											</ul></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a>
-										</li>
+												class="fa fa-chevron-up"></i>숨기기</a></li>
 									</ul>
 									<div class="clearfix"></div>
 								</div>
@@ -387,6 +410,16 @@
 	
 					<!-- M/H계획 start -->
 					<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+						<div class="x_title">
+							<h2>
+								M/H 계획 <small></small>
+							</h2>
+							<ul class="nav navbar-right panel_toolbox">
+								<li><a class="collapse-link"><i
+										class="fa fa-chevron-up"></i>숨기기</a></li>
+							</ul>
+							<div class="clearfix"></div>
+						</div>					
 						<table class="table table-bordered">
 							<tr>
 								<th rowspan="12">주관부서</th>
@@ -622,20 +655,11 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										좌 <small>제조경비1</small>
+										제조경비1 <small></small>
 									</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">Settings 1</a></li>
-												<li><a href="#">Settings 2</a></li>
-											</ul></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a>
-										</li>
+												class="fa fa-chevron-up"></i>숨기기</a></li>
 									</ul>
 									<div class="clearfix"></div>
 								</div>
@@ -668,20 +692,11 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										우 <small>제조경비1</small>
+										제조경비1 <small></small>
 									</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">Settings 1</a></li>
-												<li><a href="#">Settings 2</a></li>
-											</ul></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a>
-										</li>
+												class="fa fa-chevron-up"></i>숨기기</a></li>
 									</ul>
 									<div class="clearfix"></div>
 								</div>
@@ -770,20 +785,11 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										테이블 <small>제조경비2</small>
+										제조경비2 <small></small>
 									</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">Settings 1</a></li>
-												<li><a href="#">Settings 2</a></li>
-											</ul></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a>
-										</li>
+												class="fa fa-chevron-up"></i>숨기기</a></li>
 									</ul>
 									<div class="clearfix"></div>
 								</div>
@@ -824,20 +830,11 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										테이블 <small>기성단계</small>
+										기성단계 <small></small>
 									</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">Settings 1</a></li>
-												<li><a href="#">Settings 2</a></li>
-											</ul></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a>
-										</li>
+												class="fa fa-chevron-up"></i>숨기기</a></li>										
 									</ul>
 									<div class="clearfix"></div>
 								</div>
@@ -876,20 +873,11 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										좌 <small>합계내역</small>
+										합계내역 <small></small>
 									</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">Settings 1</a></li>
-												<li><a href="#">Settings 2</a></li>
-											</ul></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a>
-										</li>
+												class="fa fa-chevron-up"></i>숨기기</a></li>																
 									</ul>
 									<div class="clearfix"></div>
 								</div>
@@ -1006,20 +994,11 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										우 <small>간접비</small>
+										간접비 <small></small>
 									</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">Settings 1</a></li>
-												<li><a href="#">Settings 2</a></li>
-											</ul></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a>
-										</li>
+												class="fa fa-chevron-up"></i>숨기기</a></li>										
 									</ul>
 									<div class="clearfix"></div>
 								</div>
@@ -1065,20 +1044,11 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										우 <small>공통비1</small>
+										공통비1 <small></small>
 									</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">Settings 1</a></li>
-												<li><a href="#">Settings 2</a></li>
-											</ul></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a>
-										</li>
+												class="fa fa-chevron-up"></i>숨기기</a></li>
 									</ul>
 									<div class="clearfix"></div>
 								</div>

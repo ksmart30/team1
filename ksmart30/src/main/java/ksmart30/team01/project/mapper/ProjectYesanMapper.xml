@@ -8,9 +8,22 @@
 		SELECT B.PJT_CD,
 		       A.PJT_NM
 		  FROM T_SM3000 A,
-		       T_P11000 B
+		  (
+			SELECT
+				ISNULL((CASE WHEN (PJT_E_GBN='1') THEN '1'	<!-- 종료구분이 1인 경우 '1' -->
+					WHEN (PJT_YEA_YN='T') THEN 'T'			<!-- 승인구분이 T인경우 'T' -->
+					WHEN (PJT_YEA_YN='F') THEN 'F'			<!-- 승인구분이 F인 경우 'F' -->
+						END),'F') GUBUN						<!-- NULL값인 경우 'F'로 GUBUN컬럼을 만든다 -->
+				,PJT_CD 
+				,CONTRACT_DATE 
+				,DEPT_CD
+		   FROM T_P11000
+		   ) B
 		WHERE B.PJT_CD = A.PJT_CD
-			AND B.CONTRACT_DATE like #{CONTRACT_DATE}+'%'
+			AND B.CONTRACT_DATE LIKE '%' + #{CONTRACT_DATE} + '%'
+			AND B.DEPT_CD LIKE '%' + #{DEPT_CD}
+			AND B.PJT_CD LIKE '%' + #{PJT_CD} + '%'
+			AND B.GUBUN LIKE '%' + #{radioValue} + '%'
 		ORDER BY B.PJT_CD DESC;
   	</select>
  	
@@ -111,5 +124,21 @@
   		WHERE A.CUST_CD = B.CUST_CD
   			AND PJT_CD = #{PJT_CD}
   	</select>
+  	
+  	<!-- 2.2.3.1 프로젝트예산 출력을 위한 프로젝트코드 조회 -->
+  	<select id="getProjectYesanOutputPjtList" parameterType="String" resultType="java.util.Map">  	
+		SELECT B.PJT_CD,
+		       A.PJT_NM
+		  FROM T_SM3000 A,
+		       T_P11000 B
+		  WHERE A.PJT_CD = B.PJT_CD
+			AND B.CONTRACT_DATE LIKE '%'+#{CONTRACT_DATE}+'%'
+			AND ((B.PJT_CD LIKE '%' + #{inputValue} + '%') 
+				OR (A.PJT_NM LIKE '%' + #{inputValue} + '%') 
+				OR (B.DEPT_CD LIKE '%' + #{inputValue} + '%') 
+				OR (B.DEPT_NM LIKE '%' + #{inputValue} + '%'))
+  			
+  	</select>	
+	  	
   	
  </mapper> 	
