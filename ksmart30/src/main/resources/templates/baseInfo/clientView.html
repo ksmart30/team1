@@ -7,7 +7,59 @@
 	<title>거래처코드 등록</title>
 	<th:block th:include="layout/customHead"></th:block>
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	
+	<!-- 우편 시스템 -->
+	
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script>
+		    function sample6_execDaumPostcode() {
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+		
+		                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+		                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		                var addr = ''; // 주소 변수
+		                var extraAddr = ''; // 참고항목 변수
+		
+		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		                    addr = data.roadAddress;
+		                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+		                    addr = data.jibunAddress;
+		                }
+		
+		                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+		                if(data.userSelectedType === 'R'){
+		                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+		                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+		                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                        extraAddr += data.bname;
+		                    }
+		                    // 건물명이 있고, 공동주택일 경우 추가한다.
+		                    if(data.buildingName !== '' && data.apartment === 'Y'){
+		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                    }
+		                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+		                    if(extraAddr !== ''){
+		                        extraAddr = ' (' + extraAddr + ')';
+		                    }
+		                    // 조합된 참고항목을 해당 필드에 넣는다.
+		                    document.getElementById("sample6_extraAddress").value = extraAddr;
+		                
+		                } else {
+		                    document.getElementById("sample6_extraAddress").value = '';
+		                }
+		
+		                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+		                document.getElementById('sample6_postcode').value = data.zonecode;
+		                document.getElementById("sample6_address").value = addr;
+		                // 커서를 상세주소 필드로 이동한다.
+		                document.getElementById("sample6_address").focus();//원본값 sample6_detailAddress
+		            }
+		        }).open();
+		    }
+	
 	function somicall(cust_CD){
 		console.log('somicall실행'+cust_CD);
 			$.ajax({
@@ -68,9 +120,12 @@
 	            data:{BUSI_TYPE:BUSI_TYPE,CUST_NM:CUST_NM,CUST_CD:CUST_CD},//넘길 데이터(조건)
 	            success:function(data){//받은 데이터
 	            	console.log(data);
+	            	let str = '';
+	            	
 	                $('#searchBody').empty();//삭제 
 	                $(data).each((index,item)=>{//반복문으로 데이터값이 있는 만큼 추가
-	                	$('#searchBody').append('<tr onclick="somicall('+item.cust_CD+')"><td style="background-color: #fff9df">'+item.cust_CD+'</td><td>'
+	                	str = item.cust_CD;
+	                	$('#searchBody').append('<tr onclick="somicall('+str+')"><td style="background-color: #fff9df">'+item.cust_CD+'</td><td>'
 	                			+item.cust_NM+'</td></tr>'
 	                	);//append추가	                	
 	                });              
@@ -260,23 +315,26 @@
 											</div>
 										</td>
 									</tr>
-<!-- 우편번호 검색 기능 알아보기 -->
+<!-- 우편번호 검색 기능 -->
 <!-- 5 -->
 									<tr>
 										<td style="background-color: #f3f3f3">주소</td>
 										<td>
 											<div class="col-md-7 col-sm-7 col-xs-7 ">
-												<input type="text" name="test" class="form-control"
-													id="zip_CD">
+												<input type="text" class="form-control"
+													id="sample6_postcode">
 
 											</div>
-											<button>
-												<i class="fa fa-search"></i>
-											</button>
+										<button class="btn" onclick="sample6_execDaumPostcode()">
+											<i class="fa fa-search" id="pjt_s"></i>
+										</button>
 										<td colspan="6">
 											<div class="col-md-20 col-sm-20 col-xs-20 ">
-												<input type="text" name="test" class="form-control"
-													id="addr">
+												<input type="text"  class="form-control"
+													id="sample6_address">
+									<input type="hidden" id="sample6_postcode" placeholder="우편번호">
+									<input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
+									<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 											</div>
 										</td>
 									</tr>

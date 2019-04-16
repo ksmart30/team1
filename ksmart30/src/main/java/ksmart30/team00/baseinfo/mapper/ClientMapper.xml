@@ -4,8 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- @file Client.java @brief 기준정보관리-거래처등록 Controller @author ksmart30 YSM -->
 <mapper namespace="ksmart30.team00.baseinfo.mapper.ClientMapper">
-	
-	
+
+
 	<!-- 10.2.1거래처 조회를 위해 T_AC0300(고객정보)에서 사업자등록번호와 고객명 정보를 조회한다 -->
 	<select id="clientSelect"
 		parameterType="ksmart30.team00.baseinfo.domain.Client"
@@ -27,61 +27,63 @@
 	</select>
 
 
-<!-- 10.2.1 검색된 거래처의 상세페이지를 위해 T_AC0300(고객정보)에서 전체정보를 조회한다 -->
+	<!-- 10.2.1 검색된 거래처의 상세페이지를 위해 T_AC0300(고객정보)에서 전체정보를 조회한다 -->
 	<select id="clientAllSelect" parameterType="String"
 		resultType="ksmart30.team00.baseinfo.domain.Client">
 
-		SELECT CUST_CD
-		,CUST_NM
-		,CUST_PW
-		,CUST_FULL_NM
-		,BUSI_TYPE
-		,CUST_GBN
-		,REPRE_NM
-		,ZIP_CD
-		,ADDR
-		,TEL_NO
-		,FAX_NO
-		,BIZ_STAT
-		,BIZ_ITEM
-		,REPRE_CUST_CD
-		,ESTAB_DT
-		,INFOM_EMP
-		,HOMEPAGE
-		,USE_YN
-		,AUDIT_ID
-		,CONVERT(VARCHAR,AUDIT_TM,112) AS
-		AUDIT_TM
-		,BUPIN
-		,FUND
-		,BOND
-		,EMAIL
-		,DAM_NM
-		,ISO
-		,ISNULL(CO_YN,2) AS CO_YN
-		,CEL_NO
-		,REGISTER_NO
-		,BANK_CD
-		,BANK_ACCNO
-		,BANK_OWN
-		,CO_SERVICE
+		SELECT
+			CUST_CD  <!--발주처 코드 -->
+			,CUST_NM <!--프로젝트 이름 -->
+			,CUST_PW
+			,CUST_FULL_NM
+			,BUSI_TYPE
+			,CUST_GBN
+			,REPRE_NM
+			,ZIP_CD
+			,ADDR
+			,TEL_NO
+			,FAX_NO
+			,BIZ_STAT
+			,BIZ_ITEM
+			,REPRE_CUST_CD
+			,ESTAB_DT
+			,INFOM_EMP
+			,HOMEPAGE
+			,USE_YN
+			,AUDIT_ID
+			,CONVERT(VARCHAR,AUDIT_TM,112) AS
+			AUDIT_TM
+			,BUPIN
+			,FUND
+			,BOND
+			,EMAIL
+			,DAM_NM
+			,ISO
+			,ISNULL(CO_YN,2) AS CO_YN
+			,CEL_NO
+			,REGISTER_NO
+			,BANK_CD
+			,BANK_ACCNO
+			,BANK_OWN
+			,CO_SERVICE
 		FROM
 		T_AC0300
-		WHERE CUST_CD =
-		#{CUST_CD}
+		WHERE CUST_CD LIKE
+		'%'+#{CUST_CD}+'%'
 
 	</select>
-	
 
-	
-<!-- 10.2.2 거래처코드 리스트 출력 검색조건에 따라 검색하는 쿼리  -->
+
+
+	<!-- 10.2.2 거래처코드 리스트 출력 검색조건에 따라 검색하는 쿼리 -->
 	<select id="clientListOutput"
 		parameterType="ksmart30.team00.baseinfo.domain.ClientList"
 		resultType="java.util.Map">
 
 		SELECT (SELECT ISNULL(K.LEVEL2_NM, '전체') FROM T_SC9100 K
 		WHERE A.CUST_GBN =
-		K.LEVEL2_CD AND (K.BUSI_GB = 'J' AND K.LEVEL1_CD = '200'))
+		K.LEVEL2_CD AND (K.BUSI_GB = 'J' AND K.LEVEL1_CD =
+		'200'))
 		AS CUST_GBN,
 		A.CUST_NM,A.CUST_CD,
 		CASE A.BUSI_TYPE WHEN '1' THEN
@@ -94,38 +96,46 @@
 		LTRIM(A.TEL_NO) WHEN '-'
 		THEN '' ELSE LTRIM(A.TEL_NO) END),'') AS
 		TEL_NO ,
-		ISNULL((LTRIM(A.FAX_NO)),'') AS FAX_NO, ISNULL(A.ZIP_CD,'') AS ZIP_CD,
+		ISNULL((LTRIM(A.FAX_NO)),'') AS FAX_NO, ISNULL(A.ZIP_CD,'') AS
+		ZIP_CD,
 		A.ADDR,
-		ISNULL(CASE C.KUN_CORP_YN WHEN '0' THEN 'N' WHEN '1' THEN 'Y'
+		ISNULL(CASE C.KUN_CORP_YN WHEN '0' THEN 'N' WHEN '1'
+		THEN 'Y'
 		END
 		,'')AS KUN_CORP_YN,
 		ISNULL(C.SVC_CLASS,'') AS SVC_CLASS,
 		ISNULL((SELECT
 		H.LEVEL2_NM
-		FROM T_SC9100 H WHERE C.SVC_PART1 = H.LEVEL2_CD AND
+		FROM T_SC9100 H WHERE C.SVC_PART1 =
+		H.LEVEL2_CD AND
 		(H.BUSI_GB = 'J'
-		AND H.LEVEL1_CD = '220')),'') AS SVC_PART1_NM,
+		AND H.LEVEL1_CD = '220')),'') AS
+		SVC_PART1_NM,
 		ISNULL((SELECT
-		I.LEVEL2_NM FROM T_SC9100 I WHERE C.SVC_PART2 =
+		I.LEVEL2_NM FROM T_SC9100 I WHERE
+		C.SVC_PART2 =
 		I.LEVEL2_CD AND
-		(I.BUSI_GB = 'J' AND I.LEVEL1_CD = '220')),'') AS
+		(I.BUSI_GB = 'J' AND I.LEVEL1_CD =
+		'220')),'') AS
 		SVC_PART2_NM,
-		ISNULL((SELECT J.LEVEL2_NM FROM T_SC9100 J WHERE
+		ISNULL((SELECT J.LEVEL2_NM FROM T_SC9100 J
+		WHERE
 		C.SVC_PART3 =
 		J.LEVEL2_CD AND
 		(J.BUSI_GB = 'J' AND J.LEVEL1_CD =
 		'220')),'') AS
 		SVC_PART3_NM,
 		CONVERT(CHAR(8),GETDATE(),112) AS DATE
-		FROM T_AC0300
-		A,T_PP2100 C
-		WHERE A.CUST_CD *= C.CUST_CD
+		FROM
+		T_AC0300 A,
+		T_PP2100 C
+		WHERE A.CUST_FULL_CD *= C.CUST_CD
 		AND A.CUST_GBN
 		LIKE
 		'%'+#{CUST_GBN}+'%'
-		
+
 		${NMCD_TYPE}
-		
+
 
 	</select>
 
