@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import ksmart30.team01.business.domain.BusinessMarket;
 import ksmart30.team01.business.service.BusinessManageService;
@@ -43,5 +46,23 @@ public class BusinessManageRestController {
 		Map<String,Object> re = businessManageService.businessManageView(vo);
 		
 		return re;
+	}
+	
+	@PostMapping("/custSearchListView1")
+	public List<Map<String,String>> custSearchListView1(String cust){
+		System.out.println("custSearch 호출");
+		return businessManageService.CustCode(cust);
+	}
+	
+	@PostMapping("/deptSearchListView1")
+	public List<Map<String,String>> deptSearchListView(String dept){
+		System.out.println("deptSearch 호출");
+		return businessManageService.DeptCode(dept);
+	}
+	
+	@PostMapping("/business/businessManageViewInsert")
+	public void businessManageViewInsert(BusinessMarket vo) {
+		System.out.println("businessManageViewInsert 호출");
+		businessManageService.businessManageViewInsert(vo);
 	}
 }

@@ -19,4 +19,14 @@ public interface BusinessManageMapper {
 	//1.1.1 사업수행결정서(승인)프로젝트목록 클릭시 우측에 검색
 	Map<String, Object> getBusinessManageView(BusinessMarket vo);
 	
+	//거래처 검색
+	List<Map<String, String>> CustCodeList(String cust);
+	
+	//부서 검색
+	List<Map<String, String>> DeptCodeList(String dept);
+	
+	
+	//사업수행결정서 저장
+	void businessManageViewInsert(BusinessMarket vo);
+	
 }

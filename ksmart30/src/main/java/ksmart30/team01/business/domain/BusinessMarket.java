@@ -11,6 +11,7 @@ public class BusinessMarket {
 	private String DEPT_CD; // 부서
 	private String PJT_CD; // 프로젝트 코드
 	private String END_GBN; // HOLDING/CANCEL
+	private String SVC; // PS1000 프로젝트 코드
 	
 	public String getEND_GBN() {
 		return END_GBN;

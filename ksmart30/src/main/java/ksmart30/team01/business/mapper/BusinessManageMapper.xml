@@ -12,11 +12,12 @@
 				UP_SU,
 				DOWN_SU,
 				AREA_P,
-				YAREA_P
+				YAREA_P,
+				ADDR
 		FROM T_PS3000	
 		WHERE BUSI_YY LIKE #{BUSI_YY}
-		AND UP_SU BETWEEN #{UP_SU} AND #{UP_SU2}
-		AND YAREA_P BETWEEN #{YAREA_P} AND #{YAREA_P2}		
+<!-- 		AND UP_SU BETWEEN #{UP_SU} AND #{UP_SU2}
+		AND YAREA_P BETWEEN #{YAREA_P} AND #{YAREA_P2}	 -->	
 </select>
 
 <!--사업수행결정서 좌측 목록  -->
@@ -193,6 +194,7 @@ DEPT_CD = A.MEMBER_DEPT),'') MEMBER_DEPT_NM
 ) PJT 
 
 WHERE PJT.END_GBN_NM LIKE #{END_GBN}
+AND PJT.PJT_NM LIKE '%'+#{PJT_NM}+'%'
 		
 		
 		
@@ -246,5 +248,28 @@ WHERE PJT.END_GBN_NM LIKE #{END_GBN}
 				WHERE PJT_NM LIKE #{PJT_NM}
 
 </select>
+	<!-- 거래처 리스트  -->
+<select id="CustCodeList" parameterType="String" resultType="java.util.Map">
+		SELECT  CUST_CD,
+		 		CUST_NM
+		FROM T_AC0300
+		WHERE CUST_CD LIKE '%' + #{cust} + '%' OR CUST_NM LIKE '%' + #{cust} + '%'
+	
+</select>
+
+	<!-- 부서 리스트 -->
+	<select id="DeptCodeList" parameterType="String" resultType="java.util.Map">
+		SELECT  DEPT_CD,
+		 		DEPT_NM
+		FROM T_SC1010
+		WHERE DEPT_CD LIKE '%' + #{dept} + '%' OR DEPT_NM LIKE '%' + #{dept} + '%'
+	</select>
+	
+	<insert id="businessManageViewInsert" parameterType="ksmart30.team01.business.domain.BusinessMarket">
+		INSERT INTO T_PS3000(CUST_CD) VALUES(#{CUST_CD})
+	
+	
+	
+	</insert>
 
 </mapper>

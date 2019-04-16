@@ -31,5 +31,24 @@ public class BusinessManageService {
 	public Map<String, Object> businessManageView(BusinessMarket vo) {
 		return businessManageMapper.getBusinessManageView(vo);
 	}
+	
+	public List<Map<String,String>> CustCode(String cust){
+		List<Map<String,String>> list = businessManageMapper.CustCodeList(cust);
+		
+		return list;
+	}
+	
+	public List<Map<String,String>> DeptCode(String dept){
+		List<Map<String,String>> list = businessManageMapper.DeptCodeList(dept);
+		
+		return list;
+	}
+
+	public void businessManageViewInsert(BusinessMarket vo) {
+		businessManageMapper.businessManageViewInsert(vo);
+		
+	}
+
+
 
 }
