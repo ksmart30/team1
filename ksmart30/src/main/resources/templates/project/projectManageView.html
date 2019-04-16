@@ -6,18 +6,182 @@
 		<th:block th:include="layout/customHead"></th:block>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
-		function pjtOneBtn(PJT_CD,PJT_NM) {
-			console.log(PJT_CD+PJT_NM);
+		// 우편번호 및 주소 검색
+		function sample6_execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
+	                    document.getElementById("sample6_extraAddress").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("sample6_extraAddress").value = '';
+	                }
+	
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('sample6_postcode').value = data.zonecode;
+	                document.getElementById("sample6_address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("sample6_detailAddress").focus();
+	            }
+	        }).open();
+	    }
+		
+		// 모달에서 프로젝트 선택
+		function modalPjtOneBtn(PJT_CD, PJT_NM) {
+			console.log('선택완료!');
+			console.log(PJT_CD);
+			console.log(PJT_NM);
+			$('#PJT_CD').empty();
+			$('#PJT_CD').attr('value', PJT_CD);
+			$('#PJT_NM').empty();
+			$('#PJT_NM').append(PJT_NM);
+		}
+		
+		// 모달에서 발주처 선택
+		function modalCustOneBtn(CUST_CD, CUST_NM) {
+			console.log('선택완료!');
+			console.log(CUST_CD);
+			console.log(CUST_NM);
+			$('#CUST_CD_VAL').empty();
+			$('#CUST_CD_VAL').attr('value', CUST_NM);
+		}
+		
+		// 프로젝트 하나 선택시 상세내역 출력
+		function pjtOneBtn(PJT_CD) {
+			console.log(PJT_CD);
+			$.ajax({
+				url:'/project/projectManageSangseListProcess',
+				type:'POST',
+				data:{PJT_CD:PJT_CD},
+				success:function(data){
+					console.log(data);
+					// 종합코드 출력
+					
+					$('#PJT_CD_ONE').empty();			// 프로젝트 코드
+					$('#PJT_CD_ONE').append(data.sangse.PJT_CD);
+					$('#PJT_NM_ONE').empty();			// 프로젝트 명
+					$('#PJT_NM_ONE').append(data.sangse.PJT_NM);
+					$('#CRT_DATE_ONE').empty();			// 계약서등록일
+					$('#CRT_DATE_ONE').append(data.sangse.CRT_DATE);
+					if(data.seq.PJT_SEQ>0) {
+						$('#PJT_SEQ_ONE').empty();
+						$('#PJT_SEQ_ONE').append(', 총 '+data.seq.PJT_SEQ+'회 변경');
+					}
+					
+					// 기본사항
+					$('#CONTRACT_DATE_ONE').empty();	// 계약일자
+					$('#CONTRACT_DATE_ONE').append(data.sangse.CONTRACT_DATE);
+					$('#CONTRACT_PRI1_ONE').empty();	// 계약기간(시작)
+					$('#CONTRACT_PRI1_ONE').append(data.sangse.CONTRACT_PRI1);
+					$('#CONTRACT_PRI2_ONE').empty();	// 계약기간(끝)
+					$('#CONTRACT_PRI2_ONE').append(data.sangse.CONTRACT_PRI2);
+					// 종료단서
+					$('#CONTRACT_PRI3_ONE').attr('value', data.sangse.CONTRACT_PRI3);
+						$('select[id=CONTRACT_PRI3_ONE]').val(data.sangse.CONTRACT_PRI3);
+					// 수행부서 코드
+					$('#DEPT_CD_ONE').attr('value', data.sangse.DEPT_CD);
+						$('select[id=DEPT_CD_ONE]').val(data.sangse.DEPT_CD);
+					// 건축물 유형
+					$('#BUILD_TYPE_ONE').attr('value', data.sangse.BUILD_TYPE);
+						$('select[id=BUILD_TYPE_ONE]').val(data.sangse.BUILD_TYPE);
+					$('#G_AREA_M_ONE').empty();			// 대지면적_M
+					$('#G_AREA_M_ONE').attr('value', data.sangse.G_AREA_M);
+					$('#G_AREA_P_ONE').empty();			// 대지면적_P
+					$('#G_AREA_P_ONE').attr('value', data.sangse.G_AREA_M);
+					$('#G_YAREA_M_ONE').empty();		// 연면적_M
+					$('#G_YAREA_M_ONE').attr('value', data.sangse.G_YAREA_M);
+					$('#G_YAREA_P_ONE').empty();		// 연면적_P
+					$('#G_YAREA_P_ONE').attr('value', data.sangse.G_YAREA_P);
+					$('#PYUNG_DAN_ONE').empty();		// 평당단가
+					$('#PYUNG_DAN_ONE').attr('value', data.sangse.PYUNG_DAN);
+					$('#TOT_CONTRACT_AMT_ONE').empty();	// 당사 총계약액
+					$('#TOT_CONTRACT_AMT_ONE').attr('value', data.sangse.TOT_CONTRACT_AMT);
+					$('#PJT_CONTRACT_AMT_ONE').empty();	// PJT 총계약액
+					$('#PJT_CONTRACT_AMT_ONE').attr('value', data.sangse.PJT_CONTRACT_AMT);
+					$('#CHANGE_AMT_ONE').empty();		// 변경가감액
+					$('#CHANGE_AMT_ONE').attr('value', data.sangse.CHANGE_AMT);
+					$('#BALANCE_AMT_ONE').empty();		// 매출잔액
+					$('#BALANCE_AMT_ONE').attr('value', data.sangse.BALANCE_AMT);
+					// 부가세여부
+					$('#SURTAX_ONE').attr('value', data.sangse.SURTAX);
+						$('select[id=SURTAX_ONE]').val(data.sangse.SURTAX);
+					// 프로젝트 하나 선택시 발주처 리스트 출력
+					$('#OWNER_LIST_ONE').empty();
+					$(data.owner).each((index, item) => {
+						console.log(item);
+						$('#OWNER_LIST_ONE').append('<tr><td width="20%">삭제</td><td width="20%">'+item.CUST_NM+'</td><td width="20%">'+item.CUST_GBN_NM+'</td><td width="20%">'+item.N_RATE+'</td><td width="20%">'+item.CONTRACT_AMT+'</td></tr>');
+					});
+					$('#N_RATE_SUM').empty();						// 지분합계
+					$('#N_RATE_SUM').append(data.owner[0].N_RATE_SUM);
+					$('#CONTRACT_AMT_SUM').empty();					// 금액합계
+					$('#CONTRACT_AMT_SUM').append(data.owner[0].CONTRACT_AMT_SUM);
+					// 프로젝트 하나 선택시 기성단계 리스트 출력
+					$('#GISEONG_LIST_ONE').empty();
+					$(data.giseong).each((index, item) => {
+						console.log(item);
+						$('#GISEONG_LIST_ONE').append('<tr><td width="20%">'+item.RM_SEQ+'</td><td width="20%">'+item.RM_STEP_NM+'</td><td width="20%">'+item.SALE_STEP_NM+'</td><td width="20%">'+item.RM_AMT+'</td><td width="20%">'+item.SUGUM_RATE+'</td></tr>');
+					});
+					$('#RM_AMT_SUM').empty();						// 금액합계
+					$('#RM_AMT_SUM').append(data.giseong[0].RM_AMT_SUM);
+					$('#SUGUM_RATE_SUM').empty();					// 수금율합계
+					$('#SUGUM_RATE_SUM').append(data.giseong[0].SUGUM_RATE_SUM);
+					
+					// 세부사항
+					$('#PJT_CONTRACT_AMT_ONE_SEBU').empty();		// 프로젝트 총계약액
+					$('#PJT_CONTRACT_AMT_ONE_SEBU').append(data.sangse.PJT_CONTRACT_AMT);
+					$('#DONG_SU_ONE').empty();						// 동수
+					$('#DONG_SU_ONE').attr('value', data.sangse.DONG_SU);
+					$('#HOUSE_SU_ONE').empty();						// 세대수
+					$('#HOUSE_SU_ONE').attr('value', data.sangse.HOUSE_SU);
+					$('#B_UP_SU_ONE').empty();						// 지상층수
+					$('#B_UP_SU_ONE').attr('value', data.sangse.B_UP_SU);
+					$('#B_DOWN_SU_ONE').empty();						// 지하층수
+					$('#B_DOWN_SU_ONE').attr('value', data.sangse.B_DOWN_SU);
+					// 건축물구조
+					$('#BUILD_STRUCT_ONE').attr('value', data.sangse.BUILD_STRUCT);
+						$('select[id=BUILD_STRUCT_ONE]').val(data.sangse.BUILD_STRUCT);
+					$('#REGION_ONE').attr('value', data.sangse.REGION);
+						$('select[id=REGION_ONE]').val(data.sangse.REGION);
+					
+				}
+			});
 		}
 		
 		$(document).ready(function() {
 				// 용역계약서 입력을 위한 프로젝트 검색 부분
 				$('#search').click(function(){
 					// 필드로 입력받은 값들을 변수에 저장
-					let PJT_CD = $('#pjtCd').val();
+					let PJT_CD = $('#PJT_CD_VAL').val();
 					let DEPT_CD = $('#pjtDept').val();
-					let temp = $('#pjtYear').val();
-					let YEAR = temp.substring(2, 4);
+					let YEAR = $('#pjtYear').val();
 					let pjtRadioValue = $('input[name=pjtRadioValue]:checked', '#radioForm').val();
 					console.log(PJT_CD);
 					console.log(DEPT_CD);
@@ -25,20 +189,58 @@
 					console.log(pjtRadioValue);
 
 					$.ajax({
-						// ajax로 "/project/manage/in" URI를 지정 POST방식으로 data를 보낸다.
+						// ajax로 "/project/projectManageListProcess" URI를 지정 POST방식으로 data를 보낸다.
 						url:'/project/projectManageListProcess',
 						type:'POST',
-						data:{PJT_CD:PJT_CD, DEPT_CD:DEPT_CD, YEAR:YEAR},
+						data:{PJT_CD:PJT_CD, DEPT_CD:DEPT_CD, YEAR:YEAR, pjtRadioValue:pjtRadioValue},
 						success:function(data){
 							$('#pjtList').empty();
 							$('#resultLength').empty();
 							$(data).each((index,item) => {
-								$('#pjtList').append('<tr><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td onclick="pjtOneBtn('+item.PJT_NM+item.PJT_CD+')">'+item.PJT_NM+'</td></tr>');
+								$('#pjtList').append('<tr><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td onclick="pjtOneBtn('+item.PJT_CD+',&#39'+item.PJT_NM+'&#39)">'+item.PJT_NM+'</td></tr>');
 							});
 							$('#resultLength').append(data.length);
 						}
 					});
-					
+				});
+				// 프로젝트 검색 모달
+				$('#pjtSearchBtn').click(()=>{
+	    			let column = $('#selectedPjtItem option:selected').val();
+	    			let columnValue = $('#pjtValue').val();
+	    			console.log('검색 값 : ');
+		    		console.log(columnValue);
+		    		$.ajax({
+						url:'/project/projectManageSearchProcess',
+					    type:'POST',
+						data:{column:column, columnValue:columnValue},
+						success:(data)=>{
+							console.log(data);
+							$('#pjtSearchList').empty();
+							$(data).each((index, item) =>{
+							$('#pjtSearchList').append('<tr onclick="modalPjtOneBtn('+item.PJT_CD+',&#39'+item.PJT_NM+'&#39)"><td>'+item.PJT_CD+'</td><td>'+item.PJT_NM+'</td></tr>');
+							});
+						}
+		    		});
+				});
+				
+				// 발주처 검색 모달
+				$('#custSearchBtn').click(()=>{
+	    			let column = $('#selectedCustItem option:selected').val();
+	    			let columnValue = $('#custValue').val();
+	    			console.log('검색 값 : ');
+		    		console.log(columnValue);
+		    		$.ajax({
+						url:'/project/projectManageCustSearchProcess',
+					    type:'POST',
+						data:{column:column, columnValue:columnValue},
+						success:(data)=>{
+							console.log(data);
+							$('#custSearchList').empty();
+							$(data).each((index, item) =>{
+							$('#custSearchList').append('<tr onclick="modalCustOneBtn('+item.CUST_CD+',&#39'+item.CUST_NM+'&#39)"><td>'+item.CUST_CD+'</td><td>'+item.CUST_NM+'</td></tr>');
+							});
+						}
+		    		});
 				});
 			});
 		</script>
@@ -47,8 +249,8 @@
 	<div class="col-md-9 col-xs-12" style="color:black;">
     <div class="page-title">
 	<div class="title_left">
-	 <h2><b>전표상세검색</b></h2>
-	<h5><font color="gray"><b>8.회계관리&nbsp;>&nbsp;&nbsp;8.1회계입력&nbsp;>&nbsp;&nbsp;8.2회계입력</b></font></h5>			
+	 <h2><b>용역계약서 입력</b></h2>
+	<h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리</b></font></h5>			
 	</div>
 	</div>
     </div>
@@ -85,12 +287,25 @@
 					</td>
 					<td>
 						<select id="pjtDept">
-							<option value="">전 사</option>
-							<option value="7530">설계1본부</option>
-							<option value="7630">설계2본부</option>
-							<option value="7730">설계3본부</option>
-							<option value="7830">설계4본부</option>
-							<option value="7930">설계5본부</option>
+							<option value="" selected="selected">전 사</option>
+		                    <option value="3100">설계1본부</option>
+		                    <option value="3101">설계1본부-남석우</option>
+		                    <option value="3102">설계1본부-김광식</option>
+		                    <option value="3103">설계1본부-박상현</option>
+		                    <option value="3104">설계1본부-전창국</option>
+		                    <option value="3105">설계1본부-김승국</option>
+		                    <option value="3106">설계1본부-우진우</option>
+		                    <option value="3200">설계2본부</option>
+		                    <option value="3201">설계2본부-장홍만</option>
+		                    <option value="3202">설계2본부-장미진</option>
+		                    <option value="3203">설계2본부-김재원</option>
+		                    <option value="3204">설계2본부-우상훈</option>
+		                    <option value="3205">설계2본부-윤호진</option>
+		                    <option value="3206">설계2본부-정다운</option>
+		                    <option value="3300">PD전략부</option>
+		                    <option value="3400">설계지원</option>
+		                    <option value="5100">건설사업관리</option>
+		                    <option value="8000">해외지사</option>
 						</select>
 					</td>
 				</tr>
@@ -98,11 +313,59 @@
 					<td>
 						코드명
 					</td>
-					<td>
-						<input type="text" id="pjtCd">
-					</td>
-					<td>
-						<button type="submit" id="pjtSearchBtn">검색</button>
+					<td colspan="2">
+						<input type="text" id="PJT_CD_VAL" class="col-md-6 col-sm-12">
+						<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg1"><i class="fa fa-search"></i></button>
+						<div id="PJT_NM_VAL"></div>
+						<!------------------------------------------ 프로젝트 조회 modal--------------------------------------------------- -->
+						<div class="modal fade bs-example-modal-lg1" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<form class="form-horizontal ">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" id="pjtModal"><span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title" id="myModalLabel"><b>프로젝트코드조회</b></h4><br>
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td><label class="control-label">검색항목</label></td>
+															<td>
+																<select class="form-control" style="width: 40%" id="selectedPjtItem">
+																	<option selected="selected" value="PJT_CD">프로젝트코드</option>
+																</select>
+															</td>
+														</tr>
+														<tr>
+															<td><label class="control-label">검색조건</label></td>
+															<td>
+																<input type="text" id="pjtValue">
+																<button type="button" id="pjtSearchBtn"><i class="fa fa-search"></i></button>																	
+															</td>
+														</tr>
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+										<div class="modal-body">
+											<div class="table-responsive" style="overflow: auto; height: 400px;">
+												<table class="table table-striped table-bordered table-hover">
+													<thead>
+														<tr>
+															<th>프로젝트코드</th>
+															<th>프로젝트명</th>
+														</tr>
+													</thead>
+													<tbody id="pjtSearchList">
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 					</td>
 				</tr>
 			</table>
@@ -178,11 +441,13 @@
 		<div class="x_panel">
 			<div class="x_content">
 					<label for="ex3">프로젝트 코드 : </label>
-                    <label>19004</label>
+                    <label><span id="PJT_CD_ONE"></span></label>
                     <label for="ex4">프로젝트 명 : </label>
-                    <label>초코우유 프로젝트</label>
-                    <ul class="nav navbar-right panel_toolbox">
-                    </ul>
+                    <label><span id="PJT_NM_ONE"></span></label>
+                    <br>
+					<span style="color:black">계약서등록일 : </span>
+					<span style="color:black" id="CRT_DATE_ONE"></span>
+					<span style="color:black" id="PJT_SEQ_ONE"></span>
                     </div>
                     </div>
                     </div>
@@ -199,72 +464,60 @@
 				<div class="form-inline">
 	                  <div class="form-group">
 	                    <label for="ex3">계약일자 </label>
-	                    <input type="date">
+	                    <input type="date" id="CONTRACT_DATE_ONE">
 	                  </div>
 	                  <br>
 	                  <div class="form-group">
 	                    <label for="ex3">계약기간 </label>
-	                    <input type="date">
+	                    <input type="date" id="CONTRACT_PRI1_ONE">
 	                    ~
-	                    <input type="date">
-	                    <select>
-	                    	<option>1</option>
-	                    	<option>2</option>
-	                    	<option>3</option>
-	                    	<option>4</option>
-	                    	<option>5</option>
+	                    <input type="date" id="CONTRACT_PRI2_ONE">
+	                    <select id="CONTRACT_PRI3_ONE">	              
+	                    	<option selected="selected"></option>
+	                    	<th:block th:each="c : ${code}">
+	                    		<th:block th:if="${c.LEVEL1_CD}==130">
+	                    			<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    		</th:block>
+	                    	</th:block>
 	                    </select>
 	                    <label for="ex3"> 까지</label>
 	                  </div>
 	                  <br>
 	                  <div class="form-group">
 	                  <label for="ex3">수행부서코드</label>
-	                  <select>
-	                    	<option>7500</option>
-	                    	<option>7530</option>
-	                    	<option>7540</option>
-	                    	<option>7600</option>
-	                    	<option>7630</option>
+	                  <select id="DEPT_CD_ONE">
+	                  	<option value="" selected="selected">전 사</option>
+	                    <option value="3100">설계1본부</option>
+	                    <option value="3101">설계1본부-남석우</option>
+	                    <option value="3102">설계1본부-김광식</option>
+	                    <option value="3103">설계1본부-박상현</option>
+	                    <option value="3104">설계1본부-전창국</option>
+	                    <option value="3105">설계1본부-김승국</option>
+	                    <option value="3106">설계1본부-우진우</option>
+	                    <option value="3200">설계2본부</option>
+	                    <option value="3201">설계2본부-장홍만</option>
+	                    <option value="3202">설계2본부-장미진</option>
+	                    <option value="3203">설계2본부-김재원</option>
+	                    <option value="3204">설계2본부-우상훈</option>
+	                    <option value="3205">설계2본부-윤호진</option>
+	                    <option value="3206">설계2본부-정다운</option>
+	                    <option value="3300">PD전략부</option>
+	                    <option value="3400">설계지원</option>
+	                    <option value="5100">건설사업관리</option>
+	                    <option value="8000">해외지사</option>
 	                  </select>
-	                  <label for="ex3">설계1본부</label>
+	                  <label for="ex3"></label>
 	                  </div>
 	                  <br>
 	                  <div class="form-group">
 	                  <label for="ex3">건축물유형</label>
-	                  <select>
-	                  		<option></option>
-	                    	<option>단독주택</option>
-	                    	<option>공동주택</option>
-	                    	<option>제1종 근린생활시설</option>
-	                    	<option>제2종 근린생활시설</option>
-	                    	<option>문화 및 잡화시설</option>
-	                    	<option>판매시설</option>
-	                    	<option>의료시설</option>
-	                    	<option>교육연구시설</option>
-	                    	<option>운동시설</option>
-	                    	<option>업무시설</option>
-	                    	<option>숙박시설</option>
-	                    	<option>위락시설</option>
-	                    	<option>공  장</option>
-	                    	<option>창고시설</option>
-	                    	<option>위험물저장 및 처리시설</option>
-	                    	<option>자동차관련시설</option>
-	                    	<option>동물 및 식물관련시설</option>
-	                    	<option>분뇨·쓰레기처리시설</option>
-	                    	<option>교정 및 군사시설</option>
-	                    	<option>묘지관련시설</option>
-	                    	<option>관광휴게시설</option>
-	                    	<option>주거복합</option>
-	                    	<option>지구단위계획</option>
-	                    	<option>종교시설</option>
-	                    	<option>운수시설</option>
-	                    	<option>노유자시설</option>
-	                    	<option>수련시설</option>
-	                    	<option>방송통신시설</option>
-	                    	<option>발전시설</option>
-	                    	<option>공공업무시설</option>
-	                    	<option>복합시설</option>
-	                    	<option>기타</option>
+	                  <select id="BUILD_TYPE_ONE">
+	                  		<option selected="selected"></option>
+	                    	<th:block th:each="c : ${code}">
+	                    		<th:block th:if="${c.LEVEL1_CD}==170">
+	                    			<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    		</th:block>
+	                    	</th:block>
 	                  </select>
 	                  </div>
 	             </div>
@@ -279,15 +532,15 @@
 					  <label for="ex3">계약면적</label>
 	                  <div class="form-group">
 	                  	<label for="ex3">대지면적</label>
-	                  	<input type="text">m²
-	                  	<input type="text">평<br>
+	                  	<input type="text" id="G_AREA_M_ONE">m²
+	                  	<input type="text" id="G_AREA_P_ONE">평<br>
 	                  	<br>
 	                  	<label for="ex3">연 면 적</label>
-	                  	<input type="text">m²
-	                  	<input type="text">평<br>
+	                  	<input type="text" id="G_YAREA_M_ONE">m²
+	                  	<input type="text" id="G_YAREA_P_ONE">평<br>
 	                  	<br>
 	                  	<label for="ex3">평당단가</label>
-	                  	<input type="text">원
+	                  	<input type="text" id="PYUNG_DAN_ONE">원
 	                  </div>
                   </div>
                 </div>
@@ -299,9 +552,9 @@
     <div class="x_title">
     <label for="ex3"> 발주처</label>
       <div class="nav navbar-right panel_toolbox">
-                       <label for="ex3">
-                       	<button type="submit" id="ownerSaveBtn">저장</button>
-                       </label>
+                      <label for="ex3">
+                      	<button type="submit" class="btn" style="color:black" id="ownerAddBtn">추가</button>
+                      </label>
                     </div>
                   </div>
                   <div class="x_content">
@@ -317,21 +570,66 @@
                         <tr>
                           <th scope="row">신규</th>
                           <td>
-                          	<input type="text" class="col-md-8">
-                          	<button>
-								<i class="fa fa-search"></i>
-							</button>  	
+                          	<input type="text" class="col-md-9" id="CUST_CD_VAL">
+							<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg2"><i class="fa fa-search"></i></button>
+							<!------------------------------------------ 발주처 조회 modal--------------------------------------------------- -->
+							<div class="modal fade bs-example-modal-lg2" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<form class="form-horizontal ">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" id="custModal"><span aria-hidden="true">×</span>
+												</button>
+												<h4 class="modal-title" id="myModalLabel"><b>발주처코드조회</b></h4><br>
+												<div class="table-responsive">
+													<table class="table table-bordered">
+														<tbody>
+															<tr>
+																<td><label class="control-label">검색항목</label></td>
+																<td>
+																	<select class="form-control" style="width: 40%" id="selectedCustItem">
+																		<option selected="selected"  value="CUST_CD">발주처코드</option>
+																	</select>
+																</td>
+															</tr>
+															<tr>
+																<td><label class="control-label">검색조건</label></td>
+																<td>
+																	<input type="text" id="custValue">
+																	<button type="button" id="custSearchBtn"><i class="fa fa-search"></i></button>																	
+																</td>
+															</tr>
+														</tbody>																	
+													</table>
+												</div>
+											</div>
+											<div class="modal-body">
+												<div class="table-responsive" style="overflow: auto; height: 400px;">
+													<table class="table table-striped table-bordered table-hover">
+														<thead>
+															<tr>
+																<th>발주처코드</th>
+																<th>발주처명</th>
+															</tr>
+														</thead>
+														<tbody id="custSearchList">
+														</tbody>																	
+													</table>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div> 	
                           </td>
                           <td>
                           	<select class="col-md-10">
                           		<option></option>
-		                    	<option>건설사</option>
-		                    	<option>시행사</option>
-		                    	<option>공사/공단</option>
-		                    	<option>정부기관</option>
-		                    	<option>건축설계사무소</option>
-		                    	<option>조합(재개발,재건축)</option>
-		                    	<option>기 타</option>
+                          		<th:block th:each="c : ${code}">
+	                    		<th:block th:if="${c.LEVEL1_CD}==200">
+	                    			<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    		</th:block>
+	                    	</th:block>
                   			</select>
                           </td>
                           <td><input type="text" class="col-md-10"></td>
@@ -339,20 +637,16 @@
                         </tr>
                    	</table>
 					<table class="table table-bordered">
+						<tbody id="OWNER_LIST_ONE">
+                   		</tbody>
                         <tr style="background-color:#ffeeaa">
                     		<th width="20%">합계</th>
                     		<th width="20%"></th>
                     		<th width="20%"></th>
-                    		<th width="20%">100.0</th>
-                    		<th width="20%">198,411,949</th>
+                    		<th width="20%"><span id="N_RATE_SUM"></span></th>
+                    		<th width="20%"><span id="CONTRACT_AMT_SUM"></span></th>
                     	</tr>
                     </table>
-                    <label for="ex3">
-                      	<button type="submit" id="ownerAddBtn">추가</button>
-                      </label>
-                       <label for="ex3">
-                       	<button type="submit">삭제</button>
-                       </label>
 	</div>
 	</div>        
 	</div>
@@ -361,59 +655,61 @@
 	<div class="col-md-12 col-sm-6 col-xs-12">
 	<div class="x_panel" style="overflow-x:auto">
     <div class="x_title">
-    	<label for="ex3"> 기성단계</label>
-      <div class="nav navbar-right panel_toolbox">
-                      <label for="ex3">추가</label>
-                       <label for="ex3">삭제</label>
-                    </div>
+    	<label for="ex3">기성단계</label>
+		<div class="nav navbar-right panel_toolbox">
+                      <label for="ex3">
+                      	<button type="submit" class="btn" style="color:black" id="ownerAddBtn">추가</button>
+                      </label>
+		</div>
                   </div>
                   <div class="x_content">
 
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                          <th>순번</th>
-                          <th>기성단계</th>
-                          <th>단계</th>
-                          <th>금액</th>
-                          <th>수금율(%)</th>
+                          <th width="20%">순번</th>
+                          <th width="20%">기성단계</th>
+                          <th width="20%">단계</th>
+                          <th width="20%">금액</th>
+                          <th width="20%">수금율(%)</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <th scope="row">1</th>
+                          <th width="20%">신규</th>
                           <td>
                           	<select>
                           		<option></option>
-		                    	<option>계약 체결시</option>
-		                    	<option>심의 접수시</option>
-		                    	<option>심의 완료후</option>
-		                    	<option>건축허가(사업승인)접수시</option>
-		                    	<option>건축허가(사업승인)완료시</option>
+		                    	<th:block th:each="c : ${code}">
+	                    		<th:block th:if="${c.LEVEL1_CD}==150">
+	                    			<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    		</th:block>
+	                    	</th:block>
                   			</select>
                           </td>
                           <td>
                           	<select>
                           		<option></option>
-		                    	<option>기 획</option>
-		                    	<option>심 의</option>
-		                    	<option>허 가</option>
-		                    	<option>착 공</option>
-		                    	<option>실 시</option>
-		                    	<option>A / S</option>
-		                    	<option>준 공</option>
-		                    	<option>기 타</option>
+		                    	<th:block th:each="c : ${code}">
+	                    		<th:block th:if="${c.LEVEL1_CD}==110">
+	                    			<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    		</th:block>
+	                    	</th:block>
                   			</select>
                           </td>
                           <td><input type="text"></td>
                           <td><input type="text"></td>
                         </tr>
+					</table>
+					<table class="table table-bordered">
+                        <tbody id="GISEONG_LIST_ONE">
+                        </tbody>
                         <tr style="background-color:#ffeeaa">
-                    		<th scope="row"></th>
-                    		<th scope="row"></th>
-                    		<th scope="row">합계</th>
-                    		<th scope="row">0</th>
-                    		<th scope="row">0.00</th>
+                    		<th width="20%"></th>
+                    		<th width="20%"></th>
+                    		<th width="20%">합계</th>
+                    		<th width="20%"><span id="RM_AMT_SUM"></span></th>
+                    		<th width="20%"><span id="SUGUM_RATE_SUM"></span></th>
                     	</tr>
                       </tbody>
                     </table>
@@ -428,9 +724,11 @@
 	    	<label for="ex3">대금지급조건 </label>
 	    	<select>
 	    		<option></option>
-	    		<option>현   금</option>
-	    		<option>어   음</option>
-	    		<option>현금/어음</option>
+	    		<th:block th:each="c : ${code}">
+		        	<th:block th:if="${c.LEVEL1_CD}==190">
+		        		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+		        	</th:block>
+	        	</th:block>
 	    	</select>
 	      	<label for="ex3">어음일수 </label>
 	        <input type="text">
@@ -448,7 +746,7 @@
 					<label for="ex3">당사 총계약액 </label>
 				</td>
 				<td>
-					<input type="text">원
+					<input type="text" id="TOT_CONTRACT_AMT_ONE">원
 				</td>
 			</tr>
 			<tr>
@@ -456,7 +754,7 @@
 					<label for="ex3">PJT총계약액 </label>
 				</td>
 				<td>
-					<input type="text">원
+					<input type="text" id="PJT_CONTRACT_AMT_ONE">원
 				</td>
 			</tr>
 			<tr>
@@ -464,7 +762,7 @@
 					<label for="ex3">변경가감액 </label>
 				</td>
 				<td>
-					<input type="text">원
+					<input type="text" id="CHANGE_AMT_ONE">원
 				</td>
 			</tr>
 			<tr>
@@ -472,20 +770,21 @@
 					<label for="ex3">매출잔액 </label>
 				</td>
 				<td>
-					<input type="text">원
+					<input type="text" id="BALANCE_AMT_ONE">원
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<label for="ex3">부가세 여부 </label>
+					<label for="ex3">부가세 여부</label>
 				</td>
 				<td>
-					<select>
-						<option></option>
-						<option>면  세</option>
-						<option>VAT 포함</option>
-						<option>VAT 별도</option>
-						<option>일부면서</option>
+					<select id="SURTAX_ONE">
+						<option selected="selected"></option>
+						<th:block th:each="c : ${code}">
+	                    	<th:block th:if="${c.LEVEL1_CD}==340">
+	                    		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    	</th:block>
+	                    </th:block>
 					</select>
 				</td>
 			</tr>
@@ -503,13 +802,67 @@
 					1)
 				</td>
 				<td width="30%">
-					<span></span>
+					<input type="text">
 				</td>
 				<td width="10%">
-					<button>PJT</button>
+					<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg3"><i class="fa fa-search"></i></button>
+					<!------------------------------------------ 프로젝트 조회 modal--------------------------------------------------- -->
+						<div class="modal fade bs-example-modal-lg3" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<form class="form-horizontal ">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" id="pjtModal"><span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title" id="myModalLabel"><b>프로젝트코드조회</b></h4><br>
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td><label class="control-label">검색항목</label></td>
+															<td>
+																<select class="form-control" style="width: 40%" id="selectedPjtItem">
+																	<option selected="selected" value="PJT_CD">프로젝트코드</option>
+																</select>
+															</td>
+														</tr>
+														<tr>
+															<td><label class="control-label">검색조건</label></td>
+															<td>
+																<input type="text" id="pjtValue">
+																<button type="button" id="pjtSearchBtn"><i class="fa fa-search"></i></button>																	
+															</td>
+														</tr>
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+										<div class="modal-body">
+											<div class="table-responsive" style="overflow: auto; height: 400px;">
+												<table class="table table-striped table-bordered table-hover">
+													<thead>
+														<tr>
+															<th>프로젝트코드</th>
+															<th>프로젝트명</th>
+														</tr>
+													</thead>
+													<tbody id="pjtSearchList">
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 				</td>
 				<td width="20%">
 					<input class="col-md-4 col-sm-6" type="text" value="0">%
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<span></span>
 				</td>
 			</tr>
 			<tr>
@@ -517,13 +870,67 @@
 					2)
 				</td>
 				<td>
-					<span></span>
+					<input type="text">
 				</td>
 				<td>
-					<button>PJT</button>
+					<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg4"><i class="fa fa-search"></i></button>
+					<!------------------------------------------ 프로젝트 조회 modal--------------------------------------------------- -->
+						<div class="modal fade bs-example-modal-lg4" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<form class="form-horizontal ">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" id="pjtModal"><span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title" id="myModalLabel"><b>프로젝트코드조회</b></h4><br>
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td><label class="control-label">검색항목</label></td>
+															<td>
+																<select class="form-control" style="width: 40%" id="selectedPjtItem">
+																	<option selected="selected" value="PJT_CD">프로젝트코드</option>
+																</select>
+															</td>
+														</tr>
+														<tr>
+															<td><label class="control-label">검색조건</label></td>
+															<td>
+																<input type="text" id="pjtValue">
+																<button type="button" id="pjtSearchBtn"><i class="fa fa-search"></i></button>																	
+															</td>
+														</tr>
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+										<div class="modal-body">
+											<div class="table-responsive" style="overflow: auto; height: 400px;">
+												<table class="table table-striped table-bordered table-hover">
+													<thead>
+														<tr>
+															<th>프로젝트코드</th>
+															<th>프로젝트명</th>
+														</tr>
+													</thead>
+													<tbody id="pjtSearchList">
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 				</td>
 				<td>
 					<input class="col-md-4 col-sm-6" type="text" value="0">%
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<span></span>
 				</td>
 			</tr>
 			<tr>
@@ -531,13 +938,67 @@
 					3)
 				</td>
 				<td>
+					<input type="text">
+				</td>
+				<td>
+					<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg5"><i class="fa fa-search"></i></button>
+					<!------------------------------------------ 프로젝트 조회 modal--------------------------------------------------- -->
+						<div class="modal fade bs-example-modal-lg5" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<form class="form-horizontal ">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" id="pjtModal"><span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title" id="myModalLabel"><b>프로젝트코드조회</b></h4><br>
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td><label class="control-label">검색항목</label></td>
+															<td>
+																<select class="form-control" style="width: 40%" id="selectedPjtItem">
+																	<option selected="selected" value="PJT_CD">프로젝트코드</option>
+																</select>
+															</td>
+														</tr>
+														<tr>
+															<td><label class="control-label">검색조건</label></td>
+															<td>
+																<input type="text" id="pjtValue">
+																<button type="button" id="pjtSearchBtn"><i class="fa fa-search"></i></button>																	
+															</td>
+														</tr>
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+										<div class="modal-body">
+											<div class="table-responsive" style="overflow: auto; height: 400px;">
+												<table class="table table-striped table-bordered table-hover">
+													<thead>
+														<tr>
+															<th>프로젝트코드</th>
+															<th>프로젝트명</th>
+														</tr>
+													</thead>
+													<tbody id="pjtSearchList">
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+				</td>
+				<td>
+					<input class="col-md-4 col-sm-6" type="text" value="0">%
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
 					<span></span>
-				</td>
-				<td>
-					<button>PJT</button>
-				</td>
-				<td>
-					<input class="col-md-4 col-sm-6"  type="text" value="0">%
 				</td>
 			</tr>
 		</table>
@@ -553,30 +1014,30 @@
 	<div class="x_panel" style="overflow-x:auto">
 	<div class="x_title">
 		<label for="ex3">프로젝트 총계약액</label>
-		<span></span>
-		<span>원</span>
-		<button>직접 계약서 입력</button><br>
+		<span style="color:black" id="PJT_CONTRACT_AMT_ONE_SEBU"></span>
+		<span style="color:black">원</span>
+		<button>직접 계약서 입력</button>
 		</div>
 		<label for="ex3">◎ 건출물규모</label><br>
 		<table>
 			<tr>
 				<td width="10%">동수</td>
-				<td width="10%"><input class="col-md-6" type="text" value="0"></td>
+				<td width="10%"><input class="col-md-6" type="text" value="0" id="DONG_SU_ONE"></td>
 				<td width="10%">세대수</td>
-				<td width="10%"><input class="col-md-6" type="text" value="0"></td>
+				<td width="10%"><input class="col-md-6" type="text" value="0" id="HOUSE_SU_ONE"></td>
 				<td width="10%">지상층수</td>
-				<td width="10%"><input class="col-md-6" type="text" value="0"></td>
+				<td width="10%"><input class="col-md-6" type="text" value="0" id="B_UP_SU_ONE"></td>
 				<td width="10%">지하층수</td>
-				<td width="10%"><input class="col-md-6" type="text" value="0"></td>
-				<td width="10%">건출물구조</td>
+				<td width="10%"><input class="col-md-6" type="text" value="0" id="B_DOWN_SU_ONE"></td>
+				<td width="10%">건축물구조</td>
 				<td width="10%">
-				<select>
+				<select id="BUILD_STRUCT_ONE">
 					<option></option>
-					<option>철근콘크리트</option>
-					<option>철골</option>
-					<option>R.C+철골</option>
-					<option>조적조</option>
-					<option>목구조</option>
+					<th:block th:each="c : ${code}">
+	                    <th:block th:if="${c.LEVEL1_CD}==310">
+	                    	<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                	</th:block>
+	            	</th:block>
 				</select>
 				</td>
 			</tr>
@@ -585,9 +1046,14 @@
 		<label for="ex3">◎ 대지위치</label><br>
 		<table>
 			<tr>
-				<td width="12%"></td>
+				<td width="12%">
+				</td>
 				<td colspan="6">
-					<input type="text" value="주소검색부분"><br>
+					<input type="text" id="sample6_postcode" class="col-md-3" placeholder="우편번호">
+					<button onclick="sample6_execDaumPostcode()"><i class="fa fa-search" id="pjt_s"></i></button>
+					<input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
+					<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
+					<span id="sample6_address"></span>
 				</td>
 			</tr>
 			<tr>
@@ -595,11 +1061,13 @@
 					지역
 				</td>
 				<td>
-					<select>
-						<option></option>
-						<option>전용주거지역(1종)</option>
-						<option>전용주거지역(2종)</option>
-						<option>일반주거지역</option>
+					<select id="REGION_ONE">
+						<option selected="selected"></option>
+						<th:block th:each="c : ${code}">
+	                    	<th:block th:if="${c.LEVEL1_CD}==320">
+	                    		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    	</th:block>
+	                    </th:block>
 					</select>
 				</td>
 				<td width="10%">
@@ -608,9 +1076,11 @@
 				<td>
 					<select>
 						<option></option>
-						<option>자연관광지구</option>
-						<option>수변견광지구</option>
-						<option>시가지견광지구</option>
+						<th:block th:each="c : ${code}">
+	                    	<th:block th:if="${c.LEVEL1_CD}==330">
+	                    		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    	</th:block>
+	                    </th:block>
 					</select>
 				</td>
 				<td width="10%">
@@ -619,9 +1089,11 @@
 				<td>
 					<select>
 						<option></option>
-						<option>개발제한구역</option>
-						<option>시가화조정구역</option>
-						<option>수산자원보호구역</option>
+						<th:block th:each="c : ${code}">
+	                    	<th:block th:if="${c.LEVEL1_CD}==331">
+	                    		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    	</th:block>
+	                    </th:block>
 					</select>
 				</td>
 			</tr>
@@ -630,27 +1102,33 @@
 				<td>
 					<select>
 						<option></option>
-						<option>전용주거지역(1종)</option>
-						<option>전용주거지역(2종)</option>
-						<option>일반주거지역</option>
+						<th:block th:each="c : ${code}">
+	                    	<th:block th:if="${c.LEVEL1_CD}==320">
+	                    		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    	</th:block>
+	                    </th:block>
 					</select>
 				</td>
 				<td></td>
 				<td>
 					<select>
 						<option></option>
-						<option>자연관광지구</option>
-						<option>수변견광지구</option>
-						<option>시가지견광지구</option>
+						<th:block th:each="c : ${code}">
+	                    	<th:block th:if="${c.LEVEL1_CD}==330">
+	                    		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    	</th:block>
+	                    </th:block>
 					</select>
 				</td>
 				<td></td>
 				<td>
 					<select>
 						<option></option>
-						<option>개발제한구역</option>
-						<option>시가화조정구역</option>
-						<option>수산자원보호구역</option>
+						<th:block th:each="c : ${code}">
+	                    	<th:block th:if="${c.LEVEL1_CD}==331">
+	                    		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    	</th:block>
+	                    </th:block>
 					</select>
 				</td>
 			</tr>
@@ -664,15 +1142,21 @@
 				<td>
 					<select class="col-md-10">
 						<option></option>
-						<option>민간사업</option>
-						<option>공공사업</option>
+						<th:block th:each="c : ${code}">
+	                    	<th:block th:if="${c.LEVEL1_CD}==272">
+	                    		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    	</th:block>
+	                    </th:block>
 					</select>
 				</td>
 				<td colspan="2">
 					<select class="col-md-10">
 						<option></option>
-						<option>발주의뢰</option>
-						<option>저가심의</option>
+						<th:block th:each="c : ${code}">
+	                    	<th:block th:if="${c.LEVEL1_CD}==270">
+	                    		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    	</th:block>
+	                    </th:block>
 					</select>
 				</td>
 			</tr>
@@ -681,10 +1165,11 @@
 				<td colspan="2">
 					<select class="col-md-10">
 						<option></option>
-						<option>신축</option>
-						<option>중축</option>
-						<option>리모델링</option>
-						<option>재건축</option>
+						<th:block th:each="c : ${code}">
+	                    	<th:block th:if="${c.LEVEL1_CD}==171">
+	                    		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    	</th:block>
+	                    </th:block>
 					</select>
 				</td>
 			</tr>
@@ -767,8 +1252,11 @@
 				<td>
 					<select class="col-md-12">
 						<option></option>
-						<option>용역완료</option>
-						<option>중도타절</option>
+						<th:block th:each="c : ${code}">
+	                    	<th:block th:if="${c.LEVEL1_CD}==25A">
+	                    		<option th:value="${c.LEVEL2_CD}">[[${c.LEVEL2_NM}]]</option>
+	                    	</th:block>
+	                    </th:block>
 					</select>
 				</td>
 				<td></td>

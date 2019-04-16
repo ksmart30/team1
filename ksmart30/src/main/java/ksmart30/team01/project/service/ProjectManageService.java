@@ -12,6 +12,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ksmart30.team01.project.domain.Project;
 import ksmart30.team01.project.domain.ProjectHistory;
 import ksmart30.team01.project.mapper.ProjectManageMapper;
 
@@ -20,6 +21,29 @@ public class ProjectManageService {
 	@Autowired
 	ProjectManageMapper projectManageMapper;
 
+	// 용역계약서 입력 화면에서 쓰이는 종합코드 리시트를 조회하는 메서드
+	public List<Map<String, Object>> getProjectManageCode() {
+		System.out.println("Service getProjectManageCode 메서드 실행");
+		return projectManageMapper.getProjectManageCode();
+	}
+			
+	
+	// 모달에서 전체 프로젝트를 조회하는 메서드
+	public List<Map<String, Object>> getProjectManageSearchProject(String column, String columnValue) {
+		System.out.println("Service getProjectManageSearchProject 메서드 실행");
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		System.out.println("column : " + column);
+		System.out.println("columnValue : "+ columnValue);
+		if(column.equals("PJT_CD")) {
+			System.out.println("PJT_CD입니당");
+			searchMap.put("PJT_CD", columnValue);
+		} else {
+			System.out.println("PJT_NM입니당");
+			searchMap.put("PJT_NM", columnValue);
+		}
+		return projectManageMapper.getProjectManageList(searchMap);
+	}
+	
 	// 전체 발주처를 조회하는 메서드
 	public List<Map<String, Object>> getCustList(String column, String columnValue) {
 		System.out.println("Service getClientList 메서드 실행");
@@ -39,9 +63,12 @@ public class ProjectManageService {
 	
 	// ===================================================용역계약서 입력을 위한 프로젝트 조회 START===================================================
 	// 전체 프로젝트 대장을 조회하는 메서드
-	public List<Map<String, Object>> getBusinessManagerList(String PJT_CD, String DEPT_CD, String YEAR, String pjtRadioValue) {
-		System.out.println("Service getBusinessManagerList 메서드 실행");
-		System.out.println(PJT_CD + DEPT_CD + YEAR + pjtRadioValue);
+	public List<Map<String, Object>> getProjectManagerList(String PJT_CD, String DEPT_CD, String YEAR, String pjtRadioValue) {
+		System.out.println("Service getProjectManagerList 메서드 실행");
+		System.out.println(PJT_CD);
+		System.out.println(DEPT_CD);
+		System.out.println(YEAR);
+		System.out.println(pjtRadioValue);
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("PJT_CD", PJT_CD);
 		searchMap.put("DEPT_CD", DEPT_CD);
@@ -50,6 +77,7 @@ public class ProjectManageService {
 		switch(pjtRadioValue) {
 			case "1":
 				// 검토
+				resultMap = projectManageMapper.getProjectManageGumList(searchMap);
 				break;
 			case "2":
 				// 계약
@@ -78,6 +106,26 @@ public class ProjectManageService {
 	}
 	// ===================================================용역계약서 입력을 위한 프로젝트 조회 END===================================================
 
+	// 프로젝트 코드로 선택하여 용역계약서가 입력되어 있으면 그 상세 내용을 조회하는 메서드
+	public Map<String, Object> getProjectManageSangse(Project project) {
+		System.out.println("Service getProjectManageSangse 메서드 실행");
+		// 결과 리턴용 Map
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		// 용역계약서 입력 화면에서 쓰이는 전체 종합코드를 조회하는 메서드
+		resultMap.put("code", projectManageMapper.getProjectManageCode());
+		// 프로젝트 코드로 선택하여 용역계약서의 상세 내용을 조회하는 메서드
+		resultMap.put("sangse", projectManageMapper.getProjectManageSangse(project));
+		// 프로젝트 코드로 선택하여 용역계약서의 발주처 리스트를 조회하는 메서드
+		resultMap.put("owner", projectManageMapper.getProjectManageOwner(project));
+		// 프로젝트 코드로 선택하여 용역게약서의 기성단계 리스트를 조회하는 메서드
+		resultMap.put("giseong", projectManageMapper.getProjectManageGiseong(project));
+		// 프로젝트 코드로 선택하여 을의 수급지분 리스트를 조회하는 메서드
+		resultMap.put("sugub", projectManageMapper.getProjectManageSugub(project));
+		// 프로젝트 코드로 선택하여 최대 시퀀스 값을 구하는 메서드
+		resultMap.put("seq", projectManageMapper.getProjectManageSeq(project));
+		return resultMap;
+	}
+	
 	// 1번 이상 변경된 이력이 있는 용역계약서를 조회하는 메서드
 	public List<Map<String, ProjectHistory>> getProjectHistoryList(String PJT_CD, String DEPT_CD, String YEAR) {
 		System.out.println("Service getProjectManageHistoryList 메서드 실행");

@@ -6,6 +6,32 @@
 	@author	ksmart30 YDE
 -->
 <mapper namespace="ksmart30.team01.project.mapper.ProjectManageMapper">
+
+	<!-- 용역계약서 입력에서 쓰이는 종합코드 Dtail을 코드에 맞게 조회 -->
+	<select id="getProjectManageCode" resultType="java.util.Map">
+		SELECT 
+			LEVEL1_CD, LEVEL2_CD, LEVEL2_NM 
+		FROM
+			T_SC9100 
+		WHERE
+			BUSI_GB = 'J' AND LEVEL1_CD = '130'		<!-- 계약기간 --> 
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '170'	<!-- 건축물유형 --> 
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '200'	<!-- 발주처구분 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '310'	<!-- 건축물구조 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '150'	<!-- 기성단계 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '110'	<!-- 기성단계 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '190'	<!-- 대금지급조건 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '340'	<!-- 부가세 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '320'	<!-- 지역 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '330'	<!-- 지구 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '331'	<!-- 구역 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '272'	<!-- 수주구분 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '270'	<!-- 수주구분 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '171'	<!-- 사업분류 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '25A'	<!-- 종료구분 -->
+		ORDER BY LEVEL1_CD ASC
+	</select>
+	
 	<!-- 거래처 조회  -->
 	<select id="getCustList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
@@ -18,7 +44,7 @@
 	</select>
 	
 	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (전체) -->
-	<select id="getBusinessManageList" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getProjectManageList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			A.PJT_CD,
 			A.PJT_NM,
@@ -38,15 +64,67 @@
 		ORDER BY A.PJT_CD DESC
 	</select>
 	
+	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (검토) -->
+	<select id="getProjectManageGumList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			PRE_PJT_CD,
+			PJT_CD,
+			PJT_TYPE,
+			SVC AS PJT_NM,
+			CUST_CD,
+			CUST_NM,
+			AREA_P,
+			AREA_M,
+			YAREA_P,
+			YAREA_M,
+			EST_AMT,
+			BIZ_GBN,
+			REGION,
+			ZONE1,
+			ZONE2,
+			ZONE3,
+			ZIP_CD,
+			ADDR,
+			BUILD_TYPE,
+			DEPT_CD,
+			INFO_EMP_NO,
+			EMP_NO,
+			PM_EMP_NO,
+			ACT_STAT,
+			PRODUCT,
+			CRT_MAN,
+			CRT_DATE,
+			UPD_MAN,
+			UPD_DATE,
+			FORECAST_AMT,
+			MARKET_MAN,
+			UP_SU,
+			DOWN_SU,
+			COVERAGE,
+			CAPACITY,
+			PRINT_YN,
+			PRINT_CNT,
+			H_CNT,
+			BIZ_TYPE,
+			END_GBN
+		FROM
+			T_PS1000
+		WHERE
+			ACT_STAT != '5'
+			AND END_GBN = ''
+			AND PJT_CD LIKE #{YEAR}+'%'
+			AND PRE_PJT_CD LIKE '%'+#{PJT_CD}+'%'
+			AND DEPT_CD LIKE '%'+#{DEPT_CD}+'%'
+	</select>
+
 	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (예산) -->
-	<select id="getBusinessManageYesanList" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getProjectManageYesanList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			A.PJT_CD,
 			A.PJT_NM,
 			B.DEPT_CD,
 			A.PJT_TYPE,
-			(SELECT SHORT_NM FROM T_SC1010
-			WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
+			(SELECT SHORT_NM FROM T_SC1010 WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
 			B.TOT_CONTRACT_AMT,
 			B.PM_EMP_NO,
 			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = B.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = B.PM_EMP_NO) PM_EMP_NM,
@@ -57,7 +135,7 @@
 			T_P11000 B
 		WHERE
 			A.PJT_CD = B.PJT_CD
-		AND A.PJT_CD LIKE '%%'
+		AND B.CONTRACT_DATE LIKE #{YEAR}+'%'
 		AND B.DEPT_CD LIKE '%%'
 		AND A.PJT_CD LIKE '%'
 		AND B.PJT_YEA_YN = 'F'
@@ -65,7 +143,7 @@
 	</select>
 	
 	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (승인) -->
-	<select id="getBusinessManageSeunginList" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getProjectManageSeunginList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			A.PJT_CD,
 			A.PJT_NM,
@@ -83,7 +161,7 @@
 			T_P11000 B
 		WHERE
 			A.PJT_CD = B.PJT_CD
-		AND A.PJT_CD LIKE '%%'
+		AND B.CONTRACT_DATE LIKE #{YEAR}+'%'
 		AND B.DEPT_CD LIKE '%%'
 		AND A.PJT_CD LIKE '%'
 		AND B.PJT_YEA_YN = 'T'
@@ -91,14 +169,13 @@
 	</select>
 	
 	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (종료) -->
-	<select id="getBusinessManageEndList" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getProjectManageEndList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			A.PJT_CD,
 			A.PJT_NM,
 			B.DEPT_CD,
 			A.PJT_TYPE,
-			(SELECT SHORT_NM FROM T_SC1010
-			WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
+			(SELECT SHORT_NM FROM T_SC1010 WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
 			B.TOT_CONTRACT_AMT,
 			B.PM_EMP_NO,
 			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = B.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = B.PM_EMP_NO) PM_EMP_NM,
@@ -108,11 +185,134 @@
 			T_P11000 B
 		WHERE
 			A.PJT_CD   = B.PJT_CD
-		AND A.PJT_CD LIKE '%%'
+		AND B.CONTRACT_DATE LIKE #{YEAR}+'%'
 		AND B.DEPT_CD LIKE '%%'
 		AND A.PJT_CD LIKE '%'
 		AND B.PJT_E_GBN = '1'
 		ORDER BY A.PJT_CD DESC
+	</select>
+	
+	<!-- 하나의 프로젝트 선택시 프로젝트 대장 상세를 조회한다 -->
+	<select id="getProjectManageSangse" parameterType="ksmart30.team01.project.domain.Project" resultType="java.util.Map">
+		SELECT
+			A.PJT_CD,
+			(SELECT SVC FROM T_PS1000 WHERE PJT_CD = #{PJT_CD}) PJT_NM,
+			A.CRT_DATE,
+			A.CONTRACT_DATE,
+			A.CONTRACT_PRI1,
+			A.CONTRACT_PRI2,
+			A.CONTRACT_PRI3,
+			(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '170' AND LEVEL2_CD = A.CONTRACT_PRI3) CONTRACT_PRI3_NM,
+			A.DEPT_CD,
+			(SELECT DEPT_NM FROM T_SC1010 WHERE DEPT_CD = A.DEPT_CD) DEPT_NM,
+			A.G_AREA_M,
+			A.G_AREA_P,
+			A.G_YAREA_M,
+			A.G_YAREA_P,
+			PYUNG_DAN,
+			A.BUILD_TYPE,
+			A.TOT_CONTRACT_AMT,
+			A.PJT_CONTRACT_AMT,
+			A.CHANGE_AMT,
+			A.BALANCE_AMT,
+			A.SURTAX,
+			(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '340' AND LEVEL2_CD = A.SURTAX) SURTAX_NM,
+			(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '08' AND LEVEL2_CD = A.BUILD_TYPE) BUILD_NM,
+			A.DONG_SU,
+			A.HOUSE_SU,
+			A.B_UP_SU,
+			A.B_DOWN_SU,
+			A.BUILD_STRUCT,
+			(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '310' AND LEVEL2_CD = A.BUILD_STRUCT) BUILD_STRUCT_NM,
+			A.ZIP_CD,
+			A.PJT_ADDR,
+			A.REGION,			<!-- 지역1 -->
+			A.REGION2,			<!-- 지역2 -->
+			A.ZONE1,			<!-- 지구1 -->
+			A.ZONE2,			<!-- 지구2 -->
+			A.SCOPE1,			<!-- 구역1 -->
+			A.SCOPE2,			<!-- 구역2 -->
+			A.BUILD_GB,			<!-- 사업분류 -->
+			A.PM_EMP_NO,		<!-- PM -->
+			A.EMP_NO,			<!-- 관리임원 -->
+			A.MARKET_MAN,		<!-- 수주책임자 -->
+			A.INFO_EMP_NO,		<!-- 정보취득자 -->
+			A.PJT_E_GBN,		<!-- 종료구분 -->
+			A.PJT_E_DATE,		<!-- 계약일자 -->
+			A.BREAK_AMT,		<!-- 중도타절금액 -->
+			A.PJT_NIC			<!-- 프로젝트 별명 -->
+		FROM
+			T_P11000 AS A
+		WHERE
+			PJT_CD = #{PJT_CD}
+	</select>
+	
+	<!-- 하나의 프로젝트 선택시 프로젝트 대장 발주처 리스트를 조회한다 -->
+	<select id="getProjectManageOwner" parameterType="ksmart30.team01.project.domain.Project" resultType="java.util.Map">
+	SELECT 
+		PJT_CD,
+		CUST_CD,
+		(SELECT CUST_NM FROM T_AC0300 WHERE CUST_CD = (SELECT CUST_CD FROM T_P11010 WHERE PJT_CD = #{PJT_CD})) CUST_NM,
+		(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '200' AND LEVEL2_CD = (SELECT CUST_GBN FROM T_P11010 WHERE PJT_CD = #{PJT_CD})) AS CUST_GBN_NM,
+		N_RATE,
+		(SELECT SUM(N_RATE) FROM T_P11010 WHERE PJT_CD = #{PJT_CD}) N_RATE_SUM,
+		CONTRACT_AMT,
+		(SELECT SUM(CONTRACT_AMT) FROM T_P11010 WHERE PJT_CD = #{PJT_CD}) CONTRACT_AMT_SUM
+	FROM
+		T_P11010
+	WHERE
+		PJT_CD = #{PJT_CD}
+	</select>
+	
+	<!-- 하나의 프로젝트 선택시 프로젝트 대장 기성단계 리스트를 조회한다 -->
+	<select id="getProjectManageGiseong" parameterType="ksmart30.team01.project.domain.Project" resultType="java.util.Map">
+	SELECT
+		PJT_CD,
+		RM_SEQ,
+		RM_STEP,
+		B.LEVEL2_NM RM_STEP_NM,
+		SALE_STEP,
+		C.LEVEL2_NM SALE_STEP_NM,
+		RM_AMT,
+		SUGUM_RATE,
+		(SELECT SUM(SUGUM_RATE) FROM T_P11030 WHERE PJT_CD = #{PJT_CD}) SUGUM_RATE_SUM,
+		SALE_PLAN_DAY,
+		(SELECT SUM(RM_AMT) FROM T_P11030 WHERE PJT_CD = #{PJT_CD}) RM_AMT_SUM
+	FROM
+		T_P11030 A,
+		(SELECT LEVEL2_NM,LEVEL2_CD FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '150') B,
+		(SELECT LEVEL2_NM,LEVEL2_CD FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '110') C	
+	WHERE
+		B.LEVEL2_CD = A.RM_STEP
+		AND c.LEVEL2_CD = A.SALE_STEP
+		AND PJT_CD = #{PJT_CD}
+	ORDER BY
+		RM_SEQ ASC
+	</select>
+	
+	<!-- 하나의 프로젝트 선택시 프로젝트 대장 을의 수급지분 리스트를 조회한다 -->
+	<select id="getProjectManageSugub" parameterType="ksmart30.team01.project.domain.Project" resultType="java.util.Map">
+		SELECT
+			PJT_CD,
+			SUGUB,
+			SU_RATE
+		FROM
+			T_P11040
+		WHERE
+			PJT_CD = #{PJT_CD}
+	</select>
+	
+	<!-- 하나의 프로젝트 선택시 프로젝트 변경 회수를 조회한다  -->
+	<select id="getProjectManageSeq" parameterType="ksmart30.team01.project.domain.Project" resultType="java.util.Map">
+		SELECT
+			PJT_CD,
+			MAX(PJT_SEQ) AS PJT_SEQ
+		FROM
+			T_P11000_H
+		WHERE
+			PJT_CD = #{PJT_CD}
+		GROUP BY
+			PJT_CD
 	</select>
 	
 	<!-- 용역계약서 변경 조회를 위해 변경한 이력이 1번이라도 있는 용역계약서를 조회한다 -->

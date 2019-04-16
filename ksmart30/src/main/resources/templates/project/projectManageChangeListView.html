@@ -20,6 +20,7 @@
 					for(let i=0; i<data.length; i++) {
 						$('#pjtHistoryDetailList').append('<tr id="test" onclick="pjtSangseBtn('+data[i].PJT_CD+','+data[i].PJT_SEQ+')"><td>'+data[i].PJT_DATE+'</td><td>'+data[i].LEVEL2_NM+'</td></tr>');
 					}
+					// 결과 중 맨 처음 row의 상세 내용 자동 출력
 					pjtSangseBtn(data[0].PJT_CD, data[0].PJT_SEQ);
 				}
 			});
@@ -156,6 +157,7 @@
 						for(let i=0; i<data.length; i++) {
 							$('#pjtHistoryList').append('<tr><td style="background-color:#fff9df">'+data[i].PJT_CD+'</td><td onclick="pjtOneBtn('+data[i].PJT_CD+')">'+data[i].PJT_NM+'</td></tr>');
 						}
+						// 결과 중 맨처음 row의 PJT_CD 자동 선택
 						pjtOneBtn(data[0].PJT_CD);
 					}
 				});
@@ -190,13 +192,6 @@
 	    			}); */
 				}
 			});
-			$('#pjtSearchList').delegate('tr', 'click', function(){
-				let tr = $(this);
-				let td = tr.children();
-				$('#CUST_CD').val(td.eq(0).text());
-				$('#CUST_NM').text(td.eq(1).text());
-				$('#custModal').click();
-    		});
 		});
 		</script>
 	</th:block>

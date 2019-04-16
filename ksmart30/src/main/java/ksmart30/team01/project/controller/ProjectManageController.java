@@ -5,17 +5,24 @@
  */
 package ksmart30.team01.project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import ksmart30.team01.project.service.ProjectManageService;
 
 @Controller
 public class ProjectManageController {
-	//3.1.1 용역계약서 입력 View
-	@GetMapping("/project/projectManageView")
-	public String projectManageView() {
-		return "project/projectManageView";
-	}
+	@Autowired
+	ProjectManageService projectManageService;
 	
+	//3.1.2 용역계약서 변경 입력 View
+	@GetMapping("/project/projectManageView")
+	public String projectManageView(Model model) {
+		model.addAttribute("code", projectManageService.getProjectManageCode());
+		return "/project/projectManageView";
+	}
+		
 	//3.1.2 용역계약서 변경 입력 View
 	@GetMapping("/project/projectManageChangeView")
 	public String projectManageChangeIn() {
