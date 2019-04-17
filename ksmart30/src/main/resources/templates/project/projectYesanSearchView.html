@@ -7,13 +7,30 @@
 	</th:block>
 	
 	<th:block layout:fragment="customBody">
-	<!-- 검색화면 start -->
-	<div class="x_panel" style="color: black;">
-
-		<div class="x_title">
-			<h3>프로젝트예산 검색</h3>
-			<div class="clearfix"></div>
+	<font color="black">	
+	
+	<!-- 목차 상단에 추가 -->
+	<div class="col-md-12 col-xs-12">
+		<div class="page-title">
+			<div class="title_left">
+			 <h2><b>프로젝트예산 검색</b></h2>
+			<h5><font color="gray"><b>2. 계약프로젝트 관리&nbsp;&gt; 2.2 프로젝트예산 관리&nbsp;&gt; 2.2.4 프로젝트예산 검색&nbsp;&nbsp;</b></font></h5>				
+			</div>
 		</div>
+		<div class="x_content" style="text-align: right">
+			<div class="btn-group">
+			<button class="btn btn-default" type="reset">입력</button>
+			<button class="btn btn-default" type="button" disabled="disabled">수정</button>
+			<button class="btn btn-default" type="button" disabled="disabled">삭제</button>
+			<button class="btn btn-default" type="button" disabled="disabled">저장</button>
+			<button class="btn btn-default" type="button">출력</button>
+			</div>
+		</div>
+	</div>
+	<!-- 목차 상단에 추가 end -->			
+	
+	<!-- 검색화면 start -->
+	<div class="x_panel">
 
 		<div class="x_content">
 			<br>
@@ -197,6 +214,7 @@
 				</div>
 			</div>
 		</div>	
+		</font>
 	</th:block>
 	
 	<th:block layout:fragment="customJquery">

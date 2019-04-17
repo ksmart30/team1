@@ -6,24 +6,37 @@
  	<!-- 2.2.1. 프로젝트예산입력을 위해 프로젝트 대장에서 프로젝트코드와 프로젝트명을 보여주는 쿼리문 -->
  	<select id="getProjcetYesanSearchList" parameterType="ksmart30.team01.project.domain.ProjectYesanSearchRequest" resultType="java.util.Map">
 		SELECT B.PJT_CD,
-		       A.PJT_NM
-		  FROM T_SM3000 A,
-		  (
-			SELECT
-				ISNULL((CASE WHEN (PJT_E_GBN='1') THEN '1'	<!-- 종료구분이 1인 경우 '1' -->
-					WHEN (PJT_YEA_YN='T') THEN 'T'			<!-- 승인구분이 T인경우 'T' -->
-					WHEN (PJT_YEA_YN='F') THEN 'F'			<!-- 승인구분이 F인 경우 'F' -->
-						END),'F') GUBUN						<!-- NULL값인 경우 'F'로 GUBUN컬럼을 만든다 -->
-				,PJT_CD 
-				,CONTRACT_DATE 
-				,DEPT_CD
-		   FROM T_P11000
-		   ) B
+				A.PJT_NM
+		FROM T_SM3000 A,
+			(
+			SELECT 	
+				B.PJT_CD,
+				A.PJT_NM,
+				B.DEPT_CD,
+				B.CONTRACT_DATE,
+				CASE 			
+					WHEN B.PJT_YEA_YN = 'T' THEN '4'	<!-- 승인 --> 
+					WHEN B.PJT_E_GBN > '' AND B.PJT_E_DATE > '' THEN '5'	<!-- 종료 -->	  
+			      	WHEN C.MD>0 AND D.PN>0 THEN '3'	<!-- 미승인 -->	     
+				   	ELSE '2'	<!-- 계약 -->
+				END GUBUN		
+			FROM 
+				T_SM3000 A,
+				T_P11000 B,
+				(SELECT PJT_CD, COUNT(*) MD FROM T_P11050 GROUP BY PJT_CD) C,
+				(SELECT PJT_CD, COUNT(*) PN FROM T_P11080 GROUP BY PJT_CD) D		
+			 WHERE 
+			 		B.PJT_CD  = A.PJT_CD
+			   AND 
+					B.PJT_CD *= C.PJT_CD
+			   AND 
+					B.PJT_CD *= D.PJT_CD
+			) B
 		WHERE B.PJT_CD = A.PJT_CD
-			AND B.CONTRACT_DATE LIKE '%' + #{CONTRACT_DATE} + '%'
-			AND B.DEPT_CD LIKE '%' + #{DEPT_CD}
-			AND B.PJT_CD LIKE '%' + #{PJT_CD} + '%'
-			AND B.GUBUN LIKE '%' + #{radioValue} + '%'
+			AND B.CONTRACT_DATE LIKE '%'+#{CONTRACT_DATE_INPUT}+'%'
+			AND B.DEPT_CD LIKE '%'+#{DEPT_CD}+'%'
+			AND B.PJT_CD LIKE '%'+#{PJT_CD}+'%'
+			AND B.GUBUN LIKE '%'+#{radioValue}+'%'
 		ORDER BY B.PJT_CD DESC;
   	</select>
  	

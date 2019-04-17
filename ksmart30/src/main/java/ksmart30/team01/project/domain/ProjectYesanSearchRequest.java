@@ -1,7 +1,7 @@
 package ksmart30.team01.project.domain;
 
 public class ProjectYesanSearchRequest {
-	private String CONTRACT_DATE;
+	private String CONTRACT_DATE_INPUT;
 	private String DEPT_CD;
 	private String PJT_CD;
 	private String radioValue;
@@ -18,11 +18,11 @@ public class ProjectYesanSearchRequest {
 	public void setRadioValue(String radioValue) {
 		this.radioValue = radioValue;
 	}	
-	public String getCONTRACT_DATE() {
-		return CONTRACT_DATE;
+	public String getCONTRACT_DATE_INPUT() {
+		return CONTRACT_DATE_INPUT;
 	}
-	public void setCONTRACT_DATE(String cONTRACT_DATE) {
-		CONTRACT_DATE = cONTRACT_DATE;
+	public void setCONTRACT_DATE_INPUT(String cONTRACT_DATE_INPUT) {
+		CONTRACT_DATE_INPUT = cONTRACT_DATE_INPUT;
 	}
 	public String getPJT_CD() {
 		return PJT_CD;
@@ -33,7 +33,7 @@ public class ProjectYesanSearchRequest {
 	
 	@Override
 	public String toString() {
-		return "ProjectYesanSearchRequest [CONTRACT_DATE=" + CONTRACT_DATE + ", DEPT_CD=" + DEPT_CD + ", PJT_CD="
+		return "ProjectYesanSearchRequest [CONTRACT_DATE_INPUT=" + CONTRACT_DATE_INPUT + ", DEPT_CD=" + DEPT_CD + ", PJT_CD="
 				+ PJT_CD + ", radioValue=" + radioValue + "]";
 	}
 
