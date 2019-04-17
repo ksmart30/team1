@@ -231,5 +231,6 @@
 			AND 
 		 	 out_corp = #{OUT_CORP}
 	</select>
-	
+
+
 </mapper>
