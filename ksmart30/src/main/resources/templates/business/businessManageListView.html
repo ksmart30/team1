@@ -27,9 +27,11 @@ $(document).ready(function(){
                 $(data).each((index,item)=>{
                 	$('#searchBody').append('<tr><td style="background-color: #fff9df">'+item.PJT_CD+'</td><td>'
                 			+item.PJT_NM+'</td><td>'
-                			+item.ADDR+'</td><td>'
+                			+item.CUST_NM+'</td><td>'
                 			+item.AREA_P+'</td><td>'
-                			+item.YAREA_P+'</td></tr>'
+                			+item.YAREA_P+'</td><td>'
+                			+item.UP_SU+'</td><td>'
+                			+item.DOWN_SU+'</td></tr>'
                 	);
                 	
                 });              
@@ -129,9 +131,11 @@ $(document).ready(function(){
 
                             <th class="column-title">코드명</th>
 							<th class="column-title">프로젝트명</th>
-							<th class="column-title">대지위치</th>
+							<th class="column-title">발주자</th>
 							<th class="column-title">대지면적(평)</th>
 							<th class="column-title">연면적(평)</th>
+							<th class="column-title">지상층</th>
+							<th class="column-title">지하층</th>
 
                               
                             

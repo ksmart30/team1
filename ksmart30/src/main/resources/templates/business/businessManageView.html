@@ -71,6 +71,7 @@
 
 			function mooncall(PJT_NM){
 				console.log("mooncall"+PJT_NM);
+
 				$.ajax({
 					url:'/business/businessManageView',
 					type:'POST',
@@ -262,11 +263,15 @@
 			    	console.log("pjtInsertBtn 실행단계1버튼");
 			    	let CUST_CD_IN = $('#CUST_CD').val();
 	    			let CUST_NM_IN = $('#CUST_NM').text();
-	    			console.log(CUST_CD_IN,CUST_NM_IN);
+	    			let YAREA_M_IN = $('#YAREA_M').val();
+	/* 				let BUSI_DATE = $('#BUSI_DATE').val();
+					let BUSI_DATE_A = BUSI_DATE.substring(0,4)+BUSI_DATE.substinrg(5,2)+BUSI_DATE.subting(8,2);
+		
+	    			console.log('콘솔로그'+CUST_CD_IN,CUST_NM_IN,YAREA_M_IN,BUSI_DATE_A);  */
 	    			 $.ajax({
-				            url:'/business/businessManageViewList',	//url을 요청하고
+				            url:'/business/businessManageViewInsert',	//url을 요청하고
 				            type:'POST',	
-				        	data:{CUST_CD:CUST_CD_IN},
+				        	data:{CUST_CD:CUST_CD_IN,CUST_NM:CUST_NM_IN,YAREA_M:YAREA_M_IN},
 				        	success:function(){
 				                alert('사업수행결정서 저장');
 				        	}
@@ -278,6 +283,7 @@
 	    		 
 	    		 /*============================== 사업수행결정서 T_PS3000 저장 end==================  */
 			});
+			
 			
 			
 			
@@ -323,7 +329,7 @@
 											<option value="7830">설계4본부 1소</option>
 											<option value="7840">설계4본부 2소</option>
 											<option value="7930">설계5본부 1소</option>
-											<option value="7940">설계5본부 2소</option>
+											
 										</select>
 									</div>
 								</td>
@@ -529,7 +535,7 @@
 
 
 								<tr>
-									<td>의뢰일자<input type="date"></td>
+									<td>의뢰일자<input type="date" id="BUSI_DATE"></td>
 									<td>정보취득자<input type="text"
 										style="width: 40px; height: 20px; font-size: 12px">
 									<button id="pjt_s">

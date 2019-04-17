@@ -5,6 +5,7 @@ public class BusinessMarket {
 	private String BUSI_YY;  //년도
 	private String UP_SU;		//지상층수
 	private String UP_SU2;      //지상층수 검색때 필요
+	private String YAREA_M;  
 	private String YAREA_P;	 //연면적
 	private String YAREA_P2;  //연면적 검색때 필요
 	private String PJT_NM; // 프로젝트 이름
@@ -12,7 +13,47 @@ public class BusinessMarket {
 	private String PJT_CD; // 프로젝트 코드
 	private String END_GBN; // HOLDING/CANCEL
 	private String SVC; // PS1000 프로젝트 코드
+	private String CUST_CD; //거래처 코드
+	private String CUST_NM; //거래처 이름
+	private String BUSI_SEQ; //일련번호 순번
+	private String BUSI_DATE; //의뢰일 
 	
+	public String getBUSI_DATE() {
+		return BUSI_DATE;
+	}
+	public void setBUSI_DATE(String bUSI_DATE) {
+		BUSI_DATE = bUSI_DATE;
+	}
+	public String getYAREA_M() {
+		return YAREA_M;
+	}
+	public void setYAREA_M(String yAREA_M) {
+		YAREA_M = yAREA_M;
+	}
+	public String getBUSI_SEQ() {
+		return BUSI_SEQ;
+	}
+	public void setBUSI_SEQ(String bUSI_SEQ) {
+		BUSI_SEQ = bUSI_SEQ;
+	}
+	public String getCUST_NM() {
+		return CUST_NM;
+	}
+	public void setCUST_NM(String cUST_NM) {
+		CUST_NM = cUST_NM;
+	}
+	public String getSVC() {
+		return SVC;
+	}
+	public void setSVC(String sVC) {
+		SVC = sVC;
+	}
+	public String getCUST_CD() {
+		return CUST_CD;
+	}
+	public void setCUST_CD(String cUST_CD) {
+		CUST_CD = cUST_CD;
+	}
 	public String getEND_GBN() {
 		return END_GBN;
 	}

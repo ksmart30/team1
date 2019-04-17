@@ -12,12 +12,11 @@
 				UP_SU,
 				DOWN_SU,
 				AREA_P,
-				YAREA_P,
-				ADDR
+				YAREA_P
 		FROM T_PS3000	
 		WHERE BUSI_YY LIKE #{BUSI_YY}
-<!-- 		AND UP_SU BETWEEN #{UP_SU} AND #{UP_SU2}
-		AND YAREA_P BETWEEN #{YAREA_P} AND #{YAREA_P2}	 -->	
+		AND UP_SU BETWEEN #{UP_SU} AND #{UP_SU2}
+		AND YAREA_P BETWEEN #{YAREA_P} AND #{YAREA_P2}	 	
 </select>
 
 <!--사업수행결정서 좌측 목록  -->
@@ -266,7 +265,23 @@ AND PJT.PJT_NM LIKE '%'+#{PJT_NM}+'%'
 	</select>
 	
 	<insert id="businessManageViewInsert" parameterType="ksmart30.team01.business.domain.BusinessMarket">
-		INSERT INTO T_PS3000(CUST_CD) VALUES(#{CUST_CD})
+		INSERT INTO 
+			T_PS3000
+				(
+				BUSI_YY,
+				CUST_CD,
+				CUST_NM,
+				BUSI_SEQ,
+				YAREA_M
+				) 
+			VALUES
+				(
+				'2019',
+				#{CUST_CD},
+				#{CUST_NM},
+				'0070',
+				#{YAREA_M}
+				)
 	
 	
 	
