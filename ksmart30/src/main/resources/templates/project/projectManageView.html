@@ -163,14 +163,64 @@
 					$('#HOUSE_SU_ONE').attr('value', data.sangse.HOUSE_SU);
 					$('#B_UP_SU_ONE').empty();						// 지상층수
 					$('#B_UP_SU_ONE').attr('value', data.sangse.B_UP_SU);
-					$('#B_DOWN_SU_ONE').empty();						// 지하층수
+					$('#B_DOWN_SU_ONE').empty();					// 지하층수
 					$('#B_DOWN_SU_ONE').attr('value', data.sangse.B_DOWN_SU);
 					// 건축물구조
 					$('#BUILD_STRUCT_ONE').attr('value', data.sangse.BUILD_STRUCT);
 						$('select[id=BUILD_STRUCT_ONE]').val(data.sangse.BUILD_STRUCT);
+					// 지역1
 					$('#REGION_ONE').attr('value', data.sangse.REGION);
-						$('select[id=REGION_ONE]').val(data.sangse.REGION);
-					
+						$('select[id=REGION_ONE]').val(data.sangse.REGION);	
+					// 지역2
+					$('#REGION2_ONE').attr('value', data.sangse.REGION2);
+						$('select[id=REGION2_ONE]').val(data.sangse.REGION2);
+					// 지구1
+					$('#ZONE1_ONE').attr('value', data.sangse.ZONE1);	
+						$('select[id=ZONE1_ONE]').val(data.sangse.ZONE1);
+					// 지구2
+					$('#ZONE2_ONE').attr('value', data.sangse.ZONE2);	
+						$('select[id=ZONE2_ONE]').val(data.sangse.ZONE2);
+					// 구역1
+					$('#SCOPE1_ONE').attr('value', data.sangse.SCOPE1);	
+						$('select[id=SCOPE1_ONE]').val(data.sangse.SCOPE1);
+					// 구역2
+					$('#SCOPE2_ONE').attr('value', data.sangse.SCOPE2);
+						$('select[id=SCOPE2_ONE]').val(data.sangse.SCOPE2);
+					// 구역2
+					$('#SCOPE2_ONE').attr('value', data.sangse.SCOPE2);		
+						$('select[id=SCOPE2_ONE]').val(data.sangse.SCOPE2);
+					// 수주구분1 필요
+					// 수주구분2
+					$('#BIZ_GBN_ONE').attr('value', data.sangse.BIZ_GBN);		
+						$('select[id=BIZ_GBN_ONE]').val(data.sangse.BIZ_GBN);
+					// 사업분류
+					$('#BUILD_GB_ONE').attr('value', data.sangse.BUILD_GB);		
+						$('select[id=BUILD_GB_ONE]').val(data.sangse.BUILD_GB);
+					$('#PM_EMP_NO_ONE').empty();					// PM
+					$('#PM_EMP_NO_ONE').attr('value', data.sangse.PM_EMP_NO);
+					$('#PM_EMP_NO_NM_ONE').empty();					// PM 이름
+					$('#PM_EMP_NO_NM_ONE').append(data.sangse.PM_EMP_NO_NM);
+					$('#EMP_NO_ONE').empty();						// 관리임원
+					$('#EMP_NO_ONE').attr('value', data.sangse.EMP_NO);
+					$('#EMP_NO_NM_ONE').empty();						// 관리임원 이름
+					$('#EMP_NO_NM_ONE').append(data.sangse.EMP_NO_NM);
+					$('#MARKET_MAN_ONE').empty();					// 수주책임자
+					$('#MARKET_MAN_ONE').attr('value', data.sangse.MARKET_MAN);
+					$('#MARKET_MAN_NM_ONE').empty();					// 수주책임자 이름
+					$('#MARKET_MAN_NM_ONE').append(data.sangse.MARKET_MAN_NM);
+					$('#INFO_EMP_NO_ONE').empty();					// 정보취득자
+					$('#INFO_EMP_NO_ONE').attr('value', data.sangse.INFO_EMP_NO);
+					$('#INFO_EMP_NO_NM_ONE').empty();					// 정보취득자 이름
+					$('#INFO_EMP_NO_NM_ONE').append(data.sangse.INFO_EMP_NO_NM);
+					// 종료구분
+					$('#PJT_E_GBN_ONE').attr('value', data.sangse.PJT_E_GBN);		
+						$('select[id=PJT_E_GBN_ONE]').val(data.sangse.PJT_E_GBN);
+					$('#PJT_E_DATE_ONE').empty();					// 계약일자
+					$('#PJT_E_DATE_ONE').attr('value', data.sangse.INFO_EMP_NO);
+					$('#BREAK_AMT_ONE').empty();					// 중도타절금액
+					$('#BREAK_AMT_ONE').attr('value', data.sangse.BREAK_AMT);
+					$('#PJT_NIC_ONE').empty();					// 프로젝트 별명
+					$('#PJT_NIC_ONE').attr('value', data.sangse.PJT_NIC);
 				}
 			});
 		}
@@ -1018,7 +1068,7 @@
 		<span style="color:black">원</span>
 		<button>직접 계약서 입력</button>
 		</div>
-		<label for="ex3">◎ 건출물규모</label><br>
+		<label for="ex3">◎ 건축물규모</label><br>
 		<table>
 			<tr>
 				<td width="10%">동수</td>
@@ -1074,7 +1124,7 @@
 					지구
 				</td>
 				<td>
-					<select>
+					<select id="ZONE1_ONE">
 						<option></option>
 						<th:block th:each="c : ${code}">
 	                    	<th:block th:if="${c.LEVEL1_CD}==330">
@@ -1087,7 +1137,7 @@
 					구역
 				</td>
 				<td>
-					<select>
+					<select id="SCOPE1_ONE">
 						<option></option>
 						<th:block th:each="c : ${code}">
 	                    	<th:block th:if="${c.LEVEL1_CD}==331">
@@ -1100,7 +1150,7 @@
 			<tr>
 				<td></td>
 				<td>
-					<select>
+					<select id="REGION2_ONE">
 						<option></option>
 						<th:block th:each="c : ${code}">
 	                    	<th:block th:if="${c.LEVEL1_CD}==320">
@@ -1111,7 +1161,7 @@
 				</td>
 				<td></td>
 				<td>
-					<select>
+					<select id="ZONE2_ONE">
 						<option></option>
 						<th:block th:each="c : ${code}">
 	                    	<th:block th:if="${c.LEVEL1_CD}==330">
@@ -1122,7 +1172,7 @@
 				</td>
 				<td></td>
 				<td>
-					<select>
+					<select id="SCOPE2_ONE">
 						<option></option>
 						<th:block th:each="c : ${code}">
 	                    	<th:block th:if="${c.LEVEL1_CD}==331">
@@ -1150,7 +1200,7 @@
 					</select>
 				</td>
 				<td colspan="2">
-					<select class="col-md-10">
+					<select id="BIZ_GBN_ONE" class="col-md-10">
 						<option></option>
 						<th:block th:each="c : ${code}">
 	                    	<th:block th:if="${c.LEVEL1_CD}==270">
@@ -1163,7 +1213,7 @@
 			<tr>
 				<td>사업분류</td>
 				<td colspan="2">
-					<select class="col-md-10">
+					<select id="BUILD_GB_ONE" class="col-md-10">
 						<option></option>
 						<th:block th:each="c : ${code}">
 	                    	<th:block th:if="${c.LEVEL1_CD}==171">
@@ -1194,13 +1244,13 @@
 				 	PM
 				</td>
 				<td width="30%">
-					<input type="text" readonly>
+					<input type="text" id="PM_EMP_NO_ONE">
 				</td>
 				<td width="10%">
 				 	<button>사원</button>
 				</td>
 				<td width="30%">
-					이다은
+					<span id="PM_EMP_NO_NM_ONE"></span>
 				</td>
 			</tr>
 			<tr>
@@ -1208,13 +1258,13 @@
 				 	관리임원
 				</td>
 				<td>
-					<input type="text" readonly>
+					<input type="text" id="EMP_NO_ONE">
 				</td>
 				<td>
 				 	<button>사원</button>
 				</td>
 				<td>
-					이다은
+					<span id="EMP_NO_NM_ONE"></span>
 				</td>
 			</tr>
 			<tr>
@@ -1222,13 +1272,13 @@
 				 	수주책임자
 				</td>
 				<td>
-					<input type="text" readonly>
+					<input type="text" id="MARKET_MAN_ONE">
 				</td>
 				<td>
 				 	<button>사원</button>
 				</td>
 				<td>
-					이다은
+					<span id="MARKET_MAN_NM_ONE"></span>
 				</td>
 			</tr>
 			<tr>
@@ -1236,13 +1286,13 @@
 				 	정보취득자
 				</td>
 				<td width="30%">
-					<input type="text" readonly>
+					<input type="text" id="INFO_EMP_NO_ONE">
 				</td>
 				<td width="25%">
 				 	<button>사원</button>
 				</td>
 				<td>
-					이다은
+					<span id="INFO_EMP_NO_NM_ONE"></span>
 				</td>
 			</tr>
 			<tr>
@@ -1250,7 +1300,7 @@
 					종료구분
 				</td>
 				<td>
-					<select class="col-md-12">
+					<select id="PJT_E_GBN_ONE" class="col-md-12">
 						<option></option>
 						<th:block th:each="c : ${code}">
 	                    	<th:block th:if="${c.LEVEL1_CD}==25A">
@@ -1266,7 +1316,7 @@
 					계약일자
 				</td>
 				<td>
-					<input class="col-md-12" type="date">
+					<input id="PJT_E_DATE_ONE" class="col-md-12" type="date">
 				</td>
 				<td></td>
 			</tr>
@@ -1275,7 +1325,7 @@
 					중도타절금액
 				</td>
 				<td>
-					<input class="col-md-10" type="text">원
+					<input id="BREAK_AMT_ONE" class="col-md-10" type="text">원
 				</td>
 				<td></td>
 			</tr>
@@ -1291,7 +1341,7 @@
 		<label for="ex3">특기사항</label>
 		<textarea rows="10" cols="50"></textarea><br>
 		<label for="ex3">프로젝트별명</label>
-		<input type="text"><br>
+		<input type="text" id="PJT_NIC_ONE"><br>
 		<label for="ex3">첨부파일</label>
 	</div>
 	</div>

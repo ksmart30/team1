@@ -25,8 +25,8 @@
 			OR BUSI_GB = 'J' AND LEVEL1_CD = '320'	<!-- 지역 -->
 			OR BUSI_GB = 'J' AND LEVEL1_CD = '330'	<!-- 지구 -->
 			OR BUSI_GB = 'J' AND LEVEL1_CD = '331'	<!-- 구역 -->
-			OR BUSI_GB = 'J' AND LEVEL1_CD = '272'	<!-- 수주구분 -->
-			OR BUSI_GB = 'J' AND LEVEL1_CD = '270'	<!-- 수주구분 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '272'	<!-- 수주구분1 -->
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '270'	<!-- 수주구분2 -->
 			OR BUSI_GB = 'J' AND LEVEL1_CD = '171'	<!-- 사업분류 -->
 			OR BUSI_GB = 'J' AND LEVEL1_CD = '25A'	<!-- 종료구분 -->
 		ORDER BY LEVEL1_CD ASC
@@ -232,11 +232,16 @@
 			A.ZONE2,			<!-- 지구2 -->
 			A.SCOPE1,			<!-- 구역1 -->
 			A.SCOPE2,			<!-- 구역2 -->
+			(SELECT BIZ_GBN FROM T_PS1000 WHERE PJT_CD = #{PJT_CD}) BIZ_GBN,	<!-- 수주구분2 -->
 			A.BUILD_GB,			<!-- 사업분류 -->
 			A.PM_EMP_NO,		<!-- PM -->
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = A.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = A.PM_EMP_NO) PM_EMP_NO_NM,
 			A.EMP_NO,			<!-- 관리임원 -->
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = A.EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = A.EMP_NO) EMP_NO_NM,
 			A.MARKET_MAN,		<!-- 수주책임자 -->
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = A.MARKET_MAN UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = A.MARKET_MAN) MARKET_MAN_NM,
 			A.INFO_EMP_NO,		<!-- 정보취득자 -->
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = A.INFO_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = A.INFO_EMP_NO) INFO_EMP_NO_NM,
 			A.PJT_E_GBN,		<!-- 종료구분 -->
 			A.PJT_E_DATE,		<!-- 계약일자 -->
 			A.BREAK_AMT,		<!-- 중도타절금액 -->
