@@ -4,8 +4,70 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart30.team01.project.mapper.ProjectSonikMapper"> 
 
+<!-- 프로젝트 예산,실적대비표 리스트화면을 보여주기위한 쿼리-->
+<select id="projectSonikListSearch"
+		parameterType="String"
+		resultType="java.util.Map">
+	
+SELECT 
+	C.PJT_CD,
+	C.PJT_NM,
+	D.PJT_GB,
+	A.COST_AMT1,
+	A.COST_AMT2,
+	A.COST_AMT3, 
+	B.TOT_CONTRACT_AMT
+	
+FROM 
+	 T_p11090 A 
+	,T_P11000 B
+	,T_SM3000 C
+	,T_P11000_H D
+WHERE 
+	A.PJT_CD = B.PJT_CD 
+AND
+	C.PJT_CD = A.PJT_CD
+AND
+	D.PJT_CD = A.PJT_CD
+AND
+	A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
 
 
+</select>
+
+
+
+<!-- 프로젝트 예산,실적대비표_왼쪽 상단 검색 조건에서 프로젝트 코드를 조회하는 쿼리 -->
+<select id="projectCodeSearch"
+		parameterType="ksmart30.team01.project.domain.SonikProjectCodeSearch"
+		resultType="java.util.Map">
+SELECT
+*
+FROM 
+(SELECT 
+	'20'+SUBSTRING(A.PJT_CD,1,2)YY
+	,A.PJT_CD
+	,B.PJT_NM
+	,C.DEPT_CD
+	,C.DEPT_NM
+FROM
+	 T_P11000 A
+	,T_SM3000 B 
+	,T_SC1010 C
+
+WHERE
+	A.DEPT_CD = C.DEPT_CD
+AND
+	A.PJT_CD = B.PJT_CD)A
+
+WHERE 
+
+A.YY LIKE '%'+#{YY}+'%'
+
+AND
+
+A.${selectedPJT} LIKE '%' + #{pjtValue} + '%'
+</select>
 
 
 
