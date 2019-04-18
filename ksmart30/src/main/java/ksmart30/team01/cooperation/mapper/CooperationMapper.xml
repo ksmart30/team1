@@ -198,7 +198,7 @@
 			AND
 		 	 PJT_CD = #{PJT_CD} 
 			AND 
-		 	 OUT_CORP LIKE '%'+#{OUT_CORP}+'%' <!-- 외주처 검색이 안될경우에도 출력하기 위해 LIKE절 사용 -->
+		 	 OUT_CORP = #{OUT_CORP} <!-- 외주처 검색이 안될경우에도 출력하기 위해 LIKE절 사용 -->
 		 	AND
 	 		 OUT_ITEM = #{OUT_ITEM}
 	</select>
@@ -216,7 +216,9 @@
 			AND
 		 	 PJT_CD = #{PJT_CD} 
 			AND 
-		 	 out_corp = #{OUT_CORP}
+		 	 OUT_CORP = #{OUT_CORP} <!-- 외주처 검색이 안될경우에도 출력하기 위해 LIKE절 사용 -->
+		 	AND
+	 		 OUT_ITEM = #{OUT_ITEM}
 	</select>
 	<!-- 용역계약서 용역내용 출력  -->
 	<select id="getCooperationPJTDragon"
@@ -232,7 +234,9 @@
 			AND
 		 	 PJT_CD = #{PJT_CD} 
 			AND 
-		 	 out_corp = #{OUT_CORP}
+		 	 OUT_CORP = #{OUT_CORP} <!-- 외주처 검색이 안될경우에도 출력하기 위해 LIKE절 사용 -->
+		 	AND
+	 		 OUT_ITEM = #{OUT_ITEM}
 	</select>
 
 
