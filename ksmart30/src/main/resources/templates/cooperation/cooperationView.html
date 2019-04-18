@@ -9,14 +9,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 //계약서 상세내용 호출 후 출력
-function callme(IN_PJT_CD,IN_OUT_CORP){
+function callme(IN_PJT_CD,IN_OUT_CORP,IN_OUT_ITEM){
 
 		console.log("callme호출");
 		
 		$.ajax({
             url:'/cooperationPJTSangse', //호출할 메소드
             type:'POST',//송신 방식 
-            data:{PJT_CD:IN_PJT_CD,OUT_CORP:IN_OUT_CORP},//넘길 데이터
+            data:{PJT_CD:IN_PJT_CD,OUT_CORP:IN_OUT_CORP,OUT_ITEM:IN_OUT_ITEM},//넘길 데이터
             success:(data)=>{
             	console.log(data);
             	//외주계약서 상세 내용
@@ -120,7 +120,7 @@ $(document).ready(()=>{
 	                //계약현황 //&#39 = ' 유니코드
 	                $(data.cooperationSmallList).each((index,item)=>{
 	                	$('#gyhh').append(//계약현황에 출력시켜주기
-	                			'<tr onclick="callme('+PJT_CD+','+item.OUT_CORP+')"><td style="background-color: #fff9df" width="20%">'
+	                			'<tr onclick="callme('+PJT_CD+','+item.OUT_CORP+','+item.OUT_ITEM+')"><td style="background-color: #fff9df" width="20%">'
 	                			+item.OUT_ITEM_NM+'</td><td>' //부문
 	                			+item.CUST_NM+'</td><td>'	//외주처
 	                			+item.CONTRACT_AMT+'</td></tr>'); //계약액
@@ -140,7 +140,7 @@ $(document).ready(()=>{
 	                $('#PJT_DEPT_CD_NM').append('('+data.cooperationPJTPM.DEPT_CD+') '+data.cooperationPJTPM.DEPT_NM);
 	                $('#PJT_PM_NM').append(data.cooperationPJTPM.PM_NM);
 	                
-	                callme(PJT_CD,data.cooperationSmallList[0].OUT_CORP);//첫번째 외주계약서 상세내용 출력 하기위해 callme 에 값넣고 호출
+	                callme(PJT_CD,data.cooperationSmallList[0].OUT_CORP,data.cooperationSmallList[0].OUT_ITEM);//첫번째 외주계약서 상세내용 출력 하기위해 callme 에 값넣고 호출
 	            }
 	        });
     	}
@@ -156,6 +156,7 @@ $(document).ready(()=>{
 		$('#PJT_CD').val(td.eq(0).text());
 		$('#pjt_cd_nm').text(td.eq(1).text());
 		$('#custModal').click();
+		$('#pjt_btn').trigger('click');
 	});
 	/* =============================프로젝트코드별조회 end================================= */
     
@@ -212,7 +213,7 @@ $(document).ready(()=>{
 								<tbody>
 								<tr>
 									<td><label class="control-label">검색년도</label></td>
-										<td><input type="number" id="YY" placeholder="_ _ _ _"></td>
+										<td><input type="number" id="YY" placeholder="_ _ _ _4자리숫자 입력"></td>
 								</tr>
 									<tr>
 									

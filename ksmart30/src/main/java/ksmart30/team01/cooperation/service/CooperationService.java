@@ -51,6 +51,12 @@ public class CooperationService {
 	// 3.1.1 외주계약서 입력 - 조회
 	// 외주관리 - 외주계약서관리 - 외주계약서 입력 - 외주계약서 상세내역 가져오기
 	public Map<String,Object> cooperationPJTSangseSelect(CooperationSangseRequest vo){
+		if(vo.getOUT_CORP() == null) {//입력값 null 일때 공백처리
+			vo.setOUT_CORP("");
+		}
+		if(vo.getOUT_ITEM().length()<2) {//입력값이 1자리 수일때 앞에 0자 붙혀 2자리수로 만들기
+			vo.setOUT_ITEM('0'+vo.getOUT_ITEM());
+		}
 		System.out.println("cooperationSangseSelect 실행 시작");
 		Map<String,Object> cooperationPJTSangseGD = new HashMap<String, Object>();
 		

@@ -99,6 +99,7 @@
 	
 		SELECT 
 			 C.LEVEL2_NM as OUT_ITEM_NM <!-- 부문 -->
+			,A.OUT_ITEM
 			,B.CUST_NM as CUST_NM <!-- 외주처 이름 -->
 		 	,A.contract_amt as CONTRACT_AMT <!-- 계약액 -->
 		 	,PJT_CD as PJT_CD
@@ -197,7 +198,9 @@
 			AND
 		 	 PJT_CD = #{PJT_CD} 
 			AND 
-		 	 out_corp = #{OUT_CORP}
+		 	 OUT_CORP LIKE '%'+#{OUT_CORP}+'%' <!-- 외주처 검색이 안될경우에도 출력하기 위해 LIKE절 사용 -->
+		 	AND
+	 		 OUT_ITEM = #{OUT_ITEM}
 	</select>
 	<!-- 용역계약서 기성단계 출력  -->
 	<select id="getCooperationPJTGisung"
