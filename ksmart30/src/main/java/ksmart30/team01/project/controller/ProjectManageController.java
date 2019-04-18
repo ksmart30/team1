@@ -5,6 +5,9 @@
  */
 package ksmart30.team01.project.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +52,8 @@ public class ProjectManageController {
 
 	//3.1.6 용역계약서 현황 View
 	@GetMapping("/project/projectManageHyunhwangView")
-	public String projectManageHyunhwang() {
+	public String projectManageHyunhwang(Model model) {
+		model.addAttribute("OwnerHyunhwangCount", projectManageService.getProjectManageOwnerHyunhwangCount());
 		return "project/projectManageHyunhwangView";
 	}
 }

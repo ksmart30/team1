@@ -56,7 +56,7 @@
 		
 		// 모달에서 프로젝트 선택
 		function modalPjtOneBtn(PJT_CD, PJT_NM) {
-			console.log('선택완료!');
+			console.log('프로젝트 모달 선택완료!');
 			console.log(PJT_CD);
 			console.log(PJT_NM);
 			$('#PJT_CD').empty();
@@ -67,166 +67,268 @@
 		
 		// 모달에서 발주처 선택
 		function modalCustOneBtn(CUST_CD, CUST_NM) {
-			console.log('선택완료!');
+			console.log('발주처 모달 선택완료!');
 			console.log(CUST_CD);
 			console.log(CUST_NM);
 			$('#CUST_CD_VAL').empty();
 			$('#CUST_CD_VAL').attr('value', CUST_NM);
 		}
 		
+		// 모든 칸에 입력된 값 초기화 메서드
+		function reset() {
+			$('#PJT_CD_ONE').empty();
+			$('#PJT_NM_ONE').empty();
+			$('#CRT_DATE_ONE').empty();	
+			$('#PJT_SEQ_ONE').empty();
+			$('#CONTRACT_DATE_ONE').empty();	
+			$('#CONTRACT_PRI1_ONE').empty();
+			$('#CONTRACT_PRI2_ONE').empty();
+			$('#G_AREA_M_ONE').empty();	
+			$('#G_AREA_P_ONE').empty();
+			$('#G_YAREA_M_ONE').empty();
+			$('#G_YAREA_P_ONE').empty();
+			$('#PYUNG_DAN_ONE').empty();
+			$('#TOT_CONTRACT_AMT_ONE').empty();
+			$('#PJT_CONTRACT_AMT_ONE').empty();
+			$('#CHANGE_AMT_ONE').empty();
+			$('#BALANCE_AMT_ONE').empty();
+			$('#OWNER_LIST_ONE').empty();
+			$('#N_RATE_SUM').empty();
+			$('#CONTRACT_AMT_SUM').empty();
+			$('#GISEONG_LIST_ONE').empty();
+			$('#RM_AMT_SUM').empty();
+			$('#SUGUM_RATE_SUM').empty();
+			$('#PJT_CONTRACT_AMT_ONE_SEBU').empty();
+			$('#DONG_SU_ONE').empty();
+			$('#HOUSE_SU_ONE').empty();
+			$('#B_UP_SU_ONE').empty();
+			$('#B_DOWN_SU_ONE').empty();
+			$('#PM_EMP_NO_ONE').empty();
+			$('#PM_EMP_NO_NM_ONE').empty();
+			$('#EMP_NO_ONE').empty();
+			$('#EMP_NO_NM_ONE').empty();
+			$('#MARKET_MAN_ONE').empty();
+			$('#MARKET_MAN_NM_ONE').empty();
+			$('#INFO_EMP_NO_ONE').empty();
+			$('#INFO_EMP_NO_NM_ONE').empty();
+			$('#PJT_E_DATE_ONE').empty();
+			$('#BREAK_AMT_ONE').empty();
+			$('#PJT_NIC_ONE').empty();
+			$('#reset').click();
+		}
+		
 		// 프로젝트 하나 선택시 상세내역 출력
 		function pjtOneBtn(PJT_CD) {
 			console.log(PJT_CD);
 			$.ajax({
-				url:'/project/projectManageSangseListProcess',
+				url:'/project/projectManageSangseProcess',
 				type:'POST',
 				data:{PJT_CD:PJT_CD},
 				success:function(data){
 					console.log(data);
 					// 종합코드 출력
-					
-					$('#PJT_CD_ONE').empty();			// 프로젝트 코드
-					$('#PJT_CD_ONE').append(data.sangse.PJT_CD);
-					$('#PJT_NM_ONE').empty();			// 프로젝트 명
-					$('#PJT_NM_ONE').append(data.sangse.PJT_NM);
-					$('#CRT_DATE_ONE').empty();			// 계약서등록일
-					$('#CRT_DATE_ONE').append(data.sangse.CRT_DATE);
-					if(data.seq.PJT_SEQ>0) {
-						$('#PJT_SEQ_ONE').empty();
-						$('#PJT_SEQ_ONE').append(', 총 '+data.seq.PJT_SEQ+'회 변경');
+					if(data.sangse != null) {
+						// 프로젝트 코드
+						$('#PJT_CD_ONE').empty();
+						$('#PJT_CD_ONE').append(data.sangse.PJT_CD);
+						$('#PJT_NM_ONE').empty();			// 프로젝트 명
+						$('#PJT_NM_ONE').append(data.sangse.PJT_NM);
+						$('#CRT_DATE_ONE').empty();			// 계약서등록일
+						$('#CRT_DATE_ONE').append('계약서등록일 : '+data.sangse.CRT_DATE);
+						if(data.seq.PJT_SEQ>0) {
+							$('#PJT_SEQ_ONE').empty();
+							$('#PJT_SEQ_ONE').append(', 총 '+data.seq.PJT_SEQ+'회 변경');
+						}
+						// 기본사항
+						$('#CONTRACT_DATE_ONE').empty();	// 계약일자
+						$('#CONTRACT_DATE_ONE').append(data.sangse.CONTRACT_DATE);
+						$('#CONTRACT_PRI1_ONE').empty();	// 계약기간(시작)
+						$('#CONTRACT_PRI1_ONE').append(data.sangse.CONTRACT_PRI1);
+						$('#CONTRACT_PRI2_ONE').empty();	// 계약기간(끝)
+						$('#CONTRACT_PRI2_ONE').append(data.sangse.CONTRACT_PRI2);
+						// 종료단서
+						$('#CONTRACT_PRI3_ONE').attr('value', data.sangse.CONTRACT_PRI3);
+							$('select[id=CONTRACT_PRI3_ONE]').val(data.sangse.CONTRACT_PRI3);
+						// 수행부서 코드
+						$('#DEPT_CD_ONE').attr('value', data.sangse.DEPT_CD);
+							$('select[id=DEPT_CD_ONE]').val(data.sangse.DEPT_CD);
+						// 건축물 유형
+						$('#BUILD_TYPE_ONE').attr('value', data.sangse.BUILD_TYPE);
+							$('select[id=BUILD_TYPE_ONE]').val(data.sangse.BUILD_TYPE);
+						$('#G_AREA_M_ONE').empty();			// 대지면적_M
+						$('#G_AREA_M_ONE').attr('value', data.sangse.G_AREA_M);
+						$('#G_AREA_P_ONE').empty();			// 대지면적_P
+						$('#G_AREA_P_ONE').attr('value', data.sangse.G_AREA_M);
+						$('#G_YAREA_M_ONE').empty();		// 연면적_M
+						$('#G_YAREA_M_ONE').attr('value', data.sangse.G_YAREA_M);
+						$('#G_YAREA_P_ONE').empty();		// 연면적_P
+						$('#G_YAREA_P_ONE').attr('value', data.sangse.G_YAREA_P);
+						$('#PYUNG_DAN_ONE').empty();		// 평당단가
+						$('#PYUNG_DAN_ONE').attr('value', data.sangse.PYUNG_DAN);
+						$('#TOT_CONTRACT_AMT_ONE').empty();	// 당사 총계약액
+						$('#TOT_CONTRACT_AMT_ONE').attr('value', data.sangse.TOT_CONTRACT_AMT);
+						$('#PJT_CONTRACT_AMT_ONE').empty();	// PJT 총계약액
+						$('#PJT_CONTRACT_AMT_ONE').attr('value', data.sangse.PJT_CONTRACT_AMT);
+						$('#CHANGE_AMT_ONE').empty();		// 변경가감액
+						$('#CHANGE_AMT_ONE').attr('value', data.sangse.CHANGE_AMT);
+						$('#BALANCE_AMT_ONE').empty();		// 매출잔액
+						$('#BALANCE_AMT_ONE').attr('value', data.sangse.BALANCE_AMT);
+						// 부가세여부
+						$('#SURTAX_ONE').attr('value', data.sangse.SURTAX);
+							$('select[id=SURTAX_ONE]').val(data.sangse.SURTAX);
+						// 프로젝트 하나 선택시 발주처 리스트 출력
+						pjtOwnerList(PJT_CD);
+						// 프로젝트 하나 선택시 기성단계 리스트 출력
+						pjtGiseongList(PJT_CD)
+						// 세부사항
+						$('#PJT_CONTRACT_AMT_ONE_SEBU').empty();		// 프로젝트 총계약액
+						$('#PJT_CONTRACT_AMT_ONE_SEBU').append(data.sangse.PJT_CONTRACT_AMT);
+						$('#DONG_SU_ONE').empty();						// 동수
+						$('#DONG_SU_ONE').attr('value', data.sangse.DONG_SU);
+						$('#HOUSE_SU_ONE').empty();						// 세대수
+						$('#HOUSE_SU_ONE').attr('value', data.sangse.HOUSE_SU);
+						$('#B_UP_SU_ONE').empty();						// 지상층수
+						$('#B_UP_SU_ONE').attr('value', data.sangse.B_UP_SU);
+						$('#B_DOWN_SU_ONE').empty();					// 지하층수
+						$('#B_DOWN_SU_ONE').attr('value', data.sangse.B_DOWN_SU);
+						// 건축물구조
+						$('#BUILD_STRUCT_ONE').attr('value', data.sangse.BUILD_STRUCT);
+							$('select[id=BUILD_STRUCT_ONE]').val(data.sangse.BUILD_STRUCT);
+						// 지역1
+						$('#REGION_ONE').attr('value', data.sangse.REGION);
+							$('select[id=REGION_ONE]').val(data.sangse.REGION);	
+						// 지역2
+						$('#REGION2_ONE').attr('value', data.sangse.REGION2);
+							$('select[id=REGION2_ONE]').val(data.sangse.REGION2);
+						// 지구1
+						$('#ZONE1_ONE').attr('value', data.sangse.ZONE1);	
+							$('select[id=ZONE1_ONE]').val(data.sangse.ZONE1);
+						// 지구2
+						$('#ZONE2_ONE').attr('value', data.sangse.ZONE2);	
+							$('select[id=ZONE2_ONE]').val(data.sangse.ZONE2);
+						// 구역1
+						$('#SCOPE1_ONE').attr('value', data.sangse.SCOPE1);	
+							$('select[id=SCOPE1_ONE]').val(data.sangse.SCOPE1);
+						// 구역2
+						$('#SCOPE2_ONE').attr('value', data.sangse.SCOPE2);
+							$('select[id=SCOPE2_ONE]').val(data.sangse.SCOPE2);
+						// 구역2
+						$('#SCOPE2_ONE').attr('value', data.sangse.SCOPE2);		
+							$('select[id=SCOPE2_ONE]').val(data.sangse.SCOPE2);
+						// 수주구분1 필요
+						// 수주구분2
+						$('#BIZ_GBN_ONE').attr('value', data.sangse.BIZ_GBN);		
+							$('select[id=BIZ_GBN_ONE]').val(data.sangse.BIZ_GBN);
+						// 사업분류
+						$('#BUILD_GB_ONE').attr('value', data.sangse.BUILD_GB);		
+							$('select[id=BUILD_GB_ONE]').val(data.sangse.BUILD_GB);
+						$('#PM_EMP_NO_ONE').empty();					// PM
+						$('#PM_EMP_NO_ONE').attr('value', data.sangse.PM_EMP_NO);
+						$('#PM_EMP_NO_NM_ONE').empty();					// PM 이름
+						$('#PM_EMP_NO_NM_ONE').append(data.sangse.PM_EMP_NO_NM);
+						$('#EMP_NO_ONE').empty();						// 관리임원
+						$('#EMP_NO_ONE').attr('value', data.sangse.EMP_NO);
+						$('#EMP_NO_NM_ONE').empty();						// 관리임원 이름
+						$('#EMP_NO_NM_ONE').append(data.sangse.EMP_NO_NM);
+						$('#MARKET_MAN_ONE').empty();					// 수주책임자
+						$('#MARKET_MAN_ONE').attr('value', data.sangse.MARKET_MAN);
+						$('#MARKET_MAN_NM_ONE').empty();					// 수주책임자 이름
+						$('#MARKET_MAN_NM_ONE').append(data.sangse.MARKET_MAN_NM);
+						$('#INFO_EMP_NO_ONE').empty();					// 정보취득자
+						$('#INFO_EMP_NO_ONE').attr('value', data.sangse.INFO_EMP_NO);
+						$('#INFO_EMP_NO_NM_ONE').empty();					// 정보취득자 이름
+						$('#INFO_EMP_NO_NM_ONE').append(data.sangse.INFO_EMP_NO_NM);
+						// 종료구분
+						$('#PJT_E_GBN_ONE').attr('value', data.sangse.PJT_E_GBN);		
+							$('select[id=PJT_E_GBN_ONE]').val(data.sangse.PJT_E_GBN);
+						$('#PJT_E_DATE_ONE').empty();					// 계약일자
+						$('#PJT_E_DATE_ONE').attr('value', data.sangse.INFO_EMP_NO);
+						$('#BREAK_AMT_ONE').empty();					// 중도타절금액
+						$('#BREAK_AMT_ONE').attr('value', data.sangse.BREAK_AMT);
+						$('#PJT_NIC_ONE').empty();					// 프로젝트 별명
+						$('#PJT_NIC_ONE').attr('value', data.sangse.PJT_NIC);
+					} else {
+						alert('용역계약서를 한 번도 작성하지 않았습니다.');
+						// 입력 데이터 초기화
+						reset();
+						// 수주심의결정서 상세
+						pjtWriteBusi(PJT_CD);
 					}
-					
-					// 기본사항
-					$('#CONTRACT_DATE_ONE').empty();	// 계약일자
-					$('#CONTRACT_DATE_ONE').append(data.sangse.CONTRACT_DATE);
-					$('#CONTRACT_PRI1_ONE').empty();	// 계약기간(시작)
-					$('#CONTRACT_PRI1_ONE').append(data.sangse.CONTRACT_PRI1);
-					$('#CONTRACT_PRI2_ONE').empty();	// 계약기간(끝)
-					$('#CONTRACT_PRI2_ONE').append(data.sangse.CONTRACT_PRI2);
-					// 종료단서
-					$('#CONTRACT_PRI3_ONE').attr('value', data.sangse.CONTRACT_PRI3);
-						$('select[id=CONTRACT_PRI3_ONE]').val(data.sangse.CONTRACT_PRI3);
-					// 수행부서 코드
-					$('#DEPT_CD_ONE').attr('value', data.sangse.DEPT_CD);
-						$('select[id=DEPT_CD_ONE]').val(data.sangse.DEPT_CD);
-					// 건축물 유형
-					$('#BUILD_TYPE_ONE').attr('value', data.sangse.BUILD_TYPE);
-						$('select[id=BUILD_TYPE_ONE]').val(data.sangse.BUILD_TYPE);
-					$('#G_AREA_M_ONE').empty();			// 대지면적_M
-					$('#G_AREA_M_ONE').attr('value', data.sangse.G_AREA_M);
-					$('#G_AREA_P_ONE').empty();			// 대지면적_P
-					$('#G_AREA_P_ONE').attr('value', data.sangse.G_AREA_M);
-					$('#G_YAREA_M_ONE').empty();		// 연면적_M
-					$('#G_YAREA_M_ONE').attr('value', data.sangse.G_YAREA_M);
-					$('#G_YAREA_P_ONE').empty();		// 연면적_P
-					$('#G_YAREA_P_ONE').attr('value', data.sangse.G_YAREA_P);
-					$('#PYUNG_DAN_ONE').empty();		// 평당단가
-					$('#PYUNG_DAN_ONE').attr('value', data.sangse.PYUNG_DAN);
-					$('#TOT_CONTRACT_AMT_ONE').empty();	// 당사 총계약액
-					$('#TOT_CONTRACT_AMT_ONE').attr('value', data.sangse.TOT_CONTRACT_AMT);
-					$('#PJT_CONTRACT_AMT_ONE').empty();	// PJT 총계약액
-					$('#PJT_CONTRACT_AMT_ONE').attr('value', data.sangse.PJT_CONTRACT_AMT);
-					$('#CHANGE_AMT_ONE').empty();		// 변경가감액
-					$('#CHANGE_AMT_ONE').attr('value', data.sangse.CHANGE_AMT);
-					$('#BALANCE_AMT_ONE').empty();		// 매출잔액
-					$('#BALANCE_AMT_ONE').attr('value', data.sangse.BALANCE_AMT);
-					// 부가세여부
-					$('#SURTAX_ONE').attr('value', data.sangse.SURTAX);
-						$('select[id=SURTAX_ONE]').val(data.sangse.SURTAX);
-					// 프로젝트 하나 선택시 발주처 리스트 출력
-					$('#OWNER_LIST_ONE').empty();
-					$(data.owner).each((index, item) => {
-						console.log(item);
-						$('#OWNER_LIST_ONE').append('<tr><td width="20%">삭제</td><td width="20%">'+item.CUST_NM+'</td><td width="20%">'+item.CUST_GBN_NM+'</td><td width="20%">'+item.N_RATE+'</td><td width="20%">'+item.CONTRACT_AMT+'</td></tr>');
-					});
-					$('#N_RATE_SUM').empty();						// 지분합계
-					$('#N_RATE_SUM').append(data.owner[0].N_RATE_SUM);
-					$('#CONTRACT_AMT_SUM').empty();					// 금액합계
-					$('#CONTRACT_AMT_SUM').append(data.owner[0].CONTRACT_AMT_SUM);
-					// 프로젝트 하나 선택시 기성단계 리스트 출력
-					$('#GISEONG_LIST_ONE').empty();
-					$(data.giseong).each((index, item) => {
-						console.log(item);
-						$('#GISEONG_LIST_ONE').append('<tr><td width="20%">'+item.RM_SEQ+'</td><td width="20%">'+item.RM_STEP_NM+'</td><td width="20%">'+item.SALE_STEP_NM+'</td><td width="20%">'+item.RM_AMT+'</td><td width="20%">'+item.SUGUM_RATE+'</td></tr>');
-					});
-					$('#RM_AMT_SUM').empty();						// 금액합계
-					$('#RM_AMT_SUM').append(data.giseong[0].RM_AMT_SUM);
-					$('#SUGUM_RATE_SUM').empty();					// 수금율합계
-					$('#SUGUM_RATE_SUM').append(data.giseong[0].SUGUM_RATE_SUM);
-					
-					// 세부사항
-					$('#PJT_CONTRACT_AMT_ONE_SEBU').empty();		// 프로젝트 총계약액
-					$('#PJT_CONTRACT_AMT_ONE_SEBU').append(data.sangse.PJT_CONTRACT_AMT);
-					$('#DONG_SU_ONE').empty();						// 동수
-					$('#DONG_SU_ONE').attr('value', data.sangse.DONG_SU);
-					$('#HOUSE_SU_ONE').empty();						// 세대수
-					$('#HOUSE_SU_ONE').attr('value', data.sangse.HOUSE_SU);
-					$('#B_UP_SU_ONE').empty();						// 지상층수
-					$('#B_UP_SU_ONE').attr('value', data.sangse.B_UP_SU);
-					$('#B_DOWN_SU_ONE').empty();					// 지하층수
-					$('#B_DOWN_SU_ONE').attr('value', data.sangse.B_DOWN_SU);
-					// 건축물구조
-					$('#BUILD_STRUCT_ONE').attr('value', data.sangse.BUILD_STRUCT);
-						$('select[id=BUILD_STRUCT_ONE]').val(data.sangse.BUILD_STRUCT);
-					// 지역1
-					$('#REGION_ONE').attr('value', data.sangse.REGION);
-						$('select[id=REGION_ONE]').val(data.sangse.REGION);	
-					// 지역2
-					$('#REGION2_ONE').attr('value', data.sangse.REGION2);
-						$('select[id=REGION2_ONE]').val(data.sangse.REGION2);
-					// 지구1
-					$('#ZONE1_ONE').attr('value', data.sangse.ZONE1);	
-						$('select[id=ZONE1_ONE]').val(data.sangse.ZONE1);
-					// 지구2
-					$('#ZONE2_ONE').attr('value', data.sangse.ZONE2);	
-						$('select[id=ZONE2_ONE]').val(data.sangse.ZONE2);
-					// 구역1
-					$('#SCOPE1_ONE').attr('value', data.sangse.SCOPE1);	
-						$('select[id=SCOPE1_ONE]').val(data.sangse.SCOPE1);
-					// 구역2
-					$('#SCOPE2_ONE').attr('value', data.sangse.SCOPE2);
-						$('select[id=SCOPE2_ONE]').val(data.sangse.SCOPE2);
-					// 구역2
-					$('#SCOPE2_ONE').attr('value', data.sangse.SCOPE2);		
-						$('select[id=SCOPE2_ONE]').val(data.sangse.SCOPE2);
-					// 수주구분1 필요
-					// 수주구분2
-					$('#BIZ_GBN_ONE').attr('value', data.sangse.BIZ_GBN);		
-						$('select[id=BIZ_GBN_ONE]').val(data.sangse.BIZ_GBN);
-					// 사업분류
-					$('#BUILD_GB_ONE').attr('value', data.sangse.BUILD_GB);		
-						$('select[id=BUILD_GB_ONE]').val(data.sangse.BUILD_GB);
-					$('#PM_EMP_NO_ONE').empty();					// PM
-					$('#PM_EMP_NO_ONE').attr('value', data.sangse.PM_EMP_NO);
-					$('#PM_EMP_NO_NM_ONE').empty();					// PM 이름
-					$('#PM_EMP_NO_NM_ONE').append(data.sangse.PM_EMP_NO_NM);
-					$('#EMP_NO_ONE').empty();						// 관리임원
-					$('#EMP_NO_ONE').attr('value', data.sangse.EMP_NO);
-					$('#EMP_NO_NM_ONE').empty();						// 관리임원 이름
-					$('#EMP_NO_NM_ONE').append(data.sangse.EMP_NO_NM);
-					$('#MARKET_MAN_ONE').empty();					// 수주책임자
-					$('#MARKET_MAN_ONE').attr('value', data.sangse.MARKET_MAN);
-					$('#MARKET_MAN_NM_ONE').empty();					// 수주책임자 이름
-					$('#MARKET_MAN_NM_ONE').append(data.sangse.MARKET_MAN_NM);
-					$('#INFO_EMP_NO_ONE').empty();					// 정보취득자
-					$('#INFO_EMP_NO_ONE').attr('value', data.sangse.INFO_EMP_NO);
-					$('#INFO_EMP_NO_NM_ONE').empty();					// 정보취득자 이름
-					$('#INFO_EMP_NO_NM_ONE').append(data.sangse.INFO_EMP_NO_NM);
-					// 종료구분
-					$('#PJT_E_GBN_ONE').attr('value', data.sangse.PJT_E_GBN);		
-						$('select[id=PJT_E_GBN_ONE]').val(data.sangse.PJT_E_GBN);
-					$('#PJT_E_DATE_ONE').empty();					// 계약일자
-					$('#PJT_E_DATE_ONE').attr('value', data.sangse.INFO_EMP_NO);
-					$('#BREAK_AMT_ONE').empty();					// 중도타절금액
-					$('#BREAK_AMT_ONE').attr('value', data.sangse.BREAK_AMT);
-					$('#PJT_NIC_ONE').empty();					// 프로젝트 별명
-					$('#PJT_NIC_ONE').attr('value', data.sangse.PJT_NIC);
+				},
+				error:function(request, status, error) {
+					alert(error + "에러입니다.");
 				}
 			});
 		}
 		
+		// 발주처 리스트
+		function pjtOwnerList(PJT_CD) {
+			$.ajax({
+				url:'/project/projectManageOwnerListProcess',
+				type:'POST',
+				data:{PJT_CD:PJT_CD},
+				success:function(data) {
+					$('#OWNER_LIST_ONE').empty();
+					$(data).each((index, item) => {
+						console.log(item);
+						$('#OWNER_LIST_ONE').append('<tr><td width="20%">삭제</td><td width="20%">'+item.CUST_NM+'</td><td width="20%">'+item.CUST_GBN_NM+'</td><td width="20%">'+item.N_RATE+'</td><td width="20%">'+item.CONTRACT_AMT+'</td></tr>');
+					});
+					$('#N_RATE_SUM').empty();						// 지분합계
+					$('#N_RATE_SUM').append(data[0].N_RATE_SUM);
+					$('#CONTRACT_AMT_SUM').empty();					// 금액합계
+					$('#CONTRACT_AMT_SUM').append(data[0].CONTRACT_AMT_SUM);
+				}
+			});
+		}
+		
+		// 기성단계 리스트
+		function pjtGiseongList(PJT_CD) {
+			$.ajax({
+				url:'/project/projectManageGiseongListProcess',
+				type:'POST',
+				data:{PJT_CD:PJT_CD},
+				success:function(data) {
+					$('#GISEONG_LIST_ONE').empty();
+					$(data).each((index, item) => {
+						console.log(item);
+						$('#GISEONG_LIST_ONE').append('<tr><td width="20%">'+item.RM_SEQ+'</td><td width="20%">'+item.RM_STEP_NM+'</td><td width="20%">'+item.SALE_STEP_NM+'</td><td width="20%">'+item.RM_AMT+'</td><td width="20%">'+item.SUGUM_RATE+'</td></tr>');
+					});
+					$('#RM_AMT_SUM').empty();						// 금액합계
+					$('#RM_AMT_SUM').append(data[0].RM_AMT_SUM);
+					$('#SUGUM_RATE_SUM').empty();					// 수금율합계
+					$('#SUGUM_RATE_SUM').append(data[0].SUGUM_RATE_SUM);
+				}
+			});
+		}
+		
+		// 신규 용역계약서 작성시 수주심의결정서 상세를 출력
+		function pjtWriteBusi(PJT_CD) {
+			$.ajax({
+				url:'/project/BusinessManageSangseProcess',
+				type:'POST',
+				data:{PJT_CD:PJT_CD},
+				success:function(data){
+					console.log(data);
+					$('#PJT_CD_ONE').empty();			// 프로젝트 코드
+					$('#PJT_CD_ONE').append(data.PJT_CD);
+					$('#PJT_NM_ONE').empty();			// 프로젝트 명
+					$('#PJT_NM_ONE').append(data.SVC);
+					// 수행부서 코드
+					$('#DEPT_CD_ONE').attr('value', data.DEPT_CD);
+						$('select[id=DEPT_CD_ONE]').val(data.DEPT_CD);
+				},
+				error:function(request, status, error) {
+					alert(error + "에러입니다.");
+				}
+			});
+		}
+		
+		// 용역계약서 신규 입력
+		
+		
 		$(document).ready(function() {
 				// 용역계약서 입력을 위한 프로젝트 검색 부분
+				$('#reset').hide();
 				$('#search').click(function(){
 					// 필드로 입력받은 값들을 변수에 저장
 					let PJT_CD = $('#PJT_CD_VAL').val();
@@ -250,6 +352,9 @@
 								$('#pjtList').append('<tr><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td onclick="pjtOneBtn('+item.PJT_CD+',&#39'+item.PJT_NM+'&#39)">'+item.PJT_NM+'</td></tr>');
 							});
 							$('#resultLength').append(data.length);
+						},
+						error:function(request, status, error) {
+							alert(error + "에러입니다.");
 						}
 					});
 				});
@@ -474,8 +579,9 @@
 		</div>
 		
 		<!-- 프로젝트 start -->
+		<form>
 		<font color="black">
-	<div class="col-md-9 col-sm-6 col-xs-12">
+		<div class="col-md-9 col-sm-6 col-xs-12">
 		<div class="x_panel">
 		<div class="x_content">
 			<div class="" role="tabpanel" data-example-id="togglable-tabs">
@@ -495,7 +601,6 @@
                     <label for="ex4">프로젝트 명 : </label>
                     <label><span id="PJT_NM_ONE"></span></label>
                     <br>
-					<span style="color:black">계약서등록일 : </span>
 					<span style="color:black" id="CRT_DATE_ONE"></span>
 					<span style="color:black" id="PJT_SEQ_ONE"></span>
                     </div>
@@ -535,28 +640,9 @@
 	                  <br>
 	                  <div class="form-group">
 	                  <label for="ex3">수행부서코드</label>
-	                  <select id="DEPT_CD_ONE">
-	                  	<option value="" selected="selected">전 사</option>
-	                    <option value="3100">설계1본부</option>
-	                    <option value="3101">설계1본부-남석우</option>
-	                    <option value="3102">설계1본부-김광식</option>
-	                    <option value="3103">설계1본부-박상현</option>
-	                    <option value="3104">설계1본부-전창국</option>
-	                    <option value="3105">설계1본부-김승국</option>
-	                    <option value="3106">설계1본부-우진우</option>
-	                    <option value="3200">설계2본부</option>
-	                    <option value="3201">설계2본부-장홍만</option>
-	                    <option value="3202">설계2본부-장미진</option>
-	                    <option value="3203">설계2본부-김재원</option>
-	                    <option value="3204">설계2본부-우상훈</option>
-	                    <option value="3205">설계2본부-윤호진</option>
-	                    <option value="3206">설계2본부-정다운</option>
-	                    <option value="3300">PD전략부</option>
-	                    <option value="3400">설계지원</option>
-	                    <option value="5100">건설사업관리</option>
-	                    <option value="8000">해외지사</option>
-	                  </select>
-	                  <label for="ex3"></label>
+	                  <input type="text" id="DEPT_CD_ONE">
+	                  <button type="button" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-search"></i></button>
+	                  <label id="DEPT_NM_ONE"></label>
 	                  </div>
 	                  <br>
 	                  <div class="form-group">
@@ -611,11 +697,11 @@
 
                     <table class="table table-bordered">
                         <tr>
-                          <th width="20%">순번</th>
-                          <th width="20%">발주처</th>
-                          <th width="20%">발주처구분</th>
-                          <th width="20%">지분(%)</th>
-                          <th width="20%">계약금액</th>
+                          <th>순번</th>
+                          <th>발주처</th>
+                          <th>발주처구분</th>
+                          <th>지분(%)</th>
+                          <th>계약금액</th>
                         </tr>
                         <tr>
                           <th scope="row">신규</th>
@@ -685,18 +771,16 @@
                           <td><input type="text" class="col-md-10"></td>
                           <td><input type="text" class="col-md-10"></td>
                         </tr>
-                   	</table>
-					<table class="table table-bordered">
-						<tbody id="OWNER_LIST_ONE">
+                        <tbody id="OWNER_LIST_ONE">
                    		</tbody>
                         <tr style="background-color:#ffeeaa">
-                    		<th width="20%">합계</th>
-                    		<th width="20%"></th>
-                    		<th width="20%"></th>
-                    		<th width="20%"><span id="N_RATE_SUM"></span></th>
-                    		<th width="20%"><span id="CONTRACT_AMT_SUM"></span></th>
+                    		<th>합계</th>
+                    		<th></th>
+                    		<th ></th>
+                    		<th><span id="N_RATE_SUM"></span></th>
+                    		<th><span id="CONTRACT_AMT_SUM"></span></th>
                     	</tr>
-                    </table>
+                   	</table>
 	</div>
 	</div>        
 	</div>
@@ -717,11 +801,11 @@
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                          <th width="20%">순번</th>
-                          <th width="20%">기성단계</th>
-                          <th width="20%">단계</th>
-                          <th width="20%">금액</th>
-                          <th width="20%">수금율(%)</th>
+                          <th>순번</th>
+                          <th>기성단계</th>
+                          <th>단계</th>
+                          <th>금액</th>
+                          <th>수금율(%)</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -750,19 +834,16 @@
                           <td><input type="text"></td>
                           <td><input type="text"></td>
                         </tr>
-					</table>
-					<table class="table table-bordered">
                         <tbody id="GISEONG_LIST_ONE">
                         </tbody>
                         <tr style="background-color:#ffeeaa">
-                    		<th width="20%"></th>
-                    		<th width="20%"></th>
-                    		<th width="20%">합계</th>
-                    		<th width="20%"><span id="RM_AMT_SUM"></span></th>
-                    		<th width="20%"><span id="SUGUM_RATE_SUM"></span></th>
+                    		<th></th>
+                    		<th></th>
+                    		<th>합계</th>
+                    		<th><span id="RM_AMT_SUM"></span></th>
+                    		<th><span id="SUGUM_RATE_SUM"></span></th>
                     	</tr>
-                      </tbody>
-                    </table>
+					</table>
     </div>
     </div>
     </div>
@@ -1346,7 +1427,7 @@
 	</div>
 	</div>
 	</div>	
-	
+	<input type="reset" id="reset">
 	
 	<!-- Tap end -->
 			</div>
@@ -1355,6 +1436,7 @@
 			</div>
 			</div>
 			</font>
+			</form>
 		<!-- 프로젝트 end -->
 		</font>
 	</th:block>

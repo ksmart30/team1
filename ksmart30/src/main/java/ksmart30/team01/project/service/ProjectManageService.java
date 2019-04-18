@@ -21,7 +21,7 @@ public class ProjectManageService {
 	@Autowired
 	ProjectManageMapper projectManageMapper;
 
-	// 용역계약서 입력 화면에서 쓰이는 종합코드 리시트를 조회하는 메서드
+	// 용역계약서 입력 화면에서 쓰이는 종합코드 리스트를 조회하는 메서드
 	public List<Map<String, Object>> getProjectManageCode() {
 		System.out.println("Service getProjectManageCode 메서드 실행");
 		return projectManageMapper.getProjectManageCode();
@@ -61,9 +61,9 @@ public class ProjectManageService {
 	}
 	
 	
-	// ===================================================용역계약서 입력을 위한 프로젝트 조회 START===================================================
+	// ===================================================용역계약서 입력 화면에서 프로젝트 리스트 조회 START===================================================
 	// 전체 프로젝트 대장을 조회하는 메서드
-	public List<Map<String, Object>> getProjectManagerList(String PJT_CD, String DEPT_CD, String YEAR, String pjtRadioValue) {
+	public List<Map<String, Object>> getProjectManageList(String PJT_CD, String DEPT_CD, String YEAR, String pjtRadioValue) {
 		System.out.println("Service getProjectManagerList 메서드 실행");
 		System.out.println(PJT_CD);
 		System.out.println(DEPT_CD);
@@ -73,6 +73,7 @@ public class ProjectManageService {
 		searchMap.put("PJT_CD", PJT_CD);
 		searchMap.put("DEPT_CD", DEPT_CD);
 		searchMap.put("YEAR", YEAR);
+		searchMap.put("RESULT_X", pjtRadioValue);
 		List<Map<String, Object>> resultMap = null;
 		switch(pjtRadioValue) {
 			case "1":
@@ -81,18 +82,19 @@ public class ProjectManageService {
 				break;
 			case "2":
 				// 계약
+				resultMap = projectManageMapper.getProjectManageList(searchMap);
 				break;
 			case "3":
 				// 예산
-				resultMap = projectManageMapper.getProjectManageYesanList(searchMap);
+				resultMap = projectManageMapper.getProjectManageList(searchMap);
 				break;
 			case "4":
 				// 승인
-				resultMap = projectManageMapper.getProjectManageSeunginList(searchMap);
+				resultMap = projectManageMapper.getProjectManageList(searchMap);
 				break;
 			case "5":
 				// 종료
-				resultMap = projectManageMapper.getProjectManageEndList(searchMap);
+				resultMap = projectManageMapper.getProjectManageList(searchMap);
 				break;
 			case "6":
 				// ALL
@@ -104,7 +106,7 @@ public class ProjectManageService {
 		}
 		return resultMap;
 	}
-	// ===================================================용역계약서 입력을 위한 프로젝트 조회 END===================================================
+	// ===================================================용역계약서 입력 화면에서 프로젝트 리스트 조회 START===================================================
 
 	// 프로젝트 코드로 선택하여 용역계약서가 입력되어 있으면 그 상세 내용을 조회하는 메서드
 	public Map<String, Object> getProjectManageSangse(Project project) {
@@ -115,15 +117,29 @@ public class ProjectManageService {
 		resultMap.put("code", projectManageMapper.getProjectManageCode());
 		// 프로젝트 코드로 선택하여 용역계약서의 상세 내용을 조회하는 메서드
 		resultMap.put("sangse", projectManageMapper.getProjectManageSangse(project));
-		// 프로젝트 코드로 선택하여 용역계약서의 발주처 리스트를 조회하는 메서드
-		resultMap.put("owner", projectManageMapper.getProjectManageOwner(project));
-		// 프로젝트 코드로 선택하여 용역게약서의 기성단계 리스트를 조회하는 메서드
-		resultMap.put("giseong", projectManageMapper.getProjectManageGiseong(project));
 		// 프로젝트 코드로 선택하여 을의 수급지분 리스트를 조회하는 메서드
 		resultMap.put("sugub", projectManageMapper.getProjectManageSugub(project));
 		// 프로젝트 코드로 선택하여 최대 시퀀스 값을 구하는 메서드
 		resultMap.put("seq", projectManageMapper.getProjectManageSeq(project));
 		return resultMap;
+	}
+	
+	// 프로젝트 코드로 선택하여 용역계약서의 발주처 리스트를 조회하는 메서드
+	public List<Map<String, Object>> getProjectManageOwnerList(Project project) {
+		System.out.println("Service getProjectManageOwnerList 메서드 실행");
+		return projectManageMapper.getProjectManageOwnerList(project);
+	}
+	
+	// 프로젝트 코드로 선택하여 용역게약서의 기성단계 리스트를 조회하는 메서드
+	public List<Map<String, Object>> getProjectManageGiseongList(Project project) {
+		System.out.println("Service getProjectManageGiseongList 메서드 실행");
+		return projectManageMapper.getProjectManageGiseongList(project);
+	}
+	
+	// 용역계약서를 한 번도 작성하지 않았으면 수주심의결정서를 조회하는 메서드
+	public Map<String, Object> getBusinessManageSangse(String PJT_CD) {
+		System.out.println("Service getBusinessManageSangse 메서드 실행");
+		return projectManageMapper.getBusinessManageSangse(PJT_CD);
 	}
 	
 	// 1번 이상 변경된 이력이 있는 용역계약서를 조회하는 메서드
@@ -177,4 +193,16 @@ public class ProjectManageService {
 		resultMap.put("giseong_after", projectManageMapper.getProjectManageChangeGiseongAfter(map));
 		return resultMap;
 	}
+	
+	// ====================================================== 용역계약서 현황 START ====================================================== 
+	
+	// 용역계약서 현황에서 년도를 기준으로 부서별로 계약 회수 조회 쿼리를 호출하는 메서드
+	public List<Map<String, Object>> getProjectManageOwnerHyunhwangCount() {
+		System.out.println("Service getProjectManageOwnerHyunhwangCount 메서드 실행");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("YEAR", "2019");
+		return projectManageMapper.getProjectManageOwnerHyunhwangCount(map);
+	}
+		
+	// ====================================================== 용역계약서 현황 END ====================================================== 
 }

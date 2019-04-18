@@ -44,7 +44,7 @@
 	</select>
 	
 	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (전체) -->
-	<select id="getProjectManageList" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getProjectManageAllList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			A.PJT_CD,
 			A.PJT_NM,
@@ -116,80 +116,39 @@
 			AND PRE_PJT_CD LIKE '%'+#{PJT_CD}+'%'
 			AND DEPT_CD LIKE '%'+#{DEPT_CD}+'%'
 	</select>
-
-	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (예산) -->
-	<select id="getProjectManageYesanList" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT
-			A.PJT_CD,
-			A.PJT_NM,
-			B.DEPT_CD,
-			A.PJT_TYPE,
-			(SELECT SHORT_NM FROM T_SC1010 WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
-			B.TOT_CONTRACT_AMT,
-			B.PM_EMP_NO,
-			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = B.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = B.PM_EMP_NO) PM_EMP_NM,
-			B.PJT_E_GBN,
-			B.PJT_YEA_YN
-		FROM
-			T_SM3000 A,
-			T_P11000 B
-		WHERE
-			A.PJT_CD = B.PJT_CD
-		AND B.CONTRACT_DATE LIKE #{YEAR}+'%'
-		AND B.DEPT_CD LIKE '%%'
-		AND A.PJT_CD LIKE '%'
-		AND B.PJT_YEA_YN = 'F'
-		ORDER BY A.PJT_CD DESC
-	</select>
 	
-	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (승인) -->
-	<select id="getProjectManageSeunginList" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT
-			A.PJT_CD,
+	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (계약, 예산, 승인, 종료) -->
+	<select id="getProjectManageList" parameterType="java.util.Map" resultType="java.util.Map">
+	SELECT 
+		A.*
+	FROM
+		(SELECT 	
+			B.PJT_CD,
 			A.PJT_NM,
+			B.CONTRACT_DATE,
 			B.DEPT_CD,
-			A.PJT_TYPE,
-			(SELECT SHORT_NM FROM T_SC1010
-			WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
-			B.TOT_CONTRACT_AMT,
-			B.PM_EMP_NO,
-			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = B.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = B.PM_EMP_NO) PM_EMP_NM,
-			B.PJT_E_GBN,
-			B.PJT_YEA_YN
-		FROM
+			CASE 			
+				WHEN B.PJT_YEA_YN = 'T' THEN '4' /* 승인 */	
+				WHEN B.PJT_E_GBN > '' AND B.PJT_E_DATE > '' THEN '5' /* 종료 */		  
+		      WHEN C.MD>0 AND D.PN>0 THEN '3'  /* 예산 or 미승인*/		     
+			   ELSE '2' /* 계약 */
+			END RESULT_X		
+		FROM 
 			T_SM3000 A,
-			T_P11000 B
-		WHERE
-			A.PJT_CD = B.PJT_CD
-		AND B.CONTRACT_DATE LIKE #{YEAR}+'%'
-		AND B.DEPT_CD LIKE '%%'
-		AND A.PJT_CD LIKE '%'
-		AND B.PJT_YEA_YN = 'T'
-		ORDER BY A.PJT_CD DESC
-	</select>
-	
-	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (종료) -->
-	<select id="getProjectManageEndList" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT
-			A.PJT_CD,
-			A.PJT_NM,
-			B.DEPT_CD,
-			A.PJT_TYPE,
-			(SELECT SHORT_NM FROM T_SC1010 WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,
-			B.TOT_CONTRACT_AMT,
-			B.PM_EMP_NO,
-			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = B.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = B.PM_EMP_NO) PM_EMP_NM,
-			B.PJT_E_GBN
-		FROM
-			T_SM3000 A,
-			T_P11000 B
-		WHERE
-			A.PJT_CD   = B.PJT_CD
-		AND B.CONTRACT_DATE LIKE #{YEAR}+'%'
-		AND B.DEPT_CD LIKE '%%'
-		AND A.PJT_CD LIKE '%'
-		AND B.PJT_E_GBN = '1'
-		ORDER BY A.PJT_CD DESC
+			T_P11000 B,
+			(SELECT PJT_CD, COUNT(*) MD FROM T_P11050 GROUP BY PJT_CD) C,
+			(SELECT PJT_CD, COUNT(*) PN FROM T_P11080 GROUP BY PJT_CD) D		
+		 WHERE 
+		 		B.PJT_CD  = A.PJT_CD
+		   AND 
+				B.PJT_CD *= C.PJT_CD
+		   AND 
+				B.PJT_CD *= D.PJT_CD) A	   
+	WHERE
+			A.RESULT_X LIKE '%'+#{RESULT_X}+'%'
+			AND CONTRACT_DATE LIKE #{YEAR}+'%'
+			AND PJT_CD LIKE '%'+${PJT_CD}+'%'
+			AND DEPT_CD LIKE '%'+${DEPT_CD}+'%'
 	</select>
 	
 	<!-- 하나의 프로젝트 선택시 프로젝트 대장 상세를 조회한다 -->
@@ -253,24 +212,28 @@
 	</select>
 	
 	<!-- 하나의 프로젝트 선택시 프로젝트 대장 발주처 리스트를 조회한다 -->
-	<select id="getProjectManageOwner" parameterType="ksmart30.team01.project.domain.Project" resultType="java.util.Map">
-	SELECT 
-		PJT_CD,
-		CUST_CD,
-		(SELECT CUST_NM FROM T_AC0300 WHERE CUST_CD = (SELECT CUST_CD FROM T_P11010 WHERE PJT_CD = #{PJT_CD})) CUST_NM,
-		(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '200' AND LEVEL2_CD = (SELECT CUST_GBN FROM T_P11010 WHERE PJT_CD = #{PJT_CD})) AS CUST_GBN_NM,
+	<select id="getProjectManageOwnerList" parameterType="ksmart30.team01.project.domain.Project" resultType="java.util.Map">
+	SELECT
+		A.PJT_CD,
+		A.CUST_CD,
+		C.CUST_NM,
+		B.LEVEL2_NM AS CUST_GBN_NM,
 		N_RATE,
 		(SELECT SUM(N_RATE) FROM T_P11010 WHERE PJT_CD = #{PJT_CD}) N_RATE_SUM,
-		CONTRACT_AMT,
+		A.CONTRACT_AMT,
 		(SELECT SUM(CONTRACT_AMT) FROM T_P11010 WHERE PJT_CD = #{PJT_CD}) CONTRACT_AMT_SUM
 	FROM
-		T_P11010
+		T_P11010 A,
+		(SELECT LEVEL2_CD, LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '200') B,
+		(SELECT CUST_CD, CUST_NM FROM T_AC0300) C
 	WHERE
-		PJT_CD = #{PJT_CD}
+		A.CUST_GBN = B.LEVEL2_CD
+		AND A.CUST_CD = C.CUST_CD
+		AND A.PJT_CD = #{PJT_CD}
 	</select>
 	
 	<!-- 하나의 프로젝트 선택시 프로젝트 대장 기성단계 리스트를 조회한다 -->
-	<select id="getProjectManageGiseong" parameterType="ksmart30.team01.project.domain.Project" resultType="java.util.Map">
+	<select id="getProjectManageGiseongList" parameterType="ksmart30.team01.project.domain.Project" resultType="java.util.Map">
 	SELECT
 		PJT_CD,
 		RM_SEQ,
@@ -318,6 +281,89 @@
 			PJT_CD = #{PJT_CD}
 		GROUP BY
 			PJT_CD
+	</select>
+	
+	<!-- 한번도 용역계약서를 입력하지 않은 경우 수주심의결정서의 상세를 조회한다 -->
+	<select id="getBusinessManageSangse" parameterType="String" resultType="java.util.Map">
+		SELECT
+			PJT_CD,
+			PJT_TYPE,
+			SVC,
+			CUST_CD,
+			CUST_GBN,
+			CUST_NM,
+			AREA_P,
+			AREA_M,
+			YAREA_P,
+			YAREA_M,
+			EST_AMT,
+			BIZ_GBN,
+			REGION,
+			REGION2,
+			REGION3,
+			ZONE1,
+			ZONE2,
+			ZONE3,
+			SCOPE1,
+			SCOPE2,
+			SCOPE3,
+			ZIP_CD,
+			ADDR,
+			BUILD_TYPE,
+			DEPT_CD,
+			INFO_EMP_NO,
+			EMP_NO,
+			PM_EMP_NO,
+			CD_REG_DATE,
+			END_DATE,
+			END_GBN,
+			END_BIGO1,
+			PRODUCT,
+			CRT_MAN,
+			CRT_DATE,
+			UPD_MAN,
+			UPD_DATE,
+			FORECAST_AMT,
+			MARKET_MAN,
+			DESIGN_MAN,
+			UP_SU,
+			DOWN_SU,
+			COVERAGE,
+			CAPACITY,
+			CLASS_GBN,
+			BUILD_GB,
+			PRINT_YN,
+			PRINT_CNT,
+			BIZ_TYPE
+		FROM
+			T_PS1000
+		WHERE
+			PJT_CD = #{PJT_CD}
+	</select>
+	
+	<!-- 용역계약서 신규 입력시 발주처 입력 -->
+	<select id="addProjectManageOwner" parameterType="java.util.Map">
+		INSERT INTO
+			T_P11010(
+				PJT_CD,
+				CUST_CD,
+				CUST_GBN,
+				N_RATE,
+				CONTRACT_AMT,
+				CUST_MAN,
+				CUST_TEL,
+				ACC_AMT
+			)
+		VALUES(
+			#{PJT_CD},
+<!-- 			#{CUST_CD}, -->
+			#{CUST_GBN},
+			#{N_RATE},
+			#{CONTRACT_AMT},
+			#{CUST_MAN},
+			#{CUST_TEL},
+			#{ACC_AMT}
+		)
 	</select>
 	
 	<!-- 용역계약서 변경 조회를 위해 변경한 이력이 1번이라도 있는 용역계약서를 조회한다 -->
@@ -536,4 +582,51 @@
 		--ORDER BY A.DEPT_CD ASC			--부서 
 		--ORDER BY A.CONTRACT_DATE ASC	--계약일자
 	</select>
+	
+	<!-- ====================================================== 용역계약서 현황 START ====================================================== -->
+	
+	<!-- 용역계약서 현황 년도를 기준으로 월별 계약 현황(차트) -->
+	<select id="a">
+		
+	</select>
+	<!-- 용역계약서 현황 년도를 기준으로 부서별 계약 개수(차트) -->
+	<select id="getProjectManageOwnerHyunhwangCount" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT                                       
+			C.DEPT_CD_SUB,                 
+			COUNT(C.DEPT_CD_SUB) DEPT_CD_COUNT,
+			SUM(B.TOT_CONTRACT_AMT) TOT_CONTRACT_AMT_SUB
+		FROM
+			T_SM3000 A,
+			T_P11000 B,
+			(SELECT DISTINCT SUBSTRING(DEPT_CD,1,2) DEPT_CD_SUB, DEPT_CD FROM T_SC1010 GROUP BY DEPT_CD) C
+		WHERE
+			A.PJT_CD = B.PJT_CD
+			AND C.DEPT_CD = B.DEPT_CD
+			AND B.CONTRACT_DATE BETWEEN #{YEAR}+'0101' AND #{YEAR}+'1231'
+		GROUP BY C.DEPT_CD_SUB
+	</select>
+	
+	<!-- 용역계약서 현황 년도를 기준으로 부서별 계약 상세 현황(표) -->
+	<select id="b" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			B.DEPT_CD,
+			(SELECT D.DEPT_NM FROM T_SC1010 D WHERE D.DEPT_CD = B.DEPT_CD) DEPT_NM,                                         
+			B.PJT_CD,
+			A.PJT_NM,
+			B.CONTRACT_DATE,
+			B.TOT_CONTRACT_AMT,
+			C.COUNT_VALUE,
+			C.TOT_CONTRACT_AMT_SUM
+		FROM
+			T_SM3000 A,
+			T_P11000 B,
+			(SELECT COUNT(*) COUNT_VALUE, SUM(B.TOT_CONTRACT_AMT) TOT_CONTRACT_AMT_SUM FROM T_SM3000 A, T_P11000 B WHERE A.PJT_CD = B.PJT_CD AND B.CONTRACT_DATE BETWEEN #{YEAR}+'0101' AND #{YEAR}+'1231' AND DEPT_CD LIKE #{DEPT_CD_SUB}+'%') C
+		WHERE
+			A.PJT_CD = B.PJT_CD
+			AND B.CONTRACT_DATE BETWEEN #{YEAR}+'0101' AND #{YEAR}+'1231'
+			AND DEPT_CD LIKE #{DEPT_CD_SUB}+'%'
+		ORDER BY B.DEPT_CD
+	</select>
+	
+	<!-- ====================================================== 용역계약서 현황 END ====================================================== -->
 </mapper>

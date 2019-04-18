@@ -2,36 +2,79 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
 	<th:block layout:fragment="customHead">
 		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <!-- Meta, title, CSS, favicons, etc. -->
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>용역계약 현황</title>
-		<th:block th:include="layout/customHead"></th:block>
+		<!-- Bootstrap -->
+	    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Font Awesome -->
+	    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	    <!-- NProgress -->
+	    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+	    <!-- iCheck -->
+	    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	    <!-- Custom Theme Style -->
+	    <link href="/build/css/custom.min.css" rel="stylesheet">
+	    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script> <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+	    <script>
+	    $(document).ready(() =>{
+	    	/* [[${OwnerHyunhwangCount}]].each((index, item)=>{
+				console.log(item.DEPT_CD_COUNT);	    		
+	    	}); */
+	    	//console.log([[${OwnerHyunhwangCount}]]);
+	    	//console.log([[${DEPT_CD_COUNT}]]);
+	    	let monthChart = new Morris.Bar({
+	    		element: 'monthChart',  
+	    		data: 
+	    			[ 
+	    				{ month: '01월', value: 20 },
+	    				{ month: '02월', value: 10 },
+	    				{ month: '03월', value: 5 },
+	    				{ month: '04월', value: 5 },
+	    				{ month: '05월', value: 20 },
+	    				{ month: '06월', value: 20 },
+	    				{ month: '07월', value: 20 },
+	    				{ month: '08월', value: 20 },
+	    				{ month: '09월', value: 20 },
+	    				{ month: '10월', value: 20 },
+	    				{ month: '11월', value: 20 },
+	    				{ month: '12월', value: 20 }
+	    			], 
+	    		xkey: 'month', 
+	    		ykeys: ['value'],
+	    		labels: ['Value']
+	    	});
+	    	
+	    	let deptChart = new Morris.Bar({  
+	    		element: 'deptChart', 
+	    		data: 
+	    			[ 
+	    				{ dept: '설계1본부', value: 5 },
+	    				{ dept: '설계2본부', value: 10 },
+	    				{ dept: '설계3본부', value: 5 },
+	    				{ dept: '설계4본부', value: 5 },
+	    				{ dept: '설계5본부', value: 20 }
+	    			], 
+	    		xkey: 'dept', 
+	    		ykeys: ['value'],
+	    		labels: ['Value']
+	    	});
+	    });
+
+	    </script>
 	</th:block>
 	<th:block layout:fragment="customBody">
 	<!-- 1 -->
 		<div class="col-md-6 col-sm-6 col-xs-12">
-			<div class="x_panel">
-                  <div class="x_title">
-                    <h2>Bar graph <small>Sessions</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content"><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px;"></iframe>
-                    <canvas id="mybarChart" width="329" height="164" style="width: 329px; height: 164px;"></canvas>
-                  </div>
-                </div>
+		<div class="x_panel">
+		<div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
+			<div id="monthChart"></div>
+		</div>
+		</div>
 		</div>
 	<!-- 2 -->
 		<div class="col-md-6 col-sm-6 col-xs-12">
@@ -49,7 +92,8 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td></td>
+					<td>
+					</td>
 					<td></td>
 					<td></td>
 					<td></td>
@@ -69,30 +113,11 @@
 		</div>
 	<!-- 3 -->
 		<div class="col-md-6 col-sm-6 col-xs-12">
-			<div class="x_panel">
-                  <div class="x_title">
-                    <h2>Bar graph <small>Sessions</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content"><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px;"></iframe>
-                    <canvas id="mybarChart" width="329" height="164" style="width: 329px; height: 164px;"></canvas>
-                  </div>
-                </div>
+		<div class="x_panel">
+		<div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
+			<div id="deptChart"></div>
+		</div>
+		</div>
 		</div>
 	<!-- 4 -->
 		<div class="col-md-6 col-sm-6 col-xs-12">
@@ -130,6 +155,18 @@
 		</div>
 	</th:block>
 	<th:block layout:fragment="customJquery">
-		<th:block th:include="layout/customJquery"></th:block>
+		<!-- jQuery -->
+	    <script src="/vendors/jquery/dist/jquery.min.js"></script>
+	    <!-- Bootstrap -->
+	    <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	    <!-- FastClick -->
+	    <script src="/vendors/fastclick/lib/fastclick.js"></script>
+	    <!-- NProgress -->
+	    <script src="/vendors/nprogress/nprogress.js"></script>
+	    <!-- morris.js -->
+	    <script src="/vendors/raphael/raphael.min.js"></script>
+	    <script src="/vendors/morris.js/morris.min.js"></script>
+	    <!-- Custom Theme Scripts -->
+	    <script src="/build/js/custom.min.js"></script>
     </th:block>
 </html>

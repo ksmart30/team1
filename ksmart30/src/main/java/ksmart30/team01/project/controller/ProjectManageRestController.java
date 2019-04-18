@@ -44,14 +44,36 @@ public class ProjectManageRestController {
 	@PostMapping("/project/projectManageListProcess")
 	public List<Map<String, Object>> projectManageListProcess(String PJT_CD, String DEPT_CD, String YEAR, String pjtRadioValue) {
 		System.out.println("RestController projectManageListProcess 메서드 실행");
-		return projectManageService.getProjectManagerList(PJT_CD, DEPT_CD, YEAR, pjtRadioValue);
+		return projectManageService.getProjectManageList(PJT_CD, DEPT_CD, YEAR, pjtRadioValue);
 	}
-
-	//3.1.1 용역계약서 조회 (상세)
-	@PostMapping("/project/projectManageSangseListProcess")
-	public Map<String, Object> projectManageSangseListProcess(Project project) {
-		System.out.println("RestController projectManageSangseListProcess 메서드 실행");
+	
+	//3.1.1 용역계약서 상세 데이터 출력
+	@PostMapping("/project/projectManageSangseProcess")
+	public Map<String, Object> projectManageSangseProcess(Project project) {
+		System.out.println("RestController projectManageSangseProcess 메서드 실행");
 		return projectManageService.getProjectManageSangse(project);
+	}
+	
+	//3.1.1 용역게약서 발주처 데이터 출력
+	@PostMapping("/project/projectManageOwnerListProcess")
+	public List<Map<String, Object>> projectManageOwnerListProcess(Project project) {
+		System.out.println("RestController projectManageOwnerListProcess 메서드 실행");
+		return projectManageService.getProjectManageOwnerList(project);
+	}
+	
+	//3.1.1 용역게약서 기성단계 데이터 출력
+		@PostMapping("/project/projectManageGiseongListProcess")
+		public List<Map<String, Object>> projectManageGiseongListProcess(Project project) {
+			System.out.println("RestController projectManageGiseongListProcess 메서드 실행");
+			return projectManageService.getProjectManageGiseongList(project);
+		}
+
+
+	//3.1.1 용역계약서 입력 전 수주심의결정서 정보 출력
+	@PostMapping("/project/BusinessManageSangseProcess")
+	public Map<String, Object> BusinessManageSangseProcess(String PJT_CD) {
+		System.out.println("RestController BusinessManageSangseListProcess 메서드 실행");
+		return projectManageService.getBusinessManageSangse(PJT_CD);
 	}
 
 	//3.1.1 용역계약서 기본사항 입력 처리
