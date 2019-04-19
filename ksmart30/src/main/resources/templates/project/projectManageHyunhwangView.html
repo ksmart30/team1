@@ -21,57 +21,133 @@
 	    
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script> <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 	    <script>
-	    $(document).ready(() =>{
-	    	/* [[${OwnerHyunhwangCount}]].each((index, item)=>{
-				console.log(item.DEPT_CD_COUNT);	    		
-	    	}); */
-	    	//console.log([[${OwnerHyunhwangCount}]]);
-	    	//console.log([[${DEPT_CD_COUNT}]]);
-	    	let monthChart = new Morris.Bar({
-	    		element: 'monthChart',  
-	    		data: 
-	    			[ 
-	    				{ month: '01월', value: 20 },
-	    				{ month: '02월', value: 10 },
-	    				{ month: '03월', value: 5 },
-	    				{ month: '04월', value: 5 },
-	    				{ month: '05월', value: 20 },
-	    				{ month: '06월', value: 20 },
-	    				{ month: '07월', value: 20 },
-	    				{ month: '08월', value: 20 },
-	    				{ month: '09월', value: 20 },
-	    				{ month: '10월', value: 20 },
-	    				{ month: '11월', value: 20 },
-	    				{ month: '12월', value: 20 }
-	    			], 
-	    		xkey: 'month', 
-	    		ykeys: ['value'],
-	    		labels: ['Value']
-	    	});
-	    	
-	    	let deptChart = new Morris.Bar({  
-	    		element: 'deptChart', 
-	    		data: 
-	    			[ 
-	    				{ dept: '설계1본부', value: 5 },
-	    				{ dept: '설계2본부', value: 10 },
-	    				{ dept: '설계3본부', value: 5 },
-	    				{ dept: '설계4본부', value: 5 },
-	    				{ dept: '설계5본부', value: 20 }
-	    			], 
-	    		xkey: 'dept', 
-	    		ykeys: ['value'],
-	    		labels: ['Value']
-	    	});
+        function deptSangse(YEAR, DEPT_CD_SUB) {
+            console.log(YEAR+DEPT_CD_SUB);
+        }
+
+        function deptChartFunction(YEAR) {
+            var DEPT_CD_COUNT1 = 0;
+            var DEPT_CD_COUNT2 = 0;
+            var DEPT_CD_COUNT3 = 0;
+            var DEPT_CD_COUNT4 = 0;
+            var DEPT_CD_COUNT5 = 0;
+            $.ajax({
+				url:'/project/projectManageHyunhwangData',
+                type:'POST',
+                data:{YEAR:YEAR},
+				success:function(data){
+                    console.log(data);
+					$(data).each((index, item)=> {
+                        if(item.DEPT_CD_SUB=="75") {
+                            DEPT_CD_COUNT1 = item.DEPT_CD_COUNT;
+                        } else if(item.DEPT_CD_SUB=="76") {
+                            DEPT_CD_COUNT2 = item.DEPT_CD_COUNT;
+                        } else if(item.DEPT_CD_SUB=="77") {
+                            DEPT_CD_COUNT3 = item.DEPT_CD_COUNT;
+                        } else if(item.DEPT_CD_SUB=="78") {
+                            DEPT_CD_COUNT4 = item.DEPT_CD_COUNT;
+                        } else if(item.DEPT_CD_SUB=="79") {
+                            DEPT_CD_COUNT5 = item.DEPT_CD_COUNT;
+                        }
+                    });
+
+                    // 본부별 계약현황 차트
+                    let deptChart = new Morris.Bar({
+                        element: 'deptChart', 
+                        data:
+                            [ 
+                                { dept: '설계1본부', value: DEPT_CD_COUNT1 },
+                                { dept: '설계2본부', value: DEPT_CD_COUNT2 },
+                                { dept: '설계3본부', value: DEPT_CD_COUNT3 },
+                                { dept: '설계4본부', value: DEPT_CD_COUNT4 },
+                                { dept: '설계5본부', value: DEPT_CD_COUNT5 }
+                            ],
+                        xkey: 'dept', 
+                        ykeys: ['value'],
+                        labels: ['건수']
+                    }).on('click', function (i){
+                            console.log(i);
+                        if(i=="0") {
+                            deptSangse('2019', '75');
+                        } else if(i=="1") {
+                            deptSangse('2019', '76');
+                        } else if(i=="2") {
+                            deptSangse('2019', '77');
+                        } else if(i=="3") {
+                            deptSangse('2019', '78');
+                        } else if(i=="4") {
+                            deptSangse('2019', '79');
+                        }
+                        });
+                }
+            });
+        }
+	    $(document).ready(() => {
+            var YEAR = '2019';
+            $('#search').click(() => {
+                YEAR = $('#YEAR').val();
+                console.log('년도 : '+YEAR);
+                deptChartFunction(YEAR); 
+            });
+            //월별 계약현황 차트
+            let monthChart = new Morris.Bar({
+                element: 'monthChart',  
+                data: 
+                    [ 
+                        { month: '01월', value: 1 },
+                        { month: '02월', value: 10 },
+                        { month: '03월', value: 5 },
+                        { month: '04월', value: 5 },
+                        { month: '05월', value: 20 },
+                        { month: '06월', value: 20 },
+                        { month: '07월', value: 20 },
+                        { month: '08월', value: 20 },
+                        { month: '09월', value: 20 },
+                        { month: '10월', value: 20 },
+                        { month: '11월', value: 20 },
+                        { month: '12월', value: 20 }
+                    ], 
+                xkey: 'month', 
+                ykeys: ['value'],
+                labels: ['건수']
+            });
+            
+            
 	    });
 
 	    </script>
 	</th:block>
 	<th:block layout:fragment="customBody">
+    <div class="col-md-9 col-xs-12" style="color:black;">
+        <div class="page-title">
+            <div class="title_left">
+                <h2><b>용역계약 현황</b></h2>
+                <h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리</b></font></h5>			
+            </div>
+        </div>
+    </div>
+                    
+    <div class="x_content" style="text-align: right">
+        <input type="number" id="YEAR">
+        <span>년도</span>
+        <div class="btn-group">
+            <button class="btn btn-default" type="reset" id="search">조회</button>
+            <button class="btn btn-default" type="reset">입력</button>
+            <button class="btn btn-default" type="button">수정</button>
+            <button class="btn btn-default" type="button">삭제</button>
+            <button class="btn btn-default" type="button">저장</button>
+            <button class="btn btn-default" type="button">출력</button>
+        </div>
+    </div>
+    
 	<!-- 1 -->
 		<div class="col-md-6 col-sm-6 col-xs-12">
 		<div class="x_panel">
-		<div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
+        <div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
+            <label id="YEAR_VAL"></label>
+            <label for="ex3">년도 프로젝트 계약현황 (</label>
+            <label id="DEPT_CD_COUNT"></label>
+            <label for="ex3">건)</label>
 			<div id="monthChart"></div>
 		</div>
 		</div>
@@ -80,7 +156,11 @@
 		<div class="col-md-6 col-sm-6 col-xs-12">
 		<div class="x_panel">
 		<div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
-		<label for="ex3">◎ 2019년 3월 계약</label>
+            <label for="ex3">◎ </label>
+            <label id="YEAR_VAL"></label>
+            <label for="ex3">년 </label>
+            <label id="MONTH"></label>
+            <label>월 계약</label>
 			<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -114,7 +194,10 @@
 	<!-- 3 -->
 		<div class="col-md-6 col-sm-6 col-xs-12">
 		<div class="x_panel">
-		<div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
+        <div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
+            <label for="ex3">◎ </label>
+            <label id="YEAR"></label>
+            <label for="ex3">년도 본부별 계약현황</label>
 			<div id="deptChart"></div>
 		</div>
 		</div>
@@ -123,7 +206,11 @@
 		<div class="col-md-6 col-sm-6 col-xs-12">
 		<div class="x_panel">
 		<div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
-		<label for="ex3">◎ 2019년 설계1본부 계약</label>
+        <label for="ex3">◎ </label>
+        <label id="YEAR"></label>
+        <label>년 설계</label>
+        <label id="DEPT_CD_NO"></label>
+        <label>본부 계약</label>
 			<table class="table table-bordered">
 			<thead>
 				<tr>

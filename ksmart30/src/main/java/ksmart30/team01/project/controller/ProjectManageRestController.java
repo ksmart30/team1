@@ -208,4 +208,10 @@ public class ProjectManageRestController {
 	public String projectManageHyunhwang(Model model) {
 		return "project/manage/hyunhwang";
 	}
+
+	//3.1.6 용역계약서 현황 값을 가져옴 View
+	@PostMapping("/project/projectManageHyunhwangData")
+	public List<Map<String, Object>> projectManageHyunhwangData(String YEAR) {
+		return projectManageService.getProjectManageOwnerHyunhwangCount(YEAR);
+	}
 }

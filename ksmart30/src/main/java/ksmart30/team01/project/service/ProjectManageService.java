@@ -197,10 +197,10 @@ public class ProjectManageService {
 	// ====================================================== 용역계약서 현황 START ====================================================== 
 	
 	// 용역계약서 현황에서 년도를 기준으로 부서별로 계약 회수 조회 쿼리를 호출하는 메서드
-	public List<Map<String, Object>> getProjectManageOwnerHyunhwangCount() {
+	public List<Map<String, Object>> getProjectManageOwnerHyunhwangCount(String YEAR) {
 		System.out.println("Service getProjectManageOwnerHyunhwangCount 메서드 실행");
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("YEAR", "2019");
+		map.put("YEAR", YEAR);
 		return projectManageMapper.getProjectManageOwnerHyunhwangCount(map);
 	}
 		
