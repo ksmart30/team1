@@ -32,43 +32,56 @@ AND
 AND
 	A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
 
-
 </select>
-
 
 
 <!-- 프로젝트 예산,실적대비표_왼쪽 상단 검색 조건에서 프로젝트 코드를 조회하는 쿼리 -->
 <select id="projectCodeSearch"
 		parameterType="ksmart30.team01.project.domain.SonikProjectCodeSearch"
 		resultType="java.util.Map">
-SELECT
-*
+
+SELECT 
+A.*
 FROM 
-(SELECT 
-	'20'+SUBSTRING(A.PJT_CD,1,2)YY
-	,A.PJT_CD
-	,B.PJT_NM
-	,C.DEPT_CD
-	,C.DEPT_NM
-FROM
-	 T_P11000 A
-	,T_SM3000 B 
-	,T_SC1010 C
-
-WHERE
-	A.DEPT_CD = C.DEPT_CD
-AND
-	A.PJT_CD = B.PJT_CD)A
-
+	(SELECT 
+		A.*
+	FROM
+		(SELECT
+			'20'+SUBSTRING(B.PJT_CD,1,2)YY
+			,B.PJT_CD
+			,A.PJT_NM
+			,E.DEPT_CD
+			,E.DEPT_NM
+			,CASE 			
+				WHEN B.PJT_E_GBN > '' AND B.PJT_E_DATE > '' THEN '5'	<!-- 종료  -->
+				WHEN B.PJT_YEA_YN = 'T' THEN '4'	<!-- 승인 -->					  
+		      		WHEN C.MD>0 AND D.PN>0 THEN '3'	<!-- 예산 or 미승인-->	     
+			   ELSE '2'	<!-- 계약  -->
+			END RESULT_X		
+		FROM 
+			T_SM3000 A
+			,T_P11000 B
+			,(SELECT PJT_CD, COUNT(*) MD FROM T_P11050 GROUP BY PJT_CD) C
+			,(SELECT PJT_CD, COUNT(*) PN FROM T_P11080 GROUP BY PJT_CD) D
+			,T_SC1010 E		
+		 WHERE 
+		 		B.PJT_CD  = A.PJT_CD
+		   AND 
+				B.PJT_CD *= C.PJT_CD
+		   AND 
+				B.PJT_CD *= D.PJT_CD
+			AND 
+				B.DEPT_CD = E.DEPT_CD) A	   
+	WHERE
+		 A.RESULT_X = '3'
+		 OR
+		 A.RESULT_X = '4')A
 WHERE 
+	 A.YY LIKE '%'+#{YY}+'%'
+	AND
+	 A.${selectedPJT} LIKE '%' + #{pjtValue} + '%'
 
-A.YY LIKE '%'+#{YY}+'%'
-
-AND
-
-A.${selectedPJT} LIKE '%' + #{pjtValue} + '%'
 </select>
-
 
 
 <!-- 제조경비2 상세화면을위한 검색 쿼리 작성 (계정과목, 예산) -->

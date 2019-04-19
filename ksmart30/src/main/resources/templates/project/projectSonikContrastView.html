@@ -11,6 +11,34 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script>
 
+function somicall2(){	
+	 
+	console.log("하이");
+	let selectedPJT = $('#selectedPJT option:selected').val();
+	let pjtValue = $('#pjtValue').val();
+	let YY = $('#YY').val();
+
+	$.ajax({
+        url:'/project/projectSonikSearch',
+        type:'POST',
+        data:{selectedPJT:selectedPJT,pjtValue:pjtValue,YY:YY},
+        success:(list)=>{
+        	console.log(list);
+        	let tr='';
+        	$(list).each((index,item)=>{
+        		$('#pjtList').empty();
+        		tr += '<tr>';
+				tr += '<td>'+item.PJT_CD+'</td>';
+				tr += '<td>'+item.PJT_NM+'</td>';
+				tr += '</tr>';
+        	});
+        	$('#pjtList').append(tr);
+        }
+    });
+}
+
+
+
 // 리스트화면에 보여주는 ajax 검색버튼 클릭하지 않아도 리스트화면이 보이도록 
 function somicall(){
 	console.log("sonikList ajax실행");
@@ -29,6 +57,7 @@ function somicall(){
            			+"부서"+'</td> <td rowspan="3">'
            			+"["+item.PJT_CD +"] "+ item.PJT_NM+'</td><td rowspan="3">' //프로젝트코드, 프로젝트 명
            			+item.TOT_CONTRACT_AMT+'</td><td>'//총계약금액 
+           			+""+'</td><td>'
            			+"예산"+'</td><td>'//프로젝트 구분    			          			
            			+""+'</td><td>'
            			+item.COST_AMT1+'</td><td>' //인건비
@@ -36,6 +65,7 @@ function somicall(){
            			+item.COST_AMT3+'</td>' //제조경비2
            			
            			+'<tr><td>'
+           			+""+'</td><td>'
            			+"실적"+'</td><td>'//프로젝트 구분    			          			
            			+""+'</td><td>'
            			+item.COST_AMT1+'</td><td>' //인건비
@@ -43,6 +73,7 @@ function somicall(){
            			+item.COST_AMT3+'</td>' //제조경비2
            			
            			+'<tr><td>'
+           			+""+'</td><td>'
            			+"차이"+'</td><td>'//프로젝트 구분    			          			
            			+""+'</td><td>'
            			+item.COST_AMT1+'</td><td>' //인건비
@@ -59,37 +90,16 @@ function somicall(){
 $(document).ready(function() {
 	console.log("레디 실행");
 	somicall();
+	somicall2();
 	
 	 $('#sonikList').on('click',function(){
 		 console.log("클릭 실행");
-		 somicall(); 
-		 
-		 
+		 somicall(); 		 
 	 });
-	 /* ============================프로젝트코드별조회================================= */
+	 
 		$('#btnPjtSearch').click(()=>{
-			console.log("하이");
-			let selectedPJT = $('#selectedPJT option:selected').val();
-			let pjtValue = $('#pjtValue').val();
-			let YY = $('#YY').val();
-		
-			$.ajax({
-	            url:'/project/projectSonikSearch',
-	            type:'POST',
-	            data:{selectedPJT:selectedPJT,pjtValue:pjtValue,YY:YY},
-	            success:(list)=>{
-	            	console.log(list);
-	            	let tr='';
-	            	$(list).each((index,item)=>{
-	            		$('#pjtList').empty();
-	            		tr += '<tr>';
-						tr += '<td>'+item.PJT_CD+'</td>';
-						tr += '<td>'+item.PJT_NM+'</td>';
-						tr += '</tr>';
-	            	});
-	            	$('#pjtList').append(tr);
-	            }
-	        });
+			console.log("somicall2호출");
+			somicall2();
 			
 		});
 		$('#pjtList').delegate('tr', 'dblclick', function(){
@@ -98,8 +108,9 @@ $(document).ready(function() {
 			$('#PJT_CD').val(td.eq(0).text());
 			$('#PJT_NM').val(td.eq(1).text());
 			$('#custModal').click();
+			$('#sonikList').trigger('click');
 		});
-		/* =============================프로젝트코드별조회 end================================= */
+
 });
 
 </script>
@@ -325,6 +336,7 @@ $(document).ready(function() {
 							<th class="column-title">부서명</th>
 							<th class="column-title">프로젝트명</th>
 							<th class="column-title">총계약액</th>
+							<th class="column-title">상세보기</th>
 							<th class="column-title">구분</th>
 							<th class="column-title">합계</th>
 							<th class="column-title">인건비</th>
