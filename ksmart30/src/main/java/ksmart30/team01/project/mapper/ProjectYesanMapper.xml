@@ -44,89 +44,34 @@
    	<select id="getProjectYesanSangse" parameterType="String" resultType="java.util.Map">
 		SELECT  A.PJT_CD,
 		        A.PJT_NM,
-		        B.DEPT_CD,
-		        E.SHORT_NM DEPT_NM,
-		        (SELECT CUST_NM FROM T_AC0300 WHERE CUST_CD = C.CUST_CD) + CASE WHEN C.CNT > 1 THEN + '외' + CONVERT(VARCHAR(4), C.CNT) + '건'
-		                                                                                       ELSE '' END CUST_NM,
-		        SUBSTRING(B.CONTRACT_DATE,1,4)+'/'+SUBSTRING(B.CONTRACT_DATE,5,2)+'/'+SUBSTRING(B.CONTRACT_DATE,7,2)  CONTRACT_DATE,
-		        B.TOT_CONTRACT_AMT,
+		        B.PRINT_CNT,
+		        CASE B.PJT_YEA_YN WHEN 'T' THEN '승인'
+		                        WHEN 'F' THEN '미승인' 
+										ELSE '미승인' END PJT_YEA_YN,
+				  (SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.BUILD_TYPE AND LEVEL1_CD = '170' AND BUSI_GB = 'J') BUILD_NM,	
+				  (SELECT DEPT_NM FROM T_SC1010 WHERE DEPT_CD = B.DEPT_CD) DEPT_NM,	  		
+				  B.CONTRACT_DATE,
+				  B.CRT_DATE,					
+		        B.PM_EMP_NO,
+		        (SELECT KOR_NM FROM T_HM1000 WHERE B.PM_EMP_NO = EMP_NO) KOR_NM,   		        
+				  B.TOT_CONTRACT_AMT,
 		        CAST(B.G_AREA_P AS DECIMAL(14,2)) G_AREA_P,
 		        CAST(B.G_AREA_M AS DECIMAL(14,2)) G_AREA_M,
 		        CAST(B.G_YAREA_P AS DECIMAL(14,2)) G_YAREA_P,
 		        CAST(B.G_YAREA_M AS DECIMAL(14,2)) G_YAREA_M,
-		        B.BUILD_TYPE,
-		        (SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.BUILD_TYPE AND LEVEL1_CD = '170' AND BUSI_GB = 'J') BUILD_NM,
-		        B.PJT_YEA_YN,
-		        B.PJT_CD PJT_CCD,
-		        B.CRT_DATE,
-		        '1' TYPE_GB,
-		        (SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.PJT_E_GBN AND LEVEL1_CD = '25A' AND BUSI_GB = 'J') PJT_E_GBN,
-		        CASE ISNULL(B.PJT_E_DATE,'') WHEN ''  THEN ''
-		                                     WHEN ' ' THEN ''
-		                                              ELSE SUBSTRING(B.PJT_E_DATE,1,4)+'/'+SUBSTRING(B.PJT_E_DATE,5,2)+'/'+SUBSTRING(B.PJT_E_DATE,7,2)
-		        END PJT_E_DATE,
-		        SUBSTRING(B.CRT_DATE,1,4)+'/'+SUBSTRING(B.CRT_DATE,5,2)+'/'+SUBSTRING(B.CRT_DATE,7,2) + ' ~ ' +
+		        SUBSTRING(B.CONTRACT_DATE,1,4)+'/'+SUBSTRING(B.CONTRACT_DATE,5,2)+'/'+SUBSTRING(B.CONTRACT_DATE,7,2) + ' ~ ' +
 		        SUBSTRING(B.PJT_E_DATE,1,4)+'/'+SUBSTRING(B.PJT_E_DATE,5,2)+'/'+SUBSTRING(B.PJT_E_DATE,7,2)  FROM_TO,
-		        0 YEA_TOT,
-		        0 SIL_TOT,
-		        0 CHA_AMT
+		        (SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.CONTRACT_PRI3 AND LEVEL1_CD = '130' AND BUSI_GB = 'J') PJT_E_GBN,
+		        B.ZIP_CD,
+       			B.PJT_ADDR
 		   FROM T_SM3000 A,
-		 T_P11000 B,
-		        (SELECT PJT_CD, MIN(CUST_CD) CUST_CD, COUNT(*)-1 CNT
-		           FROM T_P11010
-		          WHERE PJT_CD = #{PJT_CD}
-		          GROUP BY PJT_CD) C,
-		 SF_SC1010('03', '', '', '') E
+				T_P11000 B,
+		   		T_SC1010 C
 		 WHERE B.PJT_CD   = A.PJT_CD
-		   AND B.PJT_CD  *= C.PJT_CD
-		   AND B.DEPT_CD  = E.DEPT_CD
+		   AND B.DEPT_CD  = C.DEPT_CD
 		/*   AND (SELECT COUNT(J_PJT_CD) FROM T_P13000 WHERE J_PJT_CD = B.PJT_CD) = 1 */
-		   AND B.PJT_CD = #{PJT_CD}
-		
-		UNION ALL
-		
-		SELECT  F.G_PJT_CD PJT_CD,
-		        A.PJT_NM,
-		        F.G_DEPT_CD,
-		        E.SHORT_NM,
-		        (SELECT CUST_NM FROM T_AC0300 WHERE CUST_CD = C.CUST_CD) + CASE WHEN C.CNT > 1 THEN + '외' + CONVERT(VARCHAR(4), C.CNT) + '건'
-		                                                                                       ELSE '' END CUST_NM,
-		        SUBSTRING(B.CONTRACT_DATE,1,4)+'/'+SUBSTRING(B.CONTRACT_DATE,5,2)+'/'+SUBSTRING(B.CONTRACT_DATE,7,2)  CONTRACT_DATE,
-		        (F.DAN_A+F.DAN_B+F.DAN_C+F.DAN_D+F.DAN_E+F.DAN_F+F.DAN_G) TOT_CONTRACT_AMT,
-		        CAST(B.G_AREA_P AS DECIMAL(14,2)) G_AREA_P,
-		        CAST(B.G_AREA_M AS DECIMAL(14,2)) G_AREA_M,
-		        CAST(B.G_YAREA_P AS DECIMAL(14,2)) G_YAREA_P,
-		        CAST(B.G_YAREA_M AS DECIMAL(14,2)) G_YAREA_M,
-		        B.BUILD_TYPE,
-		        (SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.BUILD_TYPE AND LEVEL1_CD = '170' AND BUSI_GB = 'J') BUILD_NM,
-		        CASE F.YESAN_YN WHEN '1' THEN 'T'
-		                        WHEN '0' THEN 'F' END PJT_YEA_YN,
-		        B.PJT_CD PJT_CCD,
-		        B.CRT_DATE,
-		        '2' TYPE_GB,
-		        (SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.PJT_E_GBN AND LEVEL1_CD = '25A' AND BUSI_GB = 'J') PJT_E_GBN,
-		        CASE ISNULL(B.PJT_E_DATE,'') WHEN ''  THEN ''
-		                                     WHEN ' ' THEN ''
-		                                              ELSE SUBSTRING(B.PJT_E_DATE,1,4)+'/'+SUBSTRING(B.PJT_E_DATE,5,2)+'/'+SUBSTRING(B.PJT_E_DATE,7,2)
-		        END PJT_E_DATE,
-		        SUBSTRING(B.CRT_DATE,1,4)+'/'+SUBSTRING(B.CRT_DATE,5,2)+'/'+SUBSTRING(B.CRT_DATE,7,2) + ' ~ ' +
-		        SUBSTRING(B.PJT_E_DATE,1,4)+'/'+SUBSTRING(B.PJT_E_DATE,5,2)+'/'+SUBSTRING(B.PJT_E_DATE,7,2)  FROM_TO,
-		        0 YEA_TOT,
-		        0 SIL_TOT,
-		        0 CHA_AMT
-		   FROM T_SM3000 A,
-		        T_P11000 B,
-		        (SELECT PJT_CD, MIN(CUST_CD) CUST_CD, COUNT(*)-1 CNT
-		           FROM T_P11010
-		          WHERE PJT_CD = #{PJT_CD}
-		          GROUP BY PJT_CD) C,
-		        SF_SC1010('03', '', '', '') E,
-		        T_P13000 F
-		 WHERE B.PJT_CD    = F.J_PJT_CD
-		   AND B.PJT_CD    = A.PJT_CD
-		   AND F.G_DEPT_CD = E.DEPT_CD
+		   AND B.PJT_CD = #{PJT_CD}		   
 		/*   AND (SELECT COUNT(J_PJT_CD) FROM T_P13000 WHERE J_PJT_CD = B.PJT_CD) > 1 */
-		   AND F.G_PJT_CD = #{PJT_CD}
   	</select>
   	
   	<!-- 2.2.1.2 발주처를 조회하는 쿼리문 -->
@@ -137,7 +82,34 @@
   		WHERE A.CUST_CD = B.CUST_CD
   			AND PJT_CD = #{PJT_CD}
   	</select>
-  	
+
+  	<!-- 2.2.1.3 프로젝트코드를 입력받아 프로젝트 일정계획을 보여주는 쿼리문 -->
+  	<select id="getProjectYesanSangseWorkStep" parameterType="String" resultType="java.util.Map">  	
+		SELECT
+			A.WORK_STEP,
+			B.LEVEL2_NM WORK_STEP_NM,
+			RTRIM(A.START_DAY) START_DAY,
+			RTRIM(A.PLAN_END_DAY) PLAN_END_DAY,
+			A.NEED_TERM,
+			RTRIM(A.REAL_END_DAY) REAL_END_DAY,
+			(SELECT COUNT(*) FROM T_P11080_H
+			WHERE PJT_CD = A.PJT_CD AND WORK_STEP = A.WORK_STEP) UPD_COUNT,
+			C.RMK
+		FROM T_P11080 A,
+			T_SC9100 B,
+			T_P11080_H C
+		WHERE A.WORK_STEP = B.LEVEL2_CD
+			AND A.WORK_STEP = C.WORK_STEP
+			AND A.PJT_CD = C.PJT_CD
+			AND B.BUSI_GB = 'J'
+			AND B.LEVEL1_CD = '110'
+			AND A.PJT_CD = #{PJT_CD}
+		/*  ORDER BY A.START_DAY, A.PLAN_END_DAY, A.WORK_STEP */
+		ORDER BY 
+			A.WORK_STEP
+  	</select>
+
+	
   	<!-- 2.2.3.1 프로젝트예산 출력을 위한 프로젝트코드 조회 -->
   	<select id="getProjectYesanOutputPjtList" parameterType="String" resultType="java.util.Map">  	
 		SELECT B.PJT_CD,

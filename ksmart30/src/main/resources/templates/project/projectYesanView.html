@@ -22,21 +22,35 @@ layout:decorator="layout/main">
 	            	console.log(data);
 	            	//프로젝트 개요
 	            	$('#PJT_CD2').empty();
-	                $('#PJT_CD2').append(data.projectYesanSangse.PJT_CD);	//프로젝트코드
+	                $('#PJT_CD2').append('('+data.projectYesanSangse.PJT_CD+')');	//프로젝트코드
 	            	$('#PJT_NM2').empty();	                
 	                $('#PJT_NM2').append(data.projectYesanSangse.PJT_NM);	//프로젝트명	
+	                $('#PRINT_CNT').empty();	                
+	                $('#PRINT_CNT').append(data.projectYesanSangse.PRINT_CNT);	//출력횟수 
+	                $('#PJT_YEA_YN').empty();	                
+	                $('#PJT_YEA_YN').append(data.projectYesanSangse.PJT_YEA_YN);	//승인여부
 	                $('#BUILD_NM').empty();
 	                $('#BUILD_NM').append(data.projectYesanSangse.BUILD_NM);	//건축물 유형	
 	                $('#DEPT_NM').empty();
 	                $('#DEPT_NM').append(data.projectYesanSangse.DEPT_NM);	//부서명	
 	                $('#CONTRACT_DATE').empty();
-	                $('#CONTRACT_DATE').append(data.projectYesanSangse.CONTRACT_DATE);	//계약일		
+	                $('#CONTRACT_DATE').append(data.projectYesanSangse.CONTRACT_DATE);	//계약일	
 	                $('#CRT_DATE').empty();
-	                $('#CRT_DATE').append('('+data.projectYesanSangse.CRT_DATE+')');	//프로젝트 개요	
+	                $('#CRT_DATE').append('('+data.projectYesanSangse.CRT_DATE+')');	//계약서 등록일
+	                $('#PM_EMP_NO').empty();
+	                $('#PM_EMP_NO').append(data.projectYesanSangse.PM_EMP_NO);	//담당자 사원번호
+	                $('#KOR_NM').empty();
+	                $('#KOR_NM').append(data.projectYesanSangse.KOR_NM);	//사원명
 	                $('#FROM_TO').empty();
-	                $('#FROM_TO').append(data.projectYesanSangse.FROM_TO);	//프로젝트 개요		
+	                $('#FROM_TO').append(data.projectYesanSangse.FROM_TO);	//계약 기간
+	                $('#PJT_E_GBN').empty();
+	                $('#PJT_E_GBN').append(','+data.projectYesanSangse.PJT_E_GBN+'까지');	//프로젝트 계약 종료 구분 시점
 	                $('#TOT_CONTRACT_AMT').empty();
-	                $('#TOT_CONTRACT_AMT').append(data.projectYesanSangse.TOT_CONTRACT_AMT+'원');	//프로젝트총계약액
+	                $('#TOT_CONTRACT_AMT').append(data.projectYesanSangse.TOT_CONTRACT_AMT+'원');		//프로젝트총계약액
+	                $('#ZIP_CD').empty();
+	                $('#ZIP_CD').append('('+data.projectYesanSangse.ZIP_CD+')');		//우편번호
+	                $('#PJT_ADDR').empty();
+	                $('#PJT_ADDR').append(data.projectYesanSangse.PJT_ADDR);	//주소
 	                $('#G_AREA_M').empty();
 	                $('#G_AREA_M').append(data.projectYesanSangse.G_AREA_M+'m²');	//계약면적_M
 	                $('#G_AREA_P').empty();
@@ -44,12 +58,11 @@ layout:decorator="layout/main">
 	                $('#G_YAREA_M').empty();
 	                $('#G_YAREA_M').append(data.projectYesanSangse.G_YAREA_M+'m²');	//계약연면적_M
 	                $('#G_YAREA_P').empty();
-	                $('#G_YAREA_P').append(data.projectYesanSangse.G_YAREA_P+'평');	//계약연면적_평		  
-	                
+	                $('#G_YAREA_P').append(data.projectYesanSangse.G_YAREA_P+'평');	//계약연면적_평	
+
 	                //발주처
                 	$('#CUST_NM').empty();	//발주처 삭제
-    	            $(data.projectYesanSangseCustNm).each((index,item)=>{
-    	               	console.log(item+"아이템");   	
+    	            $(data.projectYesanSangseCustNm).each((index,item)=>{  	
     	                $('#CUST_NM').append('<tr><td>'+item.CUST_NM+'</td></tr>');	//발주처명	
    	                });
 	                
@@ -227,44 +240,45 @@ layout:decorator="layout/main">
 										<td id="PJT_CD2"></td>
 										<td id="PJT_NM2"></td>
 										<th>출력횟수</th>
-										<td>2회</td>
-										<th>미승인</th>
+										<td id="PRINT_CNT"></td>
+										<th colspan="2" id="PJT_YEA_YN"></th>
 									</tr>
 									<tr>
 										<th>건축물유형</th>
-										<td id="BUILD_NM">업무시설</td>
+										<td id="BUILD_NM"></td>
 										<th>수행부서</th>
-										<td colspan="4" id="DEPT_NM">설계1본부 1소</td>
+										<td colspan="4" id="DEPT_NM"></td>
 									</tr>
 									<tr>
-										<td>계약일자</td>
-										<td id="CONTRACT_DATE">2018/03/02</td>
-										<td id="CRT_DATE">(2018/11/02)</td>
-										<td>PM</td>
-										<td>20120015</td>
-										<td colspan="3">김인규</td>
+										<th>계약일자</th>
+										<td id="CONTRACT_DATE"></td>
+										<th>계약서등록일</th>
+										<td id="CRT_DATE"></td>
+										<th>PM</th>
+										<td id="PM_EMP_NO"></td>
+										<td colspan="3" id="KOR_NM"></td>
 									</tr>
 									<tr>
 										<th>계약기간</th>
-										<td colspan="6" id="FROM_TO">2018/03/02~____/__/__, 
-										용역완료시까지</td>
+										<td colspan="2" id="FROM_TO"></td>
+										<td colspan="4" id="PJT_E_GBN"></td>
 									</tr>
 									<tr>
 										<th>당사계약금액</th>
-										<td colspan="6" id="TOT_CONTRACT_AMT">770,000,000원</td>
+										<td colspan="6" id="TOT_CONTRACT_AMT"></td>
 									</tr>
 									<tr>
 										<th>대지위치</th>
-										<td>343-80</td>
-										<td colspan="5">대전 대덕구 대오길 2(오정동)</td>
+										<td id="ZIP_CD"></td>
+										<td colspan="5" id="PJT_ADDR"></td>
 									</tr>
 									<tr>
 										<th>대지면적</th>
-										<td id="G_AREA_M">2,963m²</td>
-										<td id="G_AREA_P">896.31평</td>
+										<td id="G_AREA_M"></td>
+										<td id="G_AREA_P"></td>
 										<th>연면적</th>
-										<td id="G_YAREA_M">45,000m²</td>
-										<td colspan="2" id="G_YAREA_P">13,612.50평</td>
+										<td id="G_YAREA_M"></td>
+										<td colspan="2" id="G_YAREA_P"></td>
 									</tr>
 								</table>
 
@@ -314,104 +328,201 @@ layout:decorator="layout/main">
 
 									<div id="myTabContent" class="tab-content">
 										<!-- 일정계획 start -->
-										<div role="tabpanel" class="tab-pane fade active in"
-											id="tab_content1" aria-labelledby="home-tab">
-											<p>
-											<div class="col-md-12 col-sm-6 col-xs-12">
-												<div class="x_panel">
-													<div class="x_title">
-														<h2>
-															일정계획 <small></small>
-														</h2>
-														<ul class="nav navbar-right panel_toolbox">
-															<li><a class="collapse-link"><i class="fa fa-chevron-up"></i>숨기기</a></li>
-														</ul>
-														<div class="clearfix"></div>
-													</div>
-
-													<div class="x_content">
-														<table class="table table-bordered">
-															<thead>
-																<tr>
-																	<th scope="col">단계</th>
-																	<th>변경</th>
-																	<th>착수일</th>
-																	<th>완료예정일</th>
-																	<th>소요기간(Day)</th>
-																	<th>종료일</th>
-																	<th>사유입력</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td scope="row">기획</td>
-																	<td></td>
-																	<td><input type="date"></td>
-																	<td><input type="date"></td>
-																	<td>완료예정일-착수일</td>
-																	<td></td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td scope="row">심의</td>
-																	<td></td>
-																	<td><input type="date"></td>
-																	<td><input type="date"></td>
-																	<td>완료예정일-착수일</td>
-																	<td></td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td scope="row">허가</td>
-																	<td></td>
-																	<td><input type="date"></td>
-																	<td><input type="date"></td>
-																	<td>완료예정일-착수일</td>
-																	<td></td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td scope="row">착공</td>
-																	<td></td>
-																	<td><input type="date"></td>
-																	<td><input type="date"></td>
-																	<td>완료예정일-착수일</td>
-																	<td></td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td scope="row">실시</td>
-																	<td></td>
-																	<td><input type="date"></td>
-																	<td><input type="date"></td>
-																	<td>완료예정일-착수일</td>
-																	<td></td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td scope="row">A/S</td>
-																	<td></td>
-																	<td><input type="date"></td>
-																	<td><input type="date"></td>
-																	<td>완료예정일-착수일</td>
-																	<td></td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td scope="row">준공</td>
-																	<td></td>
-																	<td><input type="date"></td>
-																	<td><input type="date"></td>
-																	<td>완료예정일-착수일</td>
-																	<td></td>
-																	<td><input type="text"></td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-
+											<div role="tabpanel" class="tab-pane fade active in"
+												id="tab_content1" aria-labelledby="home-tab">
+												<p>
+												<div class="col-md-12 col-sm-6 col-xs-12">
+													<div class="x_panel">
+														<div class="x_title">
+															<h2>
+																일정계획 <small></small>
+															</h2>
+															<ul class="nav navbar-right panel_toolbox">															
+																<div class="x_content" style="text-align: right"><button class="btn" data-toggle="modal" data-target=".bs-example-modal-lg1">입력</button></div>
+										<!-- 일정계획 입력 MODAL START -->
+										<div class="modal fade bs-example-modal-lg1" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<form class="form-horizontal">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" id="accountModal"><span aria-hidden="true">X</span>
+															</button>
+															<h4 class="modal-title" id="myModalLabel"><b>일정계획</b></h4><br>
+														</div>
+														<div class="modal-body">
+															<div class="table-responsive" style="overflow: auto; height: 400px;">
+																<table class="table table-bordered table-hover jambo_table">
+																	<thead>
+																		<tr>
+																			<th scope="col">단계</th>
+																			<th>변경</th>
+																			<th>착수일</th>
+																			<th>완료예정일</th>
+																			<th>소요기간(Day)</th>
+																			<th>종료일</th>
+																			<th>사유입력</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr>
+																			<td scope="row">기획</td>
+																			<td></td>
+																			<td><input type="date"></td>
+																			<td><input type="date"></td>
+																			<td></td>
+																			<td></td>
+																			<td><input type="text"></td>
+																		</tr>
+																		<tr>
+																			<td scope="row">심의</td>
+																			<td></td>
+																			<td><input type="date"></td>
+																			<td><input type="date"></td>
+																			<td></td>
+																			<td></td>
+																			<td><input type="text"></td>
+																		</tr>
+																		<tr>
+																			<td scope="row">허가</td>
+																			<td></td>
+																			<td><input type="date"></td>
+																			<td><input type="date"></td>
+																			<td></td>
+																			<td></td>
+																			<td><input type="text"></td>
+																		</tr>
+																		<tr>
+																			<td scope="row">착공</td>
+																			<td></td>
+																			<td><input type="date"></td>
+																			<td><input type="date"></td>
+																			<td></td>
+																			<td></td>
+																			<td><input type="text"></td>
+																		</tr>
+																		<tr>
+																			<td scope="row">실시</td>
+																			<td></td>
+																			<td><input type="date"></td>
+																			<td><input type="date"></td>
+																			<td></td>
+																			<td></td>
+																			<td><input type="text"></td>
+																		</tr>
+																		<tr>
+																			<td scope="row">A/S</td>
+																			<td></td>
+																			<td><input type="date"></td>
+																			<td><input type="date"></td>
+																			<td></td>
+																			<td></td>
+																			<td><input type="text"></td>
+																		</tr>
+																		<tr>
+																			<td scope="row">준공</td>
+																			<td></td>
+																			<td><input type="date"></td>
+																			<td><input type="date"></td>
+																			<td></td>
+																			<td></td>
+																			<td><input type="text"></td>
+																		</tr>
+																	</tbody>																																	
+																</table>
+															</div>
+														</div>
+													</form>
 												</div>
 											</div>
+										</div>
+										<!-- 일정계획 입력 MODAL END -->																											
+															</ul>
+															<div class="clearfix"></div>
+														</div>
+										
+														<div class="x_content">
+															<table class="table table-bordered">
+																<thead>
+																	<tr>
+																		<th scope="col">단계</th>
+																		<th>변경</th>
+																		<th>착수일</th>
+																		<th>완료예정일</th>
+																		<th>소요기간(Day)</th>
+																		<th>종료일</th>
+																		<th>사유입력</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td scope="row">기획</td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																		<td scope="row">심의</td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																		<td scope="row">허가</td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																		<td scope="row">착공</td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																		<td scope="row">실시</td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																		<td scope="row">A/S</td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																		<td scope="row">준공</td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																		<td></td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+										
+													</div>
+												</div>
 										</div>
 										<!-- 일정계획 end -->
 
@@ -874,8 +985,7 @@ layout:decorator="layout/main">
 										<!-- 기성단계 end -->
 
 										<!-- 추정손익계산서 start -->
-										<div role="tabpanel" class="tab-pane fade" id="tab_content6"
-											aria-labelledby="profile-tab">
+										<div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab">
 											<p>
 											<div class="col-md-7 col-sm-6 col-xs-12">
 												<div class="x_panel">

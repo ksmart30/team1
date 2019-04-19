@@ -40,6 +40,9 @@ public class ProjectYesanService {
 		List<Map<String,Object>> projectYesanSangseCustNm = projectYesanMapper.getProjectYesanSangseCustNm(PJT_CD);
 		projectYesanSangseAll.put("projectYesanSangseCustNm", projectYesanSangseCustNm);
 		
+		//2.2.1.3. 일정계획
+		List<Map<String,Object>> projectYesanSangseWorkStep = projectYesanMapper.getProjectYesanSangseWorkStep(PJT_CD);
+		projectYesanSangseAll.put("projectYesanSangseWorkStep",projectYesanSangseWorkStep);
 		return projectYesanSangseAll;
 	}
 
