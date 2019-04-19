@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import ksmart30.team01.project.domain.ProjectYesanSearchRequest;
+import ksmart30.team01.project.domain.ProjectYesanWorkStepLogRequest;
 import ksmart30.team01.project.domain.ProjectSangseRequest;
 
 @Mapper
@@ -22,6 +23,11 @@ public interface ProjectYesanMapper {
 	//2.2.1.3. 프로젝트코드를 입력받아 프로젝트 상세 내용 중 일정계획을 보여줌
 	List<Map<String, Object>> getProjectYesanSangseWorkStep(String PJT_CD);
 	
+	//2.2.1. 일정계획에서 변경횟수가 2회 이상인 경우 변경내역을 보여주는 요청
+	List<Map<String, Object>> getProjectYesanViewWorkStepLog(ProjectYesanWorkStepLogRequest projectYesanWorkStepLogRequest);	
+	
 	//2.2.3.1 프로젝트예산 출력을 위한 프로젝트코드 조회
-	List<Map<String, Object>> getProjectYesanOutputPjtList(String CONTRACT_DATE, String selectedOption, String inputValue);	
+	List<Map<String, Object>> getProjectYesanOutputPjtList(String CONTRACT_DATE, String selectedOption, String inputValue);
+
+
 }

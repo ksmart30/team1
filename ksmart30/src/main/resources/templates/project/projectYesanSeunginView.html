@@ -10,6 +10,34 @@ layout:decorator="layout/main">
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script>
 		
+		//변경횟수(UPD_COUNT)가 2이상인 경우 프로젝트 일정 변경 로그를 조회할 수 있는 모달화면을 보여준다	
+		function workStepLog(UPD_COUNT, PJT_CD, WORK_STEP){
+			console.log(UPD_COUNT+'변경횟수');
+			console.log(PJT_CD+'프로젝트코드');
+			console.log(WORK_STEP+'단계');
+			if(UPD_COUNT>1){
+				$.ajax({
+		            url:'/project/projectYesanViewWorkStepLog',	//url을 요청하고
+		            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
+		        	data:{PJT_CD:PJT_CD, WORK_STEP:WORK_STEP},	//넘길 데이터
+		            success:(data)=>{
+		            	console.log(data);
+		            	//일정계획 변경 로그 (모달화면 띄우기)
+		            	$('#workStepLogList').modal('show');
+		            	$('#workStepLogListDetail').empty();
+		            	$(data).each((index,item)=>{  	
+	    	                $('#workStepLogListDetail').append('<tr><td>'+item.WORK_STEP_NM+'</td><td>'	//단계
+	    	                		+item.PJT_SEQ+'</td><td>'		//변경차수
+	    	                		+item.PLAN_END_DAY1+'</td><td>'	//완료예정일
+	    	                		+item.PLAN_END_DAY2+'</td><td>'	//변경일자
+	    	                		+item.RMK+'</td></tr>');	//사유
+	   	                });		            	
+		            	
+		            }
+				});	
+			}	
+		}
+	
 		//프로젝트코드를 입력받아 프로젝트 개요를 보여준다		    
 	    function mscall(PJT_CD){
 			console.log('mscall실행'+PJT_CD);
@@ -70,22 +98,24 @@ layout:decorator="layout/main">
 	                let needTermTotal = null;	//소요시간 변수초기화
                 	$('#workStep').empty();	//일정계획 삭제
     	            $(data.projectYesanSangseWorkStep).each((index,item)=>{		//일정계획
-    	                $('#workStep').append('<tr><td>'+item.WORK_STEP_NM		//일정계획 단계 한글로
-    	                			+'</td><td>'+item.UPD_COUNT					//변경횟수
-    	                			+'</td><td>'+item.START_DAY					//착수일
-    	                			+'</td><td>'+item.PLAN_END_DAY				//완료예정일
-    	                			+'</td><td>'+item.NEED_TERM					//소요기간
-    	                			+'</td><td>'+item.REAL_END_DAY				//종료일
-    	                			+'</td><td>'+item.RMK+'</td></tr>');		//사유입력
+    	            	//클릭하면 변경횟수(UPD_COUNT)가 2이상인 경우 프로젝트 일정 변경 로그를 조회할 수 있는 모달 화면으로
+    	                $('#workStep').append('<tr><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.WORK_STEP_NM		//일정계획 단계 한글로
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.UPD_COUNT		//변경횟수
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.START_DAY		//착수일
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.PLAN_END_DAY		//완료예정일
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.NEED_TERM		//소요기간
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.REAL_END_DAY		//종료일
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.RMK+'</td></tr>');	//사유입력
 		                //소요기간 소계
-		                needTermTotal = needTermTotal + parseInt(item.NEED_TERM);    	                			
-   	                }); 
+		                needTermTotal = needTermTotal + parseInt(item.NEED_TERM); 
+    	                month = parseInt(needTermTotal/25);		
+    	                day = needTermTotal % 25;
+    	            }); 
 	                console.log(needTermTotal+'소요기간');
 	                $('#needTermTotal').empty();
-	                $('#needTermTotal').text(needTermTotal);
+	                $('#needTermTotal').text(month+'개월'+day+'일');
 	            }
 			});	
-			
 		};	
 		
 		//엔터키 방지 start
@@ -95,7 +125,7 @@ layout:decorator="layout/main">
     		}
     	});				
 		//엔터키 방지 end
-		
+	
 		$(document).ready(()=>{
 		    // 검색목록(프로젝트예산 입력을 위한 용역계약서 리스트)
 		    $('#list_btn').click(()=>{	//list_btn를 클릭하면
@@ -117,8 +147,7 @@ layout:decorator="layout/main">
 		                $('#list').empty();	//리스트를 비우고	               
 		                $(data).each((index,item)=>{
 		                    $('#list').append('<tr onclick="mscall('+item.PJT_CD+')"><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'+item.PJT_NM+'</td></tr>');               
-		                });
-		                
+		                });		                
 		                //리스트의 길이
 		                $('#listLength').empty();
 		                $('#listLength').append(data.length);
@@ -137,10 +166,10 @@ layout:decorator="layout/main">
 			<div class="page-title">
 				<div class="title_left">
 					<h2>
-						<b>프로젝트예산 입력</b>
+						<b>프로젝트예산 승인</b>
 					</h2>
 					<h5>
-						<font color="gray"><b>2. 계약프로젝트 관리&nbsp;&gt; 2.2 프로젝트예산 관리&nbsp;&gt; 2.2.1 프로젝트예산 입력&nbsp;&nbsp;</b></font>
+						<font color="gray"><b>2. 계약프로젝트 관리&nbsp;&gt; 2.2. 프로젝트예산 관리&nbsp;&gt; 2.2.2 프로젝트예산 승인&nbsp;&nbsp;</b></font>
 					</h5>
 				</div>
 			</div>
@@ -370,12 +399,45 @@ layout:decorator="layout/main">
 																	</tr>
 																</thead>
 																<tbody id="workStep">															
-																</tbody>
+																</tbody>																
 																	<tr><th>소계</th><td></td><td></td><td></td><th id="needTermTotal"></th><td></td><td></td>
 																	</tr>
 															</table>
-														</div>
-										
+															
+															<!-- 프로젝트일정로그 MODAL START -->
+															<div class="modal fade bs-example-modal-lg1" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" id="workStepLogList">
+																<div class="modal-dialog modal-lg">
+																	<div class="modal-content">
+																		<form class="form-horizontal">
+																			<div class="modal-header">
+																				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">X</span>
+																				</button>
+																				<h4 class="modal-title" id="myModalLabel"><b>프로젝트 일정 로그</b></h4><br>
+																			</div>
+																			<div class="modal-body">
+																				<div class="table-responsive" style="overflow: auto; height: 400px;">
+																					<table class="table table-bordered table-hover jambo_table">
+																						<thead>
+																							<tr>
+																								<th>단계</th>
+																								<th>변경횟수</th>
+																								<th>완료예정일</th>
+																								<th>변경일자</th>
+																								<th>변경사유</th>
+																							</tr>
+																						</thead>
+																						<tbody id="workStepLogListDetail">																		
+																						</tbody>																																	
+																					</table>
+																				</div>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+															</div>
+															<!-- 프로젝트일정로그 MODAL END -->
+																															
+														</div>										
 													</div>
 												</div>
 										</div>

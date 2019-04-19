@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ksmart30.team01.project.domain.ProjectSangseRequest;
 import ksmart30.team01.project.domain.ProjectYesanSearchRequest;
+import ksmart30.team01.project.domain.ProjectYesanWorkStepLogRequest;
 import ksmart30.team01.project.service.ProjectYesanService;
 
 @RestController
@@ -29,14 +30,22 @@ public class ProjectYesanRestController {
 		return searchList;
 	}	
 	
-	//2.2.1 프로젝트코드를 입력받아 프로젝트 개요 화면을 보여주는 요청
+	//2.2.1. 프로젝트코드를 입력받아 프로젝트 개요 화면을 보여주는 요청
 	@PostMapping("/project/projectYesanViewOne")
 	public Map<String, Object> projectYesanViewOne(String PJT_CD) {	
 		System.out.println("/project/projectYesanViewOne RestController post 하나의 프로젝트 개요 화면");				
 		System.out.println(PJT_CD+" : 받아온값");
 		return projectYesanService.projectYesanViewOne(PJT_CD);
 	}
-		
+	
+	//2.2.1. 일정계획에서 변경횟수가 2회 이상인 경우 변경내역을 보여주는 요청
+	@PostMapping("/project/projectYesanViewWorkStepLog")
+	public List<Map<String, Object>> projectYesanViewWorkStepLog(ProjectYesanWorkStepLogRequest projectYesanWorkStepLogRequest) {	
+		System.out.println("/project/projectYesanViewWorkStepLog RestController post 일정계획 변경내역");				
+		System.out.println(projectYesanWorkStepLogRequest.toString()+" : 받아온값");		
+		return projectYesanService.projectYesanViewWorkStepLog(projectYesanWorkStepLogRequest);
+	}	
+	
 	//2.2.1 승인된 용역계약서 상세
 	@GetMapping("/project/yesan/sangse")	
 	public String projectYesanSangse() {

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ksmart30.team01.project.domain.ProjectYesanSearchRequest;
+import ksmart30.team01.project.domain.ProjectYesanWorkStepLogRequest;
 import ksmart30.team01.project.domain.ProjectSangseRequest;
 import ksmart30.team01.project.mapper.ProjectYesanMapper;
 
@@ -45,13 +46,21 @@ public class ProjectYesanService {
 		projectYesanSangseAll.put("projectYesanSangseWorkStep",projectYesanSangseWorkStep);
 		return projectYesanSangseAll;
 	}
-
+	
+	//2.2.1. 일정계획에서 변경횟수가 2회 이상인 경우 변경내역을 보여주는 요청
+	public List<Map<String, Object>> projectYesanViewWorkStepLog(ProjectYesanWorkStepLogRequest projectYesanWorkStepLogRequest) {
+		List<Map<String, Object>> workStepLogList = projectYesanMapper.getProjectYesanViewWorkStepLog(projectYesanWorkStepLogRequest);
+		return workStepLogList;
+	}
+	
 	//2.2.3.1 프로젝트예산 출력을 위한 프로젝트코드 조회
 	public List<Map<String, Object>> projectYesanOutputPjtSearch(String CONTRACT_DATE, String selectedOption, String inputValue) {
 		System.out.println("projectYesanOutputPjtSearch 서비스 확인");
 		List<Map<String, Object>> pjtList = projectYesanMapper.getProjectYesanOutputPjtList(CONTRACT_DATE, selectedOption, inputValue);
 		return pjtList;
 	}
+
+
 	
 	
 }

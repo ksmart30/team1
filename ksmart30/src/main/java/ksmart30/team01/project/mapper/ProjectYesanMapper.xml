@@ -85,7 +85,7 @@
 
   	<!-- 2.2.1.3 프로젝트코드를 입력받아 프로젝트 일정계획을 보여주는 쿼리문 -->
   	<select id="getProjectYesanSangseWorkStep" parameterType="String" resultType="java.util.Map">  	
-		SELECT
+		SELECT A.PJT_CD,
 			A.WORK_STEP,
 			B.LEVEL2_NM WORK_STEP_NM,
 			RTRIM(A.START_DAY) START_DAY,
@@ -94,20 +94,36 @@
 			RTRIM(A.REAL_END_DAY) REAL_END_DAY,
 			(SELECT COUNT(*) FROM T_P11080_H
 			WHERE PJT_CD = A.PJT_CD AND WORK_STEP = A.WORK_STEP) UPD_COUNT,
-			C.RMK
+			'' RMK
 		FROM T_P11080 A,
-			T_SC9100 B,
-			T_P11080_H C
+			(SELECT LEVEL2_NM,LEVEL2_CD FROM T_SC9100 WHERE BUSI_GB = 'J'
+			AND LEVEL1_CD = '110')B
 		WHERE A.WORK_STEP = B.LEVEL2_CD
-			AND A.WORK_STEP = C.WORK_STEP
-			AND A.PJT_CD = C.PJT_CD
-			AND B.BUSI_GB = 'J'
-			AND B.LEVEL1_CD = '110'
 			AND A.PJT_CD = #{PJT_CD}
 		/*  ORDER BY A.START_DAY, A.PLAN_END_DAY, A.WORK_STEP */
-		ORDER BY 
+		ORDER BY
 			A.WORK_STEP
   	</select>
+  	
+  	<!-- 2.2.1.3 프로젝트코드를 입력받아 프로젝트 일정변경 로그를 보여주는 쿼리문 -->
+  	<select id="getProjectYesanViewWorkStepLog" parameterType="ksmart30.team01.project.domain.ProjectYesanWorkStepLogRequest" resultType="java.util.Map">  	
+		SELECT
+			B.LEVEL2_NM WORK_STEP_NM,
+			A.PJT_SEQ,
+			(SELECT PLAN_END_DAY FROM T_P11080_H
+				WHERE PJT_CD = A.PJT_CD 
+					AND WORK_STEP = A.WORK_STEP
+					AND PJT_SEQ = A.PJT_SEQ-1) PLAN_END_DAY1,
+			A.PLAN_END_DAY PLAN_END_DAY2,
+			A.RMK
+		FROM T_P11080_H A , T_SC9100 B
+		WHERE A.WORK_STEP = B.LEVEL2_CD
+		AND B.BUSI_GB = 'J'
+		AND B.LEVEL1_CD = '110'
+		AND A.PJT_CD = #{PJT_CD}
+		AND WORK_STEP = #{WORK_STEP}
+		 ORDER BY PJT_SEQ
+  	</select>  	
 
 	
   	<!-- 2.2.3.1 프로젝트예산 출력을 위한 프로젝트코드 조회 -->
