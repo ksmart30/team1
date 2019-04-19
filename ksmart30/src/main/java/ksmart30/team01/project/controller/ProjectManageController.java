@@ -49,7 +49,7 @@ public class ProjectManageController {
 
 	//3.1.6 용역계약서 현황 View
 	@GetMapping("/project/projectManageHyunhwangView")
-	public String projectManageHyunhwang(Model model) {
+	public String projectManageHyunhwang() {
 		return "project/projectManageHyunhwangView";
 	}
 }

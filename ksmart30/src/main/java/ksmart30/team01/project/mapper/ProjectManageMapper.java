@@ -74,9 +74,13 @@ public interface ProjectManageMapper {
 	List<Map<String, Object>> getProjectManageChangeGiseongAfter(Map<String, Object> map);
 	
 	// ====================================================== 용역계약서 현황 START ====================================================== 
-	
-	// 용역계약서 현황에서 년도를 기준으로 부서별로 계약 회수 조회 쿼리를 호출하는 메서드
+	// 년도를 기준으로 월(Month)별로 계약 회수 조회 쿼리를 호출하는 메서드
+	List<Map<String, Object>> getProjectManageMonthHyunhwangCount(Map<String, Object> map);
+	// 년도를 기준으로 부서별로 계약 회수 조회 쿼리를 호출하는 메서드
 	List<Map<String, Object>> getProjectManageOwnerHyunhwangCount(Map<String, Object> map);
-	
+	// 년도를 기준으로 월별로 계약 회수 조회 쿼리를 호출하는 메서드
+	List<Map<String, Object>> getProjectManageMonthHyunhwangSangse(Map<String, Object> map);
+	// 년도를 기준으로 부서별로 계약 리스트 조회 쿼리를 호출하는 메서드
+	List<Map<String, Object>> getProjectManageOwnerHyunhwangSangse(Map<String, Object> map);
 	// ====================================================== 용역계약서 현황 END ====================================================== 
 }

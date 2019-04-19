@@ -8,7 +8,8 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>용역계약 현황</title>
-		<!-- Bootstrap -->
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script> <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 	    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	    <!-- Font Awesome -->
 	    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -18,26 +19,69 @@
 	    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 	    <!-- Custom Theme Style -->
 	    <link href="/build/css/custom.min.css" rel="stylesheet">
-	    
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script> <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 	    <script>
-        function deptSangse(YEAR, DEPT_CD_SUB) {
-            console.log(YEAR+DEPT_CD_SUB);
-        }
 
-        function deptChartFunction(YEAR) {
+        // 계약현황 차트 함수
+        function chartFunction(YEAR) {
+            // 월별 차트 초기화
+            $('#monthChart').empty();
+            // 부서별 차트 초기화
+            $('#ownerChart').empty();
+            // 월별 개수를 위한 변수 선언
+            var WORK_MM_COUNT1 = 0;
+            var WORK_MM_COUNT2 = 0;
+            var WORK_MM_COUNT3 = 0;
+            var WORK_MM_COUNT4 = 0;
+            var WORK_MM_COUNT5 = 0;
+            var WORK_MM_COUNT6 = 0;
+            var WORK_MM_COUNT7 = 0;
+            var WORK_MM_COUNT8 = 0;
+            var WORK_MM_COUNT9 = 0;
+            var WORK_MM_COUNT10 = 0;
+            var WORK_MM_COUNT11 = 0;
+            var WORK_MM_COUNT12 = 0;
+            // 부서별 개수를 위한 변수 선언
             var DEPT_CD_COUNT1 = 0;
             var DEPT_CD_COUNT2 = 0;
             var DEPT_CD_COUNT3 = 0;
             var DEPT_CD_COUNT4 = 0;
             var DEPT_CD_COUNT5 = 0;
             $.ajax({
-				url:'/project/projectManageHyunhwangData',
+				url:'/project/projectManageHyunhwangProcess',
                 type:'POST',
                 data:{YEAR:YEAR},
 				success:function(data){
                     console.log(data);
-					$(data).each((index, item)=> {
+                    // 월별 계약현황 개수 반복문
+                    $(data.monthHyunhwang).each((index, item)=> {
+                        if(item.WORK_MM=='01') {
+                            WORK_MM_COUNT1 = item.TOT_CNT;
+                        }  else if(item.WORK_MM=='02') {
+                            WORK_MM_COUNT2 = item.TOT_CNT;
+                        }  else if(item.WORK_MM=='03') {
+                            WORK_MM_COUNT3 = item.TOT_CNT;
+                        }  else if(item.WORK_MM=='04') {
+                            WORK_MM_COUNT4 = item.TOT_CNT;
+                        }  else if(item.WORK_MM=='05') {
+                            WORK_MM_COUNT5 = item.TOT_CNT;
+                        }  else if(item.WORK_MM=='06') {
+                            WORK_MM_COUNT6 = item.TOT_CNT;
+                        }  else if(item.WORK_MM=='07') {
+                            WORK_MM_COUNT7 = item.TOT_CNT;
+                        }  else if(item.WORK_MM=='08') {
+                            WORK_MM_COUNT8 = item.TOT_CNT;
+                        }  else if(item.WORK_MM=='09') {
+                            WORK_MM_COUNT9 = item.TOT_CNT;
+                        }  else if(item.WORK_MM=='10') {
+                            WORK_MM_COUNT10 = item.TOT_CNT;
+                        }  else if(item.WORK_MM=='11') {
+                            WORK_MM_COUNT11 = item.TOT_CNT;
+                        }  else if(item.WORK_MM=='12') {
+                            WORK_MM_COUNT12 = item.TOT_CNT;
+                        } 
+                    });
+                    // 본부별 계약현황 개수 반복문
+					$(data.ownerHyunhwang).each((index, item)=> {
                         if(item.DEPT_CD_SUB=="75") {
                             DEPT_CD_COUNT1 = item.DEPT_CD_COUNT;
                         } else if(item.DEPT_CD_SUB=="76") {
@@ -50,10 +94,41 @@
                             DEPT_CD_COUNT5 = item.DEPT_CD_COUNT;
                         }
                     });
-
+                    // 월별 계약현황 차트
+                    let monthChart = new Morris.Bar({
+                        element: 'monthChart',  
+                        data:
+                            [ 
+                                { month: '01월', value: WORK_MM_COUNT1 },
+                                { month: '02월', value: WORK_MM_COUNT2 },
+                                { month: '03월', value: WORK_MM_COUNT3 },
+                                { month: '04월', value: WORK_MM_COUNT4 },
+                                { month: '05월', value: WORK_MM_COUNT5 },
+                                { month: '06월', value: WORK_MM_COUNT6 },
+                                { month: '07월', value: WORK_MM_COUNT7 },
+                                { month: '08월', value: WORK_MM_COUNT8 },
+                                { month: '09월', value: WORK_MM_COUNT9 },
+                                { month: '10월', value: WORK_MM_COUNT10 },
+                                { month: '11월', value: WORK_MM_COUNT11 },
+                                { month: '12월', value: WORK_MM_COUNT12 }
+                            ], 
+                        xkey: 'month', 
+                        ykeys: ['value'],
+                        labels: ['건수']
+                    }).on('click', function(i){
+						console.log('선택: '+i);
+						let choice = i+1;
+						let choice2 = '0'+choice;
+                    	console.log('choice2: ' + choice2);
+                        $(data.monthHyunhwang).each((index, item)=> {
+                            if(choice2==item.WORK_MM) {
+                                monthChartSangse(YEAR,item.WORK_MM,choice2);
+                            }
+                        });
+                    });
                     // 본부별 계약현황 차트
-                    let deptChart = new Morris.Bar({
-                        element: 'deptChart', 
+                    let ownerChart = new Morris.Bar({
+                        element: 'ownerChart', 
                         data:
                             [ 
                                 { dept: '설계1본부', value: DEPT_CD_COUNT1 },
@@ -66,53 +141,76 @@
                         ykeys: ['value'],
                         labels: ['건수']
                     }).on('click', function (i){
-                            console.log(i);
-                        if(i=="0") {
-                            deptSangse('2019', '75');
-                        } else if(i=="1") {
-                            deptSangse('2019', '76');
-                        } else if(i=="2") {
-                            deptSangse('2019', '77');
-                        } else if(i=="3") {
-                            deptSangse('2019', '78');
-                        } else if(i=="4") {
-                            deptSangse('2019', '79');
-                        }
+                        console.log(i);
+                        $(data.ownerHyunhwang).each((index, item)=> {
+                            if(i==index) {
+                                ownerChartSangse(YEAR,item.DEPT_CD_SUB,i+1);
+                            }
                         });
+                    });
                 }
             });
         }
+        // 월별 계약현황 상세
+        function monthChartSangse(YEAR,WORK_MM,i) {
+            console.log(YEAR+WORK_MM+i);
+            let YEAR_MONTH = YEAR+WORK_MM;
+            console.log(YEAR_MONTH);
+            $.ajax({
+               url:'/project/projectManageHyunhwangMonthSangseProcess',
+               type:'POST',
+               data:{YEAR_MONTH:YEAR_MONTH},
+               success:function(data){
+                    console.log(data);
+                    $('#YEAR_MONTH_SANGSE').empty();
+                    $('#YEAR_MONTH_SANGSE').append(YEAR);
+                    $('#WORK_MM_MONTH_SANGSE').empty();
+                    $('#WORK_MM_MONTH_SANGSE').append(WORK_MM);
+                    $('#MONTH_SANGSE').empty();
+                    $(data).each((index, item)=> {
+                        $('#MONTH_SANGSE').append('<tr><td>'+item.DEPT_NM+'</td><td>['+item.PJT_CD+'] '+item.PJT_NM+'</td><td>'+item.PJT_DATE+'</td><td>'+item.TOT_CONTRACT_AMT+'</td></tr>');
+                    });
+                    $('#COUNT_VALUE_MONTH_SANGSE').empty();
+                    $('#COUNT_VALUE_MONTH_SANGSE').append(data[0].COUNT_VALUE);
+                    $('#TOT_CONTRACT_AMT_SUM_MONTH_SANGSE').empty();
+                    $('#TOT_CONTRACT_AMT_SUM_MONTH_SANGSE').append(data[0].TOT_CONTRACT_AMT);
+               }
+            });
+        }
+        // 본부별 계약현황 상세
+        function ownerChartSangse(YEAR,DEPT_CD_SUB,i) {
+            console.log(YEAR+DEPT_CD_SUB+i);
+            $.ajax({
+               url:'/project/projectManageHyunhwangOwnerSangseProcess',
+               type:'POST',
+               data:{YEAR:YEAR, DEPT_CD_SUB:DEPT_CD_SUB},
+               success:function(data){
+                    console.log(data);
+                    // 
+                    $('#YEAR_DEPT_SANGSE').empty();
+                    $('#YEAR_DEPT_SANGSE').append(YEAR);
+                    $('#DEPT_CD_SUB_DEPT_SANGSE').empty();
+                    $('#DEPT_CD_SUB_DEPT_SANGSE').append(i);
+                    $('#DEPT_SANGSE').empty();
+                    $(data).each((index, item)=> {
+                        $('#DEPT_SANGSE').append('<tr><td>'+item.DEPT_NM+'</td><td>['+item.PJT_CD+'] '+item.PJT_NM+'</td><td>'+item.PJT_DATE+'</td><td>'+item.TOT_CONTRACT_AMT+'</td></tr>');
+                    });
+                    $('#COUNT_VALUE_MONTH_SANGSE').empty();
+                    $('#COUNT_VALUE_MONTH_SANGSE').append(data[0].COUNT_VALUE);
+                    $('#TOT_CONTRACT_AMT_SUM_MONTH_SANGSE').empty();
+                    $('#TOT_CONTRACT_AMT_SUM_MONTH_SANGSE').append(data[0].TOT_CONTRACT_AMT_SUM);
+                } 
+            });
+        }
+
 	    $(document).ready(() => {
             var YEAR = '2019';
             $('#search').click(() => {
                 YEAR = $('#YEAR').val();
                 console.log('년도 : '+YEAR);
-                deptChartFunction(YEAR); 
+                // 계약현황 차트 호출
+                chartFunction(YEAR);
             });
-            //월별 계약현황 차트
-            let monthChart = new Morris.Bar({
-                element: 'monthChart',  
-                data: 
-                    [ 
-                        { month: '01월', value: 1 },
-                        { month: '02월', value: 10 },
-                        { month: '03월', value: 5 },
-                        { month: '04월', value: 5 },
-                        { month: '05월', value: 20 },
-                        { month: '06월', value: 20 },
-                        { month: '07월', value: 20 },
-                        { month: '08월', value: 20 },
-                        { month: '09월', value: 20 },
-                        { month: '10월', value: 20 },
-                        { month: '11월', value: 20 },
-                        { month: '12월', value: 20 }
-                    ], 
-                xkey: 'month', 
-                ykeys: ['value'],
-                labels: ['건수']
-            });
-            
-            
 	    });
 
 	    </script>
@@ -122,13 +220,13 @@
         <div class="page-title">
             <div class="title_left">
                 <h2><b>용역계약 현황</b></h2>
-                <h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리</b></font></h5>			
+                <h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;2.1용역계약서 관리&nbsp;>&nbsp;2.1.6용역계약 현황</b></font></h5>			
             </div>
         </div>
     </div>
                     
     <div class="x_content" style="text-align: right">
-        <input type="number" id="YEAR">
+        <input type="number" id="YEAR" value="2019">
         <span>년도</span>
         <div class="btn-group">
             <button class="btn btn-default" type="reset" id="search">조회</button>
@@ -157,9 +255,9 @@
 		<div class="x_panel">
 		<div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
             <label for="ex3">◎ </label>
-            <label id="YEAR_VAL"></label>
+            <label id="YEAR_MONTH_SANGSE"></label>
             <label for="ex3">년 </label>
-            <label id="MONTH"></label>
+            <label id="WORK_MM_MONTH_SANGSE"></label>
             <label>월 계약</label>
 			<table class="table table-bordered">
 			<thead>
@@ -170,21 +268,14 @@
 					<th>계약금액</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td>
-					</td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
+			<tbody id="MONTH_SANGSE">
 			</tbody>
 			<thead>
 				<tr>
 					<td style="background-color:#ffeeaa">**합계**</td>
 					<td style="background-color:#ffeeaa"></td>
-					<td style="background-color:#ffeeaa">1</td>
-					<td style="background-color:#ffeeaa">1,000,000,000</td>
+					<td style="background-color:#ffeeaa" id="COUNT_VALUE_MONTH_SANGSE">1</td>
+					<td style="background-color:#ffeeaa" id="TOT_CONTRACT_AMT_SUM_MONTH_SANGSE">1,000,000,000</td>
 				</tr>
 			</thead>
 			</table>
@@ -198,7 +289,7 @@
             <label for="ex3">◎ </label>
             <label id="YEAR"></label>
             <label for="ex3">년도 본부별 계약현황</label>
-			<div id="deptChart"></div>
+			<div id="ownerChart"></div>
 		</div>
 		</div>
 		</div>
@@ -207,9 +298,9 @@
 		<div class="x_panel">
 		<div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
         <label for="ex3">◎ </label>
-        <label id="YEAR"></label>
+        <label id="YEAR_DEPT_SANGSE"></label>
         <label>년 설계</label>
-        <label id="DEPT_CD_NO"></label>
+        <label id="DEPT_CD_SUB_DEPT_SANGSE"></label>
         <label>본부 계약</label>
 			<table class="table table-bordered">
 			<thead>
@@ -220,20 +311,14 @@
 					<th>계약금액</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
+			<tbody id="DEPT_SANGSE">
 			</tbody>
 			<thead>
 				<tr>
 					<td style="background-color:#ffeeaa">**합계**</td>
 					<td style="background-color:#ffeeaa"></td>
-					<td style="background-color:#ffeeaa">1</td>
-					<td style="background-color:#ffeeaa">1,000,000,000</td>
+					<td style="background-color:#ffeeaa" id="COUNT_VALUE_DEPT_SANGSE">1</td>
+					<td style="background-color:#ffeeaa" id="TOT_CONTRACT_AMT_SUM_DEPT_SANGSE">1,000,000,000</td>
 				</tr>
 			</thead>
 			</table>

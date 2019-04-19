@@ -586,8 +586,79 @@
 	<!-- ====================================================== 용역계약 현황 START ====================================================== -->
 	
 	<!-- 용역계약서 현황 년도를 기준으로 월별 계약 현황(차트) -->
-	<select id="a">
-		
+	<select id="getProjectManageMonthHyunhwangCount" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			C.WORK_YY, 
+			C.WORK_MM,
+			SUM(C.TOT_CONTRACT_AMT) TOT_CONTRACT_AMT,
+			SUM(C.PJT_CNT) TOT_CNT 
+		FROM
+			(
+			SELECT A.WORK_YY, SUBSTRING(A.WORK_YY,5,2) WORK_MM, A.PJT_CNT, A.TOT_CONTRACT_AMT
+			FROM	
+			(SELECT
+				SUBSTRING(PJT_DATE,1,6) WORK_YY,
+				COUNT(*) PJT_CNT,
+				ISNULL(SUM(TOT_CONTRACT_AMT),0) TOT_CONTRACT_AMT
+			FROM
+				T_P11000_H A,
+				DBO.SF_SC1010 ('03','','','') B
+			WHERE
+				A.DEPT_CD = B.DEPT_CD
+				AND A.PJT_SEQ = 0
+				AND A.PJT_DATE LIKE (REPLACE(#{YEAR},' ','') + '' + '%')
+			GROUP	BY SUBSTRING(PJT_DATE,1,6)
+			UNION ALL
+			SELECT
+				SUBSTRING(PJT_DATE,1,6) WORK_YY,
+				COUNT(*) PJT_CNT,
+				ISNULL(SUM(CHA_AMT),0) TOT_CONTRACT_AMT
+			FROM
+				T_P11000_H A,
+				DBO.SF_SC1010 ('03','','','') B
+			WHERE
+				A.DEPT_CD = B.DEPT_CD
+				AND A.PJT_SEQ > 0
+				AND A.PJT_DATE LIKE (REPLACE(#{YEAR},' ','') + '' + '%')
+				AND A.PJT_GB NOT IN ('02')
+			GROUP	BY SUBSTRING(PJT_DATE,1,6)
+			UNION ALL
+			SELECT
+				SUBSTRING(PJT_DATE,1,6) WORK_YY,
+				COUNT(*) PJT_CNT,
+				ISNULL(SUM(CHA_AMT),0) TOT_CONTRACT_AMT
+			FROM
+				T_P11000_H A,
+				DBO.SF_SC1010 ('03','','','') B
+			WHERE
+				A.DEPT_CD = B.DEPT_CD
+				AND A.PJT_SEQ > 0
+				AND A.PJT_DATE LIKE (REPLACE(#{YEAR},' ','') + '' + '%')
+				AND A.PJT_GB = '02'
+			GROUP	BY SUBSTRING(PJT_DATE,1,6)                                 
+			) A
+		) C
+		GROUP BY WORK_YY, WORK_MM
+	</select>
+	<!-- 용역계약서 현황 년도를 기준으로 월별 계약 상세 현황(표) -->
+	<select id="getProjectManageMonthHyunhwangSangse" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			B.DEPT_CD,
+			(SELECT D.DEPT_NM FROM T_SC1010 D WHERE D.DEPT_CD = B.DEPT_CD) DEPT_NM,                                         
+			B.PJT_CD,
+			A.PJT_NM,
+			B.PJT_DATE,
+			B.TOT_CONTRACT_AMT,
+			C.COUNT_VALUE,
+			C.TOT_CONTRACT_AMT_SUM
+		FROM
+			T_SM3000 A,
+			T_P11000_H B,
+			(SELECT COUNT(*) COUNT_VALUE, SUM(B.TOT_CONTRACT_AMT) TOT_CONTRACT_AMT_SUM FROM T_SM3000 A, T_P11000_H B WHERE A.PJT_CD = B.PJT_CD AND B.PJT_DATE LIKE #{YEAR_MONTH}+'%') C
+		WHERE
+			A.PJT_CD = B.PJT_CD
+			AND B.PJT_DATE LIKE #{YEAR_MONTH}+'%'
+		ORDER BY B.DEPT_CD
 	</select>
 	<!-- 용역계약서 현황 년도를 기준으로 부서별 계약 개수(차트) -->
 	<select id="getProjectManageOwnerHyunhwangCount" parameterType="java.util.Map" resultType="java.util.Map">
@@ -607,23 +678,23 @@
 	</select>
 	
 	<!-- 용역계약서 현황 년도를 기준으로 부서별 계약 상세 현황(표) -->
-	<select id="b" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getProjectManageOwnerHyunhwangSangse" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			B.DEPT_CD,
 			(SELECT D.DEPT_NM FROM T_SC1010 D WHERE D.DEPT_CD = B.DEPT_CD) DEPT_NM,                                         
 			B.PJT_CD,
 			A.PJT_NM,
-			B.CONTRACT_DATE,
+			B.PJT_DATE,
 			B.TOT_CONTRACT_AMT,
 			C.COUNT_VALUE,
 			C.TOT_CONTRACT_AMT_SUM
 		FROM
 			T_SM3000 A,
-			T_P11000 B,
-			(SELECT COUNT(*) COUNT_VALUE, SUM(B.TOT_CONTRACT_AMT) TOT_CONTRACT_AMT_SUM FROM T_SM3000 A, T_P11000 B WHERE A.PJT_CD = B.PJT_CD AND B.CONTRACT_DATE BETWEEN #{YEAR}+'0101' AND #{YEAR}+'1231' AND DEPT_CD LIKE #{DEPT_CD_SUB}+'%') C
+			T_P11000_H B,
+			(SELECT COUNT(*) COUNT_VALUE, SUM(B.TOT_CONTRACT_AMT) TOT_CONTRACT_AMT_SUM FROM T_SM3000 A, T_P11000_H B WHERE A.PJT_CD = B.PJT_CD AND B.PJT_DATE BETWEEN #{YEAR}+'0101' AND #{YEAR}+'1231' AND DEPT_CD LIKE #{DEPT_CD_SUB}+'%') C
 		WHERE
 			A.PJT_CD = B.PJT_CD
-			AND B.CONTRACT_DATE BETWEEN #{YEAR}+'0101' AND #{YEAR}+'1231'
+			AND B.PJT_DATE BETWEEN #{YEAR}+'0101' AND #{YEAR}+'1231'
 			AND DEPT_CD LIKE #{DEPT_CD_SUB}+'%'
 		ORDER BY B.DEPT_CD
 	</select>

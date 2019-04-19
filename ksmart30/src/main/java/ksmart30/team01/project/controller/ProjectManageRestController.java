@@ -185,33 +185,24 @@ public class ProjectManageRestController {
 	 *			발주처, 기성단계 상세 포함
 	 *			@return List<Map<String, Object>>
 	 */
-	@PostMapping("/project/projectManageChangeSangseProcess")
-	public Map<String, Object> projectManageChangeSangseProcess(String PJT_CD, String PJT_SEQ) {
-		System.out.println("RestController projectManageChangeSangseProcess 메서드 실행");
-		return projectManageService.getProjectManageChangeSangse(PJT_CD, PJT_SEQ);
-	}
-	
-	//3.1.4 용역계약서 검색(부서)
-	@PostMapping("/project/manage/depart_search")
-	public String projectManageDepartSearch(Model model) {
-		return "project/manage/depart_search";
-	}
-	
-	//3.1.4 용역계약서 검색(발주처)
-	@PostMapping("/project/manage/client_search")
-	public String projectManageClientSearch(Model model) {
-		return "project/manage/client_search";
-	}
-	
-	//3.1.6 용역계약서 현황
-	@PostMapping("/project/manage/hyunhwang")
-	public String projectManageHyunhwang(Model model) {
-		return "project/manage/hyunhwang";
+
+	//3.1.6 용역계약 현황 차트 값을 가져옴
+	@PostMapping("/project/projectManageHyunhwangProcess")
+	public Map<String, Object> projectManageHyunhwangProcess(String YEAR) {
+		System.out.println("RestController projectManageHyunhwangProcess 메서드 실행");
+		return projectManageService.getProjectManageHyunhwangCount(YEAR);
 	}
 
-	//3.1.6 용역계약서 현황 값을 가져옴 View
-	@PostMapping("/project/projectManageHyunhwangData")
-	public List<Map<String, Object>> projectManageHyunhwangData(String YEAR) {
-		return projectManageService.getProjectManageOwnerHyunhwangCount(YEAR);
+	//3.1.6 용역계약 현황 월별 상세 값을 가져옴
+	@PostMapping("/project/projectManageHyunhwangMonthSangseProcess")
+	public List<Map<String, Object>> projectManageHyunhwangMonthSangseProcess(String YEAR_MONTH) {
+		System.out.println("RestController projectManageHyunhwangMonthSangseProcess 메서드 실행");
+		return projectManageService.getProjectManageMonthHyunhwangSangse(YEAR_MONTH);
+	}
+	//3.1.6 용역계약 현황 부서별 상세 값을 가져옴
+	@PostMapping("/project/projectManageHyunhwangOwnerSangseProcess")
+	public List<Map<String, Object>> projectManageHyunhwangOwnerSangseProcess(String YEAR, String DEPT_CD_SUB) {
+		System.out.println("RestController projectManageHyunhwangOwnerSangseProcess 메서드 실행");
+		return projectManageService.getProjectManageOwnerHyunhwangSangse(YEAR, DEPT_CD_SUB);
 	}
 }
