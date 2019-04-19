@@ -48,20 +48,24 @@ public class BusinessManageRestController {
 		return re;
 	}
 	
+	// 거래처 검색 버튼
 	@PostMapping("/custSearchListView1")
 	public List<Map<String,String>> custSearchListView1(String cust){
 		System.out.println("custSearch 호출");
 		return businessManageService.CustCode(cust);
 	}
 	
+	// 부서 검색 버튼
 	@PostMapping("/deptSearchListView1")
 	public List<Map<String,String>> deptSearchListView(String dept){
 		System.out.println("deptSearch 호출");
 		return businessManageService.DeptCode(dept);
 	}
 	
+	//사업수행결정서 저장
 	@PostMapping("/business/businessManageViewInsert")
 	public void businessManageViewInsert(BusinessMarket vo) {
+		System.out.println(vo.toString());
 		System.out.println("businessManageViewInsert 호출");
 		businessManageService.businessManageViewInsert(vo);
 	}
