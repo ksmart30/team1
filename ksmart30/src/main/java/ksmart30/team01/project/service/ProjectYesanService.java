@@ -33,17 +33,42 @@ public class ProjectYesanService {
 		System.out.println(PJT_CD+"서비스 PJT_CD");
 		Map<String,Object> projectYesanSangseAll = new HashMap<String, Object>();
 
-		//2.2.1.1 프로젝트 개요(발주처 제외)
+		// 프로젝트 개요(발주처 제외)
 		Map<String,Object> projectYesanSangse = projectYesanMapper.getProjectYesanSangse(PJT_CD);
 		projectYesanSangseAll.put("projectYesanSangse", projectYesanSangse);
 		
-		//2.2.1.2 발주처
+		// 발주처
 		List<Map<String,Object>> projectYesanSangseCustNm = projectYesanMapper.getProjectYesanSangseCustNm(PJT_CD);
 		projectYesanSangseAll.put("projectYesanSangseCustNm", projectYesanSangseCustNm);
 		
-		//2.2.1.3. 일정계획
+		//1. 일정계획
 		List<Map<String,Object>> projectYesanSangseWorkStep = projectYesanMapper.getProjectYesanSangseWorkStep(PJT_CD);
 		projectYesanSangseAll.put("projectYesanSangseWorkStep",projectYesanSangseWorkStep);
+		
+		//2. MH계획
+		List<Map<String,Object>> projectYesanSangseMH = projectYesanMapper.getProjectYesanSangseMH(PJT_CD);
+		projectYesanSangseAll.put("projectYesanSangseMH",projectYesanSangseMH);
+		
+		//2.2 MH계획 중 인건비소계와 점유율을 조회
+		Map<String,Object> projectYesanSangseMHTotal = projectYesanMapper.getProjectYesanSangseMHTotal(PJT_CD);
+		projectYesanSangseAll.put("projectYesanSangseMHTotal",projectYesanSangseMHTotal);
+		
+		//3. 제조경비1 오른쪽
+		List<Map<String,Object>> projectYesanSangseJejo1R = projectYesanMapper.getProjectYesanSangseJejo1R(PJT_CD);
+		projectYesanSangseAll.put("projectYesanSangseJejo1R",projectYesanSangseJejo1R);
+		
+		//3. 제조경비1 왼쪽
+		List<Map<String,Object>> projectYesanSangseJejo1L = projectYesanMapper.getProjectYesanSangseJejo1L(PJT_CD);
+		projectYesanSangseAll.put("projectYesanSangseJejo1L",projectYesanSangseJejo1L);		
+		
+		//4. 제조경비2
+		List<Map<String,Object>> projectYesanSangseJejo2 = projectYesanMapper.getProjectYesanSangseJejo2(PJT_CD);
+		projectYesanSangseAll.put("projectYesanSangseJejo2",projectYesanSangseJejo2);		
+		
+		//5. 기성단계
+		List<Map<String,Object>> projectYesanSangseGiseong = projectYesanMapper.getProjectYesanSangseGiseong(PJT_CD);
+		projectYesanSangseAll.put("projectYesanSangseGiseong",projectYesanSangseGiseong);			
+		
 		return projectYesanSangseAll;
 	}
 	

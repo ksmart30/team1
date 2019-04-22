@@ -9,7 +9,7 @@ layout:decorator="layout/main">
 	<!-- jquery 추가 -->
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script>
-		
+	
 		//프로젝트코드를 입력받아 프로젝트 개요를 보여준다		    
 	    function mscall(PJT_CD){
 			console.log('mscall실행'+PJT_CD);
@@ -66,8 +66,42 @@ layout:decorator="layout/main">
     	                $('#CUST_NM').append('<tr><td>'+item.CUST_NM+'</td></tr>');	//발주처명	
    	                });
 	                
-	                //일정계획
-	                
+	                //일정계획	                
+	                let needTermTotal = null;	//소요시간 변수초기화
+                	$('#workStep').empty();	//일정계획 삭제
+    	            $(data.projectYesanSangseWorkStep).each((index,item)=>{		//일정계획
+    	            	//클릭하면 변경횟수(UPD_COUNT)가 2이상인 경우 프로젝트 일정 변경 로그를 조회할 수 있는 모달 화면으로
+    	                $('#workStep').append('<tr><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.WORK_STEP_NM		//일정계획 단계 한글로
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.UPD_COUNT		//변경횟수
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.START_DAY		//착수일
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.PLAN_END_DAY		//완료예정일
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.NEED_TERM		//소요기간
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.REAL_END_DAY		//종료일
+    	                			+'</td><td onclick="workStepLog('+item.UPD_COUNT+','+item.PJT_CD+',&#39'+item.WORK_STEP+'&#39)">'+item.RMK+'</td></tr>');	//사유입력
+		                
+/*     	                		//일정계획입력 버튼을 클릭하면 현재일정계획을 보여주고 입력할 수 있는 화면으로 이동(입력, 수정 가능)	
+	                		    $('#insertWorkStep').click(()=>{
+	                		       let PJT_CD = item.PJT_CD;
+	                		       console.log(PJT_CD+'일정계획 입력할 프로젝트');
+	                		        $.ajax({
+	                		            url:'/project/projectYesanSangseWorkStepView',
+	                		            type:'GET',
+	                		            data:{PJT_CD:PJT_CD},
+	                		            success:function(data){
+	                		            	location.href="/project/projectYesanSangseWorkStepView?PJT_CD="+PJT_CD;
+	                		    			console.log(data);
+	                		            }
+	                		        });
+	                		    });  */   	                			
+    	                			
+    	                //소요기간 소계
+		                needTermTotal = needTermTotal + parseInt(item.NEED_TERM); 
+    	                month = parseInt(needTermTotal/25);		
+    	                day = needTermTotal % 25;
+    	            }); 
+	                console.log(needTermTotal+'소요기간');
+	                $('#needTermTotal').empty();
+	                $('#needTermTotal').append(month+'개월'+day+'일');	                
 	            }
 			});	
 			
@@ -328,114 +362,13 @@ layout:decorator="layout/main">
 
 									<div id="myTabContent" class="tab-content">
 										<!-- 일정계획 start -->
-											<div role="tabpanel" class="tab-pane fade active in"
-												id="tab_content1" aria-labelledby="home-tab">
+											<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
 												<p>
 												<div class="col-md-12 col-sm-6 col-xs-12">
 													<div class="x_panel">
 														<div class="x_title">
-															<h2>
-																일정계획 <small></small>
-															</h2>
-															<ul class="nav navbar-right panel_toolbox">															
-																<div class="x_content" style="text-align: right"><button class="btn" data-toggle="modal" data-target=".bs-example-modal-lg1">입력</button></div>
-										<!-- 일정계획 입력 MODAL START -->
-										<div class="modal fade bs-example-modal-lg1" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-											<div class="modal-dialog modal-lg">
-												<div class="modal-content">
-													<form class="form-horizontal">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">X</span>
-															</button>
-															<h4 class="modal-title" id="myModalLabel"><b>일정계획</b></h4><br>
-														</div>
-														<div class="modal-body">
-															<div class="table-responsive" style="overflow: auto; height: 400px;">
-																<table class="table table-bordered table-hover jambo_table">
-																	<thead>
-																		<tr>
-																			<th scope="col">단계</th>
-																			<th>변경</th>
-																			<th>착수일</th>
-																			<th>완료예정일</th>
-																			<th>소요기간(Day)</th>
-																			<th>종료일</th>
-																			<th>사유입력</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td scope="row">기획</td>
-																			<td></td>
-																			<td><input type="date"></td>
-																			<td><input type="date"></td>
-																			<td></td>
-																			<td></td>
-																			<td><input type="text"></td>
-																		</tr>
-																		<tr>
-																			<td scope="row">심의</td>
-																			<td></td>
-																			<td><input type="date"></td>
-																			<td><input type="date"></td>
-																			<td></td>
-																			<td></td>
-																			<td><input type="text"></td>
-																		</tr>
-																		<tr>
-																			<td scope="row">허가</td>
-																			<td></td>
-																			<td><input type="date"></td>
-																			<td><input type="date"></td>
-																			<td></td>
-																			<td></td>
-																			<td><input type="text"></td>
-																		</tr>
-																		<tr>
-																			<td scope="row">착공</td>
-																			<td></td>
-																			<td><input type="date"></td>
-																			<td><input type="date"></td>
-																			<td></td>
-																			<td></td>
-																			<td><input type="text"></td>
-																		</tr>
-																		<tr>
-																			<td scope="row">실시</td>
-																			<td></td>
-																			<td><input type="date"></td>
-																			<td><input type="date"></td>
-																			<td></td>
-																			<td></td>
-																			<td><input type="text"></td>
-																		</tr>
-																		<tr>
-																			<td scope="row">A/S</td>
-																			<td></td>
-																			<td><input type="date"></td>
-																			<td><input type="date"></td>
-																			<td></td>
-																			<td></td>
-																			<td><input type="text"></td>
-																		</tr>
-																		<tr>
-																			<td scope="row">준공</td>
-																			<td></td>
-																			<td><input type="date"></td>
-																			<td><input type="date"></td>
-																			<td></td>
-																			<td></td>
-																			<td><input type="text"></td>
-																		</tr>
-																	</tbody>																																	
-																</table>
-															</div>
-														</div>
-													</form>
-												</div>
-											</div>
-										</div>
-										<!-- 일정계획 입력 MODAL END -->																											
+															<ul class="nav navbar-right panel_toolbox">	
+																<div class="x_content" style="text-align: right"><button class="btn" id="insertWorkStep">일정계획 입력</button></div>															
 															</ul>
 															<div class="clearfix"></div>
 														</div>
@@ -444,7 +377,7 @@ layout:decorator="layout/main">
 															<table class="table table-bordered">
 																<thead>
 																	<tr>
-																		<th scope="col">단계</th>
+																		<th>단계</th>
 																		<th>변경</th>
 																		<th>착수일</th>
 																		<th>완료예정일</th>
@@ -453,89 +386,55 @@ layout:decorator="layout/main">
 																		<th>사유입력</th>
 																	</tr>
 																</thead>
-																<tbody>
-																	<tr>
-																		<td scope="row">기획</td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																	</tr>
-																	<tr>
-																		<td scope="row">심의</td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																	</tr>
-																	<tr>
-																		<td scope="row">허가</td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																	</tr>
-																	<tr>
-																		<td scope="row">착공</td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																	</tr>
-																	<tr>
-																		<td scope="row">실시</td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																	</tr>
-																	<tr>
-																		<td scope="row">A/S</td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																	</tr>
-																	<tr>
-																		<td scope="row">준공</td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																		<td></td>
-																	</tr>
-																</tbody>
+																<tbody id="workStep">															
+																</tbody>																
+																	<tr><th>소계</th><td></td><td></td><td></td><th id="needTermTotal"></th><td></td><td></td></tr>
 															</table>
-														</div>
-										
+															
+															<!-- 프로젝트일정로그 MODAL START -->
+															<div class="modal fade bs-example-modal-lg1" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" id="workStepLogList">
+																<div class="modal-dialog modal-lg">
+																	<div class="modal-content">
+																		<form class="form-horizontal">
+																			<div class="modal-header">
+																				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">X</span>
+																				</button>
+																				<h4 class="modal-title" id="myModalLabel"><b>프로젝트 일정 로그</b></h4><br>
+																			</div>
+																			<div class="modal-body">
+																				<div class="table-responsive" style="overflow: auto; height: 400px;">
+																					<table class="table table-bordered table-hover jambo_table">
+																						<thead>
+																							<tr>
+																								<th>단계</th>
+																								<th>변경횟수</th>
+																								<th>완료예정일</th>
+																								<th>변경일자</th>
+																								<th>변경사유</th>
+																							</tr>
+																						</thead>
+																						<tbody id="workStepLogListDetail">																		
+																						</tbody>																																	
+																					</table>
+																				</div>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+															</div>
+															<!-- 프로젝트일정로그 MODAL END -->
+																															
+														</div>										
 													</div>
 												</div>
 										</div>
 										<!-- 일정계획 end -->
 
 										<!-- M/H계획 start -->
-										<div role="tabpanel" class="tab-pane fade" id="tab_content2"
-											aria-labelledby="profile-tab">
+										<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
 											<div class="x_title">
-												<h2>
-													M/H 계획 <small></small>
-												</h2>
 												<ul class="nav navbar-right panel_toolbox">
-													<li><a class="collapse-link"><i
-															class="fa fa-chevron-up"></i>숨기기</a></li>
+													<div class="x_content" style="text-align: right"><button class="btn" data-toggle="modal" data-target=".bs-example-modal-lg1">M/H계획 입력</button></div>
 												</ul>
 												<div class="clearfix"></div>
 											</div>
@@ -773,12 +672,7 @@ layout:decorator="layout/main">
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="x_panel">
 													<div class="x_title">
-														<h2>
-															제조경비1 <small></small>
-														</h2>
 														<ul class="nav navbar-right panel_toolbox">
-															<li><a class="collapse-link"><i
-																	class="fa fa-chevron-up"></i>숨기기</a></li>
 														</ul>
 														<div class="clearfix"></div>
 													</div>
@@ -790,15 +684,15 @@ layout:decorator="layout/main">
 																	<th>계정과목</th>
 																	<th>금액</th>
 																	<th>%</th>
-																	<th>비고</th>
+																	<th width="20">비고</th>
 																</tr>
 															</thead>
 															<tbody>
 																<tr>
-																	<th scope="row">프로젝트</th>
+																	<th>프로젝트</th>
 																	<td>(프로젝트번호)</td>
 																	<td><input type="text"></td>
-																	<td></td>
+																	<td width="20"></td>
 																</tr>
 															</tbody>
 														</table>
@@ -810,12 +704,8 @@ layout:decorator="layout/main">
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="x_panel">
 													<div class="x_title">
-														<h2>
-															제조경비1 <small></small>
-														</h2>
-														<ul class="nav navbar-right panel_toolbox">
-															<li><a class="collapse-link"><i
-																	class="fa fa-chevron-up"></i>숨기기</a></li>
+														<ul class="nav navbar-right panel_toolbox">	
+															<div class="x_content" style="text-align: right"><button class="btn" data-toggle="modal" data-target=".bs-example-modal-lg1">제조경비I 입력</button></div>
 														</ul>
 														<div class="clearfix"></div>
 													</div>
@@ -827,7 +717,7 @@ layout:decorator="layout/main">
 																	<th>계정과목</th>
 																	<th>금액</th>
 																	<th>%</th>
-																	<th>비고</th>
+																	<th width="20">비고</th>
 																</tr>
 															</thead>
 															<tbody>
@@ -835,7 +725,7 @@ layout:decorator="layout/main">
 																	<td>국내출장비</td>
 																	<td><input type="text"></td>
 																	<td>0.00</td>
-																	<td><input type="text"></td>
+																	<td width="20"><input type="text"></td>
 																</tr>
 																<tr>
 																	<td>국외출장비</td>
@@ -903,12 +793,8 @@ layout:decorator="layout/main">
 											<div class="col-md-12 col-sm-6 col-xs-12">
 												<div class="x_panel">
 													<div class="x_title">
-														<h2>
-															제조경비2 <small></small>
-														</h2>
 														<ul class="nav navbar-right panel_toolbox">
-															<li><a class="collapse-link"><i
-																	class="fa fa-chevron-up"></i>숨기기</a></li>
+															<div class="x_content" style="text-align: right"><button class="btn" data-toggle="modal" data-target=".bs-example-modal-lg1">제조경비II 입력</button></div>
 														</ul>
 														<div class="clearfix"></div>
 													</div>
@@ -1115,8 +1001,7 @@ layout:decorator="layout/main">
 															간접비 <small></small>
 														</h2>
 														<ul class="nav navbar-right panel_toolbox">
-															<li><a class="collapse-link"><i
-																	class="fa fa-chevron-up"></i>숨기기</a></li>
+															<li><a class="collapse-link"><i	class="fa fa-chevron-up"></i>숨기기</a></li>
 														</ul>
 														<div class="clearfix"></div>
 													</div>

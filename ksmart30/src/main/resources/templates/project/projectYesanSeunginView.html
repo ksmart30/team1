@@ -31,8 +31,7 @@ layout:decorator="layout/main">
 	    	                		+item.PLAN_END_DAY1+'</td><td>'	//완료예정일
 	    	                		+item.PLAN_END_DAY2+'</td><td>'	//변경일자
 	    	                		+item.RMK+'</td></tr>');	//사유
-	   	                });		            	
-		            	
+	   	                });		            			            	
 		            }
 				});	
 			}	
@@ -113,7 +112,191 @@ layout:decorator="layout/main">
     	            }); 
 	                console.log(needTermTotal+'소요기간');
 	                $('#needTermTotal').empty();
-	                $('#needTermTotal').text(month+'개월'+day+'일');
+	                $('#needTermTotal').append(month+'개월'+day+'일');
+	                
+	                //MH계획
+	                //주관부서
+	                let INWON_1_TOTAL = null;	//주관부서 인원합계를 구하기 위한 변수초기화
+	                let PLAN_A_1_TOTAL = null;	//주관부서 기획합계를 구하기 위한 변수초기화
+	                let PLAN_B_1_TOTAL = null;	//주관부서 심의합계를 구하기 위한 변수초기화
+	                let PLAN_C_1_TOTAL = null;	//주관부서 허가합계를 구하기 위한 변수초기화
+	                let PLAN_D_1_TOTAL = null;	//주관부서 착공합계를 구하기 위한 변수초기화
+	                let PLAN_E_1_TOTAL = null;	//주관부서 실시합계를 구하기 위한 변수초기화
+	                let PLAN_F_1_TOTAL = null;	//주관부서 A/S합계를 구하기 위한 변수초기화
+	                let PLAN_G_1_TOTAL = null;	//주관부서 준공합계를 구하기 위한 변수초기화
+	                let TOT_MD_1_TOTAL = null;	//주관부서 합계소계를 구하기 위한 변수초기화
+					//지원부서
+	                let INWON_2_TOTAL = null;	//지원부서 인원합계를 구하기 위한 변수초기화
+	                let PLAN_A_2_TOTAL = null;	//지원부서 기획합계를 구하기 위한 변수초기화
+	                let PLAN_B_2_TOTAL = null;	//지원부서 심의합계를 구하기 위한 변수초기화
+	                let PLAN_C_2_TOTAL = null;	//지원부서 허가합계를 구하기 위한 변수초기화
+	                let PLAN_D_2_TOTAL = null;	//지원부서 착공합계를 구하기 위한 변수초기화
+	                let PLAN_E_2_TOTAL = null;	//지원부서 실시합계를 구하기 위한 변수초기화
+	                let PLAN_F_2_TOTAL = null;	//지원부서 A/S합계를 구하기 위한 변수초기화
+	                let PLAN_G_2_TOTAL = null;	//지원부서 준공합계를 구하기 위한 변수초기화
+	                let TOT_MD_2_TOTAL = null;	//지원부서 합계소계를 구하기 위한 변수초기화
+	                $('#MHcompetent').empty();	//데이터 넣기 전 비우기
+	                $('#MHsupport').empty();	//데이터 넣기 전 비우기
+    	            $(data.projectYesanSangseMH).each((index,item)=>{		//MH계획
+    	            	$('#MHcompetent').append('<tr><td></td><td>'+item.LEVEL2_NM+'</td><td>'+item.INWON_1+'</td><td>'
+    	            			+item.PLAN_A_1+'</td><td>'+item.PLAN_B_1+'</td><td>'+item.PLAN_C_1+'</td><td>'+item.PLAN_D_1+'</td><td>'
+    	            			+item.PLAN_E_1+'</td><td>'+item.PLAN_F_1+'</td><td>'+item.PLAN_G_1+'</td><td>'+item.TOT_MD_1+'</td><tr>');	//주관부서
+    	    	        $('#MHsupport').append('<tr><td></td><td>'+item.LEVEL2_NM+'</td><td>'+item.INWON_2+'</td><td>'
+    	            			+item.PLAN_A_2+'</td><td>'+item.PLAN_B_2+'</td><td>'+item.PLAN_C_2+'</td><td>'+item.PLAN_D_2+'</td><td>'
+    	            			+item.PLAN_E_2+'</td><td>'+item.PLAN_F_2+'</td><td>'+item.PLAN_G_2+'</td><td>'+item.TOT_MD_2+'</td></tr>');	//지원부서
+		                //주관부서 소계
+		                INWON_1_TOTAL = INWON_1_TOTAL + parseInt(item.INWON_1);
+		                PLAN_A_1_TOTAL = PLAN_A_1_TOTAL + parseInt(item.PLAN_A_1);
+		                PLAN_B_1_TOTAL = PLAN_B_1_TOTAL + parseInt(item.PLAN_B_1);
+		                PLAN_C_1_TOTAL = PLAN_C_1_TOTAL + parseInt(item.PLAN_C_1);
+		                PLAN_D_1_TOTAL = PLAN_D_1_TOTAL + parseInt(item.PLAN_D_1);
+		                PLAN_E_1_TOTAL = PLAN_E_1_TOTAL + parseInt(item.PLAN_E_1);
+		                PLAN_F_1_TOTAL = PLAN_F_1_TOTAL + parseInt(item.PLAN_F_1);
+		                PLAN_G_1_TOTAL = PLAN_G_1_TOTAL + parseInt(item.PLAN_G_1);
+		                TOT_MD_1_TOTAL = TOT_MD_1_TOTAL + parseInt(item.TOT_MD_1);		                
+		                //지원부서 소계
+		                INWON_2_TOTAL = INWON_2_TOTAL + parseInt(item.INWON_2);
+		                PLAN_A_2_TOTAL = PLAN_A_2_TOTAL + parseInt(item.PLAN_A_2);
+		                PLAN_B_2_TOTAL = PLAN_B_2_TOTAL + parseInt(item.PLAN_B_2);
+		                PLAN_C_2_TOTAL = PLAN_C_2_TOTAL + parseInt(item.PLAN_C_2);
+		                PLAN_D_2_TOTAL = PLAN_D_2_TOTAL + parseInt(item.PLAN_D_2);
+		                PLAN_E_2_TOTAL = PLAN_E_2_TOTAL + parseInt(item.PLAN_E_2);
+		                PLAN_F_2_TOTAL = PLAN_F_2_TOTAL + parseInt(item.PLAN_F_2);
+		                PLAN_G_2_TOTAL = PLAN_G_2_TOTAL + parseInt(item.PLAN_G_2);
+		                TOT_MD_2_TOTAL = TOT_MD_2_TOTAL + parseInt(item.TOT_MD_2);		                
+    	            });
+	                //주관부서 소계
+	                $('#INWON_1_TOTAL').empty();
+	                $('#INWON_1_TOTAL').append(INWON_1_TOTAL);
+	                $('#PLAN_A_1_TOTAL').empty();
+	                $('#PLAN_A_1_TOTAL').append(PLAN_A_1_TOTAL);
+	                $('#PLAN_B_1_TOTAL').empty();
+	                $('#PLAN_B_1_TOTAL').append(PLAN_B_1_TOTAL);
+	                $('#PLAN_C_1_TOTAL').empty();
+	                $('#PLAN_C_1_TOTAL').append(PLAN_C_1_TOTAL);
+	                $('#PLAN_D_1_TOTAL').empty();
+	                $('#PLAN_D_1_TOTAL').append(PLAN_D_1_TOTAL);
+	                $('#PLAN_E_1_TOTAL').empty();
+	                $('#PLAN_E_1_TOTAL').append(PLAN_E_1_TOTAL);
+	                $('#PLAN_F_1_TOTAL').empty();
+	                $('#PLAN_F_1_TOTAL').append(PLAN_F_1_TOTAL);
+	                $('#PLAN_G_1_TOTAL').empty();
+	                $('#PLAN_G_1_TOTAL').append(PLAN_G_1_TOTAL);
+	                $('#TOT_MD_1_TOTAL').empty();
+	                $('#TOT_MD_1_TOTAL').append(TOT_MD_1_TOTAL);
+	                //지원부서
+	                $('#INWON_2_TOTAL').empty();
+	                $('#INWON_2_TOTAL').append(INWON_2_TOTAL);
+	                $('#PLAN_A_2_TOTAL').empty();
+	                $('#PLAN_A_2_TOTAL').append(PLAN_A_2_TOTAL);
+	                $('#PLAN_B_2_TOTAL').empty();
+	                $('#PLAN_B_2_TOTAL').append(PLAN_B_2_TOTAL);
+	                $('#PLAN_C_2_TOTAL').empty();
+	                $('#PLAN_C_2_TOTAL').append(PLAN_C_2_TOTAL);
+	                $('#PLAN_D_2_TOTAL').empty();
+	                $('#PLAN_D_2_TOTAL').append(PLAN_D_2_TOTAL);
+	                $('#PLAN_E_2_TOTAL').empty();
+	                $('#PLAN_E_2_TOTAL').append(PLAN_E_2_TOTAL);
+	                $('#PLAN_F_2_TOTAL').empty();
+	                $('#PLAN_F_2_TOTAL').append(PLAN_F_2_TOTAL);
+	                $('#PLAN_G_2_TOTAL').empty();
+	                $('#PLAN_G_2_TOTAL').append(PLAN_G_2_TOTAL);
+	                $('#TOT_MD_2_TOTAL').empty();
+	                $('#TOT_MD_2_TOTAL').append(TOT_MD_2_TOTAL);
+	                
+	                //MH계획 인건비와 점유율 소계
+	                $('#INGUN_AMT').empty(); 	
+    	            $('#INGUN_AMT').append('인건비소계: '+data.projectYesanSangseMHTotal.INGUN_AMT+'원');	
+	                $('#JUMYU').empty(); 	
+	                JUMYU = data.projectYesanSangseMHTotal.JUMYU*100;
+    	            $('#JUMYU').append('점유율: ('+JUMYU+'%)');       	          	           
+    	            
+    	            
+    	            
+    	            let COST_AMT_TOT_R = null;	//제조경비1 오른쪽 소계 변수 초기화
+    	            let COST_RATE_TOT_R = null;
+    	            //제조경비1 오른쪽 
+    	            $('#jejo1Right').empty();
+    	            $(data.projectYesanSangseJejo1R).each((index,item)=>{		
+    	            	$('#jejo1Right').append('<tr><td>'+item.COST_NM+'</td><td>'	//계정과목
+    	            			+item.COST_AMT+'</td><td>'	//금액
+    	            			+item.COST_RATE+'</td><td>'	//비율
+    	            			+item.OUTPUT_GROUND+'</td><tr>');	//비고
+    	            	COST_AMT_TOT_R = COST_AMT_TOT_R + item.COST_AMT;
+    	            	COST_RATE_TOT_R = COST_RATE_TOT_R + item.COST_RATE;	
+    	            });
+    	            //소계
+	                $('#COST_AMT_TOT_R').empty(); 	
+    	            $('#COST_AMT_TOT_R').append(COST_AMT_TOT_R);
+	                $('#COST_RATE_TOT_R').empty(); 	
+    	            $('#COST_RATE_TOT_R').append(COST_RATE_TOT_R.toFixed(2));
+    	            
+    	            let COST_AMT_TOT_L = null;	//제조경비1 오른쪽 소계 변수 초기화
+    	            let COST_RATE_TOT_L = null;    	            
+    	            //제조경비1 왼쪽 
+    	            $('#jejo1Left').empty();
+    	            $(data.projectYesanSangseJejo1L).each((index,item)=>{		
+    	            	$('#jejo1Left').append('<tr><td>'+item.COST_NM+'</td><td>'	//계정과목
+    	            			+item.COST_AMT+'</td><td>'	//금액
+    	            			+item.COST_RATE+'</td><td>'	//비율
+    	            			+item.OUTPUT_GROUND+'</td><tr>');	//비고
+    	            	COST_AMT_TOT_L = COST_AMT_TOT_L + item.COST_AMT;
+    	            	COST_RATE_TOT_L = COST_RATE_TOT_L + item.COST_RATE; 
+    	            });			
+    	            //소계
+	                $('#COST_AMT_TOT_L').empty(); 	
+    	            $('#COST_AMT_TOT_L').append(COST_AMT_TOT_L);
+	                $('#COST_RATE_TOT_L').empty(); 	
+    	            $('#COST_RATE_TOT_L').append(COST_RATE_TOT_L.toFixed(2));
+    	            
+    	            
+    	            
+    	            //제조경비2 
+    	            let EX_AMT_TOTAL = null;	//소계를 구하기 위한 변수 초기화
+    	            let EX_RATE_TOTAL = null;
+    	            let EX_WORK_AMT_TOTAL = null;
+	                $('#jejo2').empty(); 	
+    	            $(data.projectYesanSangseJejo2).each((index,item)=>{		
+    	            	$('#jejo2').append('<tr><td>'+item.SCV_PART_NM+'</td><td>'	//계정과목
+    	            			+item.EX_AMT+'</td><td>'	//금액
+    	            			+item.EX_RATE+'</td><td>'	//비율
+    	            			+item.EXCHANGE_NM+'</td><td>'	//거래처
+    	            			+item.EX_WORK_AMT+'</td><tr>');	//실행예산
+    	            	EX_AMT_TOTAL = EX_AMT_TOTAL + item.EX_AMT;
+    	            	EX_RATE_TOTAL = EX_RATE_TOTAL + item.EX_RATE;
+    	            	EX_WORK_AMT_TOTAL = EX_WORK_AMT_TOTAL + item.EX_WORK_AMT;            			
+    	            });	
+	                $('#EX_AMT_TOTAL').empty(); 	
+    	            $('#EX_AMT_TOTAL').append(EX_AMT_TOTAL);
+	                $('#EX_RATE_TOTAL').empty(); 	
+    	            $('#EX_RATE_TOTAL').append(EX_RATE_TOTAL);
+	                $('#EX_WORK_AMT_TOTAL').empty(); 	
+    	            $('#EX_WORK_AMT_TOTAL').append(EX_WORK_AMT_TOTAL);
+    	            
+    	            
+    	            
+    	            //기성단계
+    	            let  RM_AMT_TOTAL= null;	//소계를 구하기 위한 변수 초기화
+	                $('#giseongStep').empty(); 	
+    	            $(data.projectYesanSangseGiseong).each((index,item)=>{		
+    	            	$('#giseongStep').append('<tr><td>'+item.LEVEL2_NM+'</td><td>'	//기성단계
+    	            			+item.SALE_STEP_NM+'</td><td>'	//단계등급
+    	            			+item.RM_AMT+'</td><td>'	//금액
+    	            			+item.RM_RATE+'</td><tr>');	//비율
+	            			
+  	            	let BILL_COND = item.BILL_COND;		//매출대금회수조건
+  	            	console.log(BILL_COND);
+  	            	let BILL_DAY = item.BILL_DAY;		//어음일수
+  	            	console.log(BILL_DAY);
+         			//현금어음 구분
+         			$('#BILL').empty();
+          			$('#BILL').append('<div>매출대금회수조건: '+BILL_COND+'</div><div> 어음일수: '+BILL_DAY+'</div>');	
+    	            	
+            			//소계
+    	            	RM_AMT_TOTAL = RM_AMT_TOTAL + item.RM_AMT;         			
+    	            });	
+	                $('#RM_AMT_TOTAL').empty(); 	
+    	            $('#RM_AMT_TOTAL').append(RM_AMT_TOTAL);	            
 	            }
 			});	
 		};	
@@ -175,6 +358,7 @@ layout:decorator="layout/main">
 			</div>
 			<div class="x_content" style="text-align: right">
 				<div class="btn-group">
+					<button class="btn btn-default" type="reset">조회</button>					
 					<button class="btn btn-default" type="reset">입력</button>
 					<button class="btn btn-default" type="button">수정</button>
 					<button class="btn btn-default" type="button">삭제</button>
@@ -370,6 +554,7 @@ layout:decorator="layout/main">
 										<li role="presentation" class=""><a href="#tab_content6" role="tab" id="profile-tab5" data-toggle="tab"
 											aria-expanded="false">추정손익계산서</a></li>
 									</ul>
+									
 									<div id="myTabContent" class="tab-content">
 										<!-- 일정계획 start -->
 											<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
@@ -377,10 +562,7 @@ layout:decorator="layout/main">
 												<div class="col-md-12 col-sm-6 col-xs-12">
 													<div class="x_panel">
 														<div class="x_title">
-															<h2>
-																일정계획 <small></small>
-															</h2>
-															<ul class="nav navbar-right panel_toolbox">																																					
+															<ul class="nav navbar-right panel_toolbox">	
 															</ul>
 															<div class="clearfix"></div>
 														</div>
@@ -400,8 +582,7 @@ layout:decorator="layout/main">
 																</thead>
 																<tbody id="workStep">															
 																</tbody>																
-																	<tr><th>소계</th><td></td><td></td><td></td><th id="needTermTotal"></th><td></td><td></td>
-																	</tr>
+																	<tr><th>소계</th><td></td><td></td><td></td><th id="needTermTotal"></th><td></td><td></td></tr>
 															</table>
 															
 															<!-- 프로젝트일정로그 MODAL START -->
@@ -448,237 +629,85 @@ layout:decorator="layout/main">
 											<div class="col-md-12 col-sm-6 col-xs-12">
 													<div class="x_panel">
 											<div class="x_title">
-												<h2>
-													M/H 계획 <small></small>
-												</h2>
-												<ul class="nav navbar-right panel_toolbox">													
+												<ul class="nav navbar-right panel_toolbox">
 												</ul>
 												<div class="clearfix"></div>
 											</div>
 											<table class="table table-bordered">
-												<tr>
-													<th rowspan="12">주관부서</th>
-													<th scope="col" width="50">직급</th>
-													<th>인원</th>
-													<th>A. 기획</th>
-													<th>B. 심의</th>
-													<th>C. 허가</th>
-													<th>D. 착공</th>
-													<th>E. 실시</th>
-													<th>F. A/S</th>
-													<th>G. 준공</th>
-													<th width="50">합계</th>
-												</tr>
-												<tr>
-													<td scope="row">전무</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">상무</td>
-												<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">이사</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">실장</td>
-												<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">팀장</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">대리</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">사원</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">소계</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
+												<thead>
+													<tr>
+														<th rowspan="11" width="20">주관부서</th>
+														<th>직급</th>
+														<th>인원</th>
+														<th>A.기획</th>
+														<th>B.심의</th>
+														<th>C.허가</th>
+														<th>D.착공</th>
+														<th>E.실시</th>
+														<th>F.A/S</th>
+														<th>G.준공</th>
+														<th>합계</th>
+													</tr>	
+												</thead>
+												<tbody id="MHcompetent">
+												</tbody>
+													<tr>
+														<td></td>
+														<th>소계</th>
+														<td id="INWON_1_TOTAL"></td>
+														<td id="PLAN_A_1_TOTAL"></td>
+														<td id="PLAN_B_1_TOTAL"></td>
+														<td id="PLAN_C_1_TOTAL"></td>
+														<td id="PLAN_D_1_TOTAL"></td>
+														<td id="PLAN_E_1_TOTAL"></td>
+														<td id="PLAN_F_1_TOTAL"></td>
+														<td id="PLAN_G_1_TOTAL"></td>
+														<td id="TOT_MD_1_TOTAL"></td>
+													</tr>									
 											</table>
-
 
 											<table class="table table-bordered">
-												<tr>
-													<th rowspan="12">지원부서</th>
-													<th scope="col" width="50">직급</th>
-													<th>인원</th>
-													<th>A. 기획</th>
-													<th>B. 심의</th>
-													<th>C. 허가</th>
-													<th>D. 착공</th>
-													<th>E. 실시</th>
-													<th>F. A/S</th>
-													<th>G. 준공</th>
-													<th width="50">합계</th>
-												</tr>
-												<tr>
-													<td scope="row">전무</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">상무</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">이사</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">실장</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">팀장</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">대리</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">사원</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td scope="row">소계</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
+												<thead>
+													<tr>
+														<th rowspan="11" width="20">지원부서</th>
+														<th>직급</th>
+														<th>인원</th>
+														<th>A.기획</th>
+														<th>B.심의</th>
+														<th>C.허가</th>
+														<th>D.착공</th>
+														<th>E.실시</th>
+														<th>F.A/S</th>
+														<th>G.준공</th>
+														<th>합계</th>
+													</tr>
+												</thead>
+												<tbody id="MHsupport">
+												</tbody>
+													<tr>
+														<td></td>
+														<th>소계</th>
+														<td id="INWON_2_TOTAL"></td>
+														<td id="PLAN_A_2_TOTAL"></td>
+														<td id="PLAN_B_2_TOTAL"></td>
+														<td id="PLAN_C_2_TOTAL"></td>
+														<td id="PLAN_D_2_TOTAL"></td>
+														<td id="PLAN_E_2_TOTAL"></td>
+														<td id="PLAN_F_2_TOTAL"></td>
+														<td id="PLAN_G_2_TOTAL"></td>
+														<td id="TOT_MD_2_TOTAL"></td>
+													</tr>
 											</table>
+											<table frame e="void">
+												<tr>
+													<td>M/H기준: 1일 8시간</td>
+													<td>&emsp;&emsp;&emsp;</td>
+													<td id="INGUN_AMT"></td>
+													<td>&emsp;</td>
+													<td id="JUMYU"></td>
+												</tr>	
+											</table>
+											
 											</div>
 											</div>
 										</div>
@@ -690,10 +719,7 @@ layout:decorator="layout/main">
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="x_panel">
 													<div class="x_title">
-														<h2>
-															제조경비1 <small></small>
-														</h2>
-														<ul class="nav navbar-right panel_toolbox">															
+														<ul class="nav navbar-right panel_toolbox">		
 														</ul>
 														<div class="clearfix"></div>
 													</div>
@@ -705,17 +731,14 @@ layout:decorator="layout/main">
 																	<th>계정과목</th>
 																	<th>금액</th>
 																	<th>%</th>
-																	<th>비고</th>
+																	<th width="20">비고</th>
 																</tr>
 															</thead>
-															<tbody>
-																<tr>
-																	<th scope="row">프로젝트</th>
-																	<td>(프로젝트번호)</td>
-																	<td><input type="text"></td>
-																	<td></td>
-																</tr>
+															<tbody id="jejo1Left">
 															</tbody>
+															<tr>
+																<th>소계</th><td id="COST_AMT_TOT_L"></td><td id="COST_RATE_TOT_L"></td><td></td>
+															</tr>
 														</table>
 
 													</div>
@@ -725,9 +748,6 @@ layout:decorator="layout/main">
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="x_panel">
 													<div class="x_title">
-														<h2>
-															제조경비1 <small></small>
-														</h2>
 														<ul class="nav navbar-right panel_toolbox">															
 														</ul>
 														<div class="clearfix"></div>
@@ -740,65 +760,14 @@ layout:decorator="layout/main">
 																	<th>계정과목</th>
 																	<th>금액</th>
 																	<th>%</th>
-																	<th>비고</th>
+																	<th width="20">비고</th>
 																</tr>
 															</thead>
-															<tbody>
-																<tr>
-																	<td>국내출장비</td>
-																	<td><input type="text"></td>
-																	<td>0.00</td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td>국외출장비</td>
-																	<td><input type="text"></td>
-																	<td>0.00</td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td>보증보험료</td>
-																	<td><input type="text"></td>
-																	<td>0.00</td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td>합사운영비</td>
-																	<td><input type="text"></td>
-																	<td>0.00</td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td>인쇄비</td>
-																	<td><input type="text"></td>
-																	<td>0.00</td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td>지급수수료</td>
-																	<td><input type="text"></td>
-																	<td>0.00</td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td>모형비</td>
-																	<td><input type="text"></td>
-																	<td>0.00</td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td>조감도</td>
-																	<td><input type="text"></td>
-																	<td>0.00</td>
-																	<td><input type="text"></td>
-																</tr>
-																<tr>
-																	<td>국내출장비</td>
-																	<td><input type="text"></td>
-																	<td>0.00</td>
-																	<td><input type="text"></td>
-																</tr>
+															<tbody id="jejo1Right">																									
 															</tbody>
+															<tr>
+																<th>소계</th><td id="COST_AMT_TOT_R"></td><td id="COST_RATE_TOT_R"></td><td></td>
+															</tr>															
 														</table>
 
 													</div>
@@ -810,15 +779,11 @@ layout:decorator="layout/main">
 										<!-- 제조경비1 end -->
 
 										<!-- 제조경비2 start -->
-										<div role="tabpanel" class="tab-pane fade" id="tab_content4"
-											aria-labelledby="profile-tab">
+										<div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
 											<p>
 											<div class="col-md-12 col-sm-6 col-xs-12">
 												<div class="x_panel">
 													<div class="x_title">
-														<h2>
-															제조경비2 <small></small>
-														</h2>
 														<ul class="nav navbar-right panel_toolbox">
 														</ul>
 														<div class="clearfix"></div>
@@ -835,15 +800,11 @@ layout:decorator="layout/main">
 																	<th>실행예산</th>
 																</tr>
 															</thead>
-															<tbody>
-																<tr>
-																	<td scope="row">프로젝트</td>
-																	<td><input type="text"></td>
-																	<td>0.00</td>
-																	<td></td>
-																	<td></td>
-																</tr>
+															<tbody id="jejo2">
 															</tbody>
+															<tr>
+																<th>소  계</th><td id="EX_AMT_TOTAL"></td><td id="EX_RATE_TOTAL"></td><td></td><td id="EX_WORK_AMT_TOTAL"></td>
+															</tr>
 														</table>
 													</div>
 												</div>
@@ -859,9 +820,6 @@ layout:decorator="layout/main">
 											<div class="col-md-12 col-sm-6 col-xs-12">
 												<div class="x_panel">
 													<div class="x_title">
-														<h2>
-															기성단계 <small></small>
-														</h2>
 														<ul class="nav navbar-right panel_toolbox">
 														</ul>
 														<div class="clearfix"></div>
@@ -877,15 +835,14 @@ layout:decorator="layout/main">
 																	<th>수금율(%)</th>
 																</tr>
 															</thead>
-															<tbody>
-																<tr>
-																	<td>계약체결시</td>
-																	<td>기획</td>
-																	<td>385,000,000</td>
-																	<td>50.00</td>
-																</tr>
+															<tbody id="giseongStep">
 															</tbody>
+															<tr>
+																<th>소계</th><td></td><td id="RM_AMT_TOTAL"></td><td>100.00</td>
+															</tr>
 														</table>
+														<table class="table table-bordered" id="BILL">
+														</table>														
 													</div>
 												</div>
 											</div>
@@ -903,6 +860,7 @@ layout:decorator="layout/main">
 															합계내역 <small></small>
 														</h2>
 														<ul class="nav navbar-right panel_toolbox">
+															<li><a class="collapse-link"><i	class="fa fa-chevron-up"></i>숨기기</a></li>
 														</ul>
 														<div class="clearfix"></div>
 													</div>
@@ -1022,6 +980,7 @@ layout:decorator="layout/main">
 															간접비 <small></small>
 														</h2>
 														<ul class="nav navbar-right panel_toolbox">
+															<li><a class="collapse-link"><i	class="fa fa-chevron-up"></i>숨기기</a></li>
 														</ul>
 														<div class="clearfix"></div>
 													</div>
@@ -1070,6 +1029,7 @@ layout:decorator="layout/main">
 															공통비1 <small></small>
 														</h2>
 														<ul class="nav navbar-right panel_toolbox">
+															<li><a class="collapse-link"><i	class="fa fa-chevron-up"></i>숨기기</a></li>
 														</ul>
 														<div class="clearfix"></div>
 													</div>
