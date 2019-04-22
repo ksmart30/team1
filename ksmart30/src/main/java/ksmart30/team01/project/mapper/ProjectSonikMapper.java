@@ -14,7 +14,7 @@ public interface ProjectSonikMapper {
 	
 	List<Map<String, Object>> projectCodeSearch(SonikProjectCodeSearch jogun);
 
-	
+	Map<String, Object> SonikContrastSangse(String pJT_CD); // 예산실적 대비표 상세내역
 
 	
 	

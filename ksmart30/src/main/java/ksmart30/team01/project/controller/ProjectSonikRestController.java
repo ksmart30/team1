@@ -26,8 +26,6 @@ public class ProjectSonikRestController {
 	}
 	
 	
-	
-	
 	//상단의 검색기능에서 코드를 조건별로 검색하는 메서드
 	@PostMapping("/project/projectSonikSearch")
 	public List<Map<String,Object>> projectSonikSearch(SonikProjectCodeSearch jogun) {

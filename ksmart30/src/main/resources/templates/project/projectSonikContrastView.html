@@ -57,12 +57,18 @@ function somicall(){
            			+"부서"+'</td> <td rowspan="3">'
            			+"["+item.PJT_CD +"] "+ item.PJT_NM+'</td><td rowspan="3">' //프로젝트코드, 프로젝트 명
            			+item.TOT_CONTRACT_AMT+'</td><td>'//총계약금액 
-           			+""+'</td><td>'
+           			+'<a href="/project/projectSonikContrastSangseView?PJT_CD='+item.PJT_CD+'">'+'<button>상세</button></a></td><td>'
            			+"예산"+'</td><td>'//프로젝트 구분    			          			
-           			+""+'</td><td>'
+           			+item.HAP+'</td><td>'//합계
            			+item.COST_AMT1+'</td><td>' //인건비
            			+item.COST_AMT2+'</td><td>' //제조경비1
            			+item.COST_AMT3+'</td>' //제조경비2
+           			+""+'</td><td>'
+           			+item.BEBU+'</td><td>'
+           			+item.YUNGUPEIK+'</td><td>'//영업이익
+           			+""+'</td><td>'
+           			+""+'</td><td>'
+           			
            			
            			+'<tr><td>'
            			+""+'</td><td>'
@@ -135,6 +141,7 @@ $(document).ready(function() {
 	
 		<div class="x_content" style="text-align: right">
 			<div class="btn-group">
+				<button class="btn btn-default" type="reset" id="sonikList">조회</button>
 				<button class="btn btn-default" type="reset">입력</button>
 				<button class="btn btn-default" type="button">수정</button>
 				<button class="btn btn-default" type="button">삭제</button>
@@ -288,14 +295,10 @@ $(document).ready(function() {
 <!------------------------------------------ 프로젝트 코드 조회 modal end--------------------------------------------------- --> 
 		
 </td>
-					<td>
-						<div class="x_content" style="text-align: right">
-							<button class="btn"  style="color: black" id="sonikList">검색</button>
-						</div>
-
+					<td colspan="2">
 					</td>
-					<td>
-						<div><span>계약일자가 2012년 이전 자료는 조회하실수 없습니다.</span></div>
+					<td colspan="3">
+						<div><span>⊙ 계약일자가 2012년 이전 자료는 조회하실수 없습니다.</span></div>
 					</td>
 				</tr>
 			</tbody>
@@ -343,6 +346,7 @@ $(document).ready(function() {
 							<th class="column-title">제조경비1</th>
 							<th class="column-title">제조경비2</th>
 							<th class="column-title">배부비용</th>
+							<th class="column-title">영업이익</th>
 							<th class="column-title">사업성검토</th>
 							<th class="column-title">조정영업이익</th>
 							<th class="column-title">%</th>

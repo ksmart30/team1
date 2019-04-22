@@ -34,46 +34,32 @@
 					<table class="table table-bordered">
 						<tr>
 							<th style="background-color: #fff9df">프로젝트</th>
-							<td>18021 창원시 상남동 74-3 오피스텔 신축공사
-							<th style="background-color: #fff9df">발주처</th>
-							<td>현대건설(주)</td>
-							<th style="background-color: #fff9df">출력횟수</th>
-							<td>2회</td>
-							<th>미승인</th>
+							<td colspan="2">[[${data.PJT_CD}]] [[${data.PJT_NM}]]</td>
+							<th style="background-color: #fff9df">건축물유형</th>
+							<td colspan="3">[[${data.BUILD_NM}]]</td>				
 						</tr>
 						<tr>
-							<th style="background-color: #fff9df">프로젝트</th>
-							<td>업무시설</td>
-							<th style="background-color: #fff9df">수행부서</th>
-							<td colspan="4">설계1본부 1소</td>
+							<th style="background-color: #fff9df">계약일자</th>
+							<td colspan="2">[[${data.CONTRACT_DATE}]]</td>							
+							<td style="background-color: #fff9df">계약기간</td>
+							<td>[[${data.FROM_TO}]]</td>							
+							<td colspan="2">[[${data.PJT_E_GBN}]]</td>
+							
 						</tr>
 						<tr>
-							<td style="background-color: #fff9df">계약일자</td>
-							<td>2018/03/02 (2018/11/02)</td>
-							<td style="background-color: #fff9df">PM</td>
-							<td>20120015</td>
-							<td colspan="3">김인규</td>
-						</tr>
-						<tr>
-							<th style="background-color: #fff9df">계약기간</th>
-							<td colspan="6">2018/03/02~____/__/__, 용역완료시까지</td>
-						</tr>
-						<tr>
-							<th style="background-color: #fff9df">당사계약금액</th>
-							<td colspan="6">770,000,000원</td>
-						</tr>
-						<tr>
-							<th style="background-color: #fff9df">대지위치</th>
-							<td>343-80</td>
-							<td colspan="5">대전 대덕구 대오길 2(오정동)</td>
+							<th style="background-color: #fff9df">당사계약액</th>
+							<td colspan="2">[[${data.TOT_CONTRACT_AMT}]]</td>
+							<th style="background-color: #fff9df">소재지</th>
+							<td colspan="4">[[${data.PJT_ADDR}]]</td>
+							
 						</tr>
 						<tr>
 							<th style="background-color: #fff9df">대지면적</th>
-							<td>2,963m²</td>
-							<td>896.31평</td>
+							<td>[[${data.G_AREA_M}]]</td>
+							<td>[[${data.G_AREA_P}]]</td>
 							<th style="background-color: #fff9df">연면적</th>
-							<td>45,000m²</td>
-							<td colspan="2">13,612.50평</td>
+							<td>[[${data.G_YAREA_M}]]</td>
+							<td>[[${data.G_YAREA_P}]]</td>
 						</tr>
 					</table>
 <!-- 프로젝트 상세 end -->
@@ -99,81 +85,81 @@
 						<tbody>
 							<tr>
 								<td style="background-color: #fff9df" colspan="2">매출액</td>
-								<td>770,000,000</td>
-								<td>100.0</td>
+								<td>[[${data.TOT_CONTRACT_AMT}]]</td>
 								<td>0</td>
-								<td>100.0</td>
+								<td>0</td>
+								<td>0</td>
 								<td>0</td>
 																						
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df" rowspan="4">자체비용
 								<td style="background-color: #fff9df">인 건비</td>
+								<td>[[${data.COST_AMT1}]]</td>
 								<td>0</td>
-								<td>100.0</td>
 								<td>0</td>
-								<td>100.0</td>
+								<td>0</td>
 								<td>0</td>
 																
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df">제조경비1</td>
+								<td>[[${data.COST_AMT2}]]</td>
 								<td>0</td>
-								<td>100.0</td>
 								<td>0</td>
-								<td>100.0</td>
+								<td>0</td>
 								<td>0</td>
 																
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df">제조경비2</td>
+								<td>[[${data.COST_AMT3}]]</td>
 								<td>0</td>
-								<td>100.0</td>
 								<td>0</td>
-								<td>100.0</td>
+								<td>0</td>
 								<td>0</td>
 															
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df">소계</td>
+								<td>[[${data.SHAP}]]</td>
 								<td>0</td>
-								<td>100.0</td>
 								<td>0</td>
-								<td>100.0</td>
+								<td>0</td>
 								<td>0</td>
 																
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df" rowspan="5">배부비용</td>
 								<td style="background-color: #fff9df">공통비1</td>
+								<td>[[${data.DIV_AMT40}]]</td>
 								<td>0</td>
-								<td>100.0</td>
 								<td>0</td>
-								<td>100.0</td>
+								<td>0</td>
 								<td>0</td>
 														
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df">간접비</td>
 								<td>0</td>
-								<td>100.0</td>
 								<td>0</td>
-								<td>100.0</td>
+								<td>0</td>
+								<td>0</td>
 								<td>0</td>
 																
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df">공통비2</td>
+								<td>[[${data.DIV_AMT20}]]</td>
 								<td>0</td>
-								<td>100.0</td>
 								<td>0</td>
-								<td>100.0</td>
+								<td>0</td>
 								<td>0</td>
 															
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df">관리부문비</td>
-								<td>0</td>
+								<td>[[${data.DIV_AMT30}]]</td>
 								<td>100.0</td>
 								<td>0</td>
 								<td>100.0</td>
@@ -182,7 +168,7 @@
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df">소계</td>
-								<td>0</td>
+								<td>[[${data.BEBU}]]</td>
 								<td>100.0</td>
 								<td>0</td>
 								<td>100.0</td>
@@ -191,7 +177,7 @@
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df" colspan="2">비용합계</td>
-								<td>0</td>
+								<td>[[${data.HAP}]]</td>
 								<td>100.0</td>
 								<td>0</td>
 								<td>100.0</td>
@@ -200,7 +186,7 @@
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df" colspan="2">영업이익</td>
-								<td>0</td>
+								<td>[[${data.YUNGUPEIK}]]</td>
 								<td>100.0</td>
 								<td>0</td>
 								<td>100.0</td>

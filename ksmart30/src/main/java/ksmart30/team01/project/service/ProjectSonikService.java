@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import ksmart30.team01.project.domain.SonikProjectCodeSearch;
 import ksmart30.team01.project.mapper.ProjectSonikMapper;
 
@@ -29,6 +30,12 @@ public class ProjectSonikService {
 		
 		
 		return projectSonikMapper.projectCodeSearch(jogun);
+	}
+
+
+	//프로젝트 예산,실적 대비표 리스트에서 예산 상세버튼 클릭시 상세내용화면을 보여주는 메서드
+	public Map<String, Object> projectSonikContrastSangseView(String PJT_CD) {
+		return projectSonikMapper.SonikContrastSangse(PJT_CD);
 	}
 
 

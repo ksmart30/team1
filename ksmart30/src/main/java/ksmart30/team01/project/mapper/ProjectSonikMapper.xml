@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart30.team01.project.mapper.ProjectSonikMapper"> 
 
-<!-- 프로젝트 예산,실적대비표 리스트화면을 보여주기위한 쿼리-->
+<!-- 프로젝트 예산,실적대비표 리스트화면을 보여주기위한 쿼리 (예산)-->
 <select id="projectSonikListSearch"
 		parameterType="String"
 		resultType="java.util.Map">
@@ -13,11 +13,13 @@ SELECT
 	C.PJT_CD,
 	C.PJT_NM,
 	D.PJT_GB,
+	B.TOT_CONTRACT_AMT,
 	A.COST_AMT1,
 	A.COST_AMT2,
-	A.COST_AMT3, 
-	B.TOT_CONTRACT_AMT
-	
+	A.COST_AMT3, 	
+	(A.DIV_AMT40+ A.DIV_AMT20 + A.DIV_AMT30)BEBU,
+	(A.DIV_AMT40+ A.DIV_AMT20 + A.DIV_AMT30+A.COST_AMT1+A.COST_AMT2+A.COST_AMT3) HAP,
+	(B.TOT_CONTRACT_AMT -(A.DIV_AMT40+ A.DIV_AMT20 + A.DIV_AMT30+A.COST_AMT1+A.COST_AMT2+A.COST_AMT3)) YUNGUPEIK
 FROM 
 	 T_p11090 A 
 	,T_P11000 B
@@ -31,6 +33,8 @@ AND
 	D.PJT_CD = A.PJT_CD
 AND
 	A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
+	
+	
 
 </select>
 
@@ -83,6 +87,69 @@ WHERE
 
 </select>
 
+
+
+
+<!-- 프로젝트 예산,실적 대비표 리스트에서 예산 상세버튼 클릭시 상세내용화면을 보여주는 쿼리
+    프로젝트 개요, 상세 내역 (예산)-->
+<select id="SonikContrastSangse"
+ 		parameterType="String"
+ 		resultType="java.util.Map">
+ 
+SELECT 
+*
+FROM
+	(SELECT 
+		A.PJT_CD,
+		A.PJT_NM,
+		(SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.BUILD_TYPE AND LEVEL1_CD = '170' AND BUSI_GB = 'J') BUILD_NM,	  		
+		(B.CONTRACT_DATE+' ('+B.CRT_DATE+')') CONTRACT_DATE,
+		SUBSTRING(B.CONTRACT_DATE,1,4)+'/'+SUBSTRING(B.CONTRACT_DATE,5,2)+'/'+SUBSTRING(B.CONTRACT_DATE,7,2) + ' ~ ' +
+		SUBSTRING(B.PJT_E_DATE,1,4)+'/'+SUBSTRING(B.PJT_E_DATE,5,2)+'/'+SUBSTRING(B.PJT_E_DATE,7,2)  FROM_TO,
+		(SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.CONTRACT_PRI3 AND LEVEL1_CD = '130' AND BUSI_GB = 'J')+' 까지' PJT_E_GBN,						        
+		B.TOT_CONTRACT_AMT,
+		B.ZIP_CD+' '+B.PJT_ADDR PJT_ADDR,
+		CAST(B.G_AREA_M AS DECIMAL(14,2)) G_AREA_M,
+		CAST(B.G_AREA_P AS DECIMAL(14,2)) G_AREA_P,
+		CAST(B.G_YAREA_M AS DECIMAL(14,2)) G_YAREA_M,
+		CAST(B.G_YAREA_P AS DECIMAL(14,2)) G_YAREA_P
+	FROM 
+		T_SM3000 A,
+		T_P11000 B,
+		T_SC1010 C
+	WHERE 
+		B.PJT_CD   = A.PJT_CD
+	AND 
+		B.DEPT_CD  = C.DEPT_CD) A,
+		
+	(SELECT 
+		C.PJT_CD,
+		C.PJT_NM,
+		B.TOT_CONTRACT_AMT,
+		A.COST_AMT1 COST_AMT1,
+		A.COST_AMT2 COST_AMT2,
+		A.COST_AMT3 COST_AMT3,
+		(A.COST_AMT1+A.COST_AMT2+A.COST_AMT3) SHAP,
+		A.DIV_AMT40 DIV_AMT40, 
+		A.DIV_AMT20 DIV_AMT20, 
+		A.DIV_AMT30 DIV_AMT30,	
+		(A.DIV_AMT40+ A.DIV_AMT20 + A.DIV_AMT30)BEBU,
+		(A.DIV_AMT40+ A.DIV_AMT20 + A.DIV_AMT30+A.COST_AMT1+A.COST_AMT2+A.COST_AMT3) HAP,
+		(B.TOT_CONTRACT_AMT -(A.DIV_AMT40+ A.DIV_AMT20 + A.DIV_AMT30+A.COST_AMT1+A.COST_AMT2+A.COST_AMT3)) YUNGUPEIK
+	FROM 
+		 T_p11090 A 
+		,T_P11000 B
+		,T_SM3000 C
+	WHERE 
+		A.PJT_CD = B.PJT_CD 
+	AND
+		C.PJT_CD = A.PJT_CD) B
+WHERE 
+	A.PJT_CD = B.PJT_CD
+	AND
+	A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
+	
+ </select>
 
 <!-- 제조경비2 상세화면을위한 검색 쿼리 작성 (계정과목, 예산) -->
 <!-- <select id="jejo2YesanSearch"
