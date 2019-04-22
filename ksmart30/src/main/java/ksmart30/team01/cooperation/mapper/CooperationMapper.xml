@@ -69,9 +69,9 @@
    		 AND 
    		 	A.PJT_CD      
    		 		LIKE '%' + #{inPjtCd} +'%' <!-- 프로젝트코드 입력-->
-   		 AND 
+   		 <!-- AND 
    		 	A.PJT_NM      
-   		 		LIKE '%' + #{inPjtNm}  +'%' <!-- 프로젝트네임 입력-->
+   		 		LIKE '%' + #{inPjtNm}  +'%' 프로젝트네임 입력 -->
    		 AND 
    		 	A.OUT_ITEM    
    		 		LIKE '%' + #{inOutItem} + '%' <!--  외주부문(외주분야) 입력-->
@@ -238,6 +238,40 @@
 		 	AND
 	 		 OUT_ITEM = #{OUT_ITEM}
 	</select>
-
+<!-- 외주비 분석현황(용도별) 검색 쿼리 -->
+	<select id="getCooperationDragonHyunhwang"
+		parameterType="ksmart30.team01.cooperation.domain.CooperationDragonHyunhwangRequest"
+		resultType="java.util.Map">
+		SELECT 
+				X.BUILD_NM,X.PJT_NM,   
+				ISNULL(X.BIZ_NM,'') BIZ_NM,   X.CUST_NM,
+				X.G_AREA_P, X.G_YAREA_P, 
+				X.CONTRACT_AMT, X.CONTRACT_DAN, X.CONTRACT_RAT,
+				X.OUT_01, X.DAN_01, -- 건축 01
+				X.OUT_02, X.DAN_02, -- 기계 02
+				X.OUT_03, X.DAN_03, -- 전기 03
+				X.OUT_04, X.DAN_04, -- 구조 04
+				X.OUT_05, X.DAN_05, -- 견적 05
+				X.OUT_08, X.DAN_08, -- 교통영향평가 08
+				X.OUT_11, X.DAN_11, -- 측량 11
+				X.OUT_14, X.DAN_14, -- 소방 14
+				X.OUT_29, X.DAN_29, -- 기타 29
+				X.OUT_04, X.DAN_04, -- 토목 04
+				X.OUT_05, X.DAN_05, -- 조경 05
+				X.OUT_10, X.DAN_10, -- 지질조사 10
+				X.OUT_12, X.DAN_12, -- 흙막이 12
+				X.COST2_01, X.COST2_02, --제조경비1 중 조감도비 , 모형비
+				ISNULL(X.WORK_STEP_NM,'') WORK_STEP_NM,
+				X.COST_AMT1, X.SIL_COST1, X.CHA_COST1,
+				X.PLAN_MH1, X.PLAN_MH2, X.PLAN_TOT,
+				X.SIL_MH1, X.SIL_MH2, X.SIL_TOT,
+				PJT_CD,BUILD_GBN
+		FROM 
+			SF_P01_2400M_SL1(#{STRAT_DATE}, #{END_DATE}, #{BUILD_CD}, #{BIZ_CD}, #{Y_P_STRAT}, #{Y_P_END}, #{DG_P_STRAT}, #{DG_P_END}) X 
+							<!--(시작날짜(필수),끝날짜(필수),		빌드구분,			수주구분,		연면적평시작,		연면적평끝,		대지면적평시작,		대지면적평끝) -->
+		ORDER BY 
+			X.BUILD_GBN, X.YAREA_GBN, X.BIZ_GBN, X.GUBUN, X.GUBUN_SEQ, X.G_YAREA_P, X.PJT_CD
+	
+	</select>
 
 </mapper>

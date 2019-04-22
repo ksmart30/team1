@@ -6,49 +6,178 @@
 	<meta charset="UTF-8">
 	<title>외주비 분석현황(용도별)</title>
 	<th:block th:include="layout/customHead"></th:block>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+function startYearCall() {
+	//날짜 초기화(적용하기)
+	let today = new Date();
+	let dd = today.getDate();
+	let mm = today.getMonth()+1; //January is 0!
+	let yyyy = today.getFullYear();
+	if(dd<10) {//2자리수만들기
+	    dd='0'+dd
+	} 
+	if(mm<10) {
+	    mm='0'+mm
+	} 
+	today = yyyy+'-' + mm+'-'+dd;
+	startYear = yyyy+'-01-01';//올해 첫월 첫일
+	$('#STRAT_DATE').val(startYear);
+	$('#END_DATE').val(today);
+}
+function searchCall() {
+	let STRAT_DATE = $('#STRAT_DATE').val();//기간검색 시작
+	let END_DATE = $('#END_DATE').val();//기간검색 끝
+	let BUILD_CD = $('#BUILD_CD').val();// 건축물 용도
+	let BIZ_CD = $('#BIZ_CD').val(); // 수주구분
+	let Y_P_STRAT = $('#Y_P_STRAT').val(); //연면적 시작
+	let Y_P_END = $('#Y_P_END').val(); // 연면적 끝
+	let DG_P_STRAT = $('#DG_P_STRAT').val();//대지면적 시작
+	let DG_P_END = $('#DG_P_END').val();//대지면적 끝
+	
+	$.ajax({
+        url:'/cooperationDragonHyunhwang',//호출할 메소드
+        type:'POST',//송신 방식 
+        data:{STRAT_DATE:STRAT_DATE,END_DATE:END_DATE,BUILD_CD:BUILD_CD,BIZ_CD:BIZ_CD,
+        	Y_P_STRAT:Y_P_STRAT,Y_P_END:Y_P_END,DG_P_STRAT:DG_P_STRAT,DG_P_END:DG_P_END},//넘길 데이터
+        success:(data)=>{
+        	console.log(data);
+        	$('#searchList').empty();
+        	 $(data).each((index,item)=>{
+        		 if(item.BUILD_GBN=='Z'){
+        			 $('#searchList').append(
+   	        			'<tr style="background-color: #f9dfff"><td>'
+   	        			+item.BUILD_NM+'</td><td></td><td></td><td></td><td>'
+   	        			+item.G_AREA_P+'</td><td>'
+   	        			+item.G_YAREA_P+'</td><td>'+item.CONTRACT_AMT+'</td><td>'
+   	        			+item.CONTRACT_DAN+'</td><td>'+item.CONTRACT_RAT+'</td><td>'
+   	        			+item.OUT_01+'</td><td>'+item.DAN_01+'</td><td>'
+   	        			+item.OUT_02+'</td><td>'+item.DAN_02+'</td><td>'	        			
+   	        			+item.OUT_03+'</td><td>'+item.DAN_03+'</td><td>'	        			
+   	        			+item.OUT_04+'</td><td>'+item.DAN_04+'</td><td>'        			
+   	        			+item.OUT_05+'</td><td>'+item.DAN_05+'</td><td>'        			
+   	        			+item.OUT_08+'</td><td>'+item.DAN_08+'</td><td>'	        			
+   	        			+item.OUT_11+'</td><td>'+item.DAN_11+'</td><td>'	        			
+   	        			+item.OUT_14+'</td><td>'+item.DAN_14+'</td><td>'	        			
+   	        			+item.OUT_29+'</td><td>'+item.DAN_29+'</td><td>'	        			
+   	        			+item.OUT_04+'</td><td>'+item.DAN_04+'</td><td>'	        			
+   	        			+item.OUT_05+'</td><td>'+item.DAN_05+'</td><td>'	        			
+   	        			+item.OUT_10+'</td><td>'+item.DAN_10+'</td><td>'
+   	        			+item.OUT_12+'</td><td>'+item.DAN_12+'</td><td>'	        			
+   	        			+item.COST2_01+'</td><td>'+item.COST2_02+'</td><td>'
+   	        			+item.WORK_STEP_NM+'</td><td>'+item.COST_AMT1+'</td><td>'
+   	        			+item.SIL_COST1+'</td><td>'+item.CHA_COST1+'</td><td>'
+   	        			+item.PLAN_MH1+'</td><td>'+item.PLAN_MH2+'</td><td>'
+   	        			+item.PLAN_TOT+'</td><td>'+item.SIL_MH1+'</td><td>'
+   	        			+item.SIL_MH2+'</td><td>'+item.SIL_TOT+'</td><td>'+'</tr>')
+        		 }else if(item.PJT_CD=='ZZZZZZ'){
+     			 $('#searchList').append(
+   	        			'<tr style="background-color: #fff9df"><td>'
+   	        			+item.BUILD_NM+'</td><td></td><td></td><td></td><td>'
+   	        			+item.G_AREA_P+'</td><td>'
+   	        			+item.G_YAREA_P+'</td><td>'+item.CONTRACT_AMT+'</td><td>'
+   	        			+item.CONTRACT_DAN+'</td><td>'+item.CONTRACT_RAT+'</td><td>'
+   	        			+item.OUT_01+'</td><td>'+item.DAN_01+'</td><td>'
+   	        			+item.OUT_02+'</td><td>'+item.DAN_02+'</td><td>'	        			
+   	        			+item.OUT_03+'</td><td>'+item.DAN_03+'</td><td>'	        			
+   	        			+item.OUT_04+'</td><td>'+item.DAN_04+'</td><td>'        			
+   	        			+item.OUT_05+'</td><td>'+item.DAN_05+'</td><td>'        			
+   	        			+item.OUT_08+'</td><td>'+item.DAN_08+'</td><td>'	        			
+   	        			+item.OUT_11+'</td><td>'+item.DAN_11+'</td><td>'	        			
+   	        			+item.OUT_14+'</td><td>'+item.DAN_14+'</td><td>'	        			
+   	        			+item.OUT_29+'</td><td>'+item.DAN_29+'</td><td>'	        			
+   	        			+item.OUT_04+'</td><td>'+item.DAN_04+'</td><td>'	        			
+   	        			+item.OUT_05+'</td><td>'+item.DAN_05+'</td><td>'	        			
+   	        			+item.OUT_10+'</td><td>'+item.DAN_10+'</td><td>'
+   	        			+item.OUT_12+'</td><td>'+item.DAN_12+'</td><td>'	        			
+   	        			+item.COST2_01+'</td><td>'+item.COST2_02+'</td><td>'
+   	        			+item.WORK_STEP_NM+'</td><td>'+item.COST_AMT1+'</td><td>'
+   	        			+item.SIL_COST1+'</td><td>'+item.CHA_COST1+'</td><td>'
+   	        			+item.PLAN_MH1+'</td><td>'+item.PLAN_MH2+'</td><td>'
+   	        			+item.PLAN_TOT+'</td><td>'+item.SIL_MH1+'</td><td>'
+   	        			+item.SIL_MH2+'</td><td>'+item.SIL_TOT+'</td><td>'+'</tr>')
+	     		 }else{
+	     			 $('#searchList').append(
+  	        			'<tr><td>'
+  	        			+item.BUILD_NM+'</td><td>' //건축물용도	        			
+  	        			+item.PJT_NM+'</td><td>'//프로젝트명
+  	        			+item.BIZ_NM+'</td><td>'//수주구분
+  	        			+item.CUST_NM+'</td><td>'//발주처
+  	        			+item.G_AREA_P+'</td><td>'//대지평
+  	        			+item.G_YAREA_P+'</td><td>'//연면적평	        			
+  	        			+item.CONTRACT_AMT+'</td><td>'//계약금액
+  	        			+item.CONTRACT_DAN+'</td><td>'//평단가
+  	        			+item.CONTRACT_RAT+'</td><td>'//비율
+  	        			+item.OUT_01+'</td><td>'+item.DAN_01+'</td><td>'//건축
+  	        			+item.OUT_02+'</td><td>'+item.DAN_02+'</td><td>'//기계	        			
+  	        			+item.OUT_03+'</td><td>'+item.DAN_03+'</td><td>'//전기	        			
+  	        			+item.OUT_04+'</td><td>'+item.DAN_04+'</td><td>'//구조	        			
+  	        			+item.OUT_05+'</td><td>'+item.DAN_05+'</td><td>'//견적	        			
+  	        			+item.OUT_08+'</td><td>'+item.DAN_08+'</td><td>'//교통영향평가	        			
+  	        			+item.OUT_11+'</td><td>'+item.DAN_11+'</td><td>'//측량	        			
+  	        			+item.OUT_14+'</td><td>'+item.DAN_14+'</td><td>'//소방	        			
+  	        			+item.OUT_29+'</td><td>'+item.DAN_29+'</td><td>'//기타	        			
+  	        			+item.OUT_04+'</td><td>'+item.DAN_04+'</td><td>'//토목	        			
+  	        			+item.OUT_05+'</td><td>'+item.DAN_05+'</td><td>'//조경	        			
+  	        			+item.OUT_10+'</td><td>'+item.DAN_10+'</td><td>'//지질조사
+  	        			+item.OUT_12+'</td><td>'+item.DAN_12+'</td><td>'//흙막이	        			
+  	        			+item.COST2_01+'</td><td>'//조감도비
+  	        			+item.COST2_02+'</td><td>'//모형비
+  	        			+item.WORK_STEP_NM+'</td><td>'
+  	        			+item.COST_AMT1+'</td><td>'
+  	        			+item.SIL_COST1+'</td><td>'
+  	        			+item.CHA_COST1+'</td><td>'
+  	        			+item.PLAN_MH1+'</td><td>'
+  	        			+item.PLAN_MH2+'</td><td>'
+  	        			+item.PLAN_TOT+'</td><td>'
+  	        			+item.SIL_MH1+'</td><td>'
+  	        			+item.SIL_MH2+'</td><td>'
+  	        			+item.SIL_TOT+'</td><td>'
+  	        			+'</tr>')
+       		 }
+        		 
+       	 });
+       	}
+        	
+      });
+}
+
+$(document).ready(()=>{
+	startYearCall()//해당년 셋팅
+	searchCall()//기본 조회 하기
+	//이벤트 조회
+	$('#search').on('click',()=>{
+		searchCall()
+	});
+});
+
+</script>
 </th:block>
 <th:block layout:fragment="customBody">
 
 <font color="black">
 
-
 <div class="col-md-9 col-xs-12" style="color:black;">
         <div class="page-title">
 	<div class="title_left">
-	 <h2><b>외주관리</b></h2>
-	<h5><font color="gray"><b>3.외주관리&nbsp;>&nbsp;&nbsp;3.2외주비분석현황&nbsp;>&nbsp;&nbsp;3.2.1외주비분석현황(용도별)</b></font></h5>
+	 <h2><b>외주비 분석 현황(용도별)</b></h2>
+	<h5><font color="gray"><b>3.외주관리&nbsp;>&nbsp;&nbsp;3.2외주비분석현황</b></font></h5>
 					
 	</div>
 	</div>
         </div>
 <div class="x_content" style="text-align: right">
 <div class="btn-group" >
-<button class="btn btn-default" type="reset">입력</button>
-<button class="btn btn-default" type="button">수정</button>
-<button class="btn btn-default" type="button">삭제</button>
-<button class="btn btn-default" type="button">저장</button>
-<button class="btn btn-default" type="button">출력</button>
+<button class="btn btn-default" type="button" id="search">조회</button>
+<button class="btn btn-default" type="button" disabled="disabled">입력</button>
+<button class="btn btn-default" type="button" disabled="disabled">수정</button>
+<button class="btn btn-default" type="button" disabled="disabled">삭제</button>
+<button class="btn btn-default" type="button" disabled="disabled">저장</button>
+<button class="btn btn-default" type="button" disabled="disabled">출력</button>
 </div>
 </div>
 	<div class="x_panel">
-		<div class="x_title">
-			<h2>
-				<i class="fa fa-money"></i>외주비 분석 현황(용도별)
-			</h2>
-			<ul class="nav navbar-right panel_toolbox">
-				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-				</li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-expanded="false"><i
-						class="fa fa-wrench"></i></a>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Settings 1</a></li>
-						<li><a href="#">Settings 2</a></li>
-					</ul></li>
-				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-			</ul>
-			<div class="clearfix"></div>
-		</div>
+		
 		<div class="x_content">
 
 			<!-- 검색 폼 -->
@@ -61,13 +190,13 @@
 						<td width="150"><label>⊙ 기간 : </label></td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="date" name="date1" class="form-control ">
+								<input type="date" name="date1" class="form-control" id="STRAT_DATE">
 							</div>
 						</td>
 						<td><label>에서</label></td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="date" name="date2" class="form-control">
+								<input type="date" name="date2" class="form-control" id="END_DATE">
 							</div>
 						</td>
 						<td><label>까지</label></td>
@@ -77,28 +206,53 @@
 						<td width="150"><label>⊙ 건축물 용도 : </label></td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
+								<select class="form-control" id="BUILD_CD">
 									<option value="">ALL</option>
-									<option value="1">단독주택</option>
-									<option value="2">공동주택</option>
-									<option value="3">제1종 근린생활시설</option>
-									<option value="1">제1종 근린생활시설</option>
-									<option value="2">문화 및 집회시설</option>
-									<option value="3">판매시설</option>
-									<option value="3">의료시설</option>
+									<option value="01">단독주택</option>
+									<option value="02">공동주택</option>
+									<option value="03">제1종 근린생활시설</option>
+									<option value="04">제2종 근린생활시설</option>
+									<option value="05">문화 및 집회시설</option>
+									<option value="06">판매시설</option>
+									<option value="07">의료시설</option>
+									<option value="08">교육연구시설</option>
+									<option value="09">운동시설</option>
+									<option value="10">업무시설</option>
+									<option value="11">숙박시설</option>
+									<option value="12">위락시설</option>
+									<option value="13">공 장</option>
+									<option value="14">창고시설</option>
+									<option value="15">위험물저장 및 처리시설</option>
+									<option value="16">자동차관련시설</option>
+									<option value="17">동물 및 식물관련시설</option>
+									<option value="18">분뇨 쓰레기처리시설</option>
+									<option value="19">교정 및 군사시설</option>
+									<option value="20">묘지관련시설</option>
+									<option value="21">관광유게시설</option>
+									<option value="22">주거복합</option>
+									<option value="23">주거단위계획</option>
+									<option value="24">종교시설</option>
+									<option value="25">운수시설</option>
+									<option value="26">노유자시설</option>
+									<option value="27">수련시설</option>
+									<option value="28">방송통신시설</option>
+									<option value="29">발전시설</option>
+									<option value="30">공공업무시설</option>
+									<option value="31">공공업무시설</option>
+									<option value="99">공공업무시설</option>
 								</select>
 							</div>
 						</td>
 						<td width="100"><label>⊙ 연면적 : </label></td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control">
+								<input type="number" name="test" class="form-control" id="Y_P_STRAT">
 							</div>
 						</td>
 						<td width="80"><label>평 이상</label></td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control">
+								<input type="number" name="test" class="form-control" id="Y_P_END">
 							</div>
 						</td>
 						<td width="80"><label>평 이하</label></td>
@@ -108,28 +262,31 @@
 						<td><label for="gex3">⊙ 수주 구분 : </label></td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<select class="form-control">
+								<select class="form-control" id="BIZ_CD">
 									<option value="">ALL</option>
-									<option value="1">발주의뢰</option>
-									<option value="2">저가심의</option>
-									<option value="3">적격심사</option>
-									<option value="1">현상설계</option>
-									<option value="2">지명현상</option>
-									<option value="3">TK</option>
-									<option value="3">기술제안</option>
+									<option value="01">발주의뢰</option>
+									<option value="06">저가심의</option>
+									<option value="10">적격심사</option>
+									<option value="16">현상설계</option>
+									<option value="20">지명현상</option>
+									<option value="26">TK</option>
+									<option value="30">기술제안</option>
+									<option value="36">대안입찰</option>
+									<option value="40">PF</option>
+									<option value="46">BTL</option>
 								</select>
 							</div>
 						</td>
 						<td><label>⊙ 대지면적 : </label></td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control">
+								<input type="number" name="test" class="form-control" id="DG_P_STRAT">
 							</div>
 						</td>
 						<td><label>평 이상</label></td>
 						<td>
 							<div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="test" class="form-control">
+								<input type="number" name="test" class="form-control" id="DG_P_END">
 							</div>
 						</td>
 						<td><label>평 이하</label></td>
@@ -160,6 +317,7 @@
 					<th rowspan="2" width="100">연면적(평)</th>
 					<th rowspan="2" width="100">계약금액</th>
 					<th rowspan="2" width="100">평단가</th>
+					<th rowspan="2" width="100">비율</th>
 					<th colspan="2">건축</th>
 					<th colspan="2">기계</th>
 					<th colspan="2">전기</th>
@@ -222,17 +380,8 @@
 
 			</thead>
 
-			<tbody>
-				<!--   <tr class="even pointer">
-                            <td class=" ">121000040</td>
-                            <td class=" ">May 23, 2014 11:47:56 PM </td>
-                            <td class=" ">121000210 <i class="success fa fa-long-arrow-up"></i></td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$7.45</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                          </tr> -->
+			<tbody id="searchList">
+	
 
 			</tbody>
 		</table>
