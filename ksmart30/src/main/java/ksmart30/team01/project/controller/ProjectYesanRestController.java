@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ksmart30.team01.project.domain.ProjectSangseRequest;
+import ksmart30.team01.project.domain.ProjectYesanOutputCodeSearch;
 import ksmart30.team01.project.domain.ProjectYesanSearchRequest;
 import ksmart30.team01.project.domain.ProjectYesanWorkStepLogRequest;
 import ksmart30.team01.project.service.ProjectYesanService;
@@ -30,7 +31,7 @@ public class ProjectYesanRestController {
 		return searchList;
 	}	
 	
-	//2.2.1. 프로젝트코드를 입력받아 프로젝트 개요 화면을 보여주는 요청
+	//2.2.1. 프로젝트코드를 입력받아 프로젝트 개요화면 및 상세화면을 보여주는 요청
 	@PostMapping("/project/projectYesanViewOne")
 	public Map<String, Object> projectYesanViewOne(String PJT_CD) {	
 		System.out.println("/project/projectYesanViewOne RestController post 하나의 프로젝트 개요 화면");				
@@ -45,6 +46,17 @@ public class ProjectYesanRestController {
 		System.out.println(projectYesanWorkStepLogRequest.toString()+" : 받아온값");		
 		return projectYesanService.projectYesanViewWorkStepLog(projectYesanWorkStepLogRequest);
 	}	
+
+	/*
+	 * //2.2.1. 일정계획 입력
+	 * 
+	 * @GetMapping("/person/personInsaModifyView") public String
+	 * personInsaModifyView(Model model, @RequestParam(value="EMP_NO") String
+	 * EMP_NO) { System.out.println("CONTROLLER : 직원수정  , 사원번호 : "+ EMP_NO); Person
+	 * data = personService.personInsaEmployeeModifyView(EMP_NO);
+	 * model.addAttribute("EMP_NO", EMP_NO); model.addAttribute("result", data);
+	 * return null; }
+	 */
 	
 	//2.2.1 승인된 용역계약서 상세
 	@GetMapping("/project/yesan/sangse")	
@@ -108,12 +120,10 @@ public class ProjectYesanRestController {
 	
 	//2.2.3.1 프로젝트예산 출력을 위한 프로젝트코드 조회
 	@PostMapping("/project/projectYesanOutputPjtSearch")
-	public List<Map<String, Object>> projectYesanOutputPjtSearch(String CONTRACT_DATE, String selectedOption, String inputValue) {
-		System.out.println("/project/projectYesanOutputPjtSearch 프로젝트코드조회 요청 RestController get");
-		System.out.println(CONTRACT_DATE + " :계약일 확인 RestController get");
-		System.out.println(selectedOption + " :항목 확인 RestController get");
-		System.out.println(inputValue + " :입력값 확인 RestController get");
-		return projectYesanService.projectYesanOutputPjtSearch(CONTRACT_DATE, selectedOption, inputValue);
+	public List<Map<String, Object>> projectYesanOutputPjtSearch(ProjectYesanOutputCodeSearch projectYesanOutputCodeSearch) {
+		System.out.println("/project/projectYesanOutputPjtSearch 프로젝트코드조회 요청 RestController post");
+		System.out.println(projectYesanOutputCodeSearch.toString());
+		return projectYesanService.projectYesanOutputPjtSearch(projectYesanOutputCodeSearch);
 	}	
 
 	//2.2.4 예산 입력한 용역계약서 검색 list

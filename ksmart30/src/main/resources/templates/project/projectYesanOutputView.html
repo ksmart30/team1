@@ -11,48 +11,48 @@
 	<script>
 	
 	$(document).ready(()=>{	
-    // 프로젝트코드와 프로젝트명 검색	
+    	
+		
+		// 프로젝트코드와 프로젝트명 검색	
 		$('#pjtCdSearchBtn').click(()=>{
 			console.log('pjtCdSearchBtn 버튼확인');
 			
-			let CONTRACT_DATE_YYMMDD = $('#CONTRACT_DATE').val();
-			let CONTRACT_DATE = CONTRACT_DATE_YYMMDD.substr(0,4);
+			let CONTRACT_DATE_YYMMDD = $('#CONTRACT_DATE_YY').val();
+			let CONTRACT_DATE_YY = CONTRACT_DATE_YYMMDD.substr(0,4);
 			let selectedOption = $('#selectedOption option:selected').val();
 			let inputValue = $('#inputValue').val();
-			console.log(CONTRACT_DATE + ' :입력받은 검색연도');
+			console.log(CONTRACT_DATE_YY + ' :입력받은 검색연도');
 			console.log(selectedOption + ' :입력받은 검색항목');
 			console.log(inputValue + ' :입력받은 검색조건');
 
 			$.ajax({
 	            url:'/project/projectYesanOutputPjtSearch',
 	            type:'POST',
-	            data:{CONTRACT_DATE:CONTRACT_DATE, selectedOption:selectedOption, inputValue:inputValue},
+	            data:{CONTRACT_DATE_YY:CONTRACT_DATE_YY, selectedOption:selectedOption, inputValue:inputValue},
 	      
 	            success:(list)=>{
 	            	console.log(list);
 	            	let tr='';
 	            	$(list).each((index,item)=>{
 	            		$('#projectList').empty();
-	            		tr += '<tr>';
-						tr += '<td>'+item.PJT_CD+'</td>';
-						tr += '<td>'+item.PJT_NM+'</td>';
-						tr += '</tr>';
+	            		tr = tr + '<tr>';
+						tr = tr + '<td>'+item.PJT_CD+'</td>';
+						tr = tr + '<td>'+item.PJT_NM+'</td>';
+						tr = tr + '</tr>';
 	            	});
 	            	$('#projectList').append(tr);
-	            }
-	            
+	            }    
 	        });
-			
+		});
+		$('#projectList').delegate('tr', 'dblclick', function(){
+			let tr = $(this);
+			let td = tr.children();
+			$('#PJT_CD').val(td.eq(0).text());
+			$('#PJT_NM').val(td.eq(1).text());
+			$('#pjtCdModal').click();
 		});
 	});
-	$('#projectList').delegate('tr', 'dblclick', function(){
-		let tr = $(this);
-		let td = tr.children();
-		$('#PJT_CD').val(td.eq(0).text());
-		$('#PJT_NM').val(td.eq(1).text());
-		$('#accountValue').val('');
-		$('#accountModal').click();
-	});
+
 	
 	
 	</script>
@@ -148,7 +148,7 @@
 												<div class="modal-content">
 													<form class="form-horizontal">
 														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal" id="accountModal"><span aria-hidden="true">X</span>
+															<button type="button" class="close" data-dismiss="modal" id="pjtCdModal"><span aria-hidden="true">X</span>
 															</button>
 															<h4 class="modal-title" id="myModalLabel"><b>프로젝트코드 조회</b></h4><br>
 															<!-- <div class="table-responsive"> -->
@@ -157,7 +157,7 @@
 																		<tr>
 																			<td><label class="control-label">계약연도</label></td>
 																			<td>
-																				<input type="number" id="CONTRACT_DATE" placeholder="____">
+																				<input type="number" id="CONTRACT_DATE_YY" placeholder="____">
 																			</td>
 																		</tr>																	
 																		<tr>
@@ -230,7 +230,7 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					사업성검토 예산 출력 <small></small>
+					프로젝트예산 출력 <small></small>
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i>숨기기</a>

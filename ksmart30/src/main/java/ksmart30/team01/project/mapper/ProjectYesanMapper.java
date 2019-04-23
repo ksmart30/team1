@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import ksmart30.team01.project.domain.ProjectYesanSearchRequest;
 import ksmart30.team01.project.domain.ProjectYesanWorkStepLogRequest;
 import ksmart30.team01.project.domain.ProjectSangseRequest;
+import ksmart30.team01.project.domain.ProjectYesanOutputCodeSearch;
 
 @Mapper
 public interface ProjectYesanMapper {
@@ -44,8 +45,17 @@ public interface ProjectYesanMapper {
 	//2.2.1.5. 프로젝트코드를 입력받아 기성단계를 보여줌
 	List<Map<String, Object>> getProjectYesanSangseGiseong(String PJT_CD);
 	
-	//2.2.3.1 프로젝트예산 출력을 위한 프로젝트코드 조회
-	List<Map<String, Object>> getProjectYesanOutputPjtList(String CONTRACT_DATE, String selectedOption, String inputValue);
+	//2.2.1.6. 프로젝트코드를 입력받아 추정손익계산서를 보여줌(사업성검토제외)
+	Map<String, Object> getProjectYesanSangseSonik(String PJT_CD);
+
+	//2.2.1.6. 프로젝트코드를 입력받아 추정손익계산서를 보여줌(사업성검토)
+	Map<String, Object> getProjectYesanSangseSonikBiz(String PJT_CD);
+
+	
+	//2.2.3.1 프로젝트예산 출력하기 위해 조건에 맞는 프로젝트를 검색하는 메서드
+	List<Map<String, Object>> getProjectYesanOutputPjtList(ProjectYesanOutputCodeSearch projectYesanOutputCodeSearch);
+
+
 
 
 

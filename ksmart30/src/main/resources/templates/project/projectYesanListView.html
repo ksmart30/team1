@@ -9,20 +9,7 @@
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		
 		<script>
-		let today = new Date();
-		let dd = today.getDate();
-		let mm = today.getMonth()+1;	//January is 0
-		let yyyy = today.getFullYear();
-		if(dd<10) {
-			dd='0'+dd
-		}
-		if(mm<10) {
-			mm='0'+mm
-		}
-		today=yyyy+'-'+mm+'-'+dd;
-		MonthInit = yyyy+'-'+mm+'-01';
-		$('#FIRST_DATE').val(MonthInit);
-		$('#END_DATE').val(today);
+		
 		</script>
 		
 	</th:block>
@@ -42,7 +29,7 @@
 		<div class="x_content" style="text-align: right">
 			<div class="btn-group">
 			<button class="btn btn-default" type="reset">조회</button>
-			<button class="btn btn-default" type="reset" disabled="disabled">입력</button>
+			<button class="btn btn-default" type="button" disabled="disabled">입력</button>
 			<button class="btn btn-default" type="button" disabled="disabled">수정</button>
 			<button class="btn btn-default" type="button" disabled="disabled">삭제</button>
 			<button class="btn btn-default" type="button" disabled="disabled">저장</button>
@@ -77,7 +64,7 @@
 								<label class="control-label">기간</label>
 							</td>
 							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 30%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<input type="date" id="FIRST_DATE" style="width: 40%"> ~ <input type="date" id="END_DATE" style="width: 40%">
+								<input type="date" id="FIRST_DATE" style="width: 40%"> ~ <input type="date" id="END_DATE" style="width: 40%" value="">
 							</td>
 							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
 								<label class="control-label">연면적(평)</label>

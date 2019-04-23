@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import ksmart30.team01.project.domain.ProjectYesanSearchRequest;
 import ksmart30.team01.project.domain.ProjectYesanWorkStepLogRequest;
 import ksmart30.team01.project.domain.ProjectSangseRequest;
+import ksmart30.team01.project.domain.ProjectYesanOutputCodeSearch;
 import ksmart30.team01.project.mapper.ProjectYesanMapper;
 
 @Service
@@ -67,7 +68,15 @@ public class ProjectYesanService {
 		
 		//5. 기성단계
 		List<Map<String,Object>> projectYesanSangseGiseong = projectYesanMapper.getProjectYesanSangseGiseong(PJT_CD);
-		projectYesanSangseAll.put("projectYesanSangseGiseong",projectYesanSangseGiseong);			
+		projectYesanSangseAll.put("projectYesanSangseGiseong",projectYesanSangseGiseong);		
+		
+		//6. 추정손익계산서(사업성검토 제외)
+		Map<String,Object> projectYesanSangseSonik = projectYesanMapper.getProjectYesanSangseSonik(PJT_CD);
+		projectYesanSangseAll.put("projectYesanSangseSonik",projectYesanSangseSonik);
+		
+		//6. 추정손익계산서(사업성검토)
+		Map<String,Object> projectYesanSangseSonikBiz = projectYesanMapper.getProjectYesanSangseSonikBiz(PJT_CD);
+		projectYesanSangseAll.put("projectYesanSangseSonikBiz",projectYesanSangseSonikBiz);
 		
 		return projectYesanSangseAll;
 	}
@@ -78,14 +87,11 @@ public class ProjectYesanService {
 		return workStepLogList;
 	}
 	
-	//2.2.3.1 프로젝트예산 출력을 위한 프로젝트코드 조회
-	public List<Map<String, Object>> projectYesanOutputPjtSearch(String CONTRACT_DATE, String selectedOption, String inputValue) {
+	//2.2.3.1 프로젝트예산 출력하기 위해 조건에 맞는 프로젝트를 검색하는 메서드
+	public List<Map<String, Object>> projectYesanOutputPjtSearch(ProjectYesanOutputCodeSearch projectYesanOutputCodeSearch) {
 		System.out.println("projectYesanOutputPjtSearch 서비스 확인");
-		List<Map<String, Object>> pjtList = projectYesanMapper.getProjectYesanOutputPjtList(CONTRACT_DATE, selectedOption, inputValue);
-		return pjtList;
+		return projectYesanMapper.getProjectYesanOutputPjtList(projectYesanOutputCodeSearch);
 	}
-
-
 	
 	
 }
