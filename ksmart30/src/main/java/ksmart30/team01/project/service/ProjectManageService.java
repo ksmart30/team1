@@ -12,6 +12,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ksmart30.team01.project.domain.DeptSearch;
 import ksmart30.team01.project.domain.Project;
 import ksmart30.team01.project.domain.ProjectHistory;
 import ksmart30.team01.project.mapper.ProjectManageMapper;
@@ -21,33 +22,44 @@ public class ProjectManageService {
 	@Autowired
 	ProjectManageMapper projectManageMapper;
 
+	// select option 중 부서 리스트를 반복분으로 자동 출력하기 위한 메서드
+	public List<Map<String, Object>> deptSelectList() {
+		System.out.println("Service deptSelectList 메서드 실행");
+		return projectManageMapper.deptSelectList();
+	}
+
 	// 용역계약서 입력 화면에서 쓰이는 종합코드 리스트를 조회하는 메서드
 	public List<Map<String, Object>> getProjectManageCode() {
 		System.out.println("Service getProjectManageCode 메서드 실행");
 		return projectManageMapper.getProjectManageCode();
 	}
-			
 	
-	// 모달에서 전체 프로젝트를 조회하는 메서드
-	public List<Map<String, Object>> getProjectManageSearchProject(String column, String columnValue) {
-		System.out.println("Service getProjectManageSearchProject 메서드 실행");
+	// 전체 프로젝트를 조회하는 메서드
+	public List<Map<String, Object>> getProjectManageCodeList(String column, String columnValue) {
+		System.out.println("Service getProjectManageCodeList 메서드 실행");
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		System.out.println("column : " + column);
 		System.out.println("columnValue : "+ columnValue);
 		if(column.equals("PJT_CD")) {
 			System.out.println("PJT_CD입니당");
 			searchMap.put("PJT_CD", columnValue);
-		} else {
+		} else if(column.equals("PJT_NM")) {
 			System.out.println("PJT_NM입니당");
 			searchMap.put("PJT_NM", columnValue);
+		} else if(column.equals("DEPT_CD")) {
+			System.out.println("DEPT_CD입니당");
+			searchMap.put("DEPT_CD", columnValue);
+		} else if(column.equals("DEPT_NM")) {
+			System.out.println("DEPT_NM입니당");
+			searchMap.put("DEPT_NM", columnValue);
 		}
-		return projectManageMapper.getProjectManageList(searchMap);
+		return projectManageMapper.getProjectManageCodeList(searchMap);
 	}
 	
 	// 전체 발주처를 조회하는 메서드
 	public List<Map<String, Object>> getCustList(String column, String columnValue) {
-		System.out.println("Service getClientList 메서드 실행");
-		Map<String, String> searchMap = new HashMap<String, String>();
+		System.out.println("Service getCustList 메서드 실행");
+		Map<String, Object> searchMap = new HashMap<String, Object>();
 		System.out.println("column : " + column);
 		System.out.println("columnValue : "+ columnValue);
 		if(column.equals("CUST_CD")) {
@@ -60,6 +72,36 @@ public class ProjectManageService {
 		return projectManageMapper.getCustList(searchMap);
 	}
 	
+	// 전체 부서를 조회하는 메서드
+	public List<Map<String, Object>> getDeptList(String column, String columnValue) {
+		System.out.println("Service getDeptList 메서드 실행");
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		System.out.println("column : " + column);
+		System.out.println("columnValue : "+ columnValue);
+		if(column.equals("DEPT_CD")) { 
+			System.out.println("DEPT_CD입니당");
+			searchMap.put("DEPT_CD", columnValue);
+		} else {
+			System.out.println("DEPT_NM입니당");
+			searchMap.put("DEPT_NM", columnValue);
+		}
+		return projectManageMapper.getDeptList(searchMap);
+	}
+	 
+	// 전체 직원을 조회하는 메서드
+	public List<Map<String, Object>> getEmpList(String column, String columnValue) {
+		System.out.println("Service getEmpList 메서드 실행");
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		System.out.println("column : " + column);
+		System.out.println("columnValue : "+ columnValue);
+		/*
+		 * if(column.equals("DEPT_CD")) { System.out.println("DEPT_CD입니당");
+		 * searchMap.put("DEPT_CD", columnValue); } else {
+		 * System.out.println("DEPT_NM입니당"); searchMap.put("DEPT_NM", columnValue); }
+		 */
+		searchMap.put("columnValue",columnValue);
+		return projectManageMapper.getDeptList(searchMap);
+	}
 	
 	// ===================================================용역계약서 입력 화면에서 프로젝트 리스트 조회 START===================================================
 	// 전체 프로젝트 대장을 조회하는 메서드
@@ -194,6 +236,18 @@ public class ProjectManageService {
 		return resultMap;
 	}
 	
+	// ====================================================== 용역계약서 검색(부서) START ====================================================== 
+	public List<Map<String, Object>> getProjectManageDepartSearchCode() {
+		System.out.println("Service getProjectManageDepartSearchCode 메서드 실행");
+		return projectManageMapper.getProjectManageDepartSearchCode();
+	}
+
+	public List<Map<String, Object>> getProjectManageDepartSearch(DeptSearch deptSearch) {
+		System.out.println("Service getProjectManageDepartSearch 메서드 실행");
+		return projectManageMapper.getProjectManageDepartSearch(deptSearch);
+	}
+	// ====================================================== 용역계약서 검색(부서) END ====================================================== 
+
 	// ====================================================== 용역계약서 현황 START ====================================================== 
 
 	//년도를 기준으로 부서별로 계약 회수 조회 쿼리를 호출하는 메서드

@@ -5,64 +5,68 @@
 		<title>용역계약서 입력</title>
 		<th:block th:include="layout/customHead"></th:block>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 		<script>
 		// 우편번호 및 주소 검색
 		function sample6_execDaumPostcode() {
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	                var addr = ''; // 주소 변수
-	                var extraAddr = ''; // 참고항목 변수
-	
-	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                    addr = data.roadAddress;
-	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                    addr = data.jibunAddress;
-	                }
-	
-	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-	                if(data.userSelectedType === 'R'){
-	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                        extraAddr += data.bname;
-	                    }
-	                    // 건물명이 있고, 공동주택일 경우 추가한다.
-	                    if(data.buildingName !== '' && data.apartment === 'Y'){
-	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                    }
-	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	                    if(extraAddr !== ''){
-	                        extraAddr = ' (' + extraAddr + ')';
-	                    }
-	                    // 조합된 참고항목을 해당 필드에 넣는다.
-	                    document.getElementById("sample6_extraAddress").value = extraAddr;
-	                
-	                } else {
-	                    document.getElementById("sample6_extraAddress").value = '';
-	                }
-	
-	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                document.getElementById('sample6_postcode').value = data.zonecode;
-	                document.getElementById("sample6_address").value = addr;
-	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById("sample6_detailAddress").focus();
-	            }
-	        }).open();
-	    }
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 		
+		                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+		                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		                var addr = ''; // 주소 변수
+		                var extraAddr = ''; // 참고항목 변수
+		
+		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		                    addr = data.roadAddress;
+		                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+		                    addr = data.jibunAddress;
+		                }
+		
+		                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+		                if(data.userSelectedType === 'R'){
+		                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+		                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+		                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                        extraAddr += data.bname;
+		                    }
+		                    // 건물명이 있고, 공동주택일 경우 추가한다.
+		                    if(data.buildingName !== '' && data.apartment === 'Y'){
+		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                    }
+		                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+		                    if(extraAddr !== ''){
+		                        extraAddr = ' (' + extraAddr + ')';
+		                    }
+		                    // 조합된 참고항목을 해당 필드에 넣는다.
+		                    document.getElementById("sample6_extraAddress").value = extraAddr;
+		                
+		                } else {
+		                    document.getElementById("sample6_extraAddress").value = '';
+		                }
+		
+		                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+		                $('#ZIP_CD_ONE').empty();
+		                $('#ZIP_CD_ONE').val(data.zonecode);
+		                $('#PJT_ADDR_ONE').empty();
+		               	$('#PJT_ADDR_ONE').append(addr);
+		                // 커서를 상세주소 필드로 이동한다.
+		                //document.getElementById("sample6_detailAddress").focus();
+		            }
+		        }).open();
+		    }
 		// 모달에서 프로젝트 선택
 		function modalPjtOneBtn(PJT_CD, PJT_NM) {
 			console.log('프로젝트 모달 선택완료!');
 			console.log(PJT_CD);
 			console.log(PJT_NM);
-			$('#PJT_CD').empty();
-			$('#PJT_CD').attr('value', PJT_CD);
-			$('#PJT_NM').empty();
-			$('#PJT_NM').append(PJT_NM);
+			$('#PJT_CD_VAL').empty();
+			$('#PJT_CD_VAL').attr('value', PJT_CD);
+			$('#PJT_NM_VAL').empty();
+			$('#PJT_NM_VAL').append(PJT_NM);
+			$('#pjtModalExit').click();
 		}
 		
 		// 모달에서 발주처 선택
@@ -72,6 +76,19 @@
 			console.log(CUST_NM);
 			$('#CUST_CD_VAL').empty();
 			$('#CUST_CD_VAL').attr('value', CUST_NM);
+			$('#custModal').click();
+		}
+		
+		// 모달에서 부서 선택
+		function modalDeptOneBtn(DEPT_CD, DEPT_NM) {
+			console.log('부서 모달 선택완료!');
+			console.log(DEPT_CD);
+			console.log(DEPT_NM);
+			$('#DEPT_CD_ONE').empty();
+			$('#DEPT_CD_ONE').attr('value', DEPT_CD);
+			$('#DEPT_NM_ONE').empty();
+			$('#DEPT_NM_ONE').append(DEPT_NM);
+			$('#deptModalExit').click();
 		}
 		
 		// 모든 칸에 입력된 값 초기화 메서드
@@ -114,6 +131,8 @@
 			$('#PJT_E_DATE_ONE').empty();
 			$('#BREAK_AMT_ONE').empty();
 			$('#PJT_NIC_ONE').empty();
+			$('#PJT_ADDR_ONE').empty();
+			$('#ZIP_CODE_ONE').empty();
 			$('#reset').click();
 		}
 		
@@ -151,7 +170,9 @@
 							$('select[id=CONTRACT_PRI3_ONE]').val(data.sangse.CONTRACT_PRI3);
 						// 수행부서 코드
 						$('#DEPT_CD_ONE').attr('value', data.sangse.DEPT_CD);
-							$('select[id=DEPT_CD_ONE]').val(data.sangse.DEPT_CD);
+						// 수행부서 이름
+						$('#DEPT_NM_ONE').empty();
+						$('#DEPT_NM_ONE').append(data.sangse.DEPT_NM);
 						// 건축물 유형
 						$('#BUILD_TYPE_ONE').attr('value', data.sangse.BUILD_TYPE);
 							$('select[id=BUILD_TYPE_ONE]').val(data.sangse.BUILD_TYPE);
@@ -194,6 +215,11 @@
 						// 건축물구조
 						$('#BUILD_STRUCT_ONE').attr('value', data.sangse.BUILD_STRUCT);
 							$('select[id=BUILD_STRUCT_ONE]').val(data.sangse.BUILD_STRUCT);
+						// 대지위치
+						$('#ZIP_CD_ONE').empty();						// 우편번호
+						$('#ZIP_CD_ONE').attr('value', data.sangse.ZIP_CD);
+						$('#PJT_ADDR_ONE').empty();						// 주소
+						$('#PJT_ADDR_ONE').append(data.sangse.PJT_ADDR);
 						// 지역1
 						$('#REGION_ONE').attr('value', data.sangse.REGION);
 							$('select[id=REGION_ONE]').val(data.sangse.REGION);	
@@ -325,79 +351,114 @@
 		
 		// 용역계약서 신규 입력
 		
+		// input 태그에서 엔터키 금지
+		$('input[type="text"]').keydown((e)=>{
+			if(e.keyCode == 13){
+				e.preventDefault();
+			}
+		});
 		
 		$(document).ready(function() {
-				// 용역계약서 입력을 위한 프로젝트 검색 부분
-				$('#reset').hide();
-				$('#search').click(function(){
-					// 필드로 입력받은 값들을 변수에 저장
-					let PJT_CD = $('#PJT_CD_VAL').val();
-					let DEPT_CD = $('#pjtDept').val();
-					let YEAR = $('#pjtYear').val();
-					let pjtRadioValue = $('input[name=pjtRadioValue]:checked', '#radioForm').val();
-					console.log(PJT_CD);
-					console.log(DEPT_CD);
-					console.log(YEAR);
-					console.log(pjtRadioValue);
-
-					$.ajax({
-						// ajax로 "/project/projectManageListProcess" URI를 지정 POST방식으로 data를 보낸다.
-						url:'/project/projectManageListProcess',
-						type:'POST',
-						data:{PJT_CD:PJT_CD, DEPT_CD:DEPT_CD, YEAR:YEAR, pjtRadioValue:pjtRadioValue},
-						success:function(data){
-							$('#pjtList').empty();
-							$('#resultLength').empty();
-							$(data).each((index,item) => {
-								$('#pjtList').append('<tr><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td onclick="pjtOneBtn('+item.PJT_CD+',&#39'+item.PJT_NM+'&#39)">'+item.PJT_NM+'</td></tr>');
-							});
-							$('#resultLength').append(data.length);
-						},
-						error:function(request, status, error) {
-							alert(error + "에러입니다.");
-						}
-					});
-				});
-				// 프로젝트 검색 모달
-				$('#pjtSearchBtn').click(()=>{
-	    			let column = $('#selectedPjtItem option:selected').val();
-	    			let columnValue = $('#pjtValue').val();
-	    			console.log('검색 값 : ');
-		    		console.log(columnValue);
-		    		$.ajax({
-						url:'/project/projectManageSearchProcess',
-					    type:'POST',
-						data:{column:column, columnValue:columnValue},
-						success:(data)=>{
-							console.log(data);
-							$('#pjtSearchList').empty();
-							$(data).each((index, item) =>{
-							$('#pjtSearchList').append('<tr onclick="modalPjtOneBtn('+item.PJT_CD+',&#39'+item.PJT_NM+'&#39)"><td>'+item.PJT_CD+'</td><td>'+item.PJT_NM+'</td></tr>');
-							});
-						}
-		    		});
-				});
-				
-				// 발주처 검색 모달
-				$('#custSearchBtn').click(()=>{
-	    			let column = $('#selectedCustItem option:selected').val();
-	    			let columnValue = $('#custValue').val();
-	    			console.log('검색 값 : ');
-		    		console.log(columnValue);
-		    		$.ajax({
-						url:'/project/projectManageCustSearchProcess',
-					    type:'POST',
-						data:{column:column, columnValue:columnValue},
-						success:(data)=>{
-							console.log(data);
-							$('#custSearchList').empty();
-							$(data).each((index, item) =>{
-							$('#custSearchList').append('<tr onclick="modalCustOneBtn('+item.CUST_CD+',&#39'+item.CUST_NM+'&#39)"><td>'+item.CUST_CD+'</td><td>'+item.CUST_NM+'</td></tr>');
-							});
-						}
-		    		});
+			//현재 날짜
+			let date = new Date();
+			var NOW_YEAR =date.getFullYear();
+			var NOW_MONTH_0 = date.getMonth()+1;
+			var ZERO = '0';
+			var NOW_MONTH = ZERO+NOW_MONTH_0;
+			var NOW_DAY = date.getDate();
+			var NOW_DATE = NOW_YEAR+'-'+NOW_MONTH+'-'+NOW_DAY
+			console.log('현재날짜 : '+NOW_DATE);
+			$('#pjtYear').val(NOW_YEAR);
+			// 용역계약서 입력을 위한 프로젝트 검색 부분
+			$('#reset').hide();
+			$('#search').click(function(){
+				// 필드로 입력받은 값들을 변수에 저장
+				let PJT_CD = $('#PJT_CD_VAL').val();
+				let DEPT_CD = $('#pjtDept').val();
+				let YEAR = $('#pjtYear').val();
+				let pjtRadioValue = $('input[name=pjtRadioValue]:checked', '#radioForm').val();
+				console.log(PJT_CD);
+				console.log(DEPT_CD);
+				console.log(YEAR);
+				console.log(pjtRadioValue);
+				$.ajax({
+					// ajax로 "/project/projectManageListProcess" URI를 지정 POST방식으로 data를 보낸다.
+					url:'/project/projectManageListProcess',
+					type:'POST',
+					data:{PJT_CD:PJT_CD, DEPT_CD:DEPT_CD, YEAR:YEAR, pjtRadioValue:pjtRadioValue},
+					success:function(data){
+						$('#pjtList').empty();
+						$('#resultLength').empty();
+						$(data).each((index,item) => {
+							$('#pjtList').append('<tr><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td onclick="pjtOneBtn('+item.PJT_CD+',&#39'+item.PJT_NM+'&#39)">'+item.PJT_NM+'</td></tr>');
+						});
+						$('#resultLength').append(data.length);
+					},
+					error:function(request, status, error) {
+						alert(error + "에러입니다.");
+					}
 				});
 			});
+			// 프로젝트 검색 모달
+			$('#pjtSearchBtn').click(()=>{
+    			let column = $('#selectedPjtItem option:selected').val();
+    			let columnValue = $('#pjtValue').val();
+    			console.log('검색 값 : ');
+	    		console.log(columnValue);
+	    		$.ajax({
+					url:'/project/getProjectManageCodeListProcess',
+				    type:'POST',
+					data:{column:column, columnValue:columnValue},
+					success:(data)=>{
+						console.log(data);
+						$('#pjtSearchList').empty();
+						$(data).each((index, item) =>{
+						$('#pjtSearchList').append('<tr onclick="modalPjtOneBtn('+item.PJT_CD+',&#39'+item.PJT_NM+'&#39)"><td>'+item.PJT_CD+'</td><td>'+item.PJT_NM+'</td></tr>');
+						});
+					}
+	    		});
+			});
+			
+			// 발주처 검색 모달
+			$('#custSearchBtn').click(()=>{
+    			let column = $('#selectedCustItem option:selected').val();
+    			let columnValue = $('#custValue').val();
+    			console.log('검색 값 : ');
+	    		console.log(columnValue);
+	    		$.ajax({
+					url:'/project/projectManageCustSearchProcess',
+				    type:'POST',
+					data:{column:column, columnValue:columnValue},
+					success:(data)=>{
+						console.log(data);
+						$('#custSearchList').empty();
+						$(data).each((index, item) =>{
+						$('#custSearchList').append('<tr onclick="modalCustOneBtn('+item.CUST_CD+',&#39'+item.CUST_NM+'&#39)"><td>'+item.CUST_CD+'</td><td>'+item.CUST_NM+'</td></tr>');
+						});
+					}
+	    		});
+			});
+			
+			// 부서 검색 모달
+			$('#deptSearchBtn').click(()=> {
+				let column = $('#selectedDeptItem option:selected').val();
+    			let columnValue = $('#deptValue').val();
+    			console.log('검색 값 : ');
+	    		console.log(columnValue);
+				$.ajax({
+					url:'/project/projectManageDeptListProcess',
+					type:'POST',
+					data:{column:column, columnValue:columnValue},
+					success:(data)=>{
+						console.log(data);
+						$('#deptModalList').empty();
+						$(data).each((index, item) =>{
+							$('#deptModalList').append('<tr onclick="modalDeptOneBtn('+item.DEPT_CD+',&#39'+item.DEPT_NM+'&#39)"><td>'+item.DEPT_CD+'</td><td>'+item.DEPT_NM+'</td></tr>');
+						});
+					}
+				});
+			});
+		});
 		</script>
 	</th:block>
 	<th:block layout:fragment="customBody">
@@ -414,7 +475,7 @@
 		<div class="btn-group" >
 		<button class="btn btn-default" type="reset" id="search">조회</button>
 		<button class="btn btn-default" type="reset">입력</button>
-		<button class="btn btn-default" type="button">수정</button>
+		<button class="btn btn-default" type="button" disabled="disabled">수정</button>
 		<button class="btn btn-default" type="button">삭제</button>
 		<button class="btn btn-default" type="button">저장</button>
 		<button class="btn btn-default" type="button">출력</button>
@@ -433,7 +494,7 @@
 						년도
 					</td>
 					<td>
-						<input type="number" id="pjtYear">
+						<input type="number" id="pjtYear" maxlength="2030">
 					</td>
 				</tr>
 				<tr>
@@ -443,24 +504,9 @@
 					<td>
 						<select id="pjtDept">
 							<option value="" selected="selected">전 사</option>
-		                    <option value="3100">설계1본부</option>
-		                    <option value="3101">설계1본부-남석우</option>
-		                    <option value="3102">설계1본부-김광식</option>
-		                    <option value="3103">설계1본부-박상현</option>
-		                    <option value="3104">설계1본부-전창국</option>
-		                    <option value="3105">설계1본부-김승국</option>
-		                    <option value="3106">설계1본부-우진우</option>
-		                    <option value="3200">설계2본부</option>
-		                    <option value="3201">설계2본부-장홍만</option>
-		                    <option value="3202">설계2본부-장미진</option>
-		                    <option value="3203">설계2본부-김재원</option>
-		                    <option value="3204">설계2본부-우상훈</option>
-		                    <option value="3205">설계2본부-윤호진</option>
-		                    <option value="3206">설계2본부-정다운</option>
-		                    <option value="3300">PD전략부</option>
-		                    <option value="3400">설계지원</option>
-		                    <option value="5100">건설사업관리</option>
-		                    <option value="8000">해외지사</option>
+							<th:block th:each="d : ${dept}">
+								<option th:value="${DEPT_CD}">[[${d.DEPT_NM}]]</option>
+							</th:block>
 						</select>
 					</td>
 				</tr>
@@ -478,7 +524,7 @@
 								<div class="modal-content">
 									<form class="form-horizontal ">
 										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" id="pjtModal"><span aria-hidden="true">×</span>
+											<button type="button" class="close" data-dismiss="modal" id="pjtModalExit"><span aria-hidden="true">×</span>
 											</button>
 											<h4 class="modal-title" id="myModalLabel"><b>프로젝트코드조회</b></h4><br>
 											<div class="table-responsive">
@@ -489,6 +535,9 @@
 															<td>
 																<select class="form-control" style="width: 40%" id="selectedPjtItem">
 																	<option selected="selected" value="PJT_CD">프로젝트코드</option>
+																	<option value="PJT_NM">프로젝트명</option>
+																	<option value="DEPT_CD">부서코드</option>
+																	<option value="DEPT_NM">부서명</option>
 																</select>
 															</td>
 														</tr>
@@ -556,7 +605,7 @@
 			<div class="x_title"></div>
 			<br>
 			<!-- 결과부분 start -->
-			<table class="table table-bordered">
+			<table class="table table-bordered table-hover jambo_table">
 				<thead>
 				<tr>
 					<th width="30%">PJT코드</th>
@@ -619,14 +668,14 @@
 				<div class="form-inline">
 	                  <div class="form-group">
 	                    <label for="ex3">계약일자 </label>
-	                    <input type="date" id="CONTRACT_DATE_ONE">
+	                    <input type="date" max="2020-12-31" id="CONTRACT_DATE_ONE">
 	                  </div>
 	                  <br>
 	                  <div class="form-group">
 	                    <label for="ex3">계약기간 </label>
-	                    <input type="date" id="CONTRACT_PRI1_ONE">
+	                    <input type="date" max="2020-12-31" id="CONTRACT_PRI1_ONE">
 	                    ~
-	                    <input type="date" id="CONTRACT_PRI2_ONE">
+	                    <input type="date" max="2020-12-31" id="CONTRACT_PRI2_ONE">
 	                    <select id="CONTRACT_PRI3_ONE">	              
 	                    	<option selected="selected"></option>
 	                    	<th:block th:each="c : ${code}">
@@ -641,8 +690,58 @@
 	                  <div class="form-group">
 	                  <label for="ex3">수행부서코드</label>
 	                  <input type="text" id="DEPT_CD_ONE">
-	                  <button type="button" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-search"></i></button>
+	                  <button type="button" data-toggle="modal" data-target=".bs-example-modal-lg2"><i class="fa fa-search"></i></button>
 	                  <label id="DEPT_NM_ONE"></label>
+	                  <!-- ====================================부서 조회 모달==================================== -->
+	                  <div class="modal fade bs-example-modal-lg2" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<form class="form-horizontal">
+									<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" id="deptModalExit"><span aria-hidden="true">×</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel"><b>부서코드조회</b></h4><br>
+									<div class="table-responsive">
+										<table class="table table-bordered">
+											<tbody>
+												<tr>
+													<td><label class="control-label">검색항목</label></td>
+													<td>
+														<select class="form-control" style="width: 40%" id="selectedDeptItem">
+														<option value="DEPT_CD" selected="selected">부서코드</option>
+														<option value="DEPT_NM">부서명</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<td><label class="control-label">검색조건</label></td>
+													<td>
+														<input type="text" id="deptValue">
+														<button type="button" id="deptSearchBtn"><i class="fa fa-search"></i></button>																	
+													</td>
+												</tr>
+											</tbody>																	
+										</table>
+									</div>
+								</div>
+								<div class="modal-body">
+									<div class="table-responsive" style="overflow: auto; height: 400px;">
+										<table class="table table-striped table-bordered table-hover">
+											<thead>
+												<tr>
+													<th>부서코드</th>
+													<th>부서명칭</th>
+												</tr>
+											</thead>
+												<tbody id="deptModalList">
+												</tbody>																	
+										</table>
+									</div>
+								</div>
+								</form>
+							</div>
+							</div>
+						</div>
 	                  </div>
 	                  <br>
 	                  <div class="form-group">
@@ -707,56 +806,57 @@
                           <th scope="row">신규</th>
                           <td>
                           	<input type="text" class="col-md-9" id="CUST_CD_VAL">
-							<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg2"><i class="fa fa-search"></i></button>
-							<!------------------------------------------ 발주처 조회 modal--------------------------------------------------- -->
-							<div class="modal fade bs-example-modal-lg2" tabindex="-1" role="dialog" aria-hidden="true">
-								<div class="modal-dialog modal-lg">
-									<div class="modal-content">
-										<form class="form-horizontal ">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal" id="custModal"><span aria-hidden="true">×</span>
-												</button>
-												<h4 class="modal-title" id="myModalLabel"><b>발주처코드조회</b></h4><br>
-												<div class="table-responsive">
-													<table class="table table-bordered">
-														<tbody>
-															<tr>
-																<td><label class="control-label">검색항목</label></td>
-																<td>
-																	<select class="form-control" style="width: 40%" id="selectedCustItem">
-																		<option selected="selected"  value="CUST_CD">발주처코드</option>
-																	</select>
-																</td>
-															</tr>
-															<tr>
-																<td><label class="control-label">검색조건</label></td>
-																<td>
-																	<input type="text" id="custValue">
-																	<button type="button" id="custSearchBtn"><i class="fa fa-search"></i></button>																	
-																</td>
-															</tr>
-														</tbody>																	
-													</table>
-												</div>
-											</div>
-											<div class="modal-body">
-												<div class="table-responsive" style="overflow: auto; height: 400px;">
-													<table class="table table-striped table-bordered table-hover">
-														<thead>
-															<tr>
-																<th>발주처코드</th>
-																<th>발주처명</th>
-															</tr>
-														</thead>
-														<tbody id="custSearchList">
-														</tbody>																	
-													</table>
-												</div>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div> 	
+														<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg3"><i class="fa fa-search"></i></button>
+														<!------------------------------------------ 발주처 조회 modal--------------------------------------------------- -->
+														<div class="modal fade bs-example-modal-lg3" tabindex="-1" role="dialog" aria-hidden="true">
+															<div class="modal-dialog modal-lg">
+																<div class="modal-content">
+																	<form class="form-horizontal ">
+																		<div class="modal-header">
+																			<button type="button" class="close" data-dismiss="modal" id="custModal"><span aria-hidden="true">×</span>
+																			</button>
+																			<h4 class="modal-title" id="myModalLabel"><b>발주처코드조회</b></h4><br>
+																			<div class="table-responsive">
+																				<table class="table table-bordered">
+																					<tbody>
+																						<tr>
+																							<td><label class="control-label">검색항목</label></td>
+																							<td>
+																								<select class="form-control" style="width: 40%" id="selectedCustItem">
+																									<option selected="selected"  value="CUST_CD">발주처코드</option>
+																									<option value="CUST_NM">발주처명</option>
+																								</select>
+																							</td>
+																						</tr>
+																						<tr>
+																							<td><label class="control-label">검색조건</label></td>
+																							<td>
+																								<input type="text" id="custValue">
+																								<button type="button" id="custSearchBtn"><i class="fa fa-search"></i></button>																	
+																							</td>
+																						</tr>
+																					</tbody>																	
+																				</table>
+																			</div>
+																		</div>
+																		<div class="modal-body">
+																			<div class="table-responsive" style="overflow: auto; height: 400px;">
+																				<table class="table table-striped table-bordered table-hover">
+																					<thead>
+																						<tr>
+																							<th>발주처코드</th>
+																							<th>발주처명</th>
+																						</tr>
+																					</thead>
+																					<tbody id="custSearchList">
+																					</tbody>																	
+																				</table>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
                           </td>
                           <td>
                           	<select class="col-md-10">
@@ -936,9 +1036,9 @@
 					<input type="text">
 				</td>
 				<td width="10%">
-					<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg3"><i class="fa fa-search"></i></button>
-					<!------------------------------------------ 프로젝트 조회 modal--------------------------------------------------- -->
-						<div class="modal fade bs-example-modal-lg3" tabindex="-1" role="dialog" aria-hidden="true">
+					<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg4"><i class="fa fa-search"></i></button>
+					<!------------------------------------------ 을의 수급지분1 modal--------------------------------------------------- -->
+						<div class="modal fade bs-example-modal-lg4" tabindex="-1" role="dialog" aria-hidden="true">
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
 									<form class="form-horizontal ">
@@ -1004,9 +1104,9 @@
 					<input type="text">
 				</td>
 				<td>
-					<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg4"><i class="fa fa-search"></i></button>
-					<!------------------------------------------ 프로젝트 조회 modal--------------------------------------------------- -->
-						<div class="modal fade bs-example-modal-lg4" tabindex="-1" role="dialog" aria-hidden="true">
+				 <button type="button" data-toggle="modal" data-target=".bs-example-modal-lg5"><i class="fa fa-search"></i></button>
+					<!------------------------------------------ 을의 수급지분2 modal--------------------------------------------------- -->
+						<div class="modal fade bs-example-modal-lg5" tabindex="-1" role="dialog" aria-hidden="true">
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
 									<form class="form-horizontal ">
@@ -1072,9 +1172,9 @@
 					<input type="text">
 				</td>
 				<td>
-					<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg5"><i class="fa fa-search"></i></button>
-					<!------------------------------------------ 프로젝트 조회 modal--------------------------------------------------- -->
-						<div class="modal fade bs-example-modal-lg5" tabindex="-1" role="dialog" aria-hidden="true">
+					<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg6"><i class="fa fa-search"></i></button>
+					<!------------------------------------------ 을의 수급지분3 modal--------------------------------------------------- -->
+						<div class="modal fade bs-example-modal-lg6" tabindex="-1" role="dialog" aria-hidden="true">
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
 									<form class="form-horizontal ">
@@ -1147,7 +1247,7 @@
 		<label for="ex3">프로젝트 총계약액</label>
 		<span style="color:black" id="PJT_CONTRACT_AMT_ONE_SEBU"></span>
 		<span style="color:black">원</span>
-		<button>직접 계약서 입력</button>
+		<button type="button">직접 계약서 입력</button>
 		</div>
 		<label for="ex3">◎ 건축물규모</label><br>
 		<table>
@@ -1180,11 +1280,11 @@
 				<td width="12%">
 				</td>
 				<td colspan="6">
-					<input type="text" id="sample6_postcode" class="col-md-3" placeholder="우편번호">
-					<button onclick="sample6_execDaumPostcode()"><i class="fa fa-search" id="pjt_s"></i></button>
+					<input type="text" id="ZIP_CD_ONE" class="col-md-3">
+					<button type="button" onclick="sample6_execDaumPostcode()"><i class="fa fa-search"></i></button>
 					<input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
 					<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
-					<span id="sample6_address"></span>
+					<span id="PJT_ADDR_ONE"></span>
 				</td>
 			</tr>
 			<tr>
@@ -1328,7 +1428,70 @@
 					<input type="text" id="PM_EMP_NO_ONE">
 				</td>
 				<td width="10%">
-				 	<button>사원</button>
+				 	<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg7"><i class="fa fa-search"></i></button>
+				 	<!------------------------------------------ PM 조회 modal--------------------------------------------------- -->
+						<div class="modal fade bs-example-modal-lg7" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<form class="form-horizontal">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" id="empModalExit1"><span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title" id="myModalLabel"><b>직원조회</b></h4><br>
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td><label class="control-label">구분</label></td>
+															<td>
+																<select class="form-control" style="width: 40%" id="empGbn">
+																	<option value="PJT_CD" selected="selected" >재직자</option>
+																	<option value="PJT_CD">퇴직자</option>
+																</select>
+															</td>
+														</tr>
+														<tr>
+															<td><label class="control-label">검색항목</label></td>
+															<td>
+																<select class="form-control" style="width: 40%" id="empItem">
+																	<option value="PJT_CD" selected="selected" >성명</option>
+																	<option value="PJT_CD">사번</option>
+																	<option value="PJT_CD">부서명</option>
+																	<option value="PJT_CD">직급명</option>
+																</select>
+															</td>
+														</tr>
+														<tr>
+															<td><label class="control-label">검색조건</label></td>
+															<td>
+																<input type="text" id="pjtValue">
+																<button type="button" id="empSearchBtn"><i class="fa fa-search"></i></button>																	
+															</td>
+														</tr>
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+										<div class="modal-body">
+											<div class="table-responsive" style="overflow: auto; height: 400px;">
+												<table class="table table-striped table-bordered table-hover">
+													<thead>
+														<tr>
+															<th>사원번호</th>
+															<th>성명</th>
+															<th>부서명</th>
+															<th>직급명</th>
+														</tr>
+													</thead>
+													<tbody id="empSearchList">
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 				</td>
 				<td width="30%">
 					<span id="PM_EMP_NO_NM_ONE"></span>
@@ -1342,7 +1505,56 @@
 					<input type="text" id="EMP_NO_ONE">
 				</td>
 				<td>
-				 	<button>사원</button>
+				 	<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg8"><i class="fa fa-search"></i></button>
+				 	<!------------------------------------------ 관리임원 조회 modal--------------------------------------------------- -->
+						<div class="modal fade bs-example-modal-lg8" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<form class="form-horizontal">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" id="empModalExit2"><span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title" id="myModalLabel"><b>직원조회</b></h4><br>
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td><label class="control-label">검색항목</label></td>
+															<td>
+																<select class="form-control" style="width: 40%" id="selectedPjtItem">
+																	<option selected="selected" value="PJT_CD">프로젝트코드</option>
+																</select>
+															</td>
+														</tr>
+														<tr>
+															<td><label class="control-label">검색조건</label></td>
+															<td>
+																<input type="text" id="pjtValue">
+																<button type="button" id="pjtSearchBtn"><i class="fa fa-search"></i></button>																	
+															</td>
+														</tr>
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+										<div class="modal-body">
+											<div class="table-responsive" style="overflow: auto; height: 400px;">
+												<table class="table table-striped table-bordered table-hover">
+													<thead>
+														<tr>
+															<th>프로젝트코드</th>
+															<th>프로젝트명</th>
+														</tr>
+													</thead>
+													<tbody id="pjtSearchList">
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 				</td>
 				<td>
 					<span id="EMP_NO_NM_ONE"></span>
@@ -1356,7 +1568,56 @@
 					<input type="text" id="MARKET_MAN_ONE">
 				</td>
 				<td>
-				 	<button>사원</button>
+				 	<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg9"><i class="fa fa-search"></i></button>
+				 	<!------------------------------------------ 수주책임자 조회 modal--------------------------------------------------- -->
+						<div class="modal fade bs-example-modal-lg9" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<form class="form-horizontal">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" id="empModalExit3"><span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title" id="myModalLabel"><b>직원조회</b></h4><br>
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td><label class="control-label">검색항목</label></td>
+															<td>
+																<select class="form-control" style="width: 40%" id="selectedPjtItem">
+																	<option selected="selected" value="PJT_CD">프로젝트코드</option>
+																</select>
+															</td>
+														</tr>
+														<tr>
+															<td><label class="control-label">검색조건</label></td>
+															<td>
+																<input type="text" id="pjtValue">
+																<button type="button" id="pjtSearchBtn"><i class="fa fa-search"></i></button>																	
+															</td>
+														</tr>
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+										<div class="modal-body">
+											<div class="table-responsive" style="overflow: auto; height: 400px;">
+												<table class="table table-striped table-bordered table-hover">
+													<thead>
+														<tr>
+															<th>프로젝트코드</th>
+															<th>프로젝트명</th>
+														</tr>
+													</thead>
+													<tbody id="pjtSearchList">
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 				</td>
 				<td>
 					<span id="MARKET_MAN_NM_ONE"></span>
@@ -1370,7 +1631,56 @@
 					<input type="text" id="INFO_EMP_NO_ONE">
 				</td>
 				<td width="25%">
-				 	<button>사원</button>
+				 	<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg10"><i class="fa fa-search"></i></button>
+				 	<!------------------------------------------ 정보취득자 조회 modal--------------------------------------------------- -->
+						<div class="modal fade bs-example-modal-lg10" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<form class="form-horizontal">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" id="empModalExit4"><span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title" id="myModalLabel"><b>직원조회</b></h4><br>
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td><label class="control-label">검색항목</label></td>
+															<td>
+																<select class="form-control" style="width: 40%" id="selectedPjtItem">
+																	<option selected="selected" value="PJT_CD">프로젝트코드</option>
+																</select>
+															</td>
+														</tr>
+														<tr>
+															<td><label class="control-label">검색조건</label></td>
+															<td>
+																<input type="text" id="pjtValue">
+																<button type="button" id="pjtSearchBtn"><i class="fa fa-search"></i></button>																	
+															</td>
+														</tr>
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+										<div class="modal-body">
+											<div class="table-responsive" style="overflow: auto; height: 400px;">
+												<table class="table table-striped table-bordered table-hover">
+													<thead>
+														<tr>
+															<th>프로젝트코드</th>
+															<th>프로젝트명</th>
+														</tr>
+													</thead>
+													<tbody id="pjtSearchList">
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 				</td>
 				<td>
 					<span id="INFO_EMP_NO_NM_ONE"></span>
@@ -1442,5 +1752,6 @@
 	</th:block>
 	<th:block layout:fragment="customJquery">
 		<th:block th:include="layout/customJquery"></th:block>
+		
     </th:block>
 </html>

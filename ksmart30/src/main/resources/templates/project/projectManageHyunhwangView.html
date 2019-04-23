@@ -27,6 +27,10 @@
             $('#monthChart').empty();
             // 부서별 차트 초기화
             $('#ownerChart').empty();
+            $('#YEAR_OWNER_VAL').empty();
+            $('#YEAR_OWNER_VAL').append(YEAR);
+            $('#YEAR_PJT_VAL').empty();
+            $('#YEAR_PJT_VAL').append(YEAR);
             // 월별 개수를 위한 변수 선언
             var WORK_MM_COUNT1 = 0;
             var WORK_MM_COUNT2 = 0;
@@ -52,6 +56,7 @@
                 data:{YEAR:YEAR},
 				success:function(data){
                     console.log(data);
+                    $('#DEPT_CD_COUNT').append(data.monthHyunhwang[0].TOT_CNT);
                     // 월별 계약현황 개수 반복문
                     $(data.monthHyunhwang).each((index, item)=> {
                         if(item.WORK_MM=='01') {
@@ -204,9 +209,19 @@
         }
 
 	    $(document).ready(() => {
-            var YEAR = '2019';
+	    	//현재 날짜
+			let date = new Date();
+			var NOW_YEAR =date.getFullYear();
+			var NOW_MONTH_0 = date.getMonth()+1;
+			var ZERO = '0';
+			var NOW_MONTH = ZERO+NOW_MONTH_0;
+			var NOW_DAY = date.getDate();
+			var NOW_DATE = NOW_YEAR+'-'+NOW_MONTH+'-'+NOW_DAY
+			console.log('현재날짜 : '+NOW_DATE);
+            $('#YEAR').val(NOW_YEAR);
+            chartFunction(NOW_YEAR);
             $('#search').click(() => {
-                YEAR = $('#YEAR').val();
+            	let YEAR = $('#YEAR').val();
                 console.log('년도 : '+YEAR);
                 // 계약현황 차트 호출
                 chartFunction(YEAR);
@@ -216,33 +231,35 @@
 	    </script>
 	</th:block>
 	<th:block layout:fragment="customBody">
-    <div class="col-md-9 col-xs-12" style="color:black;">
+    <div class="col-md-12 col-xs-12" style="color:black;">
         <div class="page-title">
             <div class="title_left">
                 <h2><b>용역계약 현황</b></h2>
-                <h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;2.1용역계약서 관리&nbsp;>&nbsp;2.1.6용역계약 현황</b></font></h5>			
+                <h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리&nbsp;>&nbsp;&nbsp;2.1.6용역계약 현황</b></font></h5>			
             </div>
         </div>
     </div>
                     
     <div class="x_content" style="text-align: right">
-        <input type="number" id="YEAR" value="2019">
+        <input type="number" id="YEAR">
         <span>년도</span>
         <div class="btn-group">
             <button class="btn btn-default" type="reset" id="search">조회</button>
-            <button class="btn btn-default" type="reset">입력</button>
-            <button class="btn btn-default" type="button">수정</button>
-            <button class="btn btn-default" type="button">삭제</button>
-            <button class="btn btn-default" type="button">저장</button>
+            <button class="btn btn-default" type="reset" disabled="disabled">입력</button>
+            <button class="btn btn-default" type="button" disabled="disabled">수정</button>
+            <button class="btn btn-default" type="button" disabled="disabled">삭제</button>
+            <button class="btn btn-default" type="button" disabled="disabled">저장</button>
             <button class="btn btn-default" type="button">출력</button>
         </div>
     </div>
     
+    <font color="black">
 	<!-- 1 -->
 		<div class="col-md-6 col-sm-6 col-xs-12">
 		<div class="x_panel">
         <div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
-            <label id="YEAR_VAL"></label>
+        	<label for="ex3">◎ </label>
+            <label id="YEAR_PJT_VAL"></label>
             <label for="ex3">년도 프로젝트 계약현황 (</label>
             <label id="DEPT_CD_COUNT"></label>
             <label for="ex3">건)</label>
@@ -259,7 +276,7 @@
             <label for="ex3">년 </label>
             <label id="WORK_MM_MONTH_SANGSE"></label>
             <label>월 계약</label>
-			<table class="table table-bordered">
+			<table class="table table-bordered table-hover jambo_table">
 			<thead>
 				<tr>
 					<th>부서</th>
@@ -287,7 +304,7 @@
 		<div class="x_panel">
         <div class="x_content" style="overflow:scroll; width:100%; height:388px; padding:10px">
             <label for="ex3">◎ </label>
-            <label id="YEAR"></label>
+            <label id="YEAR_OWNER_VAL"></label>
             <label for="ex3">년도 본부별 계약현황</label>
 			<div id="ownerChart"></div>
 		</div>
@@ -302,7 +319,7 @@
         <label>년 설계</label>
         <label id="DEPT_CD_SUB_DEPT_SANGSE"></label>
         <label>본부 계약</label>
-			<table class="table table-bordered">
+			<table class="table table-bordered table-hover jambo_table">
 			<thead>
 				<tr>
 					<th>부서</th>
@@ -325,6 +342,7 @@
 		</div>
 		</div>
 		</div>
+		</font>
 	</th:block>
 	<th:block layout:fragment="customJquery">
 		<!-- jQuery -->

@@ -1,6 +1,4 @@
 package ksmart30.team01.project.domain;
-
-// P_T11000
 public class Project {
 	private String PJT_CD;				// 프로젝트 코드
 	private String DEPT_CD;				// 부서 코드

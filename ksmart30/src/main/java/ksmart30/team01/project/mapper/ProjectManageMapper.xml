@@ -7,6 +7,21 @@
 -->
 <mapper namespace="ksmart30.team01.project.mapper.ProjectManageMapper">
 
+	<!-- ====================================================== 공통 사용 쿼리문 START ====================================================== -->
+
+	<!-- 부서 리스트를 select option에 자동으로 출력하기 위한 조회-->
+	<select id="deptSelectList" resultType="java.util.Map">
+		SELECT
+			DEPT_CD,
+			SYS_COD,
+			DEPT_NM
+		FROM
+			T_SC1010
+		WHERE
+			DIV_TYPE = '70'
+			AND DIV_ID = '20'
+	</select>
+
 	<!-- 용역계약서 입력에서 쓰이는 종합코드 Dtail을 코드에 맞게 조회 -->
 	<select id="getProjectManageCode" resultType="java.util.Map">
 		SELECT 
@@ -32,6 +47,37 @@
 		ORDER BY LEVEL1_CD ASC
 	</select>
 	
+	<!-- 프로젝트 조회 -->
+	<select id="getProjectManageCodeList" resultType="java.util.Map">
+	<![CDATA[
+		SELECT
+		CASE WHEN (D.PJT_CD IS NOT NULL) THEN D.PJT_CD
+			WHEN (D.PJT_CD IS NULL) THEN (C.PJT_CD + C.PJT_TYPE)
+			END
+			PJT_CD,
+			C.PJT_NM
+			FROM
+				(SELECT
+					A.PJT_CD,
+					A.PJT_TYPE,
+					A.SVC AS PJT_NM
+				FROM
+					T_PS1000 A
+				UNION
+				SELECT
+					B.PJT_CD,
+					B.PJT_TYPE,
+					B.PJT_NM
+				FROM
+					T_PS3000 B
+				WHERE
+					B.PJT_CD <> '') C
+			LEFT JOIN
+				T_P11000 D
+			ON C.PJT_CD = D.PJT_CD
+	]]>
+	</select>
+	
 	<!-- 거래처 조회  -->
 	<select id="getCustList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
@@ -40,8 +86,68 @@
 		FROM
 			T_AC0300
 		WHERE
-			CUST_CD LIKE '%'+#{CUST_CD}+'%'
+		<choose>
+			<when test="CUST_CD != null || CUST_NM == null">
+				CUST_CD LIKE '%'+#{CUST_CD}+'%'
+			</when>
+			<when test="CUST_NM != null || CUST_CD == null">
+				CUST_NM LIKE '%'+#{CUST_NM}+'%'
+			</when>
+			<otherwise>
+
+			</otherwise>
+		</choose>
 	</select>
+	
+	<!-- 부서 조회 -->
+	<select id="getDeptList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			DEPT_CD,
+			SYS_COD,
+			DEPT_NM
+		FROM
+			T_SC1010
+		WHERE
+			DIV_TYPE = '70'
+		<choose>
+			<when test="DEPT_CD != null || DEPT_NM == null">
+				AND DEPT_CD LIKE '%' + #{DEPT_CD} + '%'
+			</when>
+			<when test="DEPT_NM != null || DEPT_CD == null">
+				AND DEPT_NM LIKE '%' + #{DEPT_NM} + '%'
+			</when>
+			<otherwise>
+
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 사원 조회 -->
+	<select id="getEmpList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		  	B.SHORT_NM DEPT_NM, 
+		  	A.EMP_NO, 
+		  	A.KOR_NM, 
+		  	(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'H' AND LEVEL1_CD = '110' AND LEVEL2_CD = A.JIKGUP_CD) JIKGUP_NM, 
+		 	CONVERT(varchar(30), A.AUDIT_TM,112) AUDIT_TM,
+		 	A.OUT_DT,
+			(CASE  WHEN A.OUT_DT ='' THEN '재직자' WHEN A.OUT_DT IS NOT NULL THEN '퇴직자' END) OUT_DT_NM
+		FROM 
+			(SELECT * FROM T_HM1000 UNION SELECT* FROM T_HM1000_T) A, 
+			T_SC1010 B
+		WHERE 
+		  	A.DEPT_CD = B.DEPT_CD AND
+		  	EMP_NO LIKE '%'+#{EMP_NO}+'%' AND
+			KOR_NM LIKE '%'+#{KOR_NM}+'%' AND
+			(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'H' AND LEVEL1_CD = '110' AND LEVEL2_CD = A.JIKGUP_CD) LIKE '%'+#{JIKGUP_NM}+'%' AND
+			DEPT_NM LIKE '%'+#{DEPT_NM}+'%' AND
+			(CASE WHEN A.OUT_DT ='' THEN '재직자' WHEN A.OUT_DT IS NOT NULL THEN '퇴직자' END) LIKE '%'+#{OUT_DT_NM}+'%'	  
+		ORDER BY EMP_NO
+	</select>
+	
+	<!-- ====================================================== 공통 사용 쿼리문 END ====================================================== -->
+	
+	<!-- ====================================================== 용역계약서 입력 START ====================================================== -->
 	
 	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (전체) -->
 	<select id="getProjectManageAllList" parameterType="java.util.Map" resultType="java.util.Map">
@@ -555,8 +661,22 @@
 		AND A.PJT_SEQ = #{PJT_SEQ}
 	</select>
 	
+	<!-- ====================================================== 용역계약서 검색(부서) START ====================================================== -->
+	
+	<!-- select option을 자동으로 출력하기 위해 종합코드 Dtail을 코드에 맞게 조회 -->
+	<select id="getProjectManageDepartSearchCode" resultType="java.util.Map">
+		SELECT 
+			LEVEL1_CD, LEVEL2_CD, LEVEL2_NM 
+		FROM
+			T_SC9100 
+		WHERE
+			BUSI_GB = 'J' AND LEVEL1_CD = '25A'
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '170'
+			OR BUSI_GB = 'J' AND LEVEL1_CD = '210';
+	</select>
+
 	<!-- 용역계약서 검색(부서별) -->
-	<select id="getProjectManageDepartSearch" parameterType="java.util.Map" resultType="java.util.Map">
+	<!-- <select id="getProjectManageDepartSearch" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT DISTINCT
 			A.PJT_CD,
 			C.PJT_NM,
@@ -576,13 +696,55 @@
 		FROM
 			T_P11000 A, T_P11000_H B, T_SM3000 C
 		WHERE A.PJT_CD = C.PJT_CD
-		AND A.DEPT_CD LIKE '%%'		--부서
-		AND A.PJT_E_GBN LIKE '%%'	--종료구분(1)
-		AND A.BUILD_TYPE LIKE '%%'	--건축물유형
-		--ORDER BY A.DEPT_CD ASC			--부서 
-		--ORDER BY A.CONTRACT_DATE ASC	--계약일자
+		AND A.DEPT_CD LIKE '%%'		부서
+		AND A.PJT_E_GBN LIKE '%%'	종료구분(1)
+		AND A.BUILD_TYPE LIKE '%%'	건축물유형
+		ORDER BY A.DEPT_CD ASC		부서 
+		ORDER BY A.CONTRACT_DATE ASC 계약일자
+	</select> -->
+
+	<select id="getProjectManageDepartSearch" parameterType="ksmart30.team01.project.domain.DeptSearch" resultType="java.util.Map">
+		<!-- 입력되는 값 순서대로 -->
+		<!-- In_sys_start					부서 --> 
+		<!-- In_contract_gbn				계약구분 1-신규 2-변경(가계약) -->
+		<!-- In_pjt_e_gbn					종료구분 1-종료 2-중도타절 -->
+		<!-- In_cust_cd						발주처 -->
+		<!-- In_start_date 					계약일자 시작 -->
+		<!-- In_end_date					계약일자 끝 -->
+		<!-- In_tot_contract_amt_start		계약금액 최소 -->
+		<!-- In_tot_contract_amt_end 		계약금액 최대 -->
+		<!-- In_pyung_dan_start				평당단가 최소 -->
+		<!-- In_pyung_dan_end				평당단가 최대 -->
+		<!-- In_g_yarea_p_start				연면적 최소 -->
+		<!-- In_g_yarea_p_end				연면적 최대-->
+		<!-- In_build_type					건축물 유형 -->
+		<!-- In_zip_cd						위치지역 -->
+		SELECT 
+			*
+		FROM sf_p12_0850m_sl1(
+			#{DEPT_CD},
+			#{CONTRACT_GBN},
+			#{PJT_E_GBN},
+			#{CUST_CD},
+			#{START_DATE},
+			#{END_DATE},
+			#{TOT_CONTRACT_AMT_START},
+			#{TOT_CONTRACT_AMT_END},
+			#{PYUNG_DAN_START},
+			#{PYUNG_DAN_END},
+			#{G_YEARA_P_START},
+			#{G_YEARA_P_END},
+			#{BUILD_TYPE},
+			#{ZIP_CD}
+		)
+		ORDER BY PJT_CD
+		)
+		ORDER BY PJT_CD
 	</select>
 	
+
+	<!-- ====================================================== 용역계약서 검색(부서) END ====================================================== -->
+
 	<!-- ====================================================== 용역계약 현황 START ====================================================== -->
 	
 	<!-- 용역계약서 현황 년도를 기준으로 월별 계약 현황(차트) -->
