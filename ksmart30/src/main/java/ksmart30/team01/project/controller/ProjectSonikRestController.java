@@ -35,11 +35,14 @@ public class ProjectSonikRestController {
 	}
 	
 	
+	
 	/*
-	 * 제조경비2 상세화면을 위한 메서드(계정과목, 예산)
-	 * @PostMapping("/project/projectSonikContrastJejo2View") public String
-	 * projectSonikContrastJejo2View(String jejo2) {
+	 * //제조경비2 상세화면을 위한 메서드(계정과목, 예산)
 	 * 
-	 * return projectSonikService.projectSonikContrastJejo2View(jejo2); }
+	 * @PostMapping("/project/projectSonikContrastJejo2View") public
+	 * List<Map<String,Object>> projectSonikContrastJejo2View(String jejo2) {
+	 * System.out.println("projectSonikContrastJejo2View확인"); return
+	 * projectSonikService.projectSonikContrastJejo2View(jejo2); }
 	 */
+	
 }

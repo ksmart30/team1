@@ -33,51 +33,37 @@
 			</div>
 			<div class="x_content">
 
-				<table class="table table-bordered">
-					<tr>
-						<th>프로젝트</th>
-						<td>18021 창원시 상남동 74-3 오피스텔 신축공사
-						<th>발주처</th>
-						<td>현대건설(주)</td>
-						<th>출력횟수</th>
-						<td>2회</td>
-						<th>미승인</th>
-					</tr>
-					<tr>
-						<th>프로젝트</th>
-						<td>업무시설</td>
-						<th>수행부서</th>
-						<td colspan="4">설계1본부 1소</td>
-					</tr>
-					<tr>
-						<td>계약일자</td>
-						<td>2018/03/02 (2018/11/02)</td>
-						<td>PM</td>
-						<td>20120015</td>
-						<td colspan="3">김인규</td>
-					</tr>
-					<tr>
-						<th>계약기간</th>
-						<td colspan="6">2018/03/02~____/__/__, 용역완료시까지</td>
-					</tr>
-					<tr>
-						<th>당사계약금액</th>
-						<td colspan="6">770,000,000원</td>
-					</tr>
-					<tr>
-						<th>대지위치</th>
-						<td>343-80</td>
-						<td colspan="5">대전 대덕구 대오길 2(오정동)</td>
-					</tr>
-					<tr>
-						<th>대지면적</th>
-						<td>2,963m²</td>
-						<td>896.31평</td>
-						<th>연면적</th>
-						<td>45,000m²</td>
-						<td colspan="2">13,612.50평</td>
-					</tr>
-				</table>
+									<table class="table table-bordered">
+						<tr>
+							<th style="background-color: #fff9df">프로젝트</th>
+							<td colspan="2">[[${data.projectGeyo.PJT_CD}]] [[${data.projectGeyo.PJT_NM}]]</td>
+							<th style="background-color: #fff9df">건축물유형</th>
+							<td colspan="3">[[${data.projectGeyo.BUILD_NM}]]</td>				
+						</tr>
+						<tr>
+							<th style="background-color: #fff9df">계약일자</th>
+							<td colspan="2">[[${data.projectGeyo.CONTRACT_DATE}]]</td>							
+							<td style="background-color: #fff9df">계약기간</td>
+							<td>[[${data.projectGeyo.FROM_TO}]]</td>							
+							<td colspan="2">[[${data.projectGeyo.PJT_E_GBN}]]</td>
+							
+						</tr>
+						<tr>
+							<th style="background-color: #fff9df">당사계약액</th>
+							<td colspan="2">[[${data.projectGeyo.TOT_CONTRACT_AMT}]]</td>
+							<th style="background-color: #fff9df">소재지</th>
+							<td colspan="4">[[${data.projectGeyo.PJT_ADDR}]]</td>
+							
+						</tr>
+						<tr>
+							<th style="background-color: #fff9df">대지면적</th>
+							<td>[[${data.projectGeyo.G_AREA_M}]]</td>
+							<td>[[${data.projectGeyo.G_AREA_P}]]</td>
+							<th style="background-color: #fff9df">연면적</th>
+							<td>[[${data.projectGeyo.G_YAREA_M}]]</td>
+							<td>[[${data.projectGeyo.G_YAREA_P}]]</td>
+						</tr>
+					</table>
 
 			</div>
 		</div>
@@ -149,9 +135,9 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>계약체결시</td>
-												<td>기획</td>
+											<tr th:each="item:${data.jejo1YesanSearch}">
+												<td>[[${item.LEVEL2_NM}]]</td>
+												<td>[[${item.COST_AMT1}]]</td>
 												<td>385,000,000</td>
 												<td>50.00</td>
 											</tr>

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart30.team01.project.mapper.ProjectSonikMapper"> 
 
-<!-- 프로젝트 예산,실적대비표 리스트화면을 보여주기위한 쿼리 (예산)-->
+<!-- 프로젝트 예산,실적대비표 리스트화면을 보여주기위한 쿼리 (예산)(실적-배부비용,영업이익빼고)-->
 <select id="projectSonikListSearch"
 		parameterType="String"
 		resultType="java.util.Map">
@@ -14,17 +14,35 @@ SELECT
 	C.PJT_NM,
 	D.PJT_GB,
 	B.TOT_CONTRACT_AMT,
+	'예산' Y_GBN,
 	A.COST_AMT1,
 	A.COST_AMT2,
 	A.COST_AMT3, 	
 	(A.DIV_AMT40+ A.DIV_AMT20 + A.DIV_AMT30)BEBU,
 	(A.DIV_AMT40+ A.DIV_AMT20 + A.DIV_AMT30+A.COST_AMT1+A.COST_AMT2+A.COST_AMT3) HAP,
 	(B.TOT_CONTRACT_AMT -(A.DIV_AMT40+ A.DIV_AMT20 + A.DIV_AMT30+A.COST_AMT1+A.COST_AMT2+A.COST_AMT3)) YUNGUPEIK
+	,E.S_GBN,E.S_HAP, E.S_COST_AMT1, E.S_COST_AMT2, E.S_COST_AMT3, E.S_BEBU, E.S_YUNGUPEIK
 FROM 
 	 T_p11090 A 
 	,T_P11000 B
 	,T_SM3000 C
 	,T_P11000_H D
+	,(SELECT
+		'실적' S_GBN,
+		B.PJT_CD, B.HAP S_HAP, B.COST_AMT1 S_COST_AMT1, B.COST_AMT2 S_COST_AMT2, B.COST_AMT3 S_COST_AMT3, B.BEBU S_BEBU, (C.TOT_CONTRACT_AMT - B.BEBU) S_YUNGUPEIK
+		FROM
+		(SELECT
+		PJT_CD,
+		SUM(cost_amt1)+ SUM(cost_amt2)+ SUM(cost_amt3)+ SUM(div_amt20)+ SUM(div_amt30)+ SUM(div_amt40) HAP
+		,SUM(cost_amt1)COST_AMT1, SUM(cost_amt2)COST_AMT2, SUM(cost_amt3)COST_AMT3, SUM(div_amt20)+ SUM(div_amt30)+ SUM(div_amt40) BEBU
+		
+		FROM
+		T_AC6220
+		GROUP BY
+		PJT_CD) B
+		,T_P11000 C
+		WHERE 
+		B.PJT_CD = C.PJT_CD) E
 WHERE 
 	A.PJT_CD = B.PJT_CD 
 AND
@@ -32,7 +50,10 @@ AND
 AND
 	D.PJT_CD = A.PJT_CD
 AND
+	A.PJT_CD = E.PJT_CD
+AND
 	A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
+	
 	
 	
 
@@ -80,18 +101,17 @@ FROM
 		 A.RESULT_X = '3'
 		 OR
 		 A.RESULT_X = '4')A
-WHERE 
-	 A.YY LIKE '%'+#{YY}+'%'
+	WHERE 
+	 	A.YY LIKE '%'+#{YY}+'%'
 	AND
-	 A.${selectedPJT} LIKE '%' + #{pjtValue} + '%'
-
+		A.${selectedPJT} LIKE '%' + #{pjtValue} + '%'
+	
 </select>
 
 
 
 
-<!-- 프로젝트 예산,실적 대비표 리스트에서 예산 상세버튼 클릭시 상세내용화면을 보여주는 쿼리
-    프로젝트 개요, 상세 내역 (예산)-->
+<!-- 프로젝트 예산,실적 대비표 리스트에서 예산 상세버튼 클릭시 상세내용화면을 보여주는 쿼리  프로젝트 개요, 상세 내역 (예산)-->
 <select id="SonikContrastSangse"
  		parameterType="String"
  		resultType="java.util.Map">
@@ -146,21 +166,50 @@ FROM
 		C.PJT_CD = A.PJT_CD) B
 WHERE 
 	A.PJT_CD = B.PJT_CD
-	AND
+AND
 	A.PJT_CD LIKE '%'+#{PJT_CD}+'%'
 	
  </select>
 
-<!-- 제조경비2 상세화면을위한 검색 쿼리 작성 (계정과목, 예산) -->
-<!-- <select id="jejo2YesanSearch"
+<!-- 제조경비2 상세화면을위한 검색 쿼리 작성 (프로젝트개요, 계정과목, 예산) -->
+<select id="jejo2YesanSearch"
 		parameterType="String"
 		resultType="java.util.Map">
 		
-SELECT PJT_CD, SCV_PART, EXCHANGE_NO, EX_AMT, EX_RATE, EX_WORK_AMT 
-FROM T_P11070 
-WHERE PJT_CD = #{PJT_CD}
+SELECT 
+		A.PJT_CD,
+		A.PJT_NM,
+		(SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.BUILD_TYPE AND LEVEL1_CD = '170' AND BUSI_GB = 'J') BUILD_NM,	  		
+		(B.CONTRACT_DATE+' ('+B.CRT_DATE+')') CONTRACT_DATE,
+		SUBSTRING(B.CONTRACT_DATE,1,4)+'/'+SUBSTRING(B.CONTRACT_DATE,5,2)+'/'+SUBSTRING(B.CONTRACT_DATE,7,2) + ' ~ ' +
+		SUBSTRING(B.PJT_E_DATE,1,4)+'/'+SUBSTRING(B.PJT_E_DATE,5,2)+'/'+SUBSTRING(B.PJT_E_DATE,7,2)  FROM_TO,
+		(SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.CONTRACT_PRI3 AND LEVEL1_CD = '130' AND BUSI_GB = 'J')+' 까지' PJT_E_GBN,						        
+		B.TOT_CONTRACT_AMT,
+		B.ZIP_CD+' '+B.PJT_ADDR PJT_ADDR,
+		CAST(B.G_AREA_M AS DECIMAL(14,2)) G_AREA_M,
+		CAST(B.G_AREA_P AS DECIMAL(14,2)) G_AREA_P,
+		CAST(B.G_YAREA_M AS DECIMAL(14,2)) G_YAREA_M,
+		CAST(B.G_YAREA_P AS DECIMAL(14,2)) G_YAREA_P,
+		C.PJT_CD, C.SCV_PART,D.LEVEL2_NM SCV_PART_NM, C.EXCHANGE_NO, C.EX_AMT, C.EX_RATE, C.EX_WORK_AMT 
+		
+	FROM 
+		T_SM3000 A,
+		T_P11000 B,
+		T_P11070 C,
+		(SELECT LEVEL2_NM,LEVEL2_CD FROM T_SC9100 WHERE BUSI_GB = 'J' AND LEVEL1_CD = '160')D
+	WHERE
+	C.SCV_PART = D.LEVEL2_CD
+	AND 
+		B.PJT_CD   = A.PJT_CD
+	AND
+		A.PJT_CD = C.PJT_CD
+	AND 
+		A.PJT_CD  = #{PJT_CD}
 
-</select> -->
+
+
+</select>
+
 
 <!-- 제조경비2 상세화면을위한 검색 쿼리 작성 (당기누계, 전기누계) -->
 <!-- <select id="jejo2YesanSearch"
@@ -171,6 +220,53 @@ SELECT * from T_P12010 WHERE PJT_CD = #{PJT_CD}
 
 </select>
  -->
+<!-- 프로젝트 개요  -->
+<select id="projectGeyo"
+		parameterType="String"
+		resultType="java.util.Map">
+
+SELECT 
+		A.PJT_CD,
+		A.PJT_NM,
+		(SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.BUILD_TYPE AND LEVEL1_CD = '170' AND BUSI_GB = 'J') BUILD_NM,	  		
+		(B.CONTRACT_DATE+' ('+B.CRT_DATE+')') CONTRACT_DATE,
+		SUBSTRING(B.CONTRACT_DATE,1,4)+'/'+SUBSTRING(B.CONTRACT_DATE,5,2)+'/'+SUBSTRING(B.CONTRACT_DATE,7,2) + ' ~ ' +
+		SUBSTRING(B.PJT_E_DATE,1,4)+'/'+SUBSTRING(B.PJT_E_DATE,5,2)+'/'+SUBSTRING(B.PJT_E_DATE,7,2)  FROM_TO,
+		(SELECT LEVEL2_NM FROM T_SC9100 WHERE LEVEL2_CD = B.CONTRACT_PRI3 AND LEVEL1_CD = '130' AND BUSI_GB = 'J')+' 까지' PJT_E_GBN,						        
+		B.TOT_CONTRACT_AMT,
+		B.ZIP_CD+' '+B.PJT_ADDR PJT_ADDR,
+		CAST(B.G_AREA_M AS DECIMAL(14,2)) G_AREA_M,
+		CAST(B.G_AREA_P AS DECIMAL(14,2)) G_AREA_P,
+		CAST(B.G_YAREA_M AS DECIMAL(14,2)) G_YAREA_M,
+		CAST(B.G_YAREA_P AS DECIMAL(14,2)) G_YAREA_P
+		
+	FROM 
+		T_SM3000 A,
+		T_P11000 B,
+		T_SC1010 C
+	WHERE 
+		B.PJT_CD   = A.PJT_CD
+	AND 
+		B.DEPT_CD  = C.DEPT_CD
+	AND 
+		A.PJT_CD = #{PJT_CD}
+
+</select>
+
+<!-- 제조경비1 상세화면을위한 검색 쿼리 작성 (프로젝트개요, 예산) -->
+<select id="jejo1YesanSearch"
+		parameterType="String"
+		resultType="java.util.Map">
+
+SELECT *
+FROM 
+	T_P11060 A,
+(SELECT LEVEL2_CD,LEVEL2_NM FROM T_SC9100 WHERE   BUSI_GB = 'A' AND LEVEL1_CD = '22')B
+WHERE
+	A.COST_ITEM = B.LEVEL2_CD
+AND
+	PJT_CD = #{PJT_CD}
 
 
+</select>
 </mapper>

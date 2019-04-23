@@ -23,7 +23,7 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					프로젝트 개요 <small></small>
+					제조경비2 <small></small>
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -41,111 +41,44 @@
 			</div>
 			<div class="x_content">
 
-				<table class="table table-bordered">
-					<tr>
-						<th>프로젝트</th>
-						<td>18021 창원시 상남동 74-3 오피스텔 신축공사
-						<th>발주처</th>
-						<td>현대건설(주)</td>
-						<th>출력횟수</th>
-						<td>2회</td>
-						<th>미승인</th>
-					</tr>
-					<tr>
-						<th>프로젝트</th>
-						<td>업무시설</td>
-						<th>수행부서</th>
-						<td colspan="4">설계1본부 1소</td>
-					</tr>
-					<tr>
-						<td>계약일자</td>
-						<td>2018/03/02 (2018/11/02)</td>
-						<td>PM</td>
-						<td>20120015</td>
-						<td colspan="3">김인규</td>
-					</tr>
-					<tr>
-						<th>계약기간</th>
-						<td colspan="6">2018/03/02~____/__/__, 용역완료시까지</td>
-					</tr>
-					<tr>
-						<th>당사계약금액</th>
-						<td colspan="6">770,000,000원</td>
-					</tr>
-					<tr>
-						<th>대지위치</th>
-						<td>343-80</td>
-						<td colspan="5">대전 대덕구 대오길 2(오정동)</td>
-					</tr>
-					<tr>
-						<th>대지면적</th>
-						<td>2,963m²</td>
-						<td>896.31평</td>
-						<th>연면적</th>
-						<td>45,000m²</td>
-						<td colspan="2">13,612.50평</td>
-					</tr>
-				</table>
+					<table class="table table-bordered">
+						<tr>
+							<th style="background-color: #fff9df">프로젝트</th>
+							<td colspan="2">[[${data[0].PJT_CD}]] [[${data[0].PJT_NM}]]</td>
+							<th style="background-color: #fff9df">건축물유형</th>
+							<td colspan="3">[[${data[0].BUILD_NM}]]</td>				
+						</tr>
+						<tr>
+							<th style="background-color: #fff9df">계약일자</th>
+							<td colspan="2">[[${data[0].CONTRACT_DATE}]]</td>							
+							<td style="background-color: #fff9df">계약기간</td>
+							<td>[[${data[0].FROM_TO}]]</td>							
+							<td colspan="2">[[${data[0].PJT_E_GBN}]]</td>
+							
+						</tr>
+						<tr>
+							<th style="background-color: #fff9df">당사계약액</th>
+							<td colspan="2">[[${data[0].TOT_CONTRACT_AMT}]]</td>
+							<th style="background-color: #fff9df">소재지</th>
+							<td colspan="4">[[${data[0].PJT_ADDR}]]</td>
+							
+						</tr>
+						<tr>
+							<th style="background-color: #fff9df">대지면적</th>
+							<td>[[${data[0].G_AREA_M}]]</td>
+							<td>[[${data[0].G_AREA_P}]]</td>
+							<th style="background-color: #fff9df">연면적</th>
+							<td>[[${data[0].G_YAREA_M}]]</td>
+							<td>[[${data[0].G_YAREA_P}]]</td>
+						</tr>
+					</table>
 
 			</div>
 		</div>
 		<!-- 프로젝트 개요 end -->
 		<!--  -->
 		<div class="x_panel">
-			<div class="x_title">
-				<div class="x_title">
-					<h2>
-						<i class="fa fa-bars"></i> Tabs <small>제조경비2</small>
-					</h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false"><i
-								class="fa fa-wrench"></i></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Settings 1</a></li>
-								<li><a href="#">Settings 2</a></li>
-							</ul></li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-
-				<div class="" role="tabpanel" data-example-id="togglable-tabs">
-					<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-						<li role="presentation" class=""><a href="#tab_content5"
-							role="tab" id="profile-tab4" data-toggle="tab"
-							aria-expanded="false">제조경비1</a></li>
-					</ul>
-
-					<!-- 기성단계 start -->
-					<div role="tabpanel" class="tab-pane fade active in" id="tab_content5"
-						aria-labelledby="profile-tab">
-						<p>
-						<div class="col-md-12 col-sm-12 col-xs-12">
-							<div class="x_panel">
-								<div class="x_title">
-									<h2>
-										테이블 <small>제조경비1</small>
-									</h2>
-									<ul class="nav navbar-right panel_toolbox">
-										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">Settings 1</a></li>
-												<li><a href="#">Settings 2</a></li>
-											</ul></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a>
-										</li>
-									</ul>
-									<div class="clearfix"></div>
-								</div>
-
-								<div class="x_content">
+		<div class="x_content">
 									<table class="table table-bordered">
 										<thead>
 											<tr>
@@ -155,24 +88,20 @@
 												<th>수금율(%)</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<td>계약체결시</td>
-												<td>기획</td>
-												<td>385,000,000</td>
-												<td>50.00</td>
+										<tbody >
+											<tr th:each="c:${data}">
+												<td>[[${c.SCV_PART_NM}]]</td>
+												<td>[[${c.EX_AMT}]]</td>
+												<td>0</td>
+												<td>0</td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
-							</div>
-						</div>
-					</div>
 					<!-- 기성단계 end -->
 				</div>
-			</div>
-		</div>
-	</div>
+				</div>
+
 </font>
 </th:block>
 <th:block layout:fragment="customJquery">

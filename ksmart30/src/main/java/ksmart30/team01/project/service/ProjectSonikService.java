@@ -1,5 +1,6 @@
 package ksmart30.team01.project.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,10 +40,26 @@ public class ProjectSonikService {
 	}
 
 
-	/*
-	 *제조경비2 상세화면을 위한 메서드(계정과목, 예산)
-	 * public String projectSonikContrastJejo2View(String jejo2) {
-	 * 
-	 * return projectSonikMapper.jejo2YesanSearch(jejo2); }
-	 */
+	//제조경비2 상세화면을 위한 메서드(프로젝트 개요, 계정과목, 예산)
+	 public List<Map<String, Object>> projectSonikContrastJejo2View(String PJT_CD) {
+	 
+	  return projectSonikMapper.jejo2YesanSearch(PJT_CD); 
+	  }
+
+
+	//제조경비1 상세화면을 위한 메서드(프로젝트 개요, 계정과목, 예산)
+	public Map<String, Object> projectSonikContrastJejo1View(String PJT_CD) {
+		System.out.println("projectSonikContrastJejo1View Service왔나" + PJT_CD);
+		
+		List<Map<String, Object>> jejo1YesanSearch = projectSonikMapper.jejo1YesanSearch(PJT_CD);
+		Map<String, Object> projectGeyo = projectSonikMapper.projectGeyo(PJT_CD);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("jejo1YesanSearch", jejo1YesanSearch);
+		result.put("projectGeyo", projectGeyo);
+		return result;
+	}
+	
+
+	 
 }

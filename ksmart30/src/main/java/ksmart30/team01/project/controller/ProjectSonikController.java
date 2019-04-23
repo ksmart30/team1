@@ -1,5 +1,8 @@
 package ksmart30.team01.project.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +32,7 @@ public class ProjectSonikController {
 		System.out.println(data);
 		return "/project/projectSonikContrastSangseView";
 	}
-	
-	
+		
 	//3.4.2 인건비 상세 화면
 	@GetMapping("project/projectSonikContrastPayView")
 	public String projectSonikContrastPayView() {
@@ -39,19 +41,26 @@ public class ProjectSonikController {
 	
 	//3.4.3 제조경비1 상세 화면 
 	@GetMapping("project/projectSonikContrastJejo1View")
-	public String projectSonikContrastJejo1View() {
+	public String projectSonikContrastJejo1View(Model model, String PJT_CD) {
+		System.out.println("projectSonikContrastJejo1View");
+		model.addAttribute("data", projectSonikService.projectSonikContrastJejo1View(PJT_CD));
+		System.out.println("model=" + model);
 		return "/project/projectSonikContrastJejo1View";
 	}
 	
 	//3.4.4 제조경비2 상세 화면 
 	@GetMapping("project/projectSonikContrastJejo2View")
-	public String projectSonikContrastJejo2View() {
+	public String projectSonikContrastJejo2View(Model model, String PJT_CD) {
+		System.out.println("projectSonikContrastJejo2View확인");
+		List<Map<String,Object>> data = projectSonikService.projectSonikContrastJejo2View(PJT_CD);
+		model.addAttribute("data", data);
+		System.out.println("model = "+ model);
 		return "/project/projectSonikContrastJejo2View";
 	}
 	
 	//3.4.5 배부비용 화면 
 	@GetMapping("project/projectSonikContrastBebooView")
 	public String projectSonikContrastBebooView() {
-		return "/project/projectSonikContrastBebooView";
+		return "/project/projectSonikContrastJejo2View";
 	}	
 }
