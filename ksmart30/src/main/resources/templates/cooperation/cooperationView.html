@@ -48,10 +48,10 @@ function callme(IN_PJT_CD,IN_OUT_CORP,IN_OUT_ITEM){
 	                			'<tr><td>'
 	                			+item.CRT_SEQ+'</td><td>' //순번
 	                			+item.GI_GBN_NM+'</td><td>'//기성단계
-	                			+item.GI_AMT+'</td><td>'//금액
+	                			+item.GI_AMT.toLocaleString()+'</td><td>'//금액
 	                			+item.GI_RATE+'</td></tr>');//%
 	            });
-            	$('#GI_AMT_SUM').append(GI_AMT_SUM);//합산 금액
+            	$('#GI_AMT_SUM').append(GI_AMT_SUM.toLocaleString());//합산 금액
             	$('#GI_RATE_SUM').append(GI_RATE_SUM);//합산 %
             	//용역내용 출력
             	$('#dragon').empty();//내용삭제
@@ -123,15 +123,15 @@ $(document).ready(()=>{
 	                			'<tr onclick="callme('+PJT_CD+','+item.OUT_CORP+','+item.OUT_ITEM+')"><td style="background-color: #fff9df" width="20%">'
 	                			+item.OUT_ITEM_NM+'</td><td>' //부문
 	                			+item.CUST_NM+'</td><td>'	//외주처
-	                			+item.CONTRACT_AMT+'</td></tr>'); //계약액
+	                			+item.CONTRACT_AMT.toLocaleString()+'</td></tr>'); //계약액
 	                });
 	                //예산현황
 	                $(data.cooperationYesanList).each((index,item)=>{
 	                	$('#yshh').append(//예산현황에 출력시켜주기
 	                			'<tr><td style="background-color: #fff9df" width="20%">'
 	                			+item.SCV_NM+'</td><td>' //부문
-	                			+item.EX_AMT+'</td><td>'	//계약예산
-	                			+item.EX_WORK_AMT+'</td></tr>'); //실행예산
+	                			+item.EX_AMT.toLocaleString()+'</td><td>'	//계약예산
+	                			+item.EX_WORK_AMT.toLocaleString()+'</td></tr>'); //실행예산
 	                });
 	                $('#PJT_CD_NM').empty();//계약프로젝트 내용 삭제
 	                $('#PJT_DEPT_CD_NM').empty();//수행부서 내용 삭제

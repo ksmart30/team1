@@ -25,7 +25,7 @@ $(document).ready(function(){
 		let tr = $(this);
 		let td = tr.children();
 		$('#inPjtCd').val(td.eq(0).text());
-		$('#pjt_cd_nm').text(td.eq(1).text());
+		$('#pjt_cd_nm').val(td.eq(1).text());
 		$('#custModal').click();
 		$('#cooperationSearch').trigger('click');
 	});
@@ -90,7 +90,7 @@ function cooperationSearch() {
             		+item.OUT_ITEM_NM+'</td><td>'//부문(외주분야)
             		+item.CONTRACT_NM+'</td><td>'//용역명
             		+item.CONTRACT_DATE+'</td><td>'//계약일자
-            		+item.CONTRACT_AMT+'</td></tr>');//append추가
+            		+item.CONTRACT_AMT.toLocaleString()+'</td></tr>');//계약금액
             });              
         }
     });
@@ -255,7 +255,7 @@ function cooperationSearch() {
 						</td>
 						<td><button class="btn" type="button" data-toggle="modal" data-target=".bs-example-modal-lg3"><i class="fa fa-search"></i></button></td>
 						<td ><div class="col-md-12 col-sm-12 col-xs-12 ">
-								<input type="text" name="inPjtNm" class="form-control" id="pjt_cd_nm" readonly="readonly">
+								<input type="text" name="pjt_cd_nm" class="form-control" id="pjt_cd_nm" readonly="readonly">
 							</div>
 							<!------------------------------------------ 프로젝트 코드 조회 modal--------------------------------------------------- -->
 	<div class="modal fade bs-example-modal-lg3" tabindex="-1" role="dialog" aria-hidden="true">
