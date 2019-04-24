@@ -38,7 +38,87 @@ public class BusinessMarket {
 	private String AREA_P;
 	private String COVERAGE;
 	private String CAPACITY;
+	private String RMK_1;
+	private String RMK_2;
+	private String RMK_3;
+	private String RMK_4;
+	private String RMK_5; 
+	private String FORECAST_AMT;
+	private String MARKET_CLASS_GBN;
+	private String MARKET_DEPT;
+	private String MARKET_FORECAST_AMT;
+	private String PJT_TYPE;
+	private String PLAN_DATE;
 	
+
+
+	
+	public String getPLAN_DATE() {
+		return PLAN_DATE;
+	}
+	public void setPLAN_DATE(String pLAN_DATE) {
+		PLAN_DATE = pLAN_DATE;
+	}
+	public String getPJT_TYPE() {
+		return PJT_TYPE;
+	}
+	public void setPJT_TYPE(String pJT_TYPE) {
+		PJT_TYPE = pJT_TYPE;
+	}
+	public String getMARKET_FORECAST_AMT() {
+		return MARKET_FORECAST_AMT;
+	}
+	public void setMARKET_FORECAST_AMT(String mARKET_FORECAST_AMT) {
+		MARKET_FORECAST_AMT = mARKET_FORECAST_AMT;
+	}
+	public String getMARKET_DEPT() {
+		return MARKET_DEPT;
+	}
+	public void setMARKET_DEPT(String mARKET_DEPT) {
+		MARKET_DEPT = mARKET_DEPT;
+	}
+	public String getFORECAST_AMT() {
+		return FORECAST_AMT;
+	}
+	public void setFORECAST_AMT(String fORECAST_AMT) {
+		FORECAST_AMT = fORECAST_AMT;
+	}
+	public String getMARKET_CLASS_GBN() {
+		return MARKET_CLASS_GBN;
+	}
+	public void setMARKET_CLASS_GBN(String mARKET_CLASS_GBN) {
+		MARKET_CLASS_GBN = mARKET_CLASS_GBN;
+	}
+	public String getRMK_2() {
+		return RMK_2;
+	}
+	public void setRMK_2(String rMK_2) {
+		RMK_2 = rMK_2;
+	}
+	public String getRMK_3() {
+		return RMK_3;
+	}
+	public void setRMK_3(String rMK_3) {
+		RMK_3 = rMK_3;
+	}
+	public String getRMK_4() {
+		return RMK_4;
+	}
+	public void setRMK_4(String rMK_4) {
+		RMK_4 = rMK_4;
+	}
+	public String getRMK_5() {
+		return RMK_5;
+	}
+	public void setRMK_5(String rMK_5) {
+		RMK_5 = rMK_5;
+	}
+	public String getRMK_1() {
+		return RMK_1;
+	}
+	public void setRMK_1(String rMK_1) {
+		RMK_1 = rMK_1;
+	}
 	public String getAREA_M() {
 		return AREA_M;
 	}

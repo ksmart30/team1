@@ -16,7 +16,8 @@
 		FROM T_PS3000	
 		WHERE BUSI_YY LIKE #{BUSI_YY}
 		AND UP_SU BETWEEN #{UP_SU} AND #{UP_SU2}
-		AND YAREA_P BETWEEN #{YAREA_P} AND #{YAREA_P2}	 	
+		AND YAREA_P BETWEEN #{YAREA_P} AND #{YAREA_P2}
+		ORDER BY PJT_CD	 	
 </select>
 
 <!--사업수행결정서 좌측 목록  -->
@@ -194,6 +195,7 @@ DEPT_CD = A.MEMBER_DEPT),'') MEMBER_DEPT_NM
 
 WHERE PJT.END_GBN_NM LIKE #{END_GBN}
 AND PJT.PJT_NM LIKE '%'+#{PJT_NM}+'%'
+ORDER BY PJT_CD
 		
 		
 		
@@ -207,8 +209,8 @@ AND PJT.PJT_NM LIKE '%'+#{PJT_NM}+'%'
 				CUST_CD, <!--발주처 코드  -->
 				CUST_NM, <!--발주처 이름  -->
 				CUST_GBN, <!--발주처구분  --> 
-				PLAN_DATE, <!--완료예정일  -->
-				BUSI_DATE, <!--의뢰 일자  -->
+				CONVERT(date,	PLAN_DATE)PLAN_DATE, <!--완료예정일  -->
+				CONVERT(date,	BUSI_DATE)BUSI_DATE, <!--의뢰 일자  -->
 				CUST_TEL, <!--전화번호  -->
 				BUSI_YY, <!--일련번호 년도  -->
 				BUSI_SEQ, <!--일련번호 번호  -->
@@ -271,7 +273,6 @@ AND PJT.PJT_NM LIKE '%'+#{PJT_NM}+'%'
 				BUSI_YY,
 				CUST_CD,
 				CUST_NM,
-				BUSI_SEQ,
 				YAREA_M,
 				PJT_NM,
 				PJT_CD,
@@ -297,14 +298,48 @@ AND PJT.PJT_NM LIKE '%'+#{PJT_NM}+'%'
 				AREA_P,
 				COVERAGE,
 				YAREA_P,
-				CAPACITY
+				CAPACITY,
+				RMK_1,
+				RMK_2,
+				RMK_3,
+				RMK_4,
+				RMK_5,
+				CD_REG_DATE, <!--사업수행결정서 insert 쿼리 승인전이기때문에 ""값줌  -->
+				MARKET_FORECAST_AMT,
+				MARKET_CLASS_GBN,
+				REGION3,
+				ZONE3,
+				SCOPE3,
+				LAND_TYPE,
+				GAREA_P,
+				GAREA_M,
+				CAPACITY_M,
+				CUST_REPRE_NM,
+				CUST_ZIP,
+				CUST_ADDR,
+				ADDR2,
+				END_GBN,
+				MARKET_DEPT,
+				DESIGN_MAN,
+				DEPT_CD,
+				END_DATE,
+				CLASS_GBN,
+				FORECAST_AMT,
+				PJT_TYPE,
+				BUSI_DATE,
+				PLAN_DATE,
+				CRT_DATE,
+				UPD_DATE,
+				CRT_DEPT,
+				CRT_MAN,
+				UPD_MAN,
+				BUSI_SEQ
 				) 
 			VALUES
 				(
-				'2019',
+				CONVERT(VARCHAR(4), GETDATE(), 112),
 				#{CUST_CD},
-				#{CUST_NM},
-				'0070',
+				#{CUST_NM}, 
 				#{YAREA_M},
 				#{PJT_NM},
 				#{PJT_CD},
@@ -330,11 +365,51 @@ AND PJT.PJT_NM LIKE '%'+#{PJT_NM}+'%'
 				#{AREA_P},
 				#{COVERAGE},
 				#{YAREA_P},
-				#{CAPACITY}
+				#{CAPACITY},
+				#{RMK_1},
+				#{RMK_2},
+				#{RMK_3},
+				#{RMK_4},
+				#{RMK_5},
+				'',
+				#{MARKET_FORECAST_AMT},
+				#{MARKET_CLASS_GBN},
+				'',
+				'',
+				'',
+				'',
+				'0',
+				'0',
+				'0',    <!--CAPACITY_M  -->
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'0',
+				#{PJT_TYPE},
+				CONVERT(VARCHAR(8), CONVERT(date,#{BUSI_DATE}), 112),
+				CONVERT(VARCHAR(8), CONVERT(date,#{PLAN_DATE}), 112),
+				CONVERT(VARCHAR(8), GETDATE(), 112),
+				CONVERT(VARCHAR(8), GETDATE(), 112),
+				'1100',
+				'20190007',
+				'20190007',
+				#{BUSI_SEQ}
 				)
 	
 	
-	
 	</insert>
+	
+	<select id="numUp" resultType="String">
+	
+	SELECT ISNULL(MAX(BUSI_SEQ) + 1, 1) FROM T_PS3000
+
+	</select>
 
 </mapper>

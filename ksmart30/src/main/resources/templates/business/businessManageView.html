@@ -11,8 +11,8 @@
 	<title>2.1.1 사업수행 결정서 검색 List</title>
 	<th:block th:include="layout/customHead"></th:block>
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	
-	
+
+
 
 	<!-- 우편 시스템 -->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -123,7 +123,7 @@
 							$('select[id=BIZ_TYPE]').val(data.BIZ_TYPE);
 						$('#BIZ_GBN').attr('value',data.BIZ_GBN);  // 수주구분2
 							$('select[id=BIZ_GBN]').val(data.BIZ_GBN); 
-						$('#FORECAST_AMT').attr('value',data.FORECAST_AMT); //추정계약액 
+						$('#MARKET_FORECAST_AMT').attr('value',data.FORECAST_AMT); //추정계약액 
 						$('#MARKET_CLASS_GBN').attr('value',data.MARKET_CLASS_GBN); //업무및 수준
 							$('select[id=MARKET_CLASS_GBN]').val(data.MARKET_CLASS_GBN);
 						$('#RMK_1').attr('value',data.RMK_1); //수주정보
@@ -160,16 +160,16 @@
 			    	console.log("안녕2");//btn_list를 클릭하면
 			    	var BUSI_YY = $('#BUSI_YY').val();
 			    	var PJT_NM = $('#PJT_NM').val();
-			    	var DEPT_CD = $('#DEPT_CD').val();
+			    	var DEPT_CD1 = $('#DEPT_CD1').val();
 			    	let END_GBN = $('input[name=pjtRadioValue]:checked','#radioForm').val();
 			        $.ajax({
 			            url:'/business/businessManageViewList',	//url을 요청하고
 			            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
-			        	data:{BUSI_YY:BUSI_YY,PJT_NM:PJT_NM,DEPT_CD:DEPT_CD,END_GBN:END_GBN},	//넘길 데이터(검색 조건 없이 우선 테스트)
+			        	data:{BUSI_YY:BUSI_YY,PJT_NM:PJT_NM,DEPT_CD:DEPT_CD1,END_GBN:END_GBN},	//넘길 데이터(검색 조건 없이 우선 테스트)
 			            success:function(data){	//받은 데이터
 			                $('#pjtList').empty(); //리스트를 비우고
 			                $(data).each((index,item)=>{
-			                    $('#pjtList').append('<tr onclick="mooncall(&#39'+item.PJT_NM+'&#39)"><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'
+			                    $('#pjtList').append('<tr onclick="mooncall(&#39;'+item.PJT_NM+'&#39;)"><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'
 			                    +item.PJT_NM+'</td></tr>' // 문자열
 			                    );
 			                });
@@ -289,11 +289,19 @@
 	    			let COVERAGE_IN = $('#COVERAGE').val();
 	    			let YAREA_P_IN = $('#YAREA_P').val();
 	    			let CAPACITY_IN = $('#CAPACITY').val();
-	    			
-	    			
-/* 					let BUSI_DATE = $('#BUSI_DATE').val();
-					let BUSI_DATE_A = BUSI_DATE.substring(0,4)+BUSI_DATE.substinrg(5,2)+BUSI_DATE.subting(8,2);  */
-					
+	    			let RMK_1_IN = $('#RMK_1').val();
+	    			let RMK_2_IN = $('#RMK_2').val();
+	    			let RMK_3_IN = $('#RMK_3').val();
+	    			let RMK_4_IN = $('#RMK_4').val();
+	    			let RMK_5_IN = $('#RMK_5').val();
+	    			let MARKET_FORECAST_AMT_IN = $('#MARKET_FORECAST_AMT').val();
+	    			let MARKET_CLASS_GBN_IN = $('#MARKET_CLASS_GBN').val();
+	    			let MARKET_DEPT_IN = $('#DEPT_CD').val();
+	    			console.log(MARKET_FORECAST_AMT_IN);
+	    			let BUSI_DATE_IN = $('#BUSI_DATE').val();
+	    			let PLAN_DATE_IN = $('#PLAN_DATE').val();
+	
+	  				
 	    			 
 	    			 $.ajax({
 				            url:'/business/businessManageViewInsert',	
@@ -326,7 +334,17 @@
 				        		AREA_P:AREA_P_IN,
 				        		COVERAGE:COVERAGE_IN,
 				        		YAREA_P:YAREA_P_IN,
-				        		CAPACITY:CAPACITY_IN
+				        		CAPACITY:CAPACITY_IN,
+				        		RMK_1:RMK_1_IN,
+				        		RMK_2:RMK_2_IN,
+				        		RMK_3:RMK_3_IN,
+				        		RMK_4:RMK_4_IN,
+				        		RMK_5:RMK_5_IN,
+				        		MARKET_FORECAST_AMT:MARKET_FORECAST_AMT_IN,
+				        		MARKET_CLASS_GBN:MARKET_CLASS_GBN_IN,
+				        		MARKET_DEPT:MARKET_DEPT_IN,
+				        		BUSI_DATE:BUSI_DATE_IN,
+				        		PLAN_DATE:PLAN_DATE_IN
 				        		},
 				        	success:function(){
 				                alert('사업수행결정서 저장');
@@ -353,8 +371,33 @@
 
 
 <th:block layout:fragment="customBody">
+	<div class="col-md-9 col-xs-12" style="color: black;">
+		<div class="page-title">
+			<div class="title_left">
+				<h2>
+					<b>사업수행결정서</b>
+				</h2>
+				<h5>
+					<font color="gray"><b>1.사업성검토관리&nbsp;>1.1사업수행결정서관리&nbsp;>1.1.1사업수행결정서&nbsp;&nbsp;</b></font>
+				</h5>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="x_content" style="text-align: right">
+		<div class="btn-group">
+			<a href="/business/businessManageView"><button class="btn btn-default" type="button">입력</button></a>
+			<button class="btn btn-default" type="button">수정</button>
+			<button class="btn btn-default" type="button">삭제</button>
+			<button class="btn btn-default" type="button" id="pjtInsertBtn">저장</button>
+			<button class="btn btn-default" type="button">출력</button>
+		</div>
+
+	</div>  
 
 	<font color="black">
+
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<div class="x_content">
@@ -374,7 +417,7 @@
 								<td>부서</td>
 								<td>
 									<div class="col-md-10 col-sm-10 col-xs-10 ">
-										<select id="DEPT_CD">
+										<select id="DEPT_CD1">
 											<option value="">전 사</option>
 											<option value="7530">설계1본부 1소</option>
 											<option value="7540">설계1본부 2소</option>
@@ -385,7 +428,7 @@
 											<option value="7830">설계4본부 1소</option>
 											<option value="7840">설계4본부 2소</option>
 											<option value="7930">설계5본부 1소</option>
-											
+
 										</select>
 									</div>
 								</td>
@@ -410,8 +453,8 @@
 						<table>
 							<tbody>
 								<tr>
-									<td><input type="radio" name="pjtRadioValue" checked value="1">접수
-									</td>
+									<td><input type="radio" name="pjtRadioValue" checked
+										value="1">접수</td>
 									<td><input type="radio" name="pjtRadioValue" value="2">승인
 									</td>
 									<td><input type="radio" name="pjtRadioValue" value="11">HOLD
@@ -452,29 +495,6 @@
 					<!-- 결과부분 end -->
 				</div>
 			</div>
-		</div>
-		<div class="col-md-9 col-xs-12" style="color: black;">
-			<div class="page-title">
-				<div class="title_left">
-					<h2>
-						<b>사업수행결정서</b>
-					</h2>
-					<h5>
-						<font color="gray"><b>1.사업성검토관리&nbsp;>1.1사업수행결정서관리&nbsp;>1.1.1사업수행결정서&nbsp;&nbsp;</b></font>
-					</h5>
-
-				</div>
-			</div>
-			<div class="x_content" style="text-align: right">
-				<div class="btn-group">
-					<button class="btn btn-default" type="reset">입력</button>
-					<button class="btn btn-default" type="button">수정</button>
-					<button class="btn btn-default" type="button">삭제</button>
-					<button class="btn btn-default" type="button" id="pjtInsertBtn">저장</button>
-					<button class="btn btn-default" type="button">출력</button>
-				</div>
-
-			</div>
 		</div> <!-- 프로젝트 start -->
 		<div class="col-md-9 col-sm-6 col-xs-12">
 			<div class="x_panel">
@@ -504,45 +524,54 @@
 								<tr>
 									<th>프로젝트</th>
 									<th><input type="text" id="PJT_NM2" value=""></th>
-									<th colspan="2">발주처<input type="text" id="CUST_CD"  
-										style="width: 80px; height: 20px; font-size: 12px">  <!--테스트입력  -->
-			<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg3"><i class="fa fa-search"></i></button> 
-										<label id="CUST_NM" name="CUST_NM"></label>
-										<!------------------------------------------ 거래처코드 조회 modal--------------------------------------------------- -->
-										<div class="modal fade bs-example-modal-lg3" tabindex="-1" role="dialog" aria-hidden="true">
+									<th colspan="2">발주처<input type="text" id="CUST_CD"
+										value="" style="width: 80px; height: 20px; font-size: 12px">
+										<!--테스트입력  -->
+										<button type="button" data-toggle="modal"
+											data-target=".bs-example-modal-lg3">
+											<i class="fa fa-search"></i>
+										</button> <label id="CUST_NM" name="CUST_NM"></label> <!------------------------------------------ 거래처코드 조회 modal--------------------------------------------------- -->
+										<div class="modal fade bs-example-modal-lg3" tabindex="-1"
+											role="dialog" aria-hidden="true">
 											<div class="modal-dialog modal-lg">
 												<div class="modal-content">
 													<form class="form-horizontal ">
 														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal" id="custModal"><span aria-hidden="true">×</span>
+															<button type="button" class="close" data-dismiss="modal"
+																id="custModal">
+																<span aria-hidden="true">×</span>
 															</button>
-															<h4 class="modal-title" id="myModalLabel"><b>거래처코드조회</b></h4><br>
+															<h4 class="modal-title" id="myModalLabel">
+																<b>거래처코드조회</b>
+															</h4>
+															<br>
 															<div class="table-responsive">
 																<table class="table table-bordered">
 																	<tbody>
 																		<tr>
 																			<td><label class="control-label">검색항목</label></td>
-																			<td>
-																				<select class="form-control" style="width: 40%" id="selectedCust">
+																			<td><select class="form-control"
+																				style="width: 40%" id="selectedCust">
 																					<option value="CUST_CD">거래처코드</option>
 																					<option selected="selected" value="CUST_NM">거래처명</option>
-																				</select>
-																			</td>
+																			</select></td>
 																		</tr>
 																		<tr>
 																			<td><label class="control-label">검색조건</label></td>
-																			<td>
-																				<input type="text" id="custValue">
-																				<button type="button" id="btnCustSearch"><i class="fa fa-search"></i></button>																	
-																			</td>
+																			<td><input type="text" id="custValue">
+																				<button type="button" id="btnCustSearch">
+																					<i class="fa fa-search"></i>
+																				</button></td>
 																		</tr>
-																	</tbody>																	
+																	</tbody>
 																</table>
 															</div>
 														</div>
 														<div class="modal-body">
-															<div class="table-responsive" style="overflow: auto; height: 400px;">
-																<table class="table table-striped table-bordered table-hover">
+															<div class="table-responsive"
+																style="overflow: auto; height: 400px;">
+																<table
+																	class="table table-striped table-bordered table-hover">
 																	<thead>
 																		<tr>
 																			<th>거래처코드</th>
@@ -566,16 +595,14 @@
 																			<td></td>
 																			<td></td>
 																		</tr>
-																	</tbody>																	
+																	</tbody>
 																</table>
 															</div>
 														</div>
 													</form>
 												</div>
 											</div>
-										</div>
-									<!------------------------------------------ 거래처코드 조회 modal end--------------------------------------------------- --> 
-
+										</div> <!------------------------------------------ 거래처코드 조회 modal end--------------------------------------------------- -->
 									<th colspan="2"><select id="CUST_GBN">
 											<option></option>
 											<option value="11">건설사</option>
@@ -591,21 +618,96 @@
 
 
 								<tr>
-									<td>의뢰일자<input type="date" id="BUSI_DATE"></td>
-									<td>정보취득자<input type="text"
-										style="width: 40px; height: 20px; font-size: 12px">
-									<button id="pjt_s">
-											<i class="fa fa-search"></i>
-										</button></td>
+									<td>의뢰일자<input type="date" id="BUSI_DATE" value=""></td>
+									<td>정보취득자
+						<input type="text"name="" id="initEmp" size="5">
+						<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg2">
+						<i class="fa fa-search"></i></button>
+						<span id="initEmpNm"></span>
+
+
+<!------------------------------------------------------------------직원 조회  ---------------------------->
+										<div class="modal fade bs-example-modal-lg2" tabindex="-1"
+											role="dialog" aria-hidden="true">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<form class="form-horizontal">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal"
+																id="accountModal">
+																<span aria-hidden="true">×</span>
+															</button>
+															<h4 class="modal-title" id="myModalLabel">
+																<b>직원조회</b>
+															</h4>
+															<br>
+															<!-- <div class="table-responsive"> -->
+															<table class="table table-bordered">
+																<tbody>
+																	<tr>
+																		<td><label class="control-label">구분</label></td>
+																		<td><select class="form-control"
+																			style="width: 40%" id="selectedAccount">
+																				<option selected="selected" value="ACC_CD">재직자</option>
+																				<option value="ACC_LONG_NM">퇴직자</option>
+																		</select></td>
+																	</tr>
+																	<tr>
+																		<td><label class="control-label">검색항목</label></td>
+																		<td><select class="form-control"
+																			style="width: 40%" id="selectedAccount">
+																				<option selected="selected" value="ACC_CD">성명</option>
+																				<option value="ACC_LONG_NM">사번</option>
+																				<option value="ACC_LONG_NM">부서명</option>
+																				<option value="ACC_LONG_NM">직급명</option>
+																		</select></td>
+																	</tr>
+																	<tr>
+																		<td><label class="control-label">검색조건</label></td>
+																		<td><input type="text" id="accountValue">
+																			<button id="btnAccountSearch" type="button">
+																				<i class="fa fa-search"></i>
+																			</button></td>
+																	</tr>
+																</tbody>
+															</table>
+															<!-- </div> -->
+														</div>
+														<div class="modal-body">
+															<div class="table-responsive"
+																style="overflow: auto; height: 400px;">
+																<table
+																	class="table table-striped table-bordered table-hover jambo_table">
+																	<thead>
+																		<tr>
+																			<th>사원번호</th>
+																			<th>성명</th>
+																			<th>부서명</th>
+																			<th>직급명</th>
+																		</tr>
+																	</thead>
+																	<tbody id="accountList">
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div></td>
+
+									<!------------------------------------------------- 사원 조회        ------------------------------------------------>
+
 									<td>담당자 <input type="text" id="CUST_CHARGE_NM" value=""
 										style="width: 80px; height: 20px; font-size: 12px"></td>
-									<td colspan="3">전화:<input type="text" id="CUST_TEL" value=""></td>
+									<td colspan="3">전화:<input type="text" id="CUST_TEL"
+										value=""></td>
 								</tr>
 								<tr>
-									<td>완료예정일<input type="date" id="PLAN_DATE"></td>
+									<td>완료예정일<input type="date" id="PLAN_DATE" value=""></td>
 									<td>수주책임자<input type="text"
 										style="width: 40px; height: 20px; font-size: 12px">
-									<button id="pjtSearchBtn">
+										<button id="pjtSearchBtn">
 											<i class="fa fa-search"></i>
 										</button></td>
 									<td colspan="4">수주구분<select id="BIZ_TYPE">
@@ -639,7 +741,7 @@
 									</td>
 									<td>관리 임원<input type="text"
 										style="width: 50px; height: 20px; font-size: 12px">
-									<button id="pjtSearchBtn">
+										<button id="pjtSearchBtn">
 											<i class="fa fa-search"></i>
 										</button></td>
 									<td colspan="4"></td>
@@ -655,14 +757,15 @@
 										</button>
 									</th>
 
-									<input type="hidden" id="sample6_postcode" placeholder="우편번호">
+									<input type="hidden" id="sample6_postcode" placeholder="우편번호"
+										value="">
 									<input type="hidden" id="sample6_detailAddress"
 										placeholder="상세주소">
 									<input type="hidden" id="sample6_extraAddress"
 										placeholder="참고항목">
 
 									<th><input type="text" id="sample6_address" value=""></th>
-									
+
 									<th>건축물용도</th>
 									<th colspan="3"><select id="BUILD_TYPE">
 											<option value=""></option>
@@ -787,11 +890,11 @@
 											<option value="140">군사시설보호구역</option>
 									</select></th>
 									<td rowspan="2">규모
-									<td rowspan="2">지하<input type="text" id="DOWN_SU" value=""
-										style="width: 20px; height: 20px; font-size: 12px">층 <br>지상<input
-										type="text" id="UP_SU" value=""
+									<td rowspan="2">지하<input type="text" id="DOWN_SU"
+										value="0" style="width: 20px; height: 20px; font-size: 12px">층
+										<br>지상<input type="text" id="UP_SU" value="0"
 										style="width: 20px; height: 20px; font-size: 12px">층 <br>세대수<input
-										type="text" id="H_CNT" value=""
+										type="text" id="H_CNT" value="0"
 										style="width: 30px; height: 20px; font-size: 12px">
 									</td>
 								</tr>
@@ -882,18 +985,18 @@
 								</tr>
 								<tr>
 									<td>대지면적</td>
-									<td><input type="text" id="AREA_M" value="">(m2)</td>
-									<td><input type="text" id="AREA_P" value="">(평)</td>
+									<td><input type="text" id="AREA_M" value="0">(m2)</td>
+									<td><input type="text" id="AREA_P" value="0">(평)</td>
 									<td>건폐율</td>
-									<td colspan="2"><input type="text" id="COVERAGE"
+									<td colspan="2"><input type="text" id="COVERAGE" value="0"
 										style="width: 30px; height: 20px; font-size: 12px">(%)</td>
 								</tr>
 								<tr>
 									<td>연면적</td>
-									<td><input type="text" id="YAREA_M" value="">(m2)</td>
-									<td><input type="text" id="YAREA_P" value="">(평)</td>
+									<td><input type="text" id="YAREA_M" value="0">(m2)</td>
+									<td><input type="text" id="YAREA_P" value="0">(평)</td>
 									<td>용적율</td>
-									<td colspan="2"><input type="text" id="CAPACITY"
+									<td colspan="2"><input type="text" id="CAPACITY" value="0"
 										style="width: 30px; height: 20px; font-size: 12px">(%)</td>
 								</tr>
 
@@ -904,7 +1007,7 @@
 
 								<tr>
 									<th>수주정보</th>
-									<th colspan="5"><TEXTAREA id="RMK_1"> </TEXTAREA></th>
+									<th colspan="5"><TEXTAREA id="RMK_1" value=""> </TEXTAREA></th>
 								</tr>
 							</table>
 
@@ -958,93 +1061,102 @@
 
 														<tbody>
 															<tr>
-																<th><TEXTAREA id="RMK_2"> </TEXTAREA></th>
+																<th><TEXTAREA id="RMK_2" value=""> </TEXTAREA></th>
 
-																<td>PM<input type="text"><br>
-																<button id="pjtSearchBtn">
+																<td>PM<input type="text" value=""><br>
+																	<button id="pjtSearchBtn">
 																		<i class="fa fa-search"></i>
 																	</button>
 																</td>
-																<td>PD<input type="text">
-																<button id="pjtSearchBtn">
+																<td>PD<input type="text" value="">
+																	<button id="pjtSearchBtn">
 																		<i class="fa fa-search"></i>
 																	</button>
 																</td>
 															</tr>
 															<tr>
 																<th colspan="2" scope="row" class="form-control">수행부서<br>
-																	<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg2"><i class="fa fa-search"></i></button>
-										<label id="DEPT_NM"></label>
-<!------------------------------------------ 부서코드 조회 modal--------------------------------------------------- -->
-										<div class="modal fade bs-example-modal-lg2" tabindex="-1" role="dialog" aria-hidden="true">
-											<div class="modal-dialog modal-lg">
-												<div class="modal-content">
-													<form class="form-horizontal ">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal" id="deptModal"><span aria-hidden="true">×</span>
-															</button>
-															<h4 class="modal-title" id="myModalLabel"><b>부서코드조회</b></h4><br>
-															<div class="table-responsive">
-																<table class="table table-bordered">
-																	<tbody>
-																		<tr>
-																			<td><label class="control-label">검색항목</label></td>
-																			<td>
-																				<select class="form-control" style="width: 40%" id="selectedDept">
-																					<option value="DEPT_CD">부서코드</option>
-																					<option selected="selected" value="DEPT_NM">부서명칭</option>
-																				</select>
-																			</td>
-																		</tr>
-																		<tr>
-																			<td><label class="control-label">검색조건</label></td>
-																			<td>
-																				<input type="text" id="deptValue">
-																				<button type="button" id="btnDeptSearch"><i class="fa fa-search"></i></button>																	
-																			</td>
-																		</tr>
-																	</tbody>																	
-																</table>
-															</div>
-														</div>
-														<div class="modal-body">
-															<div class="table-responsive" style="overflow: auto; height: 400px;">
-																<table class="table table-striped table-bordered table-hover">
-																	<thead>
-																		<tr>
-																			<th>부서코드</th>
-																			<th>부서명칭</th>
-																		</tr>
-																	</thead>
-																	<tbody id="deptList">
-																		<tr>
-																			<td></td>
-																			<td></td>
-																		</tr>
-																		<tr>
-																			<td></td>
-																			<td></td>
-																		</tr>
-																		<tr>
-																			<td></td>
-																			<td></td>
-																		</tr>
-																		<tr>
-																			<td></td>
-																			<td></td>
-																		</tr>
-																	</tbody>																	
-																</table>
-															</div>
-														</div>
-													</form>
-												</div>
-											</div>
-										</div>
-									<!------------------------------------------ 부서코드 조회 modal end--------------------------------------------------- -->
+																	<button type="button" data-toggle="modal"
+																		data-target=".bs-example-modal-lg4">
+																		<i class="fa fa-search"></i>
+																	</button> <label id="DEPT_NM"></label> <input type="hidden"
+																	id="DEPT_CD" value=""> <!------------------------------------------ 부서코드 조회 modal--------------------------------------------------- -->
+																	<div class="modal fade bs-example-modal-lg4"
+																		tabindex="-1" role="dialog" aria-hidden="true">
+																		<div class="modal-dialog modal-lg">
+																			<div class="modal-content">
+																				<form class="form-horizontal ">
+																					<div class="modal-header">
+																						<button type="button" class="close"
+																							data-dismiss="modal" id="deptModal">
+																							<span aria-hidden="true">×</span>
+																						</button>
+																						<h4 class="modal-title" id="myModalLabel">
+																							<b>부서코드조회</b>
+																						</h4>
+																						<br>
+																						<div class="table-responsive">
+																							<table class="table table-bordered">
+																								<tbody>
+																									<tr>
+																										<td><label class="control-label">검색항목</label></td>
+																										<td><select class="form-control"
+																											style="width: 40%" id="selectedDept">
+																												<option value="DEPT_CD">부서코드</option>
+																												<option selected="selected" value="DEPT_NM">부서명칭</option>
+																										</select></td>
+																									</tr>
+																									<tr>
+																										<td><label class="control-label">검색조건</label></td>
+																										<td><input type="text" id="deptValue">
+																											<button type="button" id="btnDeptSearch">
+																												<i class="fa fa-search"></i>
+																											</button></td>
+																									</tr>
+																								</tbody>
+																							</table>
+																						</div>
+																					</div>
+																					<div class="modal-body">
+																						<div class="table-responsive"
+																							style="overflow: auto; height: 400px;">
+																							<table
+																								class="table table-striped table-bordered table-hover">
+																								<thead>
+																									<tr>
+																										<th>부서코드</th>
+																										<th>부서명칭</th>
+																									</tr>
+																								</thead>
+																								<tbody id="deptList">
+																									<tr>
+																										<td></td>
+																										<td></td>
+																									</tr>
+																									<tr>
+																										<td></td>
+																										<td></td>
+																									</tr>
+																									<tr>
+																										<td></td>
+																										<td></td>
+																									</tr>
+																									<tr>
+																										<td></td>
+																										<td></td>
+																									</tr>
+																								</tbody>
+																							</table>
+																						</div>
+																					</div>
+																				</form>
+																			</div>
+																		</div>
+																	</div> <!------------------------------------------ 부서코드 조회 modal end--------------------------------------------------- -->
 																</th>
 
-																<td>추정계약액<input type="text" id="FORECAST_AMT" class="form-control">원
+																<td>추정계약액<input type="text"
+																	id="MARKET_FORECAST_AMT" class="form-control" value="0">원
 																</td>
 																<td>업무범위/수준<select id="MARKET_CLASS_GBN">
 																		<option value=""></option>
@@ -1055,25 +1167,23 @@
 																		<option value="15">X: DROP 프로젝트</option>
 																</select></td>
 															</tr>
-
 														</tbody>
 													</table>
-
 												</div>
 											</div>
 										</div>
 									</div>
 									<div role="tabpanel" class="tab-pane fade" id="tab_content2"
 										aria-labelledby="profile-tab">
-										<th><TEXTAREA id="RMK_3"> </TEXTAREA></th>
+										<th><TEXTAREA id="RMK_3" value=""> </TEXTAREA></th>
 									</div>
 									<div role="tabpanel" class="tab-pane fade" id="tab_content3"
 										aria-labelledby="profile-tab">
-										<th><TEXTAREA id="RMK_4"> </TEXTAREA></th>
+										<th><TEXTAREA id="RMK_4" value=""> </TEXTAREA></th>
 									</div>
 									<div role="tabpanel" class="tab-pane fade" id="tab_content4"
 										aria-labelledby="profile-tab">
-										<th><TEXTAREA id="RMK_5"> </TEXTAREA></th>
+										<th><TEXTAREA id="RMK_5" value=""> </TEXTAREA></th>
 									</div>
 								</div>
 							</div>

@@ -29,4 +29,6 @@ public interface BusinessManageMapper {
 	//사업수행결정서 저장
 	void businessManageViewInsert(BusinessMarket vo);
 	
+	//일련번호 증가 
+	String numUp();
 }

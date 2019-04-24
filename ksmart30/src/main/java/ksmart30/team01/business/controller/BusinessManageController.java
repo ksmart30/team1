@@ -34,24 +34,6 @@ public class BusinessManageController {
 		return "business/businessManageListView";
 	}
 	
-	//현황리스트
-	@GetMapping("/business/businessStateHyunhawngView")
-	public String businessStateHyunhawngView() {
-		return "business/businessStateHyunhawngView";
-	}
-	
-	//
-	@GetMapping("/business/businessSuccessRateView")
-	public String businessSuccessRateView() {
-		return "business/businessSuccessRateView";
-	}
-	
-	//
-	@GetMapping("/business/businessOrderHyunhwangView")
-	public String businessOrderHyunhwangView() {
-		return "business/businessOrderHyunhwangView";
-	}
-
 	
 }
 
