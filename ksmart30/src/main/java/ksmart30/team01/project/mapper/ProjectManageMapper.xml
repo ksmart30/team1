@@ -448,29 +448,23 @@
 	</select>
 	
 	<!-- 용역계약서 신규 입력시 발주처 입력 -->
-	<select id="addProjectManageOwner" parameterType="java.util.Map">
+	<insert id="addProjectManageOwner" parameterType="java.util.Map" keyProperty="PJT_CD,CUST_CD">
 		INSERT INTO
 			T_P11010(
 				PJT_CD,
 				CUST_CD,
 				CUST_GBN,
 				N_RATE,
-				CONTRACT_AMT,
-				CUST_MAN,
-				CUST_TEL,
-				ACC_AMT
+				CONTRACT_AMT
 			)
 		VALUES(
 			#{PJT_CD},
-<!-- 			#{CUST_CD}, -->
+ 			#{CUST_CD},
 			#{CUST_GBN},
 			#{N_RATE},
-			#{CONTRACT_AMT},
-			#{CUST_MAN},
-			#{CUST_TEL},
-			#{ACC_AMT}
+			#{CONTRACT_AMT}
 		)
-	</select>
+	</insert>
 	
 	<!-- 용역계약서 변경 조회를 위해 변경한 이력이 1번이라도 있는 용역계약서를 조회한다 -->
 	<select id="getProjectHistoryList" parameterType="java.util.Map" resultType="java.util.Map">
@@ -736,8 +730,6 @@
 			#{G_YEARA_P_END},
 			#{BUILD_TYPE},
 			#{ZIP_CD}
-		)
-		ORDER BY PJT_CD
 		)
 		ORDER BY PJT_CD
 	</select>

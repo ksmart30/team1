@@ -7,6 +7,18 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
 		
+		// 모달에서 프로젝트 선택
+		function modalPjtOneBtn(PJT_CD, PJT_NM) {
+			console.log('프로젝트 모달 선택완료!');
+			console.log(PJT_CD);
+			console.log(PJT_NM);
+			$('#PJT_CD_VAL').empty();
+			$('#PJT_CD_VAL').attr('value', PJT_CD);
+			$('#PJT_NM_VAL').empty();
+			$('#PJT_NM_VAL').append(PJT_NM);
+			$('#pjtModalExit').click();
+		}
+		
 		// 용역계약서 리스트에서 현황 리스트를 출력하는 메서드
 		function pjtOneBtn(PJT_CD) {
 			console.log(PJT_CD);
@@ -141,6 +153,16 @@
 
 		// 전체 document ready
 		$(document).ready(function(){
+			//현재 날짜
+			let date = new Date();
+			var NOW_YEAR =date.getFullYear();
+			var NOW_MONTH_0 = date.getMonth()+1;
+			var ZERO = '0';
+			var NOW_MONTH = ZERO+NOW_MONTH_0;
+			var NOW_DAY = date.getDate();
+			var NOW_DATE = NOW_YEAR+'-'+NOW_MONTH+'-'+NOW_DAY
+			console.log('현재날짜 : '+NOW_DATE);
+			$('#pjtYear').val(NOW_YEAR);
 			$('#Search').click(function(){
 				let PJT_CD = $('#pjtCd').val();
 				let YEAR = $('#pjtYear').val();
@@ -159,38 +181,30 @@
 						}
 						// 결과 중 맨처음 row의 PJT_CD 자동 선택
 						pjtOneBtn(data[0].PJT_CD);
+					}, error:function(requet, status, error) {
+						alert(error + "변경 내역이 없습니다.");
 					}
 				});
 			});
 			
-			// 모달 테스트
+			// 프로젝트 검색 모달
 			$('#pjtSearchBtn').click(()=>{
     			let column = $('#selectedPjtItem option:selected').val();
     			let columnValue = $('#pjtValue').val();
-    			let subvalue = columnValue.substr(0,1);
-    			if(column == 'PJT_CD' && !($.isNumeric(columnValue))){
-    				alert('숫자로 입력하세요');
-    			}else if(column == 'PJT_NM' && ($.isNumeric(subvalue))){
-    				alert('한글로 입력하세요');
-    			}else{
-    				console.log('검색 값 : ');
-	    			console.log(columnValue);
-	    			/* $.ajax({
-						url:'/project/projectManageSearchProcess',
-				        type:'POST',
-						data:{column:column, columnValue:columnValue},
-						success:(data)=>{
-							console.log(data);
-							$('#pjtSearchList').delegate('tr', 'dblclick', function(){
-								let tr = $(this);
-								let td = tr.children();
-								$('#CUST_CD').val(td.eq(0).text());
-								$('#CUST_NM').text(td.eq(1).text());
-								$('#custModal').click();
-				    		});
-						}
-	    			}); */
-				}
+    			console.log('검색 값 : ');
+	    		console.log(columnValue);
+	    		$.ajax({
+					url:'/project/getProjectManageCodeListProcess',
+				    type:'POST',
+					data:{column:column, columnValue:columnValue},
+					success:(data)=>{
+						console.log(data);
+						$('#pjtSearchList').empty();
+						$(data).each((index, item) =>{
+						$('#pjtSearchList').append('<tr onclick="modalPjtOneBtn('+item.PJT_CD+',&#39'+item.PJT_NM+'&#39)"><td>'+item.PJT_CD+'</td><td>'+item.PJT_NM+'</td></tr>');
+						});
+					}
+	    		});
 			});
 		});
 		</script>
@@ -207,11 +221,11 @@
     
     <div class="x_content" style="text-align:right">
 		<div class="btn-group" >
-			<button class="btn btn-default" type="submit" id="Search">조회</button>
-			<button class="btn btn-default" type="reset">입력</button>
-			<button class="btn btn-default" type="button">수정</button>
-			<button class="btn btn-default" type="button">삭제</button>
-			<button class="btn btn-default" type="button">저장</button>
+			<button class="btn btn-default" type="button" id="Search">조회</button>
+			<button class="btn btn-default" type="button" disabled="disabled">입력</button>
+			<button class="btn btn-default" type="button" disabled="disabled">수정</button>
+			<button class="btn btn-default" type="button" disabled="disabled">삭제</button>
+			<button class="btn btn-default" type="button" disabled="disabled">저장</button>
 			<button class="btn btn-default" type="button">출력</button>
 		</div>
 	</div>
@@ -237,12 +251,10 @@
 					</td>
 					<td>
 						<select id="pjtDept">
-							<option value="">전 사</option>
-							<option value="7530">설계1본부</option>
-							<option value="7630">설계2본부</option>
-							<option value="7730">설계3본부</option>
-							<option value="7830">설계4본부</option>
-							<option value="7930">설계5본부</option>
+							<option value="" selected="selected">전 사</option>
+							<th:block th:each="d : ${dept}">
+								<option th:value="${DEPT_CD}">[[${d.DEPT_NM}]]</option>
+							</th:block>
 						</select>
 					</td>
 				</tr>
@@ -250,34 +262,19 @@
 					<td>
 						코드명
 					</td>
-					<td>
-						<input type="text" id="pjtCd">
-					</td>
-					<td>
+					<td colspan="2">
+						<input type="text" id="PJT_CD_VAL" class="col-md-6 col-sm-12">
 						<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg1"><i class="fa fa-search"></i></button>
-						<span id="PJT_NM"></span>
-				<!-- 	</td>
-				</tr>
-				<tr>
-					<td>
-						TEST 거래처
-					</td>
-					<td>
-						<input type="text" id="CUST_CD">
-						<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg3"><i class="fa fa-search"></i></button> 
-						<label id="CUST_NM"></label>
-					</td>
-					<td>
-						<button type="submit" id="pjtSearchBtn"><i class="fa fa-search"></i></button> -->
-						<!------------------------------------------ 거래처코드 조회 modal--------------------------------------------------- -->
+						<div id="PJT_NM_VAL"></div>
+						<!------------------------------------------ 프로젝트 조회 modal--------------------------------------------------- -->
 						<div class="modal fade bs-example-modal-lg1" tabindex="-1" role="dialog" aria-hidden="true">
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
 									<form class="form-horizontal ">
 										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" id="custModal"><span aria-hidden="true">×</span>
+											<button type="button" class="close" data-dismiss="modal" id="pjtModalExit"><span aria-hidden="true">×</span>
 											</button>
-											<h4 class="modal-title" id="myModalLabel"><b>거래처코드조회</b></h4><br>
+											<h4 class="modal-title" id="myModalLabel"><b>프로젝트코드조회</b></h4><br>
 											<div class="table-responsive">
 												<table class="table table-bordered">
 													<tbody>
@@ -285,44 +282,42 @@
 															<td><label class="control-label">검색항목</label></td>
 															<td>
 																<select class="form-control" style="width: 40%" id="selectedPjtItem">
-																	<option selected="selected"  value="PJT_CD">프로젝트 코드</option>
-																	<option value="PJT_NM">프로젝트 명</option>
+																	<option selected="selected" value="PJT_CD">프로젝트코드</option>
+																	<option value="PJT_NM">프로젝트명</option>
+																	<option value="DEPT_CD">부서코드</option>
+																	<option value="DEPT_NM">부서명</option>
 																</select>
-																			</td>
-																		</tr>
-																		<tr>
-																			<td><label class="control-label">검색조건</label></td>
-																			<td>
-																				<input type="text" id="pjtValue">
-																				<button type="button" id="pjtSearchBtn"><i class="fa fa-search"></i></button>																	
-																			</td>
-																		</tr>
-																	</tbody>																	
-																</table>
-															</div>
-														</div>
-														<div class="modal-body">
-															<div class="table-responsive" style="overflow: auto; height: 400px;">
-																<table class="table table-striped table-bordered table-hover">
-																	<thead>
-																		<tr>
-																			<th>프로젝트코드</th>
-																			<th>프로젝트명</th>
-																		</tr>
-																	</thead>
-																	<tbody id="pjtSearchList">
-																		<tr>
-																			<td></td>
-																			<td></td>
-																		</tr>
-																	</tbody>																	
-																</table>
-															</div>
-														</div>
-													</form>
-												</div>
+															</td>
+														</tr>
+														<tr>
+															<td><label class="control-label">검색조건</label></td>
+															<td>
+																<input type="text" id="pjtValue">
+																<button type="button" id="pjtSearchBtn"><i class="fa fa-search"></i></button>																	
+															</td>
+														</tr>
+													</tbody>																	
+												</table>
 											</div>
 										</div>
+										<div class="modal-body">
+											<div class="table-responsive" style="overflow: auto; height: 400px;">
+												<table class="table table-striped table-bordered table-hover">
+													<thead>
+														<tr>
+															<th>프로젝트코드</th>
+															<th>프로젝트명</th>
+														</tr>
+													</thead>
+													<tbody id="pjtSearchList">
+													</tbody>																	
+												</table>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 					</td>
 				</tr>
 			</table>
@@ -331,7 +326,7 @@
 			<div class="x_title">
 			</div>
 			<!-- 결과부분 start -->
-			<table class="table table-bordered" style="overflow:auto">
+			<table class="table table-bordered table-hover jambo_table" style="overflow:auto">
 				<thead>
 				<tr>
 					<th width="30%">PJT코드</th><th>프로젝트명</th>
@@ -345,7 +340,7 @@
 			<span>◎ 계약서 변경 현황</span>
 			</div>
 			<!-- 계약서변경현황 start -->
-			<table class="table table-bordered">
+			<table class="table table-bordered table-hover jambo_table">
 				<thead>
 				<tr>
 					<th width="30%">변경일자</th><th>변경구분</th>

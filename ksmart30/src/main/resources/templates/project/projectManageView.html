@@ -75,7 +75,9 @@
 			console.log(CUST_CD);
 			console.log(CUST_NM);
 			$('#CUST_CD_VAL').empty();
-			$('#CUST_CD_VAL').attr('value', CUST_NM);
+			$('#CUST_CD_VAL').attr('value', CUST_CD);
+			$('#CUST_NM_VAL').empty();
+			$('#CUST_NM_VAL').attr('value', CUST_NM);
 			$('#custModal').click();
 		}
 		
@@ -297,7 +299,7 @@
 					$('#OWNER_LIST_ONE').empty();
 					$(data).each((index, item) => {
 						console.log(item);
-						$('#OWNER_LIST_ONE').append('<tr><td width="20%">삭제</td><td width="20%">'+item.CUST_NM+'</td><td width="20%">'+item.CUST_GBN_NM+'</td><td width="20%">'+item.N_RATE+'</td><td width="20%">'+item.CONTRACT_AMT+'</td></tr>');
+						$('#OWNER_LIST_ONE').append('<tr><td></td><td>'+item.CUST_NM+'</td><td>'+item.CUST_GBN_NM+'</td><td>'+item.N_RATE+'</td><td>'+item.CONTRACT_AMT+'</td><td><button type="submit" class="btn" style="color:black" id="ownerDelBtn">삭제</button></td></tr>');
 					});
 					$('#N_RATE_SUM').empty();						// 지분합계
 					$('#N_RATE_SUM').append(data[0].N_RATE_SUM);
@@ -399,6 +401,29 @@
 					}
 				});
 			});
+			
+			// 발주처 리스트 추가
+			$('#ownerAddBtn').click(()=>{
+				let PJT_CD = $('#PJT_CD_ONE').val();				// 프로젝트 코드
+				let CUST_CD = $('#CUST_CD_VAL').val();				// 발주처
+				let CUST_GBN = $("#CUST_GBN_VAL option:selected").val();	// 발주처 구분
+				let N_RATE = $('#N_RATE_VAL').val();				// 지분
+				let CONTRACT_AMT = $('#CONTRACT_AMT_VAL').val();	// 계약금액
+				$.ajax({
+					url:'/project/projectManageOwnerWriteProcess',
+					type:'POST',
+					data:{PJT_CD:PJT_CD, CUST_CD:CUST_CD, CUST_GBN:CUST_GBN, N_RATE:N_RATE, CONTRACT_AMT:CONTRACT_AMT},
+					success:function(data){
+						console.log(data);
+						alert("발주처 추가 완료!");
+						pjtOwnerList(PJT_CD);
+					},
+					error:function(request, status, error) {
+						alert(error + "추가 실패");
+					}
+				});
+			});
+			
 			// 프로젝트 검색 모달
 			$('#pjtSearchBtn').click(()=>{
     			let column = $('#selectedPjtItem option:selected').val();
@@ -473,8 +498,8 @@
 	
 	<div class="x_content" style="text-align: right">
 		<div class="btn-group" >
-		<button class="btn btn-default" type="reset" id="search">조회</button>
-		<button class="btn btn-default" type="reset">입력</button>
+		<button class="btn btn-default" type="button" id="search">조회</button>
+		<button class="btn btn-default" type="button">입력</button>
 		<button class="btn btn-default" type="button" disabled="disabled">수정</button>
 		<button class="btn btn-default" type="button">삭제</button>
 		<button class="btn btn-default" type="button">저장</button>
@@ -787,79 +812,80 @@
     <div class="x_title">
     <label for="ex3"> 발주처</label>
       <div class="nav navbar-right panel_toolbox">
-                      <label for="ex3">
-                      	<button type="submit" class="btn" style="color:black" id="ownerAddBtn">추가</button>
-                      </label>
                     </div>
                   </div>
                   <div class="x_content">
 
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-hover jambo_table">
+                    <thead>
                         <tr>
                           <th>순번</th>
                           <th>발주처</th>
                           <th>발주처구분</th>
                           <th>지분(%)</th>
                           <th>계약금액</th>
+                          <th>추가/삭제</th>
                         </tr>
+					</thead>
                         <tr>
                           <th scope="row">신규</th>
                           <td>
-                          	<input type="text" class="col-md-9" id="CUST_CD_VAL">
-														<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg3"><i class="fa fa-search"></i></button>
-														<!------------------------------------------ 발주처 조회 modal--------------------------------------------------- -->
-														<div class="modal fade bs-example-modal-lg3" tabindex="-1" role="dialog" aria-hidden="true">
-															<div class="modal-dialog modal-lg">
-																<div class="modal-content">
-																	<form class="form-horizontal ">
-																		<div class="modal-header">
-																			<button type="button" class="close" data-dismiss="modal" id="custModal"><span aria-hidden="true">×</span>
-																			</button>
-																			<h4 class="modal-title" id="myModalLabel"><b>발주처코드조회</b></h4><br>
-																			<div class="table-responsive">
-																				<table class="table table-bordered">
-																					<tbody>
-																						<tr>
-																							<td><label class="control-label">검색항목</label></td>
-																							<td>
-																								<select class="form-control" style="width: 40%" id="selectedCustItem">
-																									<option selected="selected"  value="CUST_CD">발주처코드</option>
-																									<option value="CUST_NM">발주처명</option>
-																								</select>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td><label class="control-label">검색조건</label></td>
-																							<td>
-																								<input type="text" id="custValue">
-																								<button type="button" id="custSearchBtn"><i class="fa fa-search"></i></button>																	
-																							</td>
-																						</tr>
-																					</tbody>																	
-																				</table>
-																			</div>
-																		</div>
-																		<div class="modal-body">
-																			<div class="table-responsive" style="overflow: auto; height: 400px;">
-																				<table class="table table-striped table-bordered table-hover">
-																					<thead>
-																						<tr>
-																							<th>발주처코드</th>
-																							<th>발주처명</th>
-																						</tr>
-																					</thead>
-																					<tbody id="custSearchList">
-																					</tbody>																	
-																				</table>
-																			</div>
-																		</div>
-																	</form>
-																</div>
-															</div>
-														</div>
+                          	<input type="text" class="col-md-9" id="CUST_NM_VAL">
+                          	<input type="hidden" id="CUST_CD_VAL">
+								<button type="button" data-toggle="modal" data-target=".bs-example-modal-lg3"><i class="fa fa-search"></i></button>
+								<!------------------------------------------ 발주처 조회 modal--------------------------------------------------- -->
+								<div class="modal fade bs-example-modal-lg3" tabindex="-1" role="dialog" aria-hidden="true">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+											<form class="form-horizontal ">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" id="custModal"><span aria-hidden="true">×</span>
+													</button>
+													<h4 class="modal-title" id="myModalLabel"><b>발주처코드조회</b></h4><br>
+													<div class="table-responsive">
+														<table class="table table-bordered">
+															<tbody>
+																<tr>
+																	<td><label class="control-label">검색항목</label></td>
+																	<td>
+																		<select class="form-control" style="width: 40%" id="selectedCustItem">
+																			<option selected="selected"  value="CUST_CD">발주처코드</option>
+																			<option value="CUST_NM">발주처명</option>
+																		</select>
+																	</td>
+																</tr>
+																<tr>
+																	<td><label class="control-label">검색조건</label></td>
+																	<td>
+																		<input type="text" id="custValue">
+																		<button type="button" id="custSearchBtn"><i class="fa fa-search"></i></button>																	
+																	</td>
+																</tr>
+															</tbody>																	
+														</table>
+													</div>
+												</div>
+												<div class="modal-body">
+													<div class="table-responsive" style="overflow: auto; height: 400px;">
+														<table class="table table-striped table-bordered table-hover">
+															<thead>
+																<tr>
+																	<th>발주처코드</th>
+																	<th>발주처명</th>
+																</tr>
+															</thead>
+															<tbody id="custSearchList">
+															</tbody>																	
+														</table>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
                           </td>
                           <td>
-                          	<select class="col-md-10">
+                          	<select id="CUST_GBN_VAL" class="col-md-10">
                           		<option></option>
                           		<th:block th:each="c : ${code}">
 	                    		<th:block th:if="${c.LEVEL1_CD}==200">
@@ -868,8 +894,9 @@
 	                    	</th:block>
                   			</select>
                           </td>
-                          <td><input type="text" class="col-md-10"></td>
-                          <td><input type="text" class="col-md-10"></td>
+                          <td><input type="text" class="col-md-10" id="N_RATE_VAL"></td>
+                          <td><input type="text" class="col-md-10" id="CONTRACT_AMT_VAL"></td>
+                          <td><button type="button" class="btn" style="color:black" id="ownerAddBtn">추가</button></td>
                         </tr>
                         <tbody id="OWNER_LIST_ONE">
                    		</tbody>
@@ -879,6 +906,7 @@
                     		<th ></th>
                     		<th><span id="N_RATE_SUM"></span></th>
                     		<th><span id="CONTRACT_AMT_SUM"></span></th>
+                    		<th></th>
                     	</tr>
                    	</table>
 	</div>
@@ -898,7 +926,7 @@
                   </div>
                   <div class="x_content">
 
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-hover jambo_table">
                       <thead>
                         <tr>
                           <th>순번</th>

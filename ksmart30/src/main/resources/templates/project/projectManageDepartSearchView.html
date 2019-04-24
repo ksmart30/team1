@@ -10,9 +10,20 @@
 			console.log(CUST_CD+CUST_NM);			
 			$('#CUST_CD_VAL').empty();
 			$('#CUST_CD_VAL').val(CUST_NM);	// 발주처 
-			$('#custModalExit').click();				// 발주처 모달 종료
+			$('#custModalExit').click();	// 발주처 모달 종료
 		}
  		$(document).ready(function() {
+ 			//현재 날짜
+			let date = new Date();
+			var NOW_YEAR =date.getFullYear();
+			var NOW_MONTH_0 = date.getMonth()+1;
+			var ZERO = '0';
+			var NOW_MONTH = ZERO+NOW_MONTH_0;
+			var NOW_DAY = date.getDate();
+			var NOW_DATE = NOW_YEAR+'-'+NOW_MONTH+'-'+NOW_DAY
+			console.log('현재날짜 : '+NOW_DATE);
+ 			$('#START_DATE').val(NOW_YEAR+'-01-01');
+ 			$('#END_DATE').val(NOW_DATE);
 			// 발주처 검색 모달
 			$('#custSearchBtn').click(()=>{
     			let column = $('#selectedCustItem option:selected').val();
@@ -35,9 +46,25 @@
 
 			$('#search').click(()=>{
 				// 검색 조건에 따른 용역계약서 검색
-				let DEPT_CD = $('#DEPT_CD').val();
-				let CONTRACT_GBN = $('#CONTRACT_GBN').val();
-				let PJT_E_GBN = $('#PJT_E_GBN').val();
+				let searchArr = {
+					DEPT_CD:$("#DEPT_CD option:selected").val(),
+	 				CONTRACT_GBN:$("#CONTRACT_GBN option:selected").val(),
+					PJT_E_GBN:$("#PJT_E_GBN option:selected").val(),
+					CUST_CD:$('#CUST_CD').val(),
+					START_DATE:$('#START_DATE').val(),
+					END_DATE:$('#END_DATE').val(),
+					TOT_CONTRACT_AMT_START:$('#TOT_CONTRACT_AMT_START').val(),
+					TOT_CONTRACT_AMT_END:$('#TOT_CONTRACT_AMT_END').val(),
+					PYUNG_DAN_START:$('#PYUNG_DAN_START').val(),
+					PYUNG_DAN_END:$('#PYUNG_DAN_END').val(),
+					G_YEARA_P_START:$('#G_YEARA_P_START').val(),
+					G_YEARA_P_END:$('#G_YEARA_P_END').val(),
+					BUILD_TYPE:$("#BUILD_TYPE option:selected").val(),
+					ZIP_CD:$("#ZIP_CD option:selected").val()
+				}
+				/* let DEPT_CD = $("#DEPT_CD option:selected").val();
+ 				let CONTRACT_GBN = $("#CONTRACT_GBN option:selected").val();
+				let PJT_E_GBN = $("#PJT_E_GBN option:selected").val();
 				let CUST_CD = $('#CUST_CD').val();
 				let START_DATE = $('#START_DATE').val();
 				let END_DATE = $('#END_DATE').val();
@@ -47,37 +74,19 @@
 				let PYUNG_DAN_END = $('#PYUNG_DAN_END').val();
 				let G_YEARA_P_START = $('#G_YEARA_P_START').val();
 				let G_YEARA_P_END = $('#G_YEARA_P_END').val();
-				let BUILD_TYPE = $('#BUILD_TYPE').val();
-				let ZIP_CD = $('#ZIP_CD').val();
-
+				let BUILD_TYPE = $("#BUILD_TYPE option:selected").val();
+				let ZIP_CD = $("#ZIP_CD option:selected").val(); */
 				$.ajax({
-					contentType:'application/json',
-					dataType:'json',
-					uri:'/project/projectManageDeptSearchProcess',
+					url:'/project/projectManageDeptSearchProcess',
 					type:'POST',
-					data:{DEPT_CD:DEPT_CD,
-								CONTRACT_GBN:CONTRACT_GBN,
-								PJT_E_GBN:PJT_E_GBN,
-								CUST_CD:CUST_CD,
-								START_DATE:START_DATE,
-								END_DATE:END_DATE,
-								TOT_CONTRACT_AMT_START:TOT_CONTRACT_AMT_START,
-								TOT_CONTRACT_AMT_END:TOT_CONTRACT_AMT_END,
-								PYUNG_DAN_START:PYUNG_DAN_START,
-								PYUNG_DAN_END:PYUNG_DAN_END,
-								G_YEARA_P_START:G_YEARA_P_START,
-								G_YEARA_P_END:G_YEARA_P_END,
-								BUILD_TYPE:BUILD_TYPE,
-								ZIP_CD:ZIP_CD
-					},
-					ssuccess:(data)=>{
-							console.log(data);
+					data:JSON.stringify(searchArr),
+					success:(data)=>{
+						console.log(data);
 					}, error:function(request, status, error) {
 						alert(error + '에러입니다.');
 					}
 				});
-			});
-			
+			});	
 		});
 	</script>
 </th:block>
@@ -91,7 +100,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="x_content" style="text-align: right">
+	<div class="x_content" style="text-align:right">
 		<div class="btn-group" >
 			<button id="search" class="btn btn-default" type="button">조회</button>
 			<button class="btn btn-default" type="reset" disabled="disabled">입력</button>
@@ -102,7 +111,7 @@
 		</div>
 	</div>
 	<font color="black">
-	<div class="col-md-8 col-sm-6 col-xs-12">
+	<div class="col-md-12 col-sm-6 col-xs-12">
 	<div class="x_panel">
 		<div class="x_content">
 		<label>⊙ 검색조건</label>
@@ -224,12 +233,12 @@
 						<span>계약금액 : </span>
 					</td>
 					<td>
-						<input type="text" id="TOT_CONTRACT_AMT_START">
-						<span>원이상</span>
+						<input type="number" id="TOT_CONTRACT_AMT_START" value="0" min="0" maxlength="9999999999999">
+						<span>원 이상</span>
 					</td>
 					<td>
-						<input type="text" id="TOT_CONTRACT_AMT_END">
-						<span>원이하</span>
+						<input type="number" id="TOT_CONTRACT_AMT_END" value="9999999999999" min="0" maxlength="9999999999999">
+						<span>원 이하</span>
 					</td>
 				</tr>
 				<tr>
@@ -260,12 +269,12 @@
 						<span>평당단가 : </span>
 					</td>
 					<td>
-						<input type="text" id="PYUNG_DAN_START">
-						<span>원이상</span>
+						<input type="number" id="PYUNG_DAN_START" value="0" min="0" maxlength="9999999999999">
+						<span>원 이상</span>
 					</td>
 					<td>
-						<input type="text" id="PYUNG_DAN_END">
-						<span>원이하</span>
+						<input type="number" id="PYUNG_DAN_END" value="9999999999999" min="0" maxlength="9999999999999">
+						<span>원 이하</span>
 					</td>
 				</tr>
 				<tr>
@@ -286,12 +295,12 @@
 						<span>연면적 : </span>
 					</td>
 					<td>
-						<input type="text" id="G_YEARA_P_START">
-						<span>평이상</span>
+						<input type="number" id="G_YEARA_P_START" value="0" min="0" maxlength="9999999999999">
+						<span>평 이상</span>
 					</td>
 					<td>
-						<input type="text" id="G_YEARA_P_END">
-						<span>평이하</span>
+						<input type="number" id="G_YEARA_P_END" value="9999999999999" min="0" maxlength="9999999999999">
+						<span>평 이하</span>
 					</td>
 				</tr>
 			</table>

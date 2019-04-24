@@ -97,9 +97,10 @@ public class ProjectManageRestController {
 	}
 	
 	//3.1.1 용역계약서 발주처 입력 처리
-	@PostMapping("/project/manage/owner_in")
-	public String projectManageOwnerIn(Model model) {
-		return "project/manage/owner_in";
+	@PostMapping("/project/projectManageOwnerWriteProcess")
+	public String projectManageOwnerWriteProcess(String PJT_CD, String CUST_CD, String CUST_GBN, String N_RATE, String CONTRACT_AMT) {
+		System.out.println("RestController projectManageOwnerWriteProcess 메서드 실행");
+		return projectManageService.addProjectManageOwner(PJT_CD, CUST_CD, CUST_GBN, N_RATE, CONTRACT_AMT);
 	}
 
 	//3.1.1 용역계약서 발주처 삭제 처리
@@ -204,6 +205,7 @@ public class ProjectManageRestController {
 	@PostMapping("/project/projectManageDeptSearchProcess")
 	public List<Map<String, Object>> projectManageDeptSearchProcess(DeptSearch deptSearch) {
 		System.out.println("RestController projectManageDeptSearchProcess 메서드 실행");
+		System.out.println("안녕?널이면안돼"+deptSearch.getEND_DATE());
 		return projectManageService.getProjectManageDepartSearch(deptSearch);
 	}
 

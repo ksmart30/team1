@@ -102,9 +102,10 @@ public class ProjectManageService {
 		searchMap.put("columnValue",columnValue);
 		return projectManageMapper.getDeptList(searchMap);
 	}
+
+	// ===================================================용역계약서 입력 START===================================================
 	
-	// ===================================================용역계약서 입력 화면에서 프로젝트 리스트 조회 START===================================================
-	// 전체 프로젝트 대장을 조회하는 메서드
+	// 화면에서 입력된 라디오 버튼에 따라 검색 결과를 다르게 호출하는 메서드
 	public List<Map<String, Object>> getProjectManageList(String PJT_CD, String DEPT_CD, String YEAR, String pjtRadioValue) {
 		System.out.println("Service getProjectManagerList 메서드 실행");
 		System.out.println(PJT_CD);
@@ -148,8 +149,7 @@ public class ProjectManageService {
 		}
 		return resultMap;
 	}
-	// ===================================================용역계약서 입력 화면에서 프로젝트 리스트 조회 START===================================================
-
+	
 	// 프로젝트 코드로 선택하여 용역계약서가 입력되어 있으면 그 상세 내용을 조회하는 메서드
 	public Map<String, Object> getProjectManageSangse(Project project) {
 		System.out.println("Service getProjectManageSangse 메서드 실행");
@@ -184,6 +184,23 @@ public class ProjectManageService {
 		return projectManageMapper.getBusinessManageSangse(PJT_CD);
 	}
 	
+	// 선택한 용역계약서의 발주처 추가
+	public String addProjectManageOwner(String PJT_CD, String CUST_CD, String CUST_GBN, String N_RATE, String CONTRACT_AMT) {
+		System.out.println("Service addProjectManageOwner 메서드 실행");
+		// 매개변수용 Map
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("PJT_CD", PJT_CD);
+		map.put("CUST_CD", CUST_CD);
+		map.put("CUST_GBN", CUST_GBN);
+		map.put("N_RATE", Integer.parseInt(N_RATE));
+		map.put("CONTRACT_AMT", Integer.parseInt(CONTRACT_AMT));
+		// 결과 확인을 위해 리턴 데이터를 String으로 지정
+		String result = projectManageMapper.addProjectManageOwner(map);
+		System.out.println("쿼리 실행 여부 확인 : "+result);
+		return result;
+	}
+	// ===================================================용역계약서 입력 화면에서 프로젝트 리스트 조회 START===================================================
+
 	// 1번 이상 변경된 이력이 있는 용역계약서를 조회하는 메서드
 	public List<Map<String, ProjectHistory>> getProjectHistoryList(String PJT_CD, String DEPT_CD, String YEAR) {
 		System.out.println("Service getProjectManageHistoryList 메서드 실행");
@@ -244,6 +261,9 @@ public class ProjectManageService {
 
 	public List<Map<String, Object>> getProjectManageDepartSearch(DeptSearch deptSearch) {
 		System.out.println("Service getProjectManageDepartSearch 메서드 실행");
+		if(deptSearch.getTOT_CONTRACT_AMT_START()==0) {
+			deptSearch.setTOT_CONTRACT_AMT_START(0);
+		}
 		return projectManageMapper.getProjectManageDepartSearch(deptSearch);
 	}
 	// ====================================================== 용역계약서 검색(부서) END ====================================================== 

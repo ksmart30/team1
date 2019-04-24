@@ -53,7 +53,7 @@ public interface ProjectManageMapper {
 	List<Map<String, Object>> getProjectManageOwnerList(Project project);
 	
 	// 용역계약서가 이미 작성되어 있는 경우 그 기성단계 리스트 조회 쿼리를 호출하는 메서드
-	List<Map<String, Object>> getProjectManageGiseongList(Project projectD);
+	List<Map<String, Object>> getProjectManageGiseongList(Project project);
 	
 	// 용역계약서가 이미 작성되어 있는 경우 그 을의 수급 리스트 조회 쿼리를 호출하는 메서드
 	List<Map<String, Object>> getProjectManageSugub(Project project);
@@ -63,7 +63,12 @@ public interface ProjectManageMapper {
 	
 	// 용역계약서가 한 번도 작성되지 않은 경우 수주심의결정서 조회 쿼리를 호출하는 메서드
 	Map<String, Object> getBusinessManageSangse(String PJT_CD);
+	
+	// 선택한 용역계약서의 발주처 추가 쿼리를 호출하는 메서드
+	String addProjectManageOwner(Map<String, Object> map);
 
+	// ====================================================== 용역계약서 변경 조회 START ======================================================
+	
 	// 변경된 용역계약서 리스트를 검색 쿼리를 호출하는 메서드
 	List<Map<String, ProjectHistory>> getProjectHistoryList(Map<String, Object> searchMap);
 	

@@ -32,7 +32,8 @@ public class ProjectManageController {
 
 	//3.1.3 용역계약서 변경 조회 View
 	@GetMapping("/project/projectManageChangeListView")
-	public String projectManageChangeListView() {
+	public String projectManageChangeListView(Model model) {
+		model.addAttribute("dept", projectManageService.deptSelectList());
 		return "project/projectManageChangeListView";
 	}
 	
