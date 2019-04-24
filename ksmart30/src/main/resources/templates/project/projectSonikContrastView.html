@@ -59,13 +59,13 @@ function somicall(){
            			+item.TOT_CONTRACT_AMT+'</td><td  style="background-color: #f9dfff">'//총계약금액 
            			+'<a href="/project/projectSonikContrastSangseView?PJT_CD='+item.PJT_CD+'">'+'<button>상세</button></a></td><td style="background-color: #f9dfff">'
            			+item.Y_GBN+'</td><td style="background-color: #f9dfff">'//프로젝트 구분    			          			
-           			+item.HAP+'</td><td  style="background-color: #f9dfff">'//합계
-           			+item.COST_AMT1+'</td><td style="background-color: #f9dfff">' //인건비
-           			+item.COST_AMT2+'</td><td style="background-color: #f9dfff">' //제조경비1
-           			+item.COST_AMT3+'</td>' //제조경비2
+           			+item.HAP.toLocaleString()+'</td><td  style="background-color: #f9dfff">'//합계
+           			+item.COST_AMT1.toLocaleString()+'</td><td style="background-color: #f9dfff">' //인건비
+           			+item.COST_AMT2.toLocaleString()+'</td><td style="background-color: #f9dfff">' //제조경비1
+           			+item.COST_AMT3.toLocaleString()+'</td>' //제조경비2
            			+""+'</td><td style="background-color: #f9dfff">'
-           			+item.BEBU+'</td><td style="background-color: #f9dfff">'
-           			+item.YUNGUPEIK+'</td><td style="background-color: #f9dfff">'//영업이익
+           			+item.BEBU.toLocaleString()+'</td><td style="background-color: #f9dfff">'
+           			+item.YUNGUPEIK.toLocaleString()+'</td><td style="background-color: #f9dfff">'//영업이익
            			+""+'</td><td style="background-color: #f9dfff">'
            			+""+'</td><td style="background-color: #f9dfff">'
            			
@@ -73,18 +73,23 @@ function somicall(){
            			+'<tr style="background-color: #a2daff"><td>'
            			+""+'</td><td>'
            			+item.S_GBN+'</td><td>'//프로젝트 구분    			          			
-           			+item.S_HAP+'</td><td>'
-           			+item.S_COST_AMT1+'</td><td>' //인건비
-           			+item.S_COST_AMT2+'</td><td>' //제조경비1
-           			+item.S_COST_AMT3+'</td>' //제조경비2
+           			+item.S_HAP.toLocaleString()+'</td><td>'
+           			+item.S_COST_AMT1.toLocaleString()+'</td><td>' //인건비
+           			+item.S_COST_AMT2.toLocaleString()+'</td><td>' //제조경비1
+           			+item.S_COST_AMT3.toLocaleString()+'</td><td>' //제조경비2
+           			+item.S_BEBU.toLocaleString()+'</td><td>'
+           			+item.S_YUNGUPEIK.toLocaleString()+'</td>'
+           			
            			
            			+'<tr style="background-color: #a2daaa"><td>'
            			+""+'</td><td>'
            			+"차이"+'</td><td>'//프로젝트 구분    			          			
            			+""+'</td><td>'
-           			+item.COST_AMT1+'</td><td>' //인건비
-           			+item.COST_AMT2+'</td><td>' //제조경비1
-           			+item.COST_AMT3+'</td>' //제조경비2
+           			+(item.COST_AMT1-item.S_COST_AMT1).toLocaleString()+'</td><td>' //인건비
+           			+(item.COST_AMT2-item.S_COST_AMT2).toLocaleString()+'</td><td>' //제조경비1
+           			+(item.COST_AMT3-item.S_COST_AMT3).toLocaleString()+'</td><td>' //제조경비2
+           			+(item.BEBU-item.S_BEBU).toLocaleString()+'</td><td>' //배부비용
+           			+(item.YUNGUPEIK-item.S_YUNGUPEIK).toLocaleString()+'</td>' //영업이익
         		
            			           			    
            		);            			            				           	

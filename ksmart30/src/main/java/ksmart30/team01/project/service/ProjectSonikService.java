@@ -58,8 +58,5 @@ public class ProjectSonikService {
 		result.put("jejo1YesanSearch", jejo1YesanSearch);
 		result.put("projectGeyo", projectGeyo);
 		return result;
-	}
-	
-
-	 
+	} 
 }

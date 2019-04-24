@@ -96,7 +96,7 @@
 								<td style="background-color: #fff9df" rowspan="4">자체비용
 								<td style="background-color: #fff9df">인 건비</td>
 								<td>[[${data.COST_AMT1}]]</td>
-								<td>0</td>
+								<td>[[${data.COST_RATE1}]]</td>
 								<td>0</td>
 								<td>0</td>
 								<td>0</td>
@@ -105,7 +105,7 @@
 							<tr>
 								<td style="background-color: #fff9df">제조경비1</td>
 								<td>[[${data.COST_AMT2}]]</td>
-								<td>0</td>
+								<td>[[${data.COST_RATE2}]]</td>
 								<td>0</td>
 								<td>0</td>
 								<td>0</td>
@@ -114,7 +114,7 @@
 							<tr>
 								<td style="background-color: #fff9df">제조경비2</td>
 								<td>[[${data.COST_AMT3}]]</td>
-								<td>0</td>
+								<td>[[${data.COST_RATE3}]]</td>
 								<td>0</td>
 								<td>0</td>
 								<td>0</td>
@@ -123,7 +123,7 @@
 							<tr>
 								<td style="background-color: #fff9df">소계</td>
 								<td>[[${data.SHAP}]]</td>
-								<td>0</td>
+								<td>[[${data.SHAP_RATE}]]</td>
 								<td>0</td>
 								<td>0</td>
 								<td>0</td>
@@ -133,7 +133,7 @@
 								<td style="background-color: #fff9df" rowspan="5">배부비용</td>
 								<td style="background-color: #fff9df">공통비1</td>
 								<td>[[${data.DIV_AMT40}]]</td>
-								<td>0</td>
+								<td>[[${data.DIV_RATE40}]]</td>
 								<td>0</td>
 								<td>0</td>
 								<td>0</td>
@@ -151,7 +151,7 @@
 							<tr>
 								<td style="background-color: #fff9df">공통비2</td>
 								<td>[[${data.DIV_AMT20}]]</td>
-								<td>0</td>
+								<td>[[${data.DIV_RATE20}]]</td>
 								<td>0</td>
 								<td>0</td>
 								<td>0</td>
@@ -160,7 +160,7 @@
 							<tr>
 								<td style="background-color: #fff9df">관리부문비</td>
 								<td>[[${data.DIV_AMT30}]]</td>
-								<td>100.0</td>
+								<td>[[${data.DIV_RATE30}]]</td>
 								<td>0</td>
 								<td>100.0</td>
 								<td>0</td>
@@ -169,7 +169,7 @@
 							<tr>
 								<td style="background-color: #fff9df">소계</td>
 								<td>[[${data.BEBU}]]</td>
-								<td>100.0</td>
+								<td>[[${data.BEBU_RATE}]]</td>
 								<td>0</td>
 								<td>100.0</td>
 								<td>0</td>
@@ -178,7 +178,7 @@
 							<tr>
 								<td style="background-color: #fff9df" colspan="2">비용합계</td>
 								<td>[[${data.HAP}]]</td>
-								<td>100.0</td>
+								<td>[[${data.HAP_RATE}]]</td>
 								<td>0</td>
 								<td>100.0</td>
 								<td>0</td>
@@ -187,7 +187,7 @@
 							<tr>
 								<td style="background-color: #fff9df" colspan="2">영업이익</td>
 								<td>[[${data.YUNGUPEIK}]]</td>
-								<td>100.0</td>
+								<td>[[${data.YUNGUPEIK_RATE}]]</td>
 								<td>0</td>
 								<td>100.0</td>
 								<td>0</td>
@@ -196,8 +196,8 @@
 							<tr>
 								<td style="background-color: #fff9df" rowspan="5">사업성검토</td>
 								<td style="background-color: #fff9df">인건비</td>
-								<td>0</td>
-								<td>100.0</td>
+								<td>[[${data.S_COST_AMT1}]]</td>
+								<td>[[${data.S_COST_RATE1}]]</td>
 								<td>0</td>
 								<td>100.0</td>
 								<td>0</td>
@@ -205,8 +205,8 @@
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df">제조경비1</td>
-								<td>0</td>
-								<td>100.0</td>
+								<td>[[${data.S_COST_AMT2}]]</td>
+								<td>[[${data.S_COST_RATE2}]]</td>
 								<td>0</td>
 								<td>100.0</td>
 								<td>0</td>
@@ -214,8 +214,8 @@
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df">공통비2</td>
-								<td>0</td>
-								<td>100.0</td>
+								<td>[[${data.S_COST_AMT3}]]</td>
+								<td>[[${data.S_COST_RATE3}]]</td>
 								<td>0</td>
 								<td>100.0</td>
 								<td>0</td>
@@ -223,8 +223,8 @@
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df">관리부문비</td>
-								<td>0</td>
-								<td>100.0</td>
+								<td>[[${data.S_DIV_AMT}]]</td>
+								<td>[[${data.S_DIV_RATE}]]</td>
 								<td>0</td>
 								<td>100.0</td>
 								<td>0</td>
@@ -232,8 +232,8 @@
 							</tr>
 							<tr>
 								<td style="background-color: #fff9df">소계</td>
-								<td>0</td>
-								<td>100.0</td>
+								<td>[[${data.S_HAP}]]</td>
+								<td>[[${data.S_HAP_RATE}]]</td>
 								<td>0</td>
 								<td>100.0</td>
 								<td>0</td>

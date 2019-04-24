@@ -132,6 +132,86 @@
 	            }
 	        });
 		})
+		
+		$('#clientIn').click(()=>{
+			console.log("clientInsert시작 저장");
+			let CUST_CD = $('#CUST_CD').val();
+			let CUST_NM = $('#cust_NM').val();
+			let CUST_PW = $('#cust_PW').val();
+			let CUST_FULL_NM = $('#cust_FULL_NM').val();
+			let BUSI_TYPE = $('#busi_TYPE').val();
+			let CUST_GBN = $('#cust_GBN').val();
+			let REPRE_NM = $('#repre_NM').val();
+			let ZIP_CD = $('#zip_CD').val();
+			let ADDR = $('#addr').val();
+			let TEL_NO = $('#tel_NO').val();
+			let FAX_NO = $('#fax_NO').val();
+			let BIZ_STAT = $('#biz_STAT').val();
+			let BIZ_ITEM = $('#biz_ITEM').val();
+			let REPRE_CUST_CD = $('#repre_CUST_CD').val();
+			let ESTAB_DT = $('#estab_DT').val();
+			let INFOM_EMP = $('#infom_EMP').val();
+			let HOMEPAGE = $('#homepage').val();
+			let USE_YN = $('#use_YN').val();
+			let AUDIT_ID = $('#audit_ID').val();
+			let BUPIN = $('#bupin').val();
+			let FUND = $('#fund').val();
+			let BOND = $('#bond').val();
+			let EMAIL = $('#email').val();
+			let DAM_NM = $('#DAM_NM').val();
+			let ISO = $('#iso').val();
+			let CO_YN = $('#co_YN').val();
+			let CEL_NO = $('#cel_NO').val();
+			let REGISTER_NO = $('#register_NO').val();
+			let BANK_CD = $('#bank_CD').val();
+			let BANK_ACCNO = $('#bank_ACCNO').val();
+			let BANK_OWN = $('#bank_OWN').val();
+			let CO_SERVICE = $('#co_SERVICE').val();
+			
+			$.ajax({
+				url:'/baseinfo/clientListView',
+				type:'POST',
+				data:{
+					CUST_CD:CUST_CD
+					,CUST_NM:CUST_NM
+					,CUST_PW:CUST_PW		
+					,BUSI_TYPE:BUSI_TYPE
+					,CUST_GBN:CUST_GBN
+					,REPRE_NM:REPRE_NM
+					,ZIP_CD:ZIP_CD
+					,ADDR:ADDR
+					,TEL_NO:TEL_NO
+					,FAX_NO:FAX_NO
+					,BIZ_STAT:BIZ_STAT
+					,BIZ_ITEM:BIZ_ITEM
+					,REPRE_CUST_CD:REPRE_CUST_CD
+					,ESTAB_DT:ESTAB_DT
+					,INFOM_EMP:INFOM_EMP
+					,HOMEPAGE:HOMEPAGE
+					,USE_YN:USE_YN
+					,AUDIT_ID:AUDIT_ID
+					,BUPIN:BUPIN
+					,FUND:FUND
+					,BOND:BOND
+					,EMAIL:EMAIL
+					,DAM_NM:DAM_NM
+					,ISO:ISO
+					,CO_YN:CO_YN
+					,CEL_NO:CEL_NO
+					,REGISTER_NO:REGISTER_NO
+					,BANK_CD:BANK_CD
+					,BANK_ACCNO:BANK_ACCNO
+					,BANK_OWN:BANK_OWN
+					,CO_SERVICE:CO_SERVICE	
+					,CUST_FULL_NM:CUST_FULL_NM
+				},
+				success:function(){
+	                alert('거래처 등록 성공');
+	        	}
+				
+			})
+
+		})
 	});
 	
 	
@@ -157,7 +237,7 @@
 				<button class="btn btn-default" type="reset">입력</button>
 				<button class="btn btn-default" type="button">수정</button>
 				<button class="btn btn-default" type="button">삭제</button>
-				<button class="btn btn-default" type="button">저장</button>
+				<button class="btn btn-default" type="button" id="clientIn">저장</button>
 				<button class="btn btn-default" type="button">출력</button>
 			</div>
 		</div> <!-- 검색부분 start -->

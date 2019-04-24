@@ -20,8 +20,7 @@ public class ClientService {
 		return clientMapper.clientSelect(client);
 		
 	}
-	//왼쪽 상단 검색기능에서 거래처코드를 매개변수로 넘겨
-	//해당 거래처의 상세정보를 불러오는 메서드
+	//왼쪽 상단 검색기능에서 거래처코드를 매개변수로 넘겨 해당 거래처의 상세정보를 불러오는 메서드
 	public Client clientAllSearch(String CUST_CD){
 		
 		if(CUST_CD.length() < 5) {
@@ -40,4 +39,9 @@ public class ClientService {
 		return clientMapper.clientListOutput(clientList);
 	}
 	
+	//화면에서 입력받은 거래처정보를 DB에 저장하는 메서드
+	public void clientViewInsert(Client client) {
+		
+		clientMapper.clientInsert(client);
+	}
 }

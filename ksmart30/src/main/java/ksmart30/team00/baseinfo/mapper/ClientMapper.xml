@@ -138,5 +138,80 @@
 
 
 	</select>
+	
+	
+	<insert id="clientInsert"
+			parameterType="ksmart30.team00.baseinfo.domain.Client">
+	
+INSERT INTO T_AC0300 
+			(CUST_CD  
+			,CUST_NM 
+			,CUST_FULL_NM
+			,CUST_PW			
+			,BUSI_TYPE
+			,CUST_GBN
+			,REPRE_NM
+			,ZIP_CD
+			,ADDR
+			,TEL_NO
+			,FAX_NO
+			,BIZ_STAT
+			,BIZ_ITEM
+			,REPRE_CUST_CD
+			,ESTAB_DT
+			,INFOM_EMP
+			,HOMEPAGE
+			,USE_YN
+			,AUDIT_ID
+			,BUPIN
+			,FUND
+			,BOND
+			,EMAIL
+			,DAM_NM
+			,ISO
+			,CO_YN
+			,CEL_NO
+			,REGISTER_NO
+			,BANK_CD
+			,BANK_ACCNO
+			,BANK_OWN
+			,CO_SERVICE
+			,AUDIT_TM)
+VALUES 	
+			(#{CUST_CD} 	 
+			,#{CUST_NM} 
+			,#{CUST_FULL_NM}
+			,#{CUST_PW} 
+			,#{BUSI_TYPE} 
+			,#{CUST_GBN} 
+			,#{REPRE_NM} 
+			,#{ZIP_CD} 
+			,#{ADDR} 
+			,#{TEL_NO} 
+			,#{FAX_NO} 
+			,#{BIZ_STAT} 
+			,#{BIZ_ITEM} 
+			,#{REPRE_CUST_CD} 
+			,#{ESTAB_DT} 
+			,#{INFOM_EMP} 
+			,#{HOMEPAGE} 
+			,#{USE_YN} 
+			,#{AUDIT_ID} 
+			,#{BUPIN} 	
+			,#{FUND} 
+			,#{BOND} 
+			,#{EMAIL} 
+			,#{DAM_NM} 
+			,#{ISO} 
+			,#{CO_YN} 
+			,#{CEL_NO} 
+			,#{REGISTER_NO} 
+			,#{BANK_CD} 
+			,#{BANK_ACCNO} 
+			,#{BANK_OWN} 
+			,#{CO_SERVICE} 
+			,GETDATE())
+			
+	</insert>
 
 </mapper>

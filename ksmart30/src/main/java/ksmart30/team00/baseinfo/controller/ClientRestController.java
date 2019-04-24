@@ -45,4 +45,10 @@ public class ClientRestController {
 		return clientService.clientListView(clientList);
 	}
 	
+	//0.1 거래처코드 등록
+	@PostMapping("/baseInfo/clientViewInsert")
+	public void clientViewInsert(Client client) {
+		System.out.println("ClientRestController  clientViewInsert왔나");
+		clientService.clientViewInsert(client);
+	}
 }

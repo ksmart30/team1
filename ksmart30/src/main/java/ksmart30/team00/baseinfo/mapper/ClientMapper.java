@@ -15,4 +15,6 @@ public interface ClientMapper {
 	Client clientAllSelect(String CUST_CD);
 
 	List<Map<String,Object>> clientListOutput(ClientList clientList);
+	
+	void clientInsert(Client client);
 }
