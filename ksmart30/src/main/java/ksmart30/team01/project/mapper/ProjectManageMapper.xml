@@ -447,7 +447,7 @@
 			PJT_CD = #{PJT_CD}
 	</select>
 	
-	<!-- 용역계약서 신규 입력시 발주처 입력 -->
+	<!-- 처음 발주처 입력 -->
 	<insert id="addProjectManageOwner" parameterType="java.util.Map" keyProperty="PJT_CD,CUST_CD">
 		INSERT INTO
 			T_P11010(
@@ -461,11 +461,44 @@
 			#{PJT_CD},
  			#{CUST_CD},
 			#{CUST_GBN},
-			#{N_RATE},
-			#{CONTRACT_AMT}
+			${N_RATE},
+			${CONTRACT_AMT}
 		)
 	</insert>
 	
+	<!-- 발주처 히스토리 입력 전 최대 시퀀스 검색 -->
+	<select id="getProjectManageOwnerSeq" parameterType="String" resultType="Integer" >
+		SELECT
+			ISNULL((MAX(PJT_SEQ)+1),0)
+		FROM
+			T_P11010_H
+		WHERE
+			PJT_CD = #{PJT_CD}
+	</select>
+	
+	<!-- 발주처 히스토리 입력  -->
+	<insert id="addProjectManageOwnerHistory" parameterType="java.util.Map" keyProperty="PJT_SEQ,CUST_CD">
+		INSERT INTO T_P11010_H (
+			PJT_CD,
+			PJT_SEQ,
+			PJT_DATE,
+			PJT_GB,
+			CUST_CD,
+			CUST_GBN,
+			N_RATE,
+			CONTRACT_AMT
+		)
+		VALUES (
+			#{PJT_CD},
+			${PJT_SEQ},
+			#{NOW_DATE},
+			#{PJT_GB},
+ 			#{CUST_CD},
+			#{CUST_GBN},
+			${N_RATE},
+			${CONTRACT_AMT}
+		)
+	</insert>
 	<!-- 용역계약서 변경 조회를 위해 변경한 이력이 1번이라도 있는 용역계약서를 조회한다 -->
 	<select id="getProjectHistoryList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT DISTINCT
@@ -697,7 +730,7 @@
 		ORDER BY A.CONTRACT_DATE ASC 계약일자
 	</select> -->
 
-	<select id="getProjectManageDepartSearch" parameterType="ksmart30.team01.project.domain.DeptSearch" resultType="java.util.Map">
+	<select id="getProjectManageDepartSearch" parameterType="java.util.Map" resultType="java.util.Map">
 		<!-- 입력되는 값 순서대로 -->
 		<!-- In_sys_start					부서 --> 
 		<!-- In_contract_gbn				계약구분 1-신규 2-변경(가계약) -->

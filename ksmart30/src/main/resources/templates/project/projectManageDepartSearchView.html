@@ -3,7 +3,22 @@
 <th:block layout:fragment="customHead">
 	<meta charset="UTF-8">
 	<title>용역계약서 검색(부서)</title>
-	<th:block th:include="layout/customHead"></th:block>
+	<!-- Bootstrap -->
+	<link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<!-- NProgress -->
+	<link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+	<!-- iCheck -->
+	<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	<!-- Datatables -->
+	<link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	<link href="../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+	<link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+	<link href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+	<link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+	<!-- Custom Theme Style -->
+	<link href="../build/css/custom.min.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 		function modalCustOneBtn(CUST_CD, CUST_NM) {
@@ -43,14 +58,15 @@
 					}
 	    		});
 			});
-
+			$('#search').trigger('click');
+			
 			$('#search').click(()=>{
 				// 검색 조건에 따른 용역계약서 검색
 				let searchArr = {
 					DEPT_CD:$("#DEPT_CD option:selected").val(),
 	 				CONTRACT_GBN:$("#CONTRACT_GBN option:selected").val(),
 					PJT_E_GBN:$("#PJT_E_GBN option:selected").val(),
-					CUST_CD:$('#CUST_CD').val(),
+					CUST_CD:$('#CUST_CD_VAL').val(),
 					START_DATE:$('#START_DATE').val(),
 					END_DATE:$('#END_DATE').val(),
 					TOT_CONTRACT_AMT_START:$('#TOT_CONTRACT_AMT_START').val(),
@@ -62,26 +78,46 @@
 					BUILD_TYPE:$("#BUILD_TYPE option:selected").val(),
 					ZIP_CD:$("#ZIP_CD option:selected").val()
 				}
-				/* let DEPT_CD = $("#DEPT_CD option:selected").val();
- 				let CONTRACT_GBN = $("#CONTRACT_GBN option:selected").val();
-				let PJT_E_GBN = $("#PJT_E_GBN option:selected").val();
-				let CUST_CD = $('#CUST_CD').val();
-				let START_DATE = $('#START_DATE').val();
-				let END_DATE = $('#END_DATE').val();
-				let TOT_CONTRACT_AMT_START = $('#TOT_CONTRACT_AMT_START').val();
-				let TOT_CONTRACT_AMT_END = $('#TOT_CONTRACT_AMT_END').val();
-				let PYUNG_DAN_START = $('#PYUNG_DAN_START').val();
-				let PYUNG_DAN_END = $('#PYUNG_DAN_END').val();
-				let G_YEARA_P_START = $('#G_YEARA_P_START').val();
-				let G_YEARA_P_END = $('#G_YEARA_P_END').val();
-				let BUILD_TYPE = $("#BUILD_TYPE option:selected").val();
-				let ZIP_CD = $("#ZIP_CD option:selected").val(); */
+				console.log(searchArr);
+				
+				// 검색조건을 넣고 SELECT 쿼리 실행
 				$.ajax({
+					contentType:'application/json',
+					dataType:'json',
 					url:'/project/projectManageDeptSearchProcess',
 					type:'POST',
 					data:JSON.stringify(searchArr),
 					success:(data)=>{
 						console.log(data);
+						let test = data.CONTRACT_DATE;
+						let table = $('#deptSearchTable').DataTable({
+							language: {
+					            decimal: ","
+							},
+							searching:false,
+							scrollX: true,
+		    				data:data,
+		    				columns: [
+		    			        {data: 'PJT_NM'},
+		    			        {data: 'DEPT_NM'},
+		    			        {data: 'CONTRACT_DATE'},
+		    			        {data: 'CUST_NM'},
+		    			        {data: 'BUILD_TYPE_NM'},
+		    			        {data: 'ORG_CONTRACT_AMT'},
+		    			        {data: 'TOT_CONTRACT_AMT'},
+		    			        {data: 'SUM_CONTRACT_AMT'},
+		    			        {data: ''},
+		    			        {data: 'PYUNG_DAN'},
+		    			        {data: 'G_YAREA_P'},
+		    			        {data: 'PJT_E_GBN_NM'},
+		    			        {data: 'PJT_E_DATE'},
+		    			        {data: 'JIKGUP_NM'},
+		    			        {data: 'PJT_ADDR'},
+		    			        {data: 'CONTRACT_PRI3_NM'},
+		    			        {data: ''}
+		    			    ]
+						});
+						table.destroy();
 					}, error:function(request, status, error) {
 						alert(error + '에러입니다.');
 					}
@@ -310,7 +346,7 @@
 	<!-- 검색폼 끝 -->
 	
 	<!-- sort 시작 -->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<!-- <div class="col-md-4 col-sm-6 col-xs-12">
 	<div class="x_panel">
 		<div class="x_content">
 		<label>⊙ Sort</label>
@@ -338,7 +374,7 @@
 			</table>
 		</div>
 	</div>
-	</div>
+	</div> -->
 	<!-- sort 끝 -->
 
 	<!-- 출력 리스트 검색 시작 -->
@@ -346,52 +382,31 @@
 	<div class="x_panel">
 		<div class="x_content">
 			<div class="table-responsive">
-				<table class="table table table-striped jambo_table bulk_action">
+				<table class="table table table-striped jambo_table bulk_action" id="deptSearchTable">
 					<thead>
 						<tr class="headings">
-							<th class="column-title">프로젝트코드명</th>
-							<th class="column-title">계약 일자</th>
-							<th class="column-title">발주처</th>
-							<th class="column-title">건축물유형</th>
-							<th class="column-title">최초계약금액</th>
-							<th class="column-title">계약금액</th>
-							<th class="column-title">최종계약금액</th>
-							<th class="column-title">첨부</th>
-							<th class="column-title">평당단가</th>
-							<th class="column-title">연면적</th>
-							<th class="column-title">종료구분</th>
-							<th class="column-title">종료일자</th>
-							<th class="column-title">계약구분</th>
-							<th class="column-title">위치/지역</th>
-							<th class="column-title">계약기간</th>
-							<th class="column-title">타절일자</th>
+							<th style="white-space: nowrap" class="column-title">프로젝트코드명</th>
+							<th style="white-space: nowrap" class="column-title">부서</th>
+							<th style="white-space: nowrap" class="column-title">계약 일자</th>
+							<th style="white-space: nowrap" class="column-title">발주처</th>
+							<th style="white-space: nowrap" class="column-title">건축물유형</th>
+							<th style="white-space: nowrap" class="column-title">최초계약금액</th>
+							<th style="white-space: nowrap" class="column-title">계약금액</th>
+							<th style="white-space: nowrap" class="column-title">최종계약금액</th>
+							<th style="white-space: nowrap" class="column-title">첨부</th>
+							<th style="white-space: nowrap" class="column-title">평당단가</th>
+							<th style="white-space: nowrap" class="column-title">연면적</th>
+							<th style="white-space: nowrap" class="column-title">종료구분</th>
+							<th style="white-space: nowrap" class="column-title">종료일자</th>
+							<th style="white-space: nowrap" class="column-title">계약구분</th>
+							<th style="white-space: nowrap" class="column-title">위치/지역</th>
+							<th style="white-space: nowrap" class="column-title">계약기간</th>
+							<th style="white-space: nowrap" class="column-title">타절일자</th>
 						</tr>
 					</thead>
-
-					<tbody>
-						<tr class="even pointer">
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-					</tbody>
-					
 					<!-- 합계 부분 -->
-					<tbody>
-					</tbody>
+					<tfoot>
+					</tfoot>
 				</table>
 				<!-- 출력 리스트 검색 끝 -->
 			</div>
@@ -400,5 +415,32 @@
 	</font>
 	</th:block>
 	<th:block layout:fragment="customJquery">
-		<th:block th:include="layout/customJquery"></th:block>
+		<!-- jQuery -->
+	    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+	    <!-- Bootstrap -->
+	    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	    <!-- FastClick -->
+	    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+	    <!-- NProgress -->
+	    <script src="../vendors/nprogress/nprogress.js"></script>
+	    <!-- iCheck -->
+	    <script src="../vendors/iCheck/icheck.min.js"></script>
+	    <!-- Datatables -->
+	    <script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+	    <script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+	    <script src="../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+	    <script src="../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+	    <script src="../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+	    <script src="../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+	    <script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+	    <script src="../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+	    <script src="../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+	    <script src="../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+	    <script src="../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+	    <script src="../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+	    <script src="../vendors/jszip/dist/jszip.min.js"></script>
+	    <script src="../vendors/pdfmake/build/pdfmake.min.js"></script>
+	    <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
+	    <!-- Custom Theme Scripts -->
+	    <script src="../build/js/custom.min.js"></script>
     </th:block>

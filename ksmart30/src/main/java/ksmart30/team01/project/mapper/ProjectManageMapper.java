@@ -64,11 +64,18 @@ public interface ProjectManageMapper {
 	// 용역계약서가 한 번도 작성되지 않은 경우 수주심의결정서 조회 쿼리를 호출하는 메서드
 	Map<String, Object> getBusinessManageSangse(String PJT_CD);
 	
-	// 선택한 용역계약서의 발주처 추가 쿼리를 호출하는 메서드
-	String addProjectManageOwner(Map<String, Object> map);
-
-	// ====================================================== 용역계약서 변경 조회 START ======================================================
 	
+	// ====================================================== 용역계약서 입력-발주처 START ======================================================
+	// 선택한 용역계약서의 첫 발주처 입력 쿼리를 호출하는 메서드
+	int addProjectManageOwner(Map<String, Object> map);
+	// 발주처 히스토리 입력을 위해 최대 시퀀스+1을 구해오는 메서드
+	int getProjectManageOwnerSeq(String PJT_CD);
+	// 발주처 히스토리 입력 쿼리를 호출하는 메서드
+	int addProjectManageOwnerHistory(Map<String, Object> map);
+	// ====================================================== 용역계약서 입력-발주처 START ======================================================
+	
+	
+	// ====================================================== 용역계약서 변경 조회 START ======================================================
 	// 변경된 용역계약서 리스트를 검색 쿼리를 호출하는 메서드
 	List<Map<String, ProjectHistory>> getProjectHistoryList(Map<String, Object> searchMap);
 	
@@ -98,7 +105,7 @@ public interface ProjectManageMapper {
 	// 화면에서 쓰이는 종합코드 전체 검색 쿼리를 호출하는 메서드
 	List<Map<String, Object>> getProjectManageDepartSearchCode();
 	// 검색 조건에 따라 용역계약서 List 조회 쿼리를 호출하는 메서드
-	List<Map<String, Object>> getProjectManageDepartSearch(DeptSearch deptSearch);
+	List<Map<String, Object>> getProjectManageDepartSearch(Map<String, Object> map);
 	// ====================================================== 용역계약서 검색(부서) END ======================================================
 
 	// ====================================================== 용역계약서 현황 START ====================================================== 

@@ -299,7 +299,7 @@
 					$('#OWNER_LIST_ONE').empty();
 					$(data).each((index, item) => {
 						console.log(item);
-						$('#OWNER_LIST_ONE').append('<tr><td></td><td>'+item.CUST_NM+'</td><td>'+item.CUST_GBN_NM+'</td><td>'+item.N_RATE+'</td><td>'+item.CONTRACT_AMT+'</td><td><button type="submit" class="btn" style="color:black" id="ownerDelBtn">삭제</button></td></tr>');
+						$('#OWNER_LIST_ONE').append('<tr><td></td><td>'+item.CUST_NM+'</td><td>'+item.CUST_GBN_NM+'</td><td>'+item.N_RATE+'</td><td>'+item.CONTRACT_AMT+'</td><td><button type="button" class="btn" style="color:black" onclick="ownerDelBtn()">삭제</button></td></tr>');
 					});
 					$('#N_RATE_SUM').empty();						// 지분합계
 					$('#N_RATE_SUM').append(data[0].N_RATE_SUM);
@@ -327,6 +327,14 @@
 					$('#SUGUM_RATE_SUM').append(data[0].SUGUM_RATE_SUM);
 				}
 			});
+		}
+		
+		// 선택한 발주처 삭제
+		function ownerDelBtn() {
+			let PJT_CD = $('#PJT_CD_ONE').text();				// 프로젝트 코드
+			let PJT_DATE = NOW_DATE;
+			console.log('발주처삭제하고싶다');
+			console.log(PJT_CD+PJT_DATE);
 		}
 		
 		// 신규 용역계약서 작성시 수주심의결정서 상세를 출력
@@ -402,17 +410,20 @@
 				});
 			});
 			
-			// 발주처 리스트 추가
+			// 발주처 추가
 			$('#ownerAddBtn').click(()=>{
-				let PJT_CD = $('#PJT_CD_ONE').val();				// 프로젝트 코드
+				let PJT_CD = $('#PJT_CD_ONE').text();				// 프로젝트 코드
 				let CUST_CD = $('#CUST_CD_VAL').val();				// 발주처
 				let CUST_GBN = $("#CUST_GBN_VAL option:selected").val();	// 발주처 구분
 				let N_RATE = $('#N_RATE_VAL').val();				// 지분
 				let CONTRACT_AMT = $('#CONTRACT_AMT_VAL').val();	// 계약금액
+				// replace 정규식으로 - 제거
+				NOW_DATE = NOW_YEAR+NOW_MONTH+NOW_DAY;
+				console.log('뭐지?'+NOW_DATE);
 				$.ajax({
 					url:'/project/projectManageOwnerWriteProcess',
 					type:'POST',
-					data:{PJT_CD:PJT_CD, CUST_CD:CUST_CD, CUST_GBN:CUST_GBN, N_RATE:N_RATE, CONTRACT_AMT:CONTRACT_AMT},
+					data:{PJT_CD:PJT_CD, CUST_CD:CUST_CD, CUST_GBN:CUST_GBN, N_RATE:N_RATE, CONTRACT_AMT:CONTRACT_AMT, NOW_DATE:NOW_DATE},
 					success:function(data){
 						console.log(data);
 						alert("발주처 추가 완료!");
@@ -487,11 +498,11 @@
 		</script>
 	</th:block>
 	<th:block layout:fragment="customBody">
-	<div class="col-md-9 col-xs-12" style="color:black;">
+	<div class="col-md-12 col-xs-12" style="color:black;">
     <div class="page-title">
 	<div class="title_left">
 	 <h2><b>용역계약서 입력</b></h2>
-	<h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리</b></font></h5>			
+	<h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리&nbsp;>&nbsp;&nbsp;2.1.1용역계약서 입력</b></font></h5>			
 	</div>
 	</div>
     </div>

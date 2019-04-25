@@ -11,6 +11,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ksmart30.team01.project.domain.DeptSearch;
@@ -98,9 +99,9 @@ public class ProjectManageRestController {
 	
 	//3.1.1 용역계약서 발주처 입력 처리
 	@PostMapping("/project/projectManageOwnerWriteProcess")
-	public String projectManageOwnerWriteProcess(String PJT_CD, String CUST_CD, String CUST_GBN, String N_RATE, String CONTRACT_AMT) {
+	public void projectManageOwnerWriteProcess(String PJT_CD, String CUST_CD, String CUST_GBN, String N_RATE, String CONTRACT_AMT, String NOW_DATE) {
 		System.out.println("RestController projectManageOwnerWriteProcess 메서드 실행");
-		return projectManageService.addProjectManageOwner(PJT_CD, CUST_CD, CUST_GBN, N_RATE, CONTRACT_AMT);
+		projectManageService.addProjectManageOwner(PJT_CD, CUST_CD, CUST_GBN, N_RATE, CONTRACT_AMT, NOW_DATE);
 	}
 
 	//3.1.1 용역계약서 발주처 삭제 처리
@@ -203,12 +204,11 @@ public class ProjectManageRestController {
 
 	// 3.1.4 용역계약서 검색(부서)
 	@PostMapping("/project/projectManageDeptSearchProcess")
-	public List<Map<String, Object>> projectManageDeptSearchProcess(DeptSearch deptSearch) {
+	public List<Map<String, Object>> projectManageDeptSearchProcess(@RequestBody Map<String, Object> map) {
 		System.out.println("RestController projectManageDeptSearchProcess 메서드 실행");
-		System.out.println("안녕?널이면안돼"+deptSearch.getEND_DATE());
-		return projectManageService.getProjectManageDepartSearch(deptSearch);
+		return projectManageService.getProjectManageDepartSearch(map);
 	}
-
+		
 	//3.1.6 용역계약 현황 차트 값을 가져옴
 	@PostMapping("/project/projectManageHyunhwangProcess")
 	public Map<String, Object> projectManageHyunhwangProcess(String YEAR) {
