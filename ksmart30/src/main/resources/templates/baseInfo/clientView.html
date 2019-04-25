@@ -135,15 +135,15 @@
 		
 		$('#clientIn').click(()=>{
 			console.log("clientInsert시작 저장");
-			let CUST_CD = $('#CUST_CD').val();
+			let CUST_CD = $('#cust_cd').val();
 			let CUST_NM = $('#cust_NM').val();
 			let CUST_PW = $('#cust_PW').val();
 			let CUST_FULL_NM = $('#cust_FULL_NM').val();
-			let BUSI_TYPE = $('#busi_TYPE').val();
+			let BUSI_TYPE = $('input[name=busy_TYPE2]:checked').val();
 			let CUST_GBN = $('#cust_GBN').val();
 			let REPRE_NM = $('#repre_NM').val();
-			let ZIP_CD = $('#zip_CD').val();
-			let ADDR = $('#addr').val();
+			let ZIP_CD = $('#sample6_postcode').val();
+			let ADDR = $('#sample6_address').val();
 			let TEL_NO = $('#tel_NO').val();
 			let FAX_NO = $('#fax_NO').val();
 			let BIZ_STAT = $('#biz_STAT').val();
@@ -158,7 +158,7 @@
 			let FUND = $('#fund').val();
 			let BOND = $('#bond').val();
 			let EMAIL = $('#email').val();
-			let DAM_NM = $('#DAM_NM').val();
+			let DAM_NM = $('#dam_NM').val();
 			let ISO = $('#iso').val();
 			let CO_YN = $('#co_YN').val();
 			let CEL_NO = $('#cel_NO').val();
@@ -169,7 +169,7 @@
 			let CO_SERVICE = $('#co_SERVICE').val();
 			
 			$.ajax({
-				url:'/baseinfo/clientListView',
+				url:'/baseInfo/clientViewInsert',
 				type:'POST',
 				data:{
 					CUST_CD:CUST_CD
@@ -234,7 +234,7 @@
 	<font color="black">
 		<div class="x_content" style="text-align: right">
 			<div class="btn-group">
-				<button class="btn btn-default" type="reset">입력</button>
+				<a href="/baseInfo/clientView"><button class="btn btn-default" type="reset" >입력</button></a>
 				<button class="btn btn-default" type="button">수정</button>
 				<button class="btn btn-default" type="button">삭제</button>
 				<button class="btn btn-default" type="button" id="clientIn">저장</button>
@@ -323,14 +323,14 @@
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="cust_cd">
+													id="cust_cd" value="">
 											</div>
 										</td>
 										<td style="background-color: #f3f3f3" width="15%">고객명</td>
 										<td colspan="6">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="cust_NM">
+													id="cust_NM"  value="">
 											</div>
 										</td>
 									</tr>
@@ -340,7 +340,7 @@
 										<td colspan="20">
 											<div class="col-md-20 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="cust_FULL_NM">
+													id="cust_FULL_NM"  value="">
 											</div>
 										</td>
 									</tr>
@@ -363,16 +363,23 @@
 											</div>
 										</td>
 
+									
+								
+								
 										<td style="background-color: #f3f3f3" width="10%">거래유형</td>
 										<td colspan="6">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 
-												<input type="radio" name="chk_info" value="1">매입 <input
-													type="radio" name="chk_info" value="2">매출 <input
-													type="radio" name="chk_info" value="3">기타
+												<input type="radio" name="busy_TYPE2" value="1" >매입 
+												<input type="radio" name="busy_TYPE2" value="2" >매출 
+												<input type="radio" name="busy_TYPE2" value="3" >기타
 											</div>
 										</td>
+										
+									
+									
 									</tr>
+									
 <!-- 법인구분  BUPIN Value 알아보기  -->
 <!-- 4 -->
 									<tr>
@@ -391,7 +398,7 @@
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="repre_NM">
+													id="repre_NM" value="">
 											</div>
 										</td>
 									</tr>
@@ -402,11 +409,11 @@
 										<td>
 											<div class="col-md-7 col-sm-7 col-xs-7 ">
 												<input type="text" class="form-control"
-													id="sample6_postcode">
+													id="sample6_postcode" value="">
 
 											</div>
 										<button class="btn" onclick="sample6_execDaumPostcode()">
-											<i class="fa fa-search" id="pjt_s"></i>
+											<i class="fa fa-search" id="pjt_s" value=""></i>
 										</button>
 										<td colspan="6">
 											<div class="col-md-20 col-sm-20 col-xs-20 ">
@@ -424,14 +431,14 @@
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="tel_NO">
+													id="tel_NO" value="">
 											</div>
 										</td>
 										<td style="background-color: #f3f3f3" width="15%">팩스번호</td>
 										<td colspan="6">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="fax_NO">
+													id="fax_NO" value="">
 											</div>
 
 										</td>
@@ -442,14 +449,14 @@
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="biz_STAT">
+													id="biz_STAT" value="">
 											</div>
 										</td>
 										<td style="background-color: #f3f3f3" width="15%">업종</td>
 										<td colspan="6">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="biz_ITEM">
+													id="biz_ITEM" value="">
 											</div>
 
 										</td>
@@ -460,7 +467,7 @@
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="repre_CUST_CD">
+													id="repre_CUST_CD" value="">
 											</div>
 
 										</td>
@@ -554,7 +561,7 @@
 										<td colspan="6">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="bank_ACCNO">
+													id="bank_ACCNO" value="">
 											</div>
 										</td>
 									</tr>
@@ -564,7 +571,7 @@
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="bank_OWN">
+													id="bank_OWN" value="">
 											</div>
 										</td>
 									</tr>
@@ -574,14 +581,14 @@
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="fund">
+													id="fund" value="0">
 											</div>
 										</td>
 										<td style="background-color: #f3f3f3">채권한도액</td>
 										<td colspan="6">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="bond">
+													id="bond" value="0">
 											</div>
 										</td>
 									</tr>
@@ -591,7 +598,7 @@
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="estab_DT">
+													id="estab_DT" value="">
 											</div>
 										</td>
 									</tr>
@@ -601,14 +608,14 @@
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="dam_NM">
+													id="dam_NM" value="">
 											</div>
 										</td>
 										<td style="background-color: #f3f3f3">E-MAIL</td>
 										<td colspan="6">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="email">
+													id="email" value="">
 											</div>
 										</td>
 									</tr>
@@ -617,16 +624,20 @@
 										<td style="background-color: #f3f3f3" width="10%">정보담당자</td>
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
-												<input type="text" name="test" class="form-control">
+												<input type="text" name="test" class="form-control"  value="">
 											</div>
 										</td>
+									
+										
 										<td style="background-color: #f3f3f3">사용유무 타절</td>
 										<td colspan="4">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
-												<input type="radio" name="chk_info" value="매입">유 <input
-													type="radio" name="chk_info" value="매출">무
+												<input type="radio" name="use_YN" value="매입">유
+												 <input type="radio" name="use_YN" value="매출" >무
 											</div>
 										</td>
+									
+									
 									</tr>
 <!-- 15 -->
 									<tr>
@@ -634,7 +645,7 @@
 										<td colspan="6">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="homepage">
+													id="homepage"  value="">
 											</div>
 										<td>
 											<div>
@@ -650,14 +661,14 @@
 										<td colspan="2">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="audit_ID">
+													id="audit_ID" value="">
 											</div>
 										</td>
 										<td style="background-color: #f3f3f3">등록일자</td>
 										<td colspan="6">
 											<div class="col-md-12 col-sm-12 col-xs-12 ">
 												<input type="text" name="test" class="form-control"
-													id="audit_TM">
+													id="audit_TM" value="">
 											</div>
 										</td>
 									</tr>

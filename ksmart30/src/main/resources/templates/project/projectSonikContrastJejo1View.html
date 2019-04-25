@@ -8,72 +8,12 @@
 	<th:block th:include="layout/customHead"></th:block>
 </th:block>
 <th:block layout:fragment="customBody">
-<font color="black">
-
-	<!-- 프로젝트 개요 start -->
-	<div class="col-md-9 col-sm-6 col-xs-12">
-		<div class="x_panel">
-			<div class="x_title">
-				<h2>
-					프로젝트 개요 <small></small>
-				</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"><i
-							class="fa fa-wrench"></i></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Settings 1</a></li>
-							<li><a href="#">Settings 2</a></li>
-						</ul></li>
-
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-
-									<table class="table table-bordered">
-						<tr>
-							<th style="background-color: #fff9df">프로젝트</th>
-							<td colspan="2">[[${data.projectGeyo.PJT_CD}]] [[${data.projectGeyo.PJT_NM}]]</td>
-							<th style="background-color: #fff9df">건축물유형</th>
-							<td colspan="3">[[${data.projectGeyo.BUILD_NM}]]</td>				
-						</tr>
-						<tr>
-							<th style="background-color: #fff9df">계약일자</th>
-							<td colspan="2">[[${data.projectGeyo.CONTRACT_DATE}]]</td>							
-							<td style="background-color: #fff9df">계약기간</td>
-							<td>[[${data.projectGeyo.FROM_TO}]]</td>							
-							<td colspan="2">[[${data.projectGeyo.PJT_E_GBN}]]</td>
-							
-						</tr>
-						<tr>
-							<th style="background-color: #fff9df">당사계약액</th>
-							<td colspan="2">[[${data.projectGeyo.TOT_CONTRACT_AMT}]]</td>
-							<th style="background-color: #fff9df">소재지</th>
-							<td colspan="4">[[${data.projectGeyo.PJT_ADDR}]]</td>
-							
-						</tr>
-						<tr>
-							<th style="background-color: #fff9df">대지면적</th>
-							<td>[[${data.projectGeyo.G_AREA_M}]]</td>
-							<td>[[${data.projectGeyo.G_AREA_P}]]</td>
-							<th style="background-color: #fff9df">연면적</th>
-							<td>[[${data.projectGeyo.G_YAREA_M}]]</td>
-							<td>[[${data.projectGeyo.G_YAREA_P}]]</td>
-						</tr>
-					</table>
-
-			</div>
-		</div>
-		<!-- 프로젝트 개요 end -->
-		<!--  -->
-		<div class="x_panel">
-			<div class="x_title">
+	<font color="black"> <!-- 프로젝트 개요 start -->
+		<div class="col-md-9 col-sm-6 col-xs-12">
+			<div class="x_panel">
 				<div class="x_title">
 					<h2>
-						<i class="fa fa-bars"></i> Tabs <small>제조경비1</small>
+						제조경비1상세 <small></small>
 					</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -85,74 +25,85 @@
 								<li><a href="#">Settings 1</a></li>
 								<li><a href="#">Settings 2</a></li>
 							</ul></li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+
 					</ul>
 					<div class="clearfix"></div>
 				</div>
+				<div class="x_content">
 
-				<div class="" role="tabpanel" data-example-id="togglable-tabs">
-					<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-						<li role="presentation" class=""><a href="#tab_content5"
-							role="tab" id="profile-tab4" data-toggle="tab"
-							aria-expanded="false">제조경비1</a></li>
-					</ul>
+					<table class="table table-bordered">
+						<tr>
+							<th style="background-color: #fff9df">프로젝트</th>
+							<td colspan="2">[[${data.projectGeyo.PJT_CD}]]
+								[[${data.projectGeyo.PJT_NM}]]</td>
+							<th style="background-color: #fff9df">건축물유형</th>
+							<td colspan="3">[[${data.projectGeyo.BUILD_NM}]]</td>
+						</tr>
+						<tr>
+							<th style="background-color: #fff9df">계약일자</th>
+							<td colspan="2">[[${data.projectGeyo.CONTRACT_DATE}]]</td>
+							<td style="background-color: #fff9df">계약기간</td>
+							<td>[[${data.projectGeyo.FROM_TO}]]</td>
+							<td colspan="2">[[${data.projectGeyo.PJT_E_GBN}]]</td>
 
+						</tr>
+						<tr>
+							<th style="background-color: #fff9df">당사계약액</th>
+							<td colspan="2">[[${data.projectGeyo.TOT_CONTRACT_AMT}]]</td>
+							<th style="background-color: #fff9df">소재지</th>
+							<td colspan="4">[[${data.projectGeyo.PJT_ADDR}]]</td>
 
-					<!-- 기성단계 start -->
-					<div role="tabpanel" class="tab-pane fade active in" id="tab_content5"
-						aria-labelledby="profile-tab">
-						<p>
-						<div class="col-md-12 col-sm-12 col-xs-12">
-							<div class="x_panel">
-								<div class="x_title">
-									<h2>
-										테이블 <small>제조경비1</small>
-									</h2>
-									<ul class="nav navbar-right panel_toolbox">
-										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">Settings 1</a></li>
-												<li><a href="#">Settings 2</a></li>
-											</ul></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a>
-										</li>
-									</ul>
-									<div class="clearfix"></div>
-								</div>
+						</tr>
+						<tr>
+							<th style="background-color: #fff9df">대지면적</th>
+							<td>[[${data.projectGeyo.G_AREA_M}]]</td>
+							<td>[[${data.projectGeyo.G_AREA_P}]]</td>
+							<th style="background-color: #fff9df">연면적</th>
+							<td>[[${data.projectGeyo.G_YAREA_M}]]</td>
+							<td>[[${data.projectGeyo.G_YAREA_P}]]</td>
+						</tr>
+					</table>
 
-								<div class="x_content">
-									<table class="table table-bordered">
-										<thead>
-											<tr>
-												<th>기성단계</th>
-												<th>단계등급</th>
-												<th>금액</th>
-												<th>수금율(%)</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="item:${data.jejo1YesanSearch}">
-												<td>[[${item.LEVEL2_NM}]]</td>
-												<td>[[${item.COST_AMT1}]]</td>
-												<td>385,000,000</td>
-												<td>50.00</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- 기성단계 end -->
 				</div>
 			</div>
+			<!-- 프로젝트 개요 end -->
+
+			<!-- 기성단계 start -->
+			<div class="x_panel">
+				<div class="x_content">
+					<table class="table table-bordered">
+					
+					
+						<thead>
+							<tr>
+								<th style="background-color: #D8D8D8"  rowspan="2">과목</th>							
+								<th style="background-color: #D8D8D8"  rowspan="2">예산</th>							
+								<th style="background-color: #D8D8D8" colspan="2">실적</th>
+								<th style="background-color: #D8D8D8" colspan="2" rowspan="2">차이</th>
+						</tr>
+						<tr>		
+														
+								
+								<th style="background-color: #D8D8D8">당기누계</th>
+								<th style="background-color: #D8D8D8">전기누계</th>								
+						</tr>	
+						</thead>
+						<tbody>
+							<tr th:each="item:${data.jejo1YesanSearch}">
+								<td>[[${item.LEVEL2_NM}]]</td>
+								<td style="background-color: #fff9df">[[${item.COST_AMT1}]]</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- 기성단계 end -->
 		</div>
-	</div>
-</font>
+	</font>
 </th:block>
 <th:block layout:fragment="customJquery">
 	<th:block th:include="layout/customJquery"></th:block>

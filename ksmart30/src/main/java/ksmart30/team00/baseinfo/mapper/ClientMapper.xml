@@ -139,6 +139,7 @@
 
 	</select>
 	
+	<!-- 10.2.1 거래처등록 화면에서 입력받은 값을 DB에 저장하여 거래처를 추가하는 쿼리 -->
 	
 	<insert id="clientInsert"
 			parameterType="ksmart30.team00.baseinfo.domain.Client">
