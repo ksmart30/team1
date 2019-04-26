@@ -99,10 +99,10 @@
 		SELECT A.PJT_CD,
 			A.WORK_STEP,
 			B.LEVEL2_NM WORK_STEP_NM,
-			RTRIM(A.START_DAY) START_DAY,
-			RTRIM(A.PLAN_END_DAY) PLAN_END_DAY,
+			CONVERT(DATE, RTRIM(A.START_DAY)) START_DAY,	<!-- VIEW에서 DATE타입으로 입력해서 DATE타입으로 변환해줌 -->
+			CONVERT(DATE, RTRIM(A.PLAN_END_DAY)) PLAN_END_DAY,
 			A.NEED_TERM,
-			RTRIM(A.REAL_END_DAY) REAL_END_DAY,
+			CONVERT(DATE, RTRIM(A.REAL_END_DAY)) REAL_END_DAY,
 			(SELECT COUNT(*) FROM T_P11080_H
 			WHERE PJT_CD = A.PJT_CD AND WORK_STEP = A.WORK_STEP) UPD_COUNT,
 			'' RMK
@@ -367,30 +367,86 @@
 
   	<!-- 2.2.1.6. 프로젝트코드를 입력받아 추정손익계산서(사업성검토)를 조회하는 쿼리문 -->
   	<select id="getProjectYesanSangseSonikBiz" parameterType="String" resultType="java.util.Map">  	
-		SELECT * FROM 
+		SELECT
+			A.COST_AMT1,
+			ROUND(A.COST_AMT1/ISNULL(B.TOT_CONTRACT_AMT,0)*100, 2) COST_RATE1,
+			A.COST_AMT2,
+			ROUND(A.COST_AMT2/ISNULL(B.TOT_CONTRACT_AMT,0)*100, 2) COST_RATE2,
+			A.COST_AMT3,
+			ROUND(A.COST_AMT3/ISNULL(B.TOT_CONTRACT_AMT,0)*100, 2) COST_RATE3,
+			A.DIV_AMT,
+			ROUND(A.DIV_AMT/ISNULL(B.TOT_CONTRACT_AMT,0)*100, 2) DIV_RATE,
+			A.BIZ_TOTAL,
+			ROUND(A.BIZ_TOTAL/ISNULL(B.TOT_CONTRACT_AMT,0)*100, 2) BIZ_RATE
+		FROM
 			(SELECT
-				A.PJT_CD,
-				ISNULL(SUM(A.COST_AMT1),0) COST_AMT1,	<!-- 인건비 -->
-				ROUND((ISNULL(SUM(A.COST_AMT1),0)/ISNULL(SUM(DISTINCT B.TOT_CONTRACT_AMT),0))*100, 2) COST_RATE1,
-				ISNULL(SUM(A.COST_AMT2),0) COST_AMT2,   <!-- 제조경비1 -->
-				ROUND((ISNULL(SUM(A.COST_AMT2),0)/ISNULL(SUM(DISTINCT B.TOT_CONTRACT_AMT),0))*100, 2) COST_RATE2,
-				ISNULL(SUM(A.COST_AMT3),0) COST_AMT3,   <!-- 제조경비2 -->
-				ROUND((ISNULL(SUM(A.COST_AMT3),0)/ISNULL(SUM(DISTINCT B.TOT_CONTRACT_AMT),0))*100, 2) COST_RATE3,
-				(ISNULL(SUM(A.DIV_AMT10),0) + ISNULL(SUM(A.DIV_AMT20),0) + ISNULL(SUM(A.DIV_AMT30),0) + ISNULL(SUM(A.DIV_AMT40),0)) DIV_AMT,  <!-- 간접비외 -->
-				ROUND((ISNULL(SUM(A.DIV_AMT10),0) + ISNULL(SUM(A.DIV_AMT20),0) + ISNULL(SUM(A.DIV_AMT30),0) + ISNULL(SUM(A.DIV_AMT40),0))/(ISNULL(SUM(DISTINCT B.TOT_CONTRACT_AMT),0))*100, 2) DIV_RATE,
-				(ISNULL(SUM(A.COST_AMT1),0) + ISNULL(SUM(A.COST_AMT2),0) + ISNULL(SUM(A.COST_AMT3),0) 
-				+ ISNULL(SUM(A.DIV_AMT10),0) + ISNULL(SUM(A.DIV_AMT20),0) + ISNULL(SUM(A.DIV_AMT30),0) + ISNULL(SUM(A.DIV_AMT40),0)) BIZ_TOTAL,	<!-- 사업성검토소계 -->
-				ROUND((ISNULL(SUM(A.COST_AMT1),0) + ISNULL(SUM(A.COST_AMT2),0) + ISNULL(SUM(A.COST_AMT3),0) 
-				+ ISNULL(SUM(A.DIV_AMT10),0) + ISNULL(SUM(A.DIV_AMT20),0) + ISNULL(SUM(A.DIV_AMT30),0) + ISNULL(SUM(A.DIV_AMT40),0))/(ISNULL(SUM(DISTINCT B.TOT_CONTRACT_AMT),0))*100, 2) BIZ_RATE
-			FROM T_AC6220 A, T_P11000 B
-			WHERE SUBSTRING(A.PJT_CD,6,1) IN ('C','F','G','H','I','J','K')
-				AND B.PJT_CD = SUBSTRING(A.PJT_CD,1,5)
-				GROUP BY A.PJT_CD) A
-		WHERE A.PJT_CD LIKE #{PJT_CD}+'%'			
-  	</select>	
+				PJT_CD,
+				ISNULL(SUM(COST_AMT1),0) COST_AMT1,	<!-- 인건비 -->
+				ISNULL(SUM(COST_AMT2),0) COST_AMT2,   <!-- 제조경비1 -->
+				ISNULL(SUM(COST_AMT3),0) COST_AMT3,   <!-- 제조경비2 -->
+				(ISNULL(SUM(DIV_AMT10),0) + ISNULL(SUM(DIV_AMT20),0) + ISNULL(SUM(DIV_AMT30),0) + ISNULL(SUM(DIV_AMT40),0)) DIV_AMT,  <!-- 간접비외 -->
+				(ISNULL(SUM(COST_AMT1),0) + ISNULL(SUM(COST_AMT2),0) + ISNULL(SUM(COST_AMT3),0) 
+				+ ISNULL(SUM(DIV_AMT10),0) + ISNULL(SUM(DIV_AMT20),0) + ISNULL(SUM(DIV_AMT30),0) + ISNULL(SUM(DIV_AMT40),0)) BIZ_TOTAL	<!-- 사업성검토소계 -->			
+			FROM T_AC6220
+			WHERE SUBSTRING(PJT_CD,6,1) IN ('C','F','G','H','I','J','K')
+			GROUP BY PJT_CD)A, T_P11000 B						
+		WHERE
+		SUBSTRING(A.PJT_CD,1,5) = B.PJT_CD
+		AND A.PJT_CD LIKE #{PJT_CD}+'%'			
+  	</select>
 
+  	<!-- 2.2.2. 프로젝트코드를 입력받아 해당 프로젝트를 승인하는 쿼리문 -->
+  	<update id="modifyProjectYesanSeungin" parameterType="String" >  	
+		UPDATE T_P11000
+		SET PJT_YEA_YN = 'T', PJT_YEA_DATE = CONVERT(VARCHAR(8), CONVERT(date, SYSDATETIME()), 112)
+		WHERE PJT_CD = #{PJT_CD}
+  	</update>	
+
+  	<!-- 2.2.2. 프로젝트코드를 입력받아 해당 프로젝트를 승인 취소하는 쿼리문 -->
+  	<update id="modifyProjectYesanSeunginCancel" parameterType="String" >  	
+		UPDATE T_P11000
+		SET PJT_YEA_YN = 'F', PJT_YEA_DATE = CONVERT(VARCHAR(8), CONVERT(date, SYSDATETIME()), 112)
+		WHERE PJT_CD = #{PJT_CD}
+  	</update>	
+
+  	<!-- 2.2.3. 프로젝트예산 출력을 위한 프로젝트리스트 조회 -->
+  	<select id="getprojectYesanOutputList" parameterType="ksmart30.team01.project.domain.ProjectYesanOutputListRequest" resultType="java.util.Map">  	
+		SELECT B.PJT_CD,
+				A.PJT_NM
+		FROM T_SM3000 A,
+			(
+			SELECT 	
+				B.PJT_CD,
+				A.PJT_NM,
+				B.DEPT_CD,
+				B.CONTRACT_DATE,
+				CASE 			
+					WHEN B.PJT_YEA_YN = 'T' THEN '4'	<!-- 승인 --> 
+					WHEN B.PJT_E_GBN > '' AND B.PJT_E_DATE > '' THEN '5'	<!-- 종료 -->	  
+			      	WHEN C.MD>0 AND D.PN>0 THEN '3'	<!-- 미승인 -->	     
+				   	ELSE '2'	<!-- 계약 -->
+				END GUBUN		
+			FROM 
+				T_SM3000 A,
+				T_P11000 B,
+				(SELECT PJT_CD, COUNT(*) MD FROM T_P11050 GROUP BY PJT_CD) C,
+				(SELECT PJT_CD, COUNT(*) PN FROM T_P11080 GROUP BY PJT_CD) D		
+			 WHERE 
+			 		B.PJT_CD  = A.PJT_CD
+			   AND 
+					B.PJT_CD *= C.PJT_CD
+			   AND 
+					B.PJT_CD *= D.PJT_CD
+			) B
+		WHERE B.PJT_CD = A.PJT_CD	
+ 			${START_DATE}${END_DATE}
+			AND B.DEPT_CD LIKE '%'+#{DEPT_CD}+'%'
+			AND B.PJT_CD LIKE '%'+#{PJT_CD}+'%' 
+			AND B.GUBUN LIKE '%'+#{radioValue}+'%'
+		ORDER BY B.PJT_CD DESC	
+  	</select>
 	
-  	<!-- 2.2.3.1 프로젝트예산 출력하기 전에 조건에 맞는 프로젝트를 검색하는 쿼리문 -->
+  	<!-- 2.2.3.1 프로젝트예산 출력하기 전에 조건에 맞는 프로젝트를 검색하는 모달의 쿼리문 -->
   	<select id="getProjectYesanOutputPjtList" parameterType="ksmart30.team01.project.domain.ProjectYesanOutputCodeSearch" resultType="java.util.Map">  	
 		SELECT 
 			A.*
@@ -400,26 +456,45 @@
 				B.PJT_CD,
 				A.PJT_NM,
 				E.DEPT_CD,
-				E.DEPT_NM,
-				CASE WHEN B.PJT_E_GBN > '' AND B.PJT_E_DATE > '' THEN '5'	-- 종료  -->
-					WHEN B.PJT_YEA_YN = 'T' THEN '4'	-- 승인 -->					  
-			      	WHEN C.MD>0 AND D.PN>0 THEN '3'	-- 예산 or 미승인-->	     
-					ELSE '2'	-- 계약  -->
-				END GUBUN		
+				E.DEPT_NM	
 			FROM 
 				T_SM3000 A,
 				T_P11000 B,
-				(SELECT PJT_CD, COUNT(*) MD FROM T_P11050 GROUP BY PJT_CD) C,
-				(SELECT PJT_CD, COUNT(*) PN FROM T_P11080 GROUP BY PJT_CD) D,
 				T_SC1010 E		
 			 WHERE 
 			 	B.PJT_CD  = A.PJT_CD
-			 	AND B.PJT_CD *= C.PJT_CD
-			   	AND B.PJT_CD *= D.PJT_CD
 				AND B.DEPT_CD = E.DEPT_CD) A	   
 		WHERE 
 			A.CONTRACT_DATE_YY LIKE '%' + #{CONTRACT_DATE_YY} + '%'
 			AND A.${selectedOption} LIKE '%' + #{inputValue} + '%'		
   	</select>	
+
+
+	
+	<!-- 2.2.5. 계약프로젝트List를 조회하는 쿼리문 -->
+  	<select id="getProjectYesanList" parameterType="ksmart30.team01.project.domain.ProjectYesanListRequest" resultType="java.util.Map">   
+		SELECT A.PJT_CD,
+		       B.PJT_NM,
+		       ISNULL(C.CUST_NM, '') CUST_NM,
+		       CAST(A.G_AREA_P AS DECIMAL(14,2)) G_AREA_P,
+		       CAST(A.G_YAREA_P AS DECIMAL(14,2)) G_YAREA_P,
+		       A.B_UP_SU,
+		       A.B_DOWN_SU,
+		       A.CONTRACT_PRI1,
+		       A.CONTRACT_PRI2
+		FROM T_P11000 A, T_SM3000 B, T_AC0300 C,
+	        (SELECT PJT_CD, MIN(CUST_CD) CUST_CD
+	         FROM T_P11010
+	         GROUP BY PJT_CD) D
+		WHERE A.PJT_CD = B.PJT_CD
+			AND A.PJT_CD  = D.PJT_CD
+		 	AND D.CUST_CD *= C.CUST_CD
+		 	AND A.CONTRACT_PRI1 <![CDATA[>=]]> CONVERT(VARCHAR(8), CONVERT(DATE, #{START_DATE}), 112)
+		 	AND A.CONTRACT_PRI2 <![CDATA[<=]]> CONVERT(VARCHAR(8), CONVERT(DATE, #{END_DATE}), 112)
+		 	AND A.B_DOWN_SU <![CDATA[>=]]> ${B_DOWN_SU}	--문자열이 아니라 숫자
+		 	AND A.B_UP_SU <![CDATA[<=]]> ${B_UP_SU} 
+		 	AND CAST(A.G_AREA_P AS DECIMAL(14,2)) BETWEEN ${G_AREA_P_LOW} AND ${G_AREA_P_HIGH}	--문자열이 아니라 숫자
+			ORDER BY B.PJT_CD
+   </select>
   		
  </mapper> 	

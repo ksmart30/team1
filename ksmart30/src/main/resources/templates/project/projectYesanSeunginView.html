@@ -8,8 +8,8 @@ layout:decorator="layout/main">
 
 	<!-- jquery 추가 -->
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	<script>
-		
+	<script>	
+	
 		//변경횟수(UPD_COUNT)가 2이상인 경우 프로젝트 일정 변경 로그를 조회할 수 있는 모달화면을 보여준다	
 		function workStepLog(UPD_COUNT, PJT_CD, WORK_STEP){
 			console.log(UPD_COUNT+'변경횟수');
@@ -40,7 +40,6 @@ layout:decorator="layout/main">
 		//프로젝트코드를 입력받아 프로젝트 개요를 보여준다		    
 	    function mscall(PJT_CD){
 			console.log('mscall실행'+PJT_CD);
-			
 			$.ajax({
 	            url:'/project/projectYesanViewOne',	//url을 요청하고
 	            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
@@ -49,7 +48,7 @@ layout:decorator="layout/main">
 	            	console.log(data);
 	            	//프로젝트 개요
 	            	$('#PJT_CD2').empty();
-	                $('#PJT_CD2').append('('+data.projectYesanSangse.PJT_CD+')');	//프로젝트코드
+	                $('#PJT_CD2').append(data.projectYesanSangse.PJT_CD);	//프로젝트코드
 	            	$('#PJT_NM2').empty();	                
 	                $('#PJT_NM2').append(data.projectYesanSangse.PJT_NM);	//프로젝트명	
 	                $('#PRINT_CNT').empty();	                
@@ -73,7 +72,7 @@ layout:decorator="layout/main">
 	                $('#PJT_E_GBN').empty();
 	                $('#PJT_E_GBN').append(','+data.projectYesanSangse.PJT_E_GBN+'까지');	//프로젝트 계약 종료 구분 시점
 	                $('#TOT_CONTRACT_AMT').empty();
-	                $('#TOT_CONTRACT_AMT').append(data.projectYesanSangse.TOT_CONTRACT_AMT+'원');		//프로젝트총계약액
+	                $('#TOT_CONTRACT_AMT').append(data.projectYesanSangse.TOT_CONTRACT_AMT.toLocaleString()+'원');		//프로젝트총계약액
 	                $('#ZIP_CD').empty();
 	                $('#ZIP_CD').append('('+data.projectYesanSangse.ZIP_CD+')');		//우편번호
 	                $('#PJT_ADDR').empty();
@@ -206,7 +205,7 @@ layout:decorator="layout/main">
 	                
 	                //MH계획 인건비와 점유율 소계
 	                $('#INGUN_AMT').empty(); 	
-    	            $('#INGUN_AMT').append('인건비소계: '+data.projectYesanSangseMHTotal.INGUN_AMT+'원');	
+    	            $('#INGUN_AMT').append('인건비소계: '+data.projectYesanSangseMHTotal.INGUN_AMT.toLocaleString()+'원');	
 	                $('#JUMYU').empty(); 	
 	                JUMYU = data.projectYesanSangseMHTotal.JUMYU*100;
     	            $('#JUMYU').append('점유율: ('+JUMYU+'%)');       	          	           
@@ -219,7 +218,7 @@ layout:decorator="layout/main">
     	            $('#jejo1Right').empty();
     	            $(data.projectYesanSangseJejo1R).each((index,item)=>{		
     	            	$('#jejo1Right').append('<tr><td>'+item.COST_NM+'</td><td>'	//계정과목
-    	            			+item.COST_AMT+'</td><td>'	//금액
+    	            			+item.COST_AMT.toLocaleString()+'</td><td>'	//금액
     	            			+item.COST_RATE+'</td><td>'	//비율
     	            			+item.OUTPUT_GROUND+'</td><tr>');	//비고
     	            	COST_AMT_TOT_R = COST_AMT_TOT_R + item.COST_AMT;
@@ -227,7 +226,7 @@ layout:decorator="layout/main">
     	            });
     	            //소계
 	                $('#COST_AMT_TOT_R').empty(); 	
-    	            $('#COST_AMT_TOT_R').append(COST_AMT_TOT_R);
+    	            $('#COST_AMT_TOT_R').append(COST_AMT_TOT_R.toLocaleString());
 	                $('#COST_RATE_TOT_R').empty(); 	
     	            $('#COST_RATE_TOT_R').append(COST_RATE_TOT_R.toFixed(2));
     	            
@@ -237,7 +236,7 @@ layout:decorator="layout/main">
     	            $('#jejo1Left').empty();
     	            $(data.projectYesanSangseJejo1L).each((index,item)=>{		
     	            	$('#jejo1Left').append('<tr><td>'+item.COST_NM+'</td><td>'	//계정과목
-    	            			+item.COST_AMT+'</td><td>'	//금액
+    	            			+item.COST_AMT.toLocaleString()+'</td><td>'	//금액
     	            			+item.COST_RATE+'</td><td>'	//비율
     	            			+item.OUTPUT_GROUND+'</td><tr>');	//비고
     	            	COST_AMT_TOT_L = COST_AMT_TOT_L + item.COST_AMT;
@@ -245,7 +244,7 @@ layout:decorator="layout/main">
     	            });			
     	            //소계
 	                $('#COST_AMT_TOT_L').empty(); 	
-    	            $('#COST_AMT_TOT_L').append(COST_AMT_TOT_L);
+    	            $('#COST_AMT_TOT_L').append(COST_AMT_TOT_L.toLocaleString());
 	                $('#COST_RATE_TOT_L').empty(); 	
     	            $('#COST_RATE_TOT_L').append(COST_RATE_TOT_L.toFixed(2));
     	            
@@ -258,20 +257,20 @@ layout:decorator="layout/main">
 	                $('#jejo2').empty(); 	
     	            $(data.projectYesanSangseJejo2).each((index,item)=>{		
     	            	$('#jejo2').append('<tr><td>'+item.SCV_PART_NM+'</td><td>'	//계정과목
-    	            			+item.EX_AMT+'</td><td>'	//금액
+    	            			+item.EX_AMT.toLocaleString()+'</td><td>'	//금액
     	            			+item.EX_RATE+'</td><td>'	//비율
     	            			+item.EXCHANGE_NM+'</td><td>'	//거래처
-    	            			+item.EX_WORK_AMT+'</td><tr>');	//실행예산
+    	            			+item.EX_WORK_AMT.toLocaleString()+'</td><tr>');	//실행예산
     	            	EX_AMT_TOTAL = EX_AMT_TOTAL + item.EX_AMT;
     	            	EX_RATE_TOTAL = EX_RATE_TOTAL + item.EX_RATE;
     	            	EX_WORK_AMT_TOTAL = EX_WORK_AMT_TOTAL + item.EX_WORK_AMT;            			
     	            });	
 	                $('#EX_AMT_TOTAL').empty(); 	
-    	            $('#EX_AMT_TOTAL').append(EX_AMT_TOTAL);
+    	            $('#EX_AMT_TOTAL').append(EX_AMT_TOTAL.toLocaleString());
 	                $('#EX_RATE_TOTAL').empty(); 	
     	            $('#EX_RATE_TOTAL').append(EX_RATE_TOTAL);
 	                $('#EX_WORK_AMT_TOTAL').empty(); 	
-    	            $('#EX_WORK_AMT_TOTAL').append(EX_WORK_AMT_TOTAL);
+    	            $('#EX_WORK_AMT_TOTAL').append(EX_WORK_AMT_TOTAL.toLocaleString());
     	            
     	            
     	            
@@ -281,7 +280,7 @@ layout:decorator="layout/main">
     	            $(data.projectYesanSangseGiseong).each((index,item)=>{		
     	            	$('#giseongStep').append('<tr><td>'+item.LEVEL2_NM+'</td><td>'	//기성단계
     	            			+item.SALE_STEP_NM+'</td><td>'	//단계등급
-    	            			+item.RM_AMT+'</td><td>'	//금액
+    	            			+item.RM_AMT.toLocaleString()+'</td><td>'	//금액
     	            			+item.RM_RATE+'</td><tr>');	//비율
 	            			
   	            	let BILL_COND = item.BILL_COND;		//매출대금회수조건
@@ -296,113 +295,113 @@ layout:decorator="layout/main">
     	            	RM_AMT_TOTAL = RM_AMT_TOTAL + item.RM_AMT;         			
     	            });	
 	                $('#RM_AMT_TOTAL').empty(); 	
-    	            $('#RM_AMT_TOTAL').append(RM_AMT_TOTAL);	
+    	            $('#RM_AMT_TOTAL').append(RM_AMT_TOTAL.toLocaleString());	
     	            
     	            
     	            
     	            //추정손익계산서(사업성검토 제외)		
    	            	$('#TOT_CONTRACT_AMT_SONIK').empty(); 	//매출액
-       	            $('#TOT_CONTRACT_AMT_SONIK').append(data.projectYesanSangseSonik.TOT_CONTRACT_AMT);
+       	            $('#TOT_CONTRACT_AMT_SONIK').append(data.projectYesanSangseSonik.TOT_CONTRACT_AMT.toLocaleString());
        	         	$('#TOT_RATE').empty(); 	
     	            $('#TOT_RATE').append(data.projectYesanSangseSonik.TOT_RATE);
        	        	$('#COST_AMT1').empty(); 	//인건비
-    	            $('#COST_AMT1').append(data.projectYesanSangseSonik.COST_AMT1);
+    	            $('#COST_AMT1').append(data.projectYesanSangseSonik.COST_AMT1.toLocaleString());
     	            $('#COST_RATE1').empty(); 	
     	            $('#COST_RATE1').append(data.projectYesanSangseSonik.COST_RATE1);
     	            $('#COST_AMT2').empty(); 	//제조경비1
-    	            $('#COST_AMT2').append(data.projectYesanSangseSonik.COST_AMT2);
+    	            $('#COST_AMT2').append(data.projectYesanSangseSonik.COST_AMT2.toLocaleString());
     	            $('#COST_RATE2').empty(); 	
     	            $('#COST_RATE2').append(data.projectYesanSangseSonik.COST_RATE2);
     	            $('#COST_AMT3').empty(); 	//제조경비2
-    	            $('#COST_AMT3').append(data.projectYesanSangseSonik.COST_AMT3);
+    	            $('#COST_AMT3').append(data.projectYesanSangseSonik.COST_AMT3.toLocaleString());
     	            $('#COST_RATE3').empty(); 	
     	            $('#COST_RATE3').append(data.projectYesanSangseSonik.COST_RATE3);
     	            $('#JACHE_TOT').empty(); 	//자체비용소계
-    	            $('#JACHE_TOT').append(data.projectYesanSangseSonik.JACHE_TOT);
+    	            $('#JACHE_TOT').append(data.projectYesanSangseSonik.JACHE_TOT.toLocaleString());
     	            $('#JACHE_RATE').empty(); 	
     	            $('#JACHE_RATE').append(data.projectYesanSangseSonik.JACHE_RATE);
     	            $('#DIV_AMT44').empty(); 	//부문장
-    	            $('#DIV_AMT44').append(data.projectYesanSangseSonik.DIV_AMT44);
+    	            $('#DIV_AMT44').append(data.projectYesanSangseSonik.DIV_AMT44.toLocaleString());
     	            $('#DIV_RATE44').empty(); 	
     	            $('#DIV_RATE44').append(data.projectYesanSangseSonik.DIV_RATE44);
     	            $('#DIV_AMT41').empty(); 	//본부장
-    	            $('#DIV_AMT41').append(data.projectYesanSangseSonik.DIV_AMT41);
+    	            $('#DIV_AMT41').append(data.projectYesanSangseSonik.DIV_AMT41.toLocaleString());
     	            $('#DIV_RATE41').empty(); 	
     	            $('#DIV_RATE41').append(data.projectYesanSangseSonik.DIV_RATE41);
     	            $('#DIV_AMT43').empty(); 	//지원부서
-    	            $('#DIV_AMT43').append(data.projectYesanSangseSonik.DIV_AMT43);
+    	            $('#DIV_AMT43').append(data.projectYesanSangseSonik.DIV_AMT43.toLocaleString());
     	            $('#DIV_RATE43').empty(); 	
     	            $('#DIV_RATE43').append(data.projectYesanSangseSonik.DIV_RATE43);
     	            $('#DIV_AMT42').empty(); 	//기타
-    	            $('#DIV_AMT42').append(data.projectYesanSangseSonik.DIV_AMT42);
+    	            $('#DIV_AMT42').append(data.projectYesanSangseSonik.DIV_AMT42.toLocaleString());
     	            $('#DIV_RATE42').empty(); 	
     	            $('#DIV_RATE42').append(data.projectYesanSangseSonik.DIV_RATE42);
     	            $('.DIV_AMT40').empty(); 	//공통비1소계
-    	            $('.DIV_AMT40').append(data.projectYesanSangseSonik.DIV_AMT40);
+    	            $('.DIV_AMT40').append(data.projectYesanSangseSonik.DIV_AMT40.toLocaleString());
     	            $('.DIV_RATE40').empty(); 	
     	            $('.DIV_RATE40').append(data.projectYesanSangseSonik.DIV_RATE40);
     	            $('#DIV_AMT11').empty(); 	//빌딩
-    	            $('#DIV_AMT11').append(data.projectYesanSangseSonik.DIV_AMT11);
+    	            $('#DIV_AMT11').append(data.projectYesanSangseSonik.DIV_AMT11.toLocaleString());
     	            $('#DIV_RATE11').empty(); 	
     	            $('#DIV_RATE11').append(data.projectYesanSangseSonik.DIV_RATE11);
     	            $('#DIV_AMT12').empty(); 	//통신
-    	            $('#DIV_AMT12').append(data.projectYesanSangseSonik.DIV_AMT12);
+    	            $('#DIV_AMT12').append(data.projectYesanSangseSonik.DIV_AMT12.toLocaleString());
     	            $('#DIV_RATE12').empty(); 	
     	            $('#DIV_RATE12').append(data.projectYesanSangseSonik.DIV_RATE12);
     	            $('#DIV_AMT13').empty(); 	//전산
-    	            $('#DIV_AMT13').append(data.projectYesanSangseSonik.DIV_AMT13);
+    	            $('#DIV_AMT13').append(data.projectYesanSangseSonik.DIV_AMT13.toLocaleString());
     	            $('#DIV_RATE13').empty(); 	
     	            $('#DIV_RATE13').append(data.projectYesanSangseSonik.DIV_RATE13);
     	            $('.DIV_AMT10').empty(); 	//간접비소계
-    	            $('.DIV_AMT10').append(data.projectYesanSangseSonik.DIV_AMT10);
+    	            $('.DIV_AMT10').append(data.projectYesanSangseSonik.DIV_AMT10.toLocaleString());
     	            $('.DIV_RATE10').empty(); 	
     	            $('.DIV_RATE10').append(data.projectYesanSangseSonik.DIV_RATE10);
     	            $('#DIV_AMT20').empty(); 	//공통비2
-    	            $('#DIV_AMT20').append(data.projectYesanSangseSonik.DIV_AMT20);
+    	            $('#DIV_AMT20').append(data.projectYesanSangseSonik.DIV_AMT20.toLocaleString());
     	            $('#DIV_RATE20').empty(); 	
     	            $('#DIV_RATE20').append(data.projectYesanSangseSonik.DIV_RATE20); 
     	            $('#DIV_AMT30').empty(); 	//관리부문비
-    	            $('#DIV_AMT30').append(data.projectYesanSangseSonik.DIV_AMT30);
+    	            $('#DIV_AMT30').append(data.projectYesanSangseSonik.DIV_AMT30.toLocaleString());
     	            $('#DIV_RATE30').empty(); 	
     	            $('#DIV_RATE30').append(data.projectYesanSangseSonik.DIV_RATE30); 
     	            $('#BAEBU_TOT').empty(); 	//배부비용
-    	            $('#BAEBU_TOT').append(data.projectYesanSangseSonik.BAEBU_TOT);
+    	            $('#BAEBU_TOT').append(data.projectYesanSangseSonik.BAEBU_TOT.toLocaleString());
     	            $('#BAEBU_RATE').empty(); 	
     	            $('#BAEBU_RATE').append(data.projectYesanSangseSonik.BAEBU_RATE); 
     	            $('#COST_TOT').empty(); 	//비용합계
-    	            $('#COST_TOT').append(data.projectYesanSangseSonik.COST_TOT);
+    	            $('#COST_TOT').append(data.projectYesanSangseSonik.COST_TOT.toLocaleString());
     	            $('#COST_RATE').empty(); 	
     	            $('#COST_RATE').append(data.projectYesanSangseSonik.COST_RATE); 
     	            $('#OPERATING_INCOME').empty(); 	//영업이익
-    	            $('#OPERATING_INCOME').append(data.projectYesanSangseSonik.OPERATING_INCOME);
+    	            $('#OPERATING_INCOME').append(data.projectYesanSangseSonik.OPERATING_INCOME.toLocaleString());
     	            $('#OPERATING_INCOME_RATE').empty(); 	
     	            $('#OPERATING_INCOME_RATE').append(data.projectYesanSangseSonik.OPERATING_INCOME_RATE);  
     	            
     	            //추정손익계산서(사업성검토)
     	            $('#COST_AMT1_BIZ').empty(); 	//인건비
-    	            $('#COST_AMT1_BIZ').append(data.projectYesanSangseSonikBiz.COST_AMT1);
+    	            $('#COST_AMT1_BIZ').append(data.projectYesanSangseSonikBiz.COST_AMT1.toLocaleString());
     	            $('#COST_RATE1_BIZ').empty(); 	
     	            $('#COST_RATE1_BIZ').append(data.projectYesanSangseSonikBiz.COST_RATE1);
     	            $('#COST_AMT2_BIZ').empty(); 	//제조경비1
-    	            $('#COST_AMT2_BIZ').append(data.projectYesanSangseSonikBiz.COST_AMT2);
+    	            $('#COST_AMT2_BIZ').append(data.projectYesanSangseSonikBiz.COST_AMT2.toLocaleString());
     	            $('#COST_RATE2_BIZ').empty(); 	
     	            $('#COST_RATE2_BIZ').append(data.projectYesanSangseSonikBiz.COST_RATE2);
     	            $('#COST_AMT3_BIZ').empty(); 	//제조경비2
-    	            $('#COST_AMT3_BIZ').append(data.projectYesanSangseSonikBiz.COST_AMT3);
+    	            $('#COST_AMT3_BIZ').append(data.projectYesanSangseSonikBiz.COST_AMT3.toLocaleString());
     	            $('#COST_RATE3_BIZ').empty(); 	
     	            $('#COST_RATE3_BIZ').append(data.projectYesanSangseSonikBiz.COST_RATE3);
     	            $('#DIV_AMT').empty(); 	//간접비외
-    	            $('#DIV_AMT').append(data.projectYesanSangseSonikBiz.DIV_AMT);
+    	            $('#DIV_AMT').append(data.projectYesanSangseSonikBiz.DIV_AMT.toLocaleString());
     	            $('#DIV_RATE').empty(); 	
     	            $('#DIV_RATE').append(data.projectYesanSangseSonikBiz.DIV_RATE);
     	            $('#BIZ_TOTAL').empty(); 	//사업성검토소계
-    	            $('#BIZ_TOTAL').append(data.projectYesanSangseSonikBiz.BIZ_TOTAL);
+    	            $('#BIZ_TOTAL').append(data.projectYesanSangseSonikBiz.BIZ_TOTAL.toLocaleString());
     	            $('#BIZ_RATE').empty(); 	
     	            $('#BIZ_RATE').append(data.projectYesanSangseSonikBiz.BIZ_RATE);
     	            
     	            //조정영업이익
     	            $('#adjustedOperatingProfit').empty(); 	
-    	            $('#adjustedOperatingProfit').append(data.projectYesanSangseSonik.OPERATING_INCOME-data.projectYesanSangseSonikBiz.BIZ_TOTAL);
+    	            $('#adjustedOperatingProfit').append((data.projectYesanSangseSonik.OPERATING_INCOME-data.projectYesanSangseSonikBiz.BIZ_TOTAL).toLocaleString());
     	            $('#adjustedOperatingProfitRate').empty(); 	
     	            $('#adjustedOperatingProfitRate').append((((data.projectYesanSangseSonik.OPERATING_INCOME-data.projectYesanSangseSonikBiz.BIZ_TOTAL)
     	            		/data.projectYesanSangseSonik.TOT_CONTRACT_AMT)*100).toFixed(2));
@@ -417,35 +416,79 @@ layout:decorator="layout/main">
     		}
     	});				
 		//엔터키 방지 end
-	
-		$(document).ready(()=>{
-		    // 검색목록(프로젝트예산 입력을 위한 용역계약서 리스트)
-		    $('#list_btn').click(()=>{	//list_btn를 클릭하면
-				// 필드로 입력받은 값들을 변수에 저장
-				let CONTRACT_DATE_INPUT = $('#CONTRACT_DATE_INPUT').val();
-		    	let DEPT_CD = $('#DEPT_CD').val();
-		    	let PJT_CD = $('#PJT_CD').val();
-		    	let radioValue = $('.pjtRadio:checked').val();
-		    	console.log(CONTRACT_DATE_INPUT);	
-		    	console.log(DEPT_CD);
-				console.log(PJT_CD);
-				console.log(radioValue);
+
+		// 검색목록(프로젝트예산 입력을 위한 용역계약서 리스트)
+		function listCall(){
+			// 필드로 입력받은 값들을 변수에 저장
+			let CONTRACT_DATE_INPUT = $('#CONTRACT_DATE_INPUT').val();
+	    	let DEPT_CD = $('#DEPT_CD').val();
+	    	let PJT_CD = $('#PJT_CD').val();
+	    	let radioValue = $('.pjtRadio:checked').val();
+	    	console.log(CONTRACT_DATE_INPUT);	
+	    	console.log(DEPT_CD);
+			console.log(PJT_CD);
+			console.log(radioValue);
+	    	$.ajax({
+	            url:'/project/projectYesanView',	//url을 요청하고
+	            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
+	        	data:{CONTRACT_DATE_INPUT:CONTRACT_DATE_INPUT, DEPT_CD:DEPT_CD, PJT_CD:PJT_CD, radioValue:radioValue},	//넘길 데이터
+	            success:(data)=>{	//받은 데이터
+	            	console.log(data);
+	                $('#list').empty();	//리스트를 비우고	               
+	                $(data).each((index,item)=>{
+	                    $('#list').append('<tr onclick="mscall('+item.PJT_CD+')"><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'+item.PJT_NM+'</td></tr>');                            
+	                });
+	                
+	                //리스트의 길이
+	                $('#listLength').empty();
+	                $('#listLength').append(data.length);
+	                
+	                //문서가 준비되면 가장 큰 프로젝트코드를 받아 프로젝트개요 및 상세를 조회하는 호출
+	                mscall(data[0].PJT_CD);	              
+	        	}
+	    	});
+	    	
+		}
+		
+		//문서가 준비되면
+		$(document).ready(()=>{	
+			listCall();	//프로젝트예산 입력을 위한 용역계약서 리스트를 호출한다					
+			
+			//list_btn를 클릭하면
+		    $('#list_btn').click(()=>{	
+				listCall();	//프로젝트예산 입력을 위한 용역계약서 리스트를 호출한다
+		    });	
+			
+ 			//approval(승인버튼)을 클릭하면 프로젝트예산을 승인시킨다
+		     $('#approval').click(()=>{
+		    	let PJT_CD = $('#PJT_CD2').text();
+		    	console.log(PJT_CD+"승인을 위한 프로젝트코드");
 		    	$.ajax({
-		            url:'/project/projectYesanView',	//url을 요청하고
+		            url:'/project/projectYesanSeungin',	//url을 요청하고
 		            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
-		        	data:{CONTRACT_DATE_INPUT:CONTRACT_DATE_INPUT, DEPT_CD:DEPT_CD, PJT_CD:PJT_CD, radioValue:radioValue},	//넘길 데이터
+		            data:{PJT_CD:PJT_CD},	//넘길 데이터		     
 		            success:(data)=>{	//받은 데이터
-		            	console.log(data);
-		                $('#list').empty();	//리스트를 비우고	               
-		                $(data).each((index,item)=>{
-		                    $('#list').append('<tr onclick="mscall('+item.PJT_CD+')"><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td>'+item.PJT_NM+'</td></tr>');               
-		                });		                
-		                //리스트의 길이
-		                $('#listLength').empty();
-		                $('#listLength').append(data.length);
-		        	}
-		    	});			    	
-		    });			    
+		        	    alert('승인되었습니다.'); 
+		            }
+		    	});
+		    	$('#list_btn').click();
+		    }); 	
+ 			
+ 			//revocation(승인취소버튼)을 클릭하면 프로젝트예산 승인을 취소한다
+		     $('#revocation').click(()=>{
+			    	let PJT_CD = $('#PJT_CD2').text();
+			    	console.log(PJT_CD+"승인을 위한 프로젝트코드");
+			    	$.ajax({
+			            url:'/project/projectYesanSeunginCancel',	//url을 요청하고
+			            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
+			            data:{PJT_CD:PJT_CD},	//넘길 데이터		     
+			            success:(data)=>{	//받은 데이터
+			        	    alert('승인 취소 되었습니다.'); 
+			            }
+			    	});
+			    	$('#list_btn').click();
+			    }); 
+			
 		});
 		</script>
 </th:block>
@@ -519,11 +562,11 @@ layout:decorator="layout/main">
 						</tr>
 						<table>
 							<tr>
-								<td><input type="radio" class="pjtRadio" name="pjtRadio" value="2">계약</td>
-								<td><input type="radio" class="pjtRadio" name="pjtRadio" value="3">미승인</td>
-								<td><input type="radio" class="pjtRadio" name="pjtRadio" value="4">승인</td>
-								<td><input type="radio" class="pjtRadio" name="pjtRadio" value="5">종료</td>
-								<td><input type="radio" class="pjtRadio" name="pjtRadio" value="" checked="checked">ALL</td>
+								<td><input type="radio" class="pjtRadio" name="pjtRadio" value="2" onclick="listCall()">계약</td>
+								<td><input type="radio" class="pjtRadio" name="pjtRadio" value="3" onclick="listCall()">미승인</td>
+								<td><input type="radio" class="pjtRadio" name="pjtRadio" value="4" onclick="listCall()">승인</td>
+								<td><input type="radio" class="pjtRadio" name="pjtRadio" value="5" onclick="listCall()">종료</td>
+								<td><input type="radio" class="pjtRadio" name="pjtRadio" value="" checked="checked" onclick="listCall()">ALL</td>
 							</tr>
 						</table>
 					</table>
@@ -645,7 +688,10 @@ layout:decorator="layout/main">
 					<!-- 프로젝트 예산 입력 start -->
 					<div class="col-md-12 col-sm-6 col-xs-12">
 						<div class="x_panel">
-							<div class="x_content" style="text-align: right"><button class="btn" id="approval">승인</button><button class="btn" id="revocation">승인취소</button></div>
+							<div class="x_content" style="text-align: right">
+								<button class="btn" id="approval">승인</button>
+								<button class="btn" id="revocation">승인취소</button>
+							</div>
 							<div class="x_content">					
 								<div class="" role="tabpanel" data-example-id="togglable-tabs">
 									<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">

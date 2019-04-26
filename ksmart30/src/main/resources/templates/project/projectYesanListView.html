@@ -6,12 +6,79 @@
 	<th:block th:include="layout/customHead"></th:block>
 		
 		<!-- jquery 추가 -->
-		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		
-		<script>
-		
-		</script>
-		
+			<script>
+			
+			function startYearCall() {
+				//날짜 초기화(적용하기)
+				let today = new Date();
+				let dd = today.getDate();
+				let mm = today.getMonth()+1; //January is 0!
+				let yyyy = today.getFullYear();
+				if(dd<10) {//2자리수만들기
+				    dd='0'+dd
+				} 
+				if(mm<10) {
+				    mm='0'+mm
+				} 
+				today = yyyy+'-' + mm+'-'+dd;
+				startYear = yyyy+'-01-01';//올해 첫월 첫일
+				$('#START_DATE').val(startYear);
+				$('#END_DATE').val(today);
+			}
+
+			function listCall(){
+ 				// 필드로 입력받은 값들을 변수에 저장
+ 				let START_DATE = $('#START_DATE').val();
+ 				let END_DATE = $('#END_DATE').val();
+				let G_AREA_P_LOW = $('#G_AREA_P_LOW').val();
+				let G_AREA_P_HIGH = $('#G_AREA_P_HIGH').val();
+				let B_UP_SU = $('#B_UP_SU').val();
+				let B_DOWN_SU = $('#B_DOWN_SU').val();
+				console.log(START_DATE);
+				console.log(END_DATE);
+				console.log(G_AREA_P_LOW);
+				console.log(G_AREA_P_HIGH);
+				console.log(B_UP_SU);
+				console.log(B_DOWN_SU);
+				$.ajax({
+			        url:'/project/projectYesanListView',	//url을 요청하고
+			        type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
+			    	data:{START_DATE:START_DATE, END_DATE:END_DATE, G_AREA_P_LOW:G_AREA_P_LOW, G_AREA_P_HIGH:G_AREA_P_HIGH, B_UP_SU:B_UP_SU, B_DOWN_SU:B_DOWN_SU},	//넘길 데이터
+			        success:(data)=>{	//받은 데이터
+			        	console.log(data);
+			            $('#list').empty();	//리스트를 비우고	               
+			            $(data).each((index,item)=>{
+			                $('#list').append('<tr><td>'+item.PJT_CD+'</td><td>'	//프로젝트코드
+			                		+item.PJT_NM+'</td><td>'	//프로젝트명
+			                		+item.CUST_NM+'</td><td>'	//발주처명
+			                		+item.G_AREA_P+'</td><td>'	//연면적(평)
+			                		+item.G_YAREA_P+'</td><td>'	//대지면적(평)
+			                		+item.B_UP_SU+'</td><td>'	//지상층
+			                		+item.B_DOWN_SU+'</td></tr>');	//지하층           
+			            });
+			            
+			            //리스트의 길이
+			            $('#listLength').empty();
+			            $('#listLength').append(data.length);
+			    	}
+				});	
+			}
+			
+				//문서가 준비되면
+				$(document).ready(()=>{
+					startYearCall();	//날짜를 초기화하는 함수를 호출
+					listCall();	//리스트를 조회하는 함수 호출
+					
+					$('#list_btn').click(()=>{ //list_btn조회버튼을 클릭하면
+						listCall();	//리스트를 조회하는 함수 호출
+					});
+				});
+				
+				
+
+			</script>		
 	</th:block>
 
 	<th:block layout:fragment="customBody">
@@ -28,7 +95,7 @@
 		</div>
 		<div class="x_content" style="text-align: right">
 			<div class="btn-group">
-			<button class="btn btn-default" type="reset">조회</button>
+			<button class="btn btn-default" type="reset" id="list_btn">조회</button>
 			<button class="btn btn-default" type="button" disabled="disabled">입력</button>
 			<button class="btn btn-default" type="button" disabled="disabled">수정</button>
 			<button class="btn btn-default" type="button" disabled="disabled">삭제</button>
@@ -64,19 +131,19 @@
 								<label class="control-label">기간</label>
 							</td>
 							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 30%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<input type="date" id="FIRST_DATE" style="width: 40%"> ~ <input type="date" id="END_DATE" style="width: 40%" value="">
+								<input type="date" id="START_DATE" style="width: 40%"> ~ <input type="date" id="END_DATE" style="width: 40%" value="">
 							</td>
 							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
 								<label class="control-label">연면적(평)</label>
 							</td>
 							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 30%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<input type="text" style="width: 40%"> ~ <input type="text" style="width: 40%">
+								<input type="number" min="0" max="9999999" style="width: 40%" id="G_AREA_P_LOW"> ~ <input type="number" min="0" max="9999999" style="width: 40%" id="G_AREA_P_HIGH">
 							</td>
 							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
 								<label class="control-label">지상층</label>
 							</td>
 							<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 16%;" aria-sort="ascending" aria-label="First name: activate to sort column descending">
-								<input type="text" style="width: 40%"> ~ <input	type="text" style="width: 40%">
+								<input type="number" max="999" min="0" style="width: 40%" id="B_DOWN_SU"> ~ <input type="number" max="999" min="0" style="width: 40%" id="B_UP_SU">
 							</td>																		
 						</tr>
 
@@ -91,17 +158,11 @@
 	<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					프로젝트예산 검색 <small>Custom design</small>
+					계약프로젝트List <small></small>
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Settings 1</a></li>
-							<li><a href="#">Settings 2</a></li>
-						</ul></li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i>숨기기</a>
+					</li>					
 				</ul>
 				<div class="clearfix"></div>
 			</div>
@@ -125,17 +186,11 @@
 								<th class="column-title">지하층</th>																					
 							</tr>
 						</thead>
-							<tr>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-							</tr>
-						<tbody>
+						<tbody id="list">
 						</tbody>
+						<tr>
+							<td colspan="7" style="text-align: right" id="listLength"></td>
+						<tr>
 					</table>
 					<!-- 출력 리스트 검색 끝 -->
 				</div>

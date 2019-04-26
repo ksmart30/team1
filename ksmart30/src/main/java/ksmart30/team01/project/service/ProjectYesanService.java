@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import ksmart30.team01.project.domain.ProjectYesanSearchRequest;
 import ksmart30.team01.project.domain.ProjectYesanWorkStepLogRequest;
 import ksmart30.team01.project.domain.ProjectSangseRequest;
+import ksmart30.team01.project.domain.ProjectYesanListRequest;
 import ksmart30.team01.project.domain.ProjectYesanOutputCodeSearch;
+import ksmart30.team01.project.domain.ProjectYesanOutputListRequest;
 import ksmart30.team01.project.mapper.ProjectYesanMapper;
 
 @Service
@@ -83,9 +85,41 @@ public class ProjectYesanService {
 	
 	//2.2.1. 일정계획에서 변경횟수가 2회 이상인 경우 변경내역을 보여주는 요청
 	public List<Map<String, Object>> projectYesanViewWorkStepLog(ProjectYesanWorkStepLogRequest projectYesanWorkStepLogRequest) {
+		
 		List<Map<String, Object>> workStepLogList = projectYesanMapper.getProjectYesanViewWorkStepLog(projectYesanWorkStepLogRequest);
 		return workStepLogList;
 	}
+	
+	//2.2.2. 프로젝트코드에 해당하는 프로젝트예산을 승인하는 요청
+	public int projectYesanSeungin(String PJT_CD) {
+		System.out.println("projectYesanSeungin 프로젝트예산 승인 서비스");
+		System.out.println(PJT_CD+"승인처리할 프로젝트코드 서비스");
+		return projectYesanMapper.modifyProjectYesanSeungin(PJT_CD);
+	}	
+
+	//2.2.2. 프로젝트코드에 해당하는 프로젝트예산 승인 취소하는 요청
+	public int projectYesanSeunginCancel(String PJT_CD) {
+		System.out.println("projectYesanSeunginCancel 프로젝트예산 승인취소 서비스");
+		System.out.println(PJT_CD+"승인처리 취소할 프로젝트코드 서비스");
+		return projectYesanMapper.modifyProjectYesanSeunginCancel(PJT_CD);
+	}	
+	
+	//2.2.3. 프로젝트예산 출력을 위한 프로젝트리스트 조회	
+	public List<Map<String, Object>> projectYesanOutputList(ProjectYesanOutputListRequest projectYesanOutputListRequest) {
+		System.out.println("시작"+projectYesanOutputListRequest.getEND_DATE().length());
+		if(projectYesanOutputListRequest.getEND_DATE().length()>0) {		
+			String aa = projectYesanOutputListRequest.getEND_DATE();
+			projectYesanOutputListRequest.setEND_DATE("CONVERT(VARCHAR,CONVERT(DATE,'"+aa+"'),112)");
+		}
+		
+		if(projectYesanOutputListRequest.getSTART_DATE().length()>0) {
+			String bb = projectYesanOutputListRequest.getSTART_DATE();
+			projectYesanOutputListRequest.setSTART_DATE("AND B.CONTRACT_DATE BETWEEN CONVERT(VARCHAR,CONVERT(DATE,'"+bb+"'),112) AND");
+		}
+		System.out.println("마지막"+projectYesanOutputListRequest.toString());
+		List<Map<String, Object>> projectYesanOutputList = projectYesanMapper.getprojectYesanOutputList(projectYesanOutputListRequest);
+		return projectYesanOutputList;
+	}	
 	
 	//2.2.3.1 프로젝트예산 출력하기 위해 조건에 맞는 프로젝트를 검색하는 메서드
 	public List<Map<String, Object>> projectYesanOutputPjtSearch(ProjectYesanOutputCodeSearch projectYesanOutputCodeSearch) {
@@ -93,5 +127,41 @@ public class ProjectYesanService {
 		return projectYesanMapper.getProjectYesanOutputPjtList(projectYesanOutputCodeSearch);
 	}
 	
+	//2.2.4 예산 입력한 용역계약서를 조건별로 검색
+	public List<Map<String, Object>> projectYesanSearchList() {
+		System.out.println("projectYesanSearchList메서드 서비스");
+		return projectYesanMapper.getProjectYesanSearch();
+	}	
+	
+	//2.2.5. 계약프로젝트List
+	public List<Map<String, Object>> projectYesanList(ProjectYesanListRequest projectYesanListRequest) {
+		System.out.println("projectYesanList 서비스");		
+		
+		//지상층과 지하층이 공백일 경우 처리해주기
+		if(projectYesanListRequest.getB_UP_SU().equals("")) {
+			projectYesanListRequest.setB_UP_SU("999");
+		}
+		if(projectYesanListRequest.getB_DOWN_SU().equals("")) {
+			projectYesanListRequest.setB_DOWN_SU("0");
+		}
+		
+		//연면적 공백일 경우 처리해주기
+		if(projectYesanListRequest.getG_AREA_P_LOW().equals("")) {
+			projectYesanListRequest.setG_AREA_P_LOW("0.0");
+		}
+		if(projectYesanListRequest.getG_AREA_P_HIGH().equals("")) {
+			projectYesanListRequest.setG_AREA_P_HIGH("9999999");
+		}
+		System.out.println(projectYesanListRequest.toString()+"프로젝트예산List 검색조건");
+		List<Map<String, Object>> projectYesanList = projectYesanMapper.getProjectYesanList(projectYesanListRequest);
+		return projectYesanList;
+	}
+
+
+
+
+
+
+
 	
 }

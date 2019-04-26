@@ -9,14 +9,69 @@
 		<!-- jquery -->
 	    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script>
+
+	function startYearCall() {
+		//날짜 초기화(적용하기)
+		let today = new Date();
+		let dd = today.getDate();
+		let mm = today.getMonth()+1; //January is 0!
+		let yyyy = today.getFullYear();
+		if(dd<10) {//2자리수만들기
+		    dd='0'+dd
+		} 
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+		today = yyyy+'-' + mm+'-'+dd;
+		$('#END_DATE').val(today);
+	}		
 	
+	//프로젝트예산리스트를 조회하는 함수
+	function pjtListAll(){
+		// 필드에 입력받은 값들을 변수에 저장
+ 		let START_DATE = $('#START_DATE').val();
+		let END_DATE = $('#END_DATE').val();
+		let DEPT_CD = $('#DEPT_CD').val(); 
+		let PJT_CD = $('#PJT_CD').val(); 
+		let radioValue = $('.pjtRadio:checked').val();
+ 		console.log(START_DATE);	
+ 		console.log(END_DATE);
+		console.log(DEPT_CD); 
+		console.log(PJT_CD); 
+		console.log(radioValue); 
+		$.ajax({
+	        url:'/project/projectYesanOutputView',	//url을 요청하고
+	        type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
+	    	data:{START_DATE:START_DATE, END_DATE:END_DATE, DEPT_CD:DEPT_CD, PJT_CD:PJT_CD, radioValue:radioValue},	//넘길 데이터
+	        success:(data)=>{	//받은 데이터
+	        	console.log(data);
+	            $('#pjtList').empty();	//리스트를 비우고	               
+	            $(data).each((index,item)=>{
+	                $('#pjtList').append('<tr><td class="a-center"></td><td>'+item.PJT_CD+'</td><td>'+item.PJT_NM+'</td><td><input type="checkbox"></td></tr>');               
+	            });
+	            
+	            //리스트의 길이
+	            $('#listLength').empty();
+	            $('#listLength').append(data.length); 
+	    	}
+		});	
+	}
+	
+	//문서가 준비되면 프로젝트예산리스트를 모두 조회하고 검색 조건 중 마지막 날짜를 초기화한다
 	$(document).ready(()=>{	
-    	
+		pjtListAll(); 	
+		startYearCall();
+		
+		//조회버튼(pjtListBtn)을 클릭하면 프로젝트예산리스트를 모두 조회
+		$('#pjtListBtn').click(()=>{
+			pjtListAll(); 
+	    });	
+		
+		
 		
 		// 프로젝트코드와 프로젝트명 검색	
 		$('#pjtCdSearchBtn').click(()=>{
-			console.log('pjtCdSearchBtn 버튼확인');
-			
+			console.log('pjtCdSearchBtn 버튼확인');		
 			let CONTRACT_DATE_YYMMDD = $('#CONTRACT_DATE_YY').val();
 			let CONTRACT_DATE_YY = CONTRACT_DATE_YYMMDD.substr(0,4);
 			let selectedOption = $('#selectedOption option:selected').val();
@@ -50,8 +105,12 @@
 			$('#PJT_CD').val(td.eq(0).text());
 			$('#PJT_NM').val(td.eq(1).text());
 			$('#pjtCdModal').click();
-		});
+		});		
 	});
+		
+		
+
+
 
 	
 	
@@ -75,7 +134,7 @@
 			</div>
 			<div class="x_content" style="text-align: right">
 				<div class="btn-group">
-					<button class="btn btn-default" type="reset">조회</button>
+					<button class="btn btn-default" type="reset" id="pjtListBtn">조회</button>
 					<button class="btn btn-default" type="reset" disabled="disabled">입력</button>
 					<button class="btn btn-default" type="button" disabled="disabled">수정</button>
 					<button class="btn btn-default" type="button" disabled="disabled">삭제</button>
@@ -109,38 +168,36 @@
 
 						<tbody>
 							<tr role="row">
-								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending"
+								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 3%;" aria-sort="ascending"
 									aria-label="First name: activate to sort column descending">
 									<label class="control-label">기간</label>
 								</td>
-								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 30%;" aria-sort="ascending"
+								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 20%;" aria-sort="ascending"
 									aria-label="First name: activate to sort column descending">
-									<input type="date" style="width: 40%"> ~ <input	type="date" style="width: 40%">
+									<input type="date" style="width: 40%" id="START_DATE"> ~ <input	type="date" style="width: 40%" id="END_DATE">
 								</td>
-								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending"
+								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 3%;" aria-sort="ascending"
 									aria-label="First name: activate to sort column descending">
 									<label class="control-label">부서</label>
 								</td>
-								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 20%;" aria-sort="ascending"
+								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 7%;" aria-sort="ascending"
 									aria-label="First name: activate to sort column descending">
-									<div class="col-md-12 col-sm-12 col-xs-12 ">
-										<select class="form-control">
+										<select class="form-control" id="DEPT_CD">
 											<option value="">전 사</option>
-											<option value="1">설계1본부</option>
-											<option value="2">설계2본부</option>
-											<option value="3">설계3본부</option>
-											<option value="4">설계4본부</option>
-											<option value="5">설계5본부</option>
-										</select>
-									</div>
+											<option value="75">설계1본부</option>
+											<option value="76">설계2본부</option>
+											<option value="77">설계3본부</option>
+											<option value="78">설계4본부</option>
+											<option value="79">설계5본부</option>
+										</select>	
 								</td>
-								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 8%;" aria-sort="ascending"
+								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 3%;" aria-sort="ascending"
 									aria-label="First name: activate to sort column descending">
 									<label class="control-label">코드명</label>
 								</td>
 								<td class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" style="width: 20%;" aria-sort="ascending"
 									aria-label="First name: activate to sort column descending">
-									<input type="number" id="PJT_CD" style="width: 20%"> <button type="button" data-toggle="modal" data-target=".bs-example-modal-lg1"><i class="fa fa-search"></i></button> <input type="text" id="PJT_NM" style="width: 60%">
+									<input type="number" id="PJT_CD" style="width: 20%"> <button type="button" data-toggle="modal" data-target=".bs-example-modal-lg1"><i class="fa fa-search"></i></button> <input type="text" id="PJT_NM" style="width: 70%">
 									
 									<!-- 프로젝트 코드 조회 modal 시작 -->																				
 										<div class="modal fade bs-example-modal-lg1" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
@@ -210,11 +267,11 @@
 							<tr>
 								<td colspan="6">
 									<div class="radio">
-										<label style="padding-left: 50px;"><input type="radio">계약</label>
-										<label style="padding-left: 50px;"><input type="radio">미승인</label>
-										<label style="padding-left: 50px;"><input type="radio">승인</label>
-										<label style="padding-left: 50px;"><input type="radio">종료</label>
-										<label style="padding-left: 50px;"><input type="radio">ALL</label>
+										<label style="padding-left: 50px;"><input type="radio" class="pjtRadio" name="pjtRadio" value="2">계약</label>
+										<label style="padding-left: 50px;"><input type="radio" class="pjtRadio" name="pjtRadio" value="3">미승인</label>
+										<label style="padding-left: 50px;"><input type="radio" class="pjtRadio" name="pjtRadio" value="4">승인</label>
+										<label style="padding-left: 50px;"><input type="radio" class="pjtRadio" name="pjtRadio" value="5">종료</label>
+										<label style="padding-left: 50px;"><input type="radio" class="pjtRadio" name="pjtRadio" value="" checked="checked">ALL</label>
 									</div>
 								</td>
 							</tr>
@@ -248,82 +305,20 @@
 								<th>
 									<!-- <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; visibility: hidden;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> -->
 								</th>
-								<th class="column-title">No.</th>
-								<th class="column-title">부서</th>
 								<th class="column-title">PJT코드</th>
 								<th class="column-title">프로젝트명</th>
 								<th class="column-title">출력</th>
 								<!-- <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i> -->
 							</tr>
 						</thead>
-
-						<tbody>
-							<tr class="even pointer">
-								<td class="a-center "></td>
-								<td class=" ">1</td>
-								<td class=" ">설계1본부 1소</td>
-								<td class=" ">19001F</td>
-								<td class=" ">효창동 근린생활시설 신축공사</td>
-								<td class=" "><input type="checkbox"></td>
-							</tr>
-
-							<tr class="odd pointer">
-								<td class="a-center "></td>
-								<td class=" ">2</td>
-								<td class=" ">설계1본부 1소</td>
-								<td class=" ">19010F</td>
-								<td class=" ">01_프로젝트_주선태극기</td>
-								<td class=" "><input type="checkbox"></td>
-							</tr>
-							<tr class="even pointer">
-								<td class="a-center "></td>
-								<td class=" ">3</td>
-								<td class=" ">설계1본부 1소</td>
-								<td class=" ">19015F</td>
-								<td class=" ">KDY TEST사업</td>
-								<td class=" "><input type="checkbox"></td>
-							</tr>
-							<tr class="odd pointer">
-								<td class="a-center "></td>
-								<td class=" ">4</td>
-								<td class=" ">설계1본부 1소</td>
-								<td class=" ">19016F</td>
-								<td class=" ">오란씨</td>
-								<td class=" "><input type="checkbox"></td>
-							</tr>
-							<tr class="even pointer">
-								<td class="a-center "></td>
-								<td class=" ">5</td>
-								<td class=" ">설계1본부 1소</td>
-								<td class=" ">19017F</td>
-								<td class=" ">성수산자연 휴양림 호텔 건축 공사</td>
-								<td class=" "><input type="checkbox"></td>
-							</tr>
-							<tr class="odd pointer">
-								<td class="a-center "></td>
-								<td class=" ">6</td>
-								<td class=" ">설계3본부 2소</td>
-								<td class=" ">19012F</td>
-								<td class=" ">EBS건물신축공사</td>
-								<td class=" "><input type="checkbox"></td>
-							</tr>
-							<tr class="even pointer">
-								<td class="a-center "></td>
-								<td class=" ">7</td>
-								<td class=" ">설계4본부 1소</td>
-								<td class=" ">19003F</td>
-								<td class=" ">J프로젝트</td>
-								<td class=" "><input type="checkbox"></td>
-							</tr>
-							<tr class="odd pointer">
-								<td class="a-center "></td>
-								<td class=" ">8</td>
-								<td class=" ">설계1본부 1소</td>
-								<td class=" ">19019F</td>
-								<td class=" ">문효균TEST</td>
-								<td class=" "><input type="checkbox"></td>
-							</tr>
+						<tbody id="pjtList">
 						</tbody>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<th id="listLength"></th>
+						<tr>
 					</table>
 					<!-- 출력 리스트 검색 끝 -->
 				</div>
