@@ -139,13 +139,20 @@ public class ProjectYesanRestController {
 		return projectYesanService.projectYesanOutputPjtSearch(projectYesanOutputCodeSearch);
 	}	
 
-	//2.2.4 예산 입력한 용역계약서를 조건별로 검색
+	//2.2.4. 승인한 프로젝트예산서를 조건별로 검색
 	@PostMapping("/project/projectYesanSearchView")
 	public List<Map<String, Object>> projectYesanSearch() {
 		System.out.println("/project/projectYesanSearchView 프로젝트예산 검색 요청 RestController post");
 		return projectYesanService.projectYesanSearchList();
 	}
 
+	//2.2.4.1. 발주처 검색 Modal
+	@PostMapping("/project/projectYesanCustSearch")
+	public List<Map<String, Object>> projectYesanCustSearch(String column, String columnValue) {
+		System.out.println("/project/projectYesanCustSearch 발주처modal 검색 요청 RestController post");
+		return projectYesanService.projectYesanCustSearch(column, columnValue);
+	}
+	
 	//2.2.5. 계약프로젝트List
 	@PostMapping("/project/projectYesanListView")
 	public List<Map<String, Object>> projectYesanListView(ProjectYesanListRequest projectYesanListRequest) {

@@ -61,18 +61,21 @@ public class ProjectYesanController {
 	//2.2.3 프로젝트예산 출력
 	@GetMapping("/project/projectYesanOutputView")
 	public String projectYesanOutput() {
+		System.out.println("/project/projectYesanOutputView 프로젝트예산 출력화면 요청 Controller get");
 		return "project/projectYesanOutputView";
 	}
 	
 	//2.2.4 프로젝트예산 검색
 	@GetMapping("/project/projectYesanSearchView")
 	public String projectYesanSearch() {
+		System.out.println("/project/projectYesanSearchView 프로젝트예산 검색화면 요청 Controller get");
 		return "project/projectYesanSearchView";
 	}
 	
 	//2.2.5 계약프로젝트List
 	@GetMapping("/project/projectYesanListView")
 	public String projectYesanList() {
+		System.out.println("/project/projectYesanSearchView 계약프로젝트List화면 요청 Controller get");
 		return "project/projectYesanListView";
 	}	
 	

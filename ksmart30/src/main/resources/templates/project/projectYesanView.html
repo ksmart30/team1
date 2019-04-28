@@ -843,6 +843,9 @@ layout:decorator="layout/main">
 													<div class="x_panel">
 											<div class="x_title">
 												<ul class="nav navbar-right panel_toolbox">
+													<div class="x_content" style="text-align: right">
+														<button class="btn" id="workStepBtn">M/H계획 입력</button>
+													</div>													
 												</ul>
 												<div class="clearfix"></div>
 											</div>
@@ -961,7 +964,10 @@ layout:decorator="layout/main">
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="x_panel">
 													<div class="x_title">
-														<ul class="nav navbar-right panel_toolbox">															
+														<ul class="nav navbar-right panel_toolbox">
+															<div class="x_content" style="text-align: right">
+																<button class="btn" id="workStepBtn">제조경비I 입력</button>
+															</div>																														
 														</ul>
 														<div class="clearfix"></div>
 													</div>
@@ -998,6 +1004,9 @@ layout:decorator="layout/main">
 												<div class="x_panel">
 													<div class="x_title">
 														<ul class="nav navbar-right panel_toolbox">
+															<div class="x_content" style="text-align: right">
+																<button class="btn" id="workStepBtn">제조경비II 입력</button>
+															</div>														
 														</ul>
 														<div class="clearfix"></div>
 													</div>
@@ -1014,6 +1023,44 @@ layout:decorator="layout/main">
 																</tr>
 															</thead>
 															<tbody id="jejo2">
+																<tr>
+																	<td>
+																		<select id="SCV_PART_NM">
+																			<option value=""></option>
+																			<option value="01">건축</option>
+																			<option value="02">기계</option>
+																			<option value="03">전기</option>
+																			<option value="04">토목</option>
+																			<option value="05">조경</option>
+																			<option value="06">구조</option>
+																			<option value="07">전경</option>
+																			<option value="08">교통영향평가</option>
+																			<option value="09">기타인증</option>
+																			<option value="10">지질조사</option>
+																			<option value="11">측량</option>
+																			<option value="12">흙막이</option>
+																			<option value="13">특수디자인</option>
+																			<option value="14">소방</option>
+																			<option value="15">환경영향평가</option>
+																			<option value="16">재해영향평가</option>
+																			<option value="17">VE/LCC</option>
+																			<option value="18">인테리어</option>
+																			<option value="19">친환경인증</option>
+																			<option value="20">타당성검토</option>
+																			<option value="21">교통성검토</option>
+																			<option value="22">사전환경성검토</option>
+																			<option value="23">사전재해영샹향성검토</option>
+																			<option value="24">사전경관분석검토</option>
+																			<option value="29">기타</option>
+																			<option value="30">프리랜서</option>
+																			<option value="99">예비비</option>
+																		</select>
+																	</td>
+																	<td><input type="number" id="EX_AMT"></td>
+																	<td id=""></td>
+																	<td id=""></td>
+																	<td id=""></td>
+																</tr>
 															</tbody>
 															<tr>
 																<th>소  계</th><td id="EX_AMT_TOTAL"></td><td id="EX_RATE_TOTAL"></td><td></td><td id="EX_WORK_AMT_TOTAL"></td>

@@ -65,11 +65,15 @@ public interface ProjectYesanMapper {
 	//2.2.3.1 프로젝트예산 출력하기 위해 조건에 맞는 프로젝트를 검색하는 메서드
 	List<Map<String, Object>> getProjectYesanOutputPjtList(ProjectYesanOutputCodeSearch projectYesanOutputCodeSearch);
 
-	//2.2.4. 프로젝트예산을 조건별로 검색하는 메서드
+	//2.2.4. 승인한 프로젝트예산을 조건별로 검색하는 메서드
 	List<Map<String, Object>> getProjectYesanSearch();
 
+	//2.2.4.1. 발주처 검색 modal
+	List<Map<String, Object>> getProjectYesanCustList(String column, String columnValue);
+	
 	//2.2.5. 계약프로젝트List 조회하는 메서드
 	List<Map<String, Object>> getProjectYesanList(ProjectYesanListRequest projectYesanListRequest);
+
 
 
 

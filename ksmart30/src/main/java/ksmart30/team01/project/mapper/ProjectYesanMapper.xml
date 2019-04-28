@@ -469,7 +469,103 @@
 			AND A.${selectedOption} LIKE '%' + #{inputValue} + '%'		
   	</select>	
 
-
+  	<!-- 2.2.4. 승인된 프로젝트예산을 조건별로 검색하는 쿼리문 -->
+  	<select id="getProjectYesanSearch" resultType="java.util.Map">  	
+		SELECT 
+	    	A.PJT_CD,	--프로젝트코드
+	        A.PJT_NM,	--프로젝트명
+	        A.DEPT_CD,	--부서코드
+	        A.DEPT_NM,	--부서명
+	        A.SYS_COD,	--시스템코드
+	        A.CONTRACT_DATE,	--계약일
+	        A.CUST_CD,	--사업자번호
+	        A.CUST_NM,	--발주처
+	        A.PM_EMP_NO,	--PM사원번호
+	        A.PM_EMP_NM,	--PM이름
+	        A.PYUNG_DAN,	--평당단가
+	        A.G_YAREA_P,	--연면적
+	        A.TOT_CONTRACT_AMT,	--매출액
+	        A.COST_TOT,	--매출원가합계
+	        ROUND((CASE WHEN A.COST_TOT <![CDATA[<>]]> 0 AND A.TOT_CONTRACT_AMT <![CDATA[<>]]> 0 THEN (A.COST_TOT / A.TOT_CONTRACT_AMT) * 100
+	        	ELSE 0 END),1) COST_TOT_YUL,
+	        A.COST_AMT,	--자체비용
+	        ROUND((CASE WHEN A.COST_AMT <![CDATA[<>]]> 0 AND A.TOT_CONTRACT_AMT <![CDATA[<>]]> 0 THEN (A.COST_AMT / A.TOT_CONTRACT_AMT) * 100
+	        	ELSE 0 END),1) COST_AMT_YUL,
+	        A.DIV_AMT,	--배부비용
+	        ROUND((CASE WHEN A.DIV_AMT <![CDATA[<>]]> 0 AND A.TOT_CONTRACT_AMT <![CDATA[<>]]> 0 THEN (A.DIV_AMT / A.TOT_CONTRACT_AMT) * 100
+	        	ELSE 0 END),1) DIV_AMT_YUL,
+	        (CASE WHEN A.TOT_CONTRACT_AMT = A.PROFIT_TOT THEN 0 
+	        	ELSE  A.PROFIT_TOT END) PROFIT_TOT,	--영업이익
+	        ROUND((CASE WHEN A.TOT_CONTRACT_AMT = A.PROFIT_TOT THEN 0
+	        	ELSE (CASE WHEN A.PROFIT_TOT <![CDATA[<>]]> 0 AND A.TOT_CONTRACT_AMT <![CDATA[<>]]> 0 THEN (A.PROFIT_TOT * 100 / A.TOT_CONTRACT_AMT)
+	            	ELSE 0 END)	END),1) PROFIT_TOT_YUL,
+	        A.COLOR
+		    FROM (
+		    	SELECT A.PJT_CD, 
+		        	'['+A.PJT_CD+'] '+ISNULL((SELECT PJT_NM FROM T_SM3000 WHERE T_SM3000.PJT_CD  = A.PJT_CD),'*') PJT_NM,
+		            A.DEPT_CD,
+		            D.DEPT_NM,               
+		            D.SHORT_NM,
+		            D.SYS_COD,
+		            A.CONTRACT_DATE,
+		            C.CUST_CD,
+		            ISNULL((SELECT CUST_NM FROM T_AC0300 WHERE T_AC0300.CUST_CD = C.CUST_CD),' ') CUST_NM,
+		            A.PM_EMP_NO,
+		            ISNULL(H.KOR_NM,'') PM_EMP_NM,
+		            A.PYUNG_DAN,
+		            A.G_YAREA_P,
+		            (CASE WHEN A.BALANCE_AMT > 0 THEN A.BALANCE_AMT
+				     	ELSE ISNULL(A.TOT_CONTRACT_AMT,0)
+		                	END) TOT_CONTRACT_AMT,
+		                ISNULL(B.COST_AMT1,0) + ISNULL(B.COST_AMT2,0) + ISNULL(B.COST_AMT3,0) + ISNULL(B.DIV_AMT11,0) + ISNULL(B.DIV_AMT12,0)
+		                + ISNULL(B.DIV_AMT13,0) + ISNULL(B.DIV_AMT20,0) + ISNULL(B.DIV_AMT30,0) + ISNULL(B.DIV_AMT40,0) COST_TOT,
+		                ISNULL(B.COST_AMT1,0) + ISNULL(B.COST_AMT2,0) + ISNULL(B.COST_AMT3,0) + ISNULL(B.DIV_AMT11,0) 
+		                + ISNULL(B.DIV_AMT12,0) + ISNULL(B.DIV_AMT13,0) + ISNULL(B.DIV_AMT40,0) COST_AMT,
+		                ISNULL(B.DIV_AMT20,0) + ISNULL(B.DIV_AMT30,0)  DIV_AMT,
+		                (CASE  WHEN A.BALANCE_AMT > 0 THEN
+		 	            	ISNULL(A.BALANCE_AMT,0) - (ISNULL(B.COST_AMT1,0) + ISNULL(B.COST_AMT2,0) + ISNULL(B.COST_AMT3,0) 
+		                	+ ISNULL(B.DIV_AMT11,0) + ISNULL(B.DIV_AMT12,0) + ISNULL(B.DIV_AMT13,0) + ISNULL(B.DIV_AMT20,0) 
+		        	        + ISNULL(B.DIV_AMT30,0) + ISNULL(B.DIV_AMT40,0)) 
+				        ELSE 
+			                ISNULL(A.TOT_CONTRACT_AMT,0) - (ISNULL(B.COST_AMT1,0) + ISNULL(B.COST_AMT2,0) + ISNULL(B.COST_AMT3,0) 
+		                	+ ISNULL(B.DIV_AMT11,0) + ISNULL(B.DIV_AMT12,0)
+			                + ISNULL(B.DIV_AMT13,0) + ISNULL(B.DIV_AMT20,0) 
+		        	        + ISNULL(B.DIV_AMT30,0) + ISNULL(B.DIV_AMT40,0))
+		                END) PROFIT_TOT,
+		                H.COLOR
+		            FROM T_P11000 A,
+		                 T_P11090 B,
+		                 (SELECT  B.PJT_CD, ISNULL(MIN(A.CUST_CD),'') CUST_CD
+		                 	FROM  T_P11010 A,
+		                         (SELECT DISTINCT(B.PJT_CD) PJT_CD, 
+		                                 ISNULL(MAX(A.N_RATE),0) N_RATE
+		                          FROM T_P11010 A, T_P11000 B
+		                          WHERE  B.PJT_CD *= A.PJT_CD
+		                          GROUP BY B.PJT_CD) B 
+		                   WHERE  B.PJT_CD *= A.PJT_CD
+		                     AND  B.N_RATE *= A.N_RATE
+		                   GROUP  BY B.PJT_CD) C,
+		                 T_SC1010 D,
+		                 (SELECT *,'' COLOR  FROM T_HM1000 UNION SELECT *, 'red' COLOR FROM T_HM1000_T) H
+		           WHERE A.PJT_CD    *=  B.PJT_CD 
+		             AND A.PJT_CD    *=  C.PJT_CD 
+		             AND A.PM_EMP_NO *=  H.EMP_NO
+		             AND A.DEPT_CD    =  D.DEPT_CD
+		             AND A.PJT_YEA_YN = 'T'
+					) A	
+  	</select>	
+	
+	<!-- 2.2.4.1. 전체 발주처를 조회하는 쿼리문 modal -->
+  	<select id="getProjectYesanCustList" parameterType="String" resultType="java.util.Map">   
+		SELECT
+			CUST_CD,
+			CUST_NM
+		FROM
+			T_AC0300
+		WHERE
+			${column} LIKE '%'+#{columnValue}+'%'
+			
+   </select>	
 	
 	<!-- 2.2.5. 계약프로젝트List를 조회하는 쿼리문 -->
   	<select id="getProjectYesanList" parameterType="ksmart30.team01.project.domain.ProjectYesanListRequest" resultType="java.util.Map">   

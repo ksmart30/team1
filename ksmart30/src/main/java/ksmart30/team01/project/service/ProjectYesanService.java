@@ -127,11 +127,19 @@ public class ProjectYesanService {
 		return projectYesanMapper.getProjectYesanOutputPjtList(projectYesanOutputCodeSearch);
 	}
 	
-	//2.2.4 예산 입력한 용역계약서를 조건별로 검색
+	//2.2.4. 프로젝트예산서를 조건별로 검색
 	public List<Map<String, Object>> projectYesanSearchList() {
 		System.out.println("projectYesanSearchList메서드 서비스");
 		return projectYesanMapper.getProjectYesanSearch();
 	}	
+	
+	//2.2.4 발주처 검색 modal
+	public List<Map<String, Object>> projectYesanCustSearch(String column, String columnValue) {
+		System.out.println("projectYesanSearchList 발주처 검색 modal 서비스");
+		System.out.println(column+" :구분");
+		System.out.println(columnValue+" :입력값");
+		return projectYesanMapper.getProjectYesanCustList(column, columnValue);
+	}
 	
 	//2.2.5. 계약프로젝트List
 	public List<Map<String, Object>> projectYesanList(ProjectYesanListRequest projectYesanListRequest) {
@@ -156,6 +164,8 @@ public class ProjectYesanService {
 		List<Map<String, Object>> projectYesanList = projectYesanMapper.getProjectYesanList(projectYesanListRequest);
 		return projectYesanList;
 	}
+
+
 
 
 
