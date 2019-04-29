@@ -95,10 +95,11 @@ function callme(IN_PJT_CD,IN_OUT_CORP,IN_OUT_ITEM){
 $(document).ready(()=>{
 	pjtSearch();//검색 부문 먼저 불러오기
 	//선택 색상 변경
-	 $("#yshh tr").click(function() {
-		$("#yshh tr").css("background-color", "#ffffff");
-		$(this).css( "background-color", "#ABF200" );
-	 });		
+  	 $("#gyhh tr").click(function() {
+  		$("#gyhh tr").css("background-color", "#ffffff");
+  		$(this).css( "background-color", "#ABF200" );
+  	 });
+	 
     // 서치
     $('#pjt_btn').on('click',()=>{
     	let PJT_CD = $('#PJT_CD').val();
@@ -144,6 +145,7 @@ $(document).ready(()=>{
 	            }
 	        });
     	}
+    
     });
     /* ============================프로젝트코드별조회================================= */
 	$('#btnPjtSearch').click(()=>{
