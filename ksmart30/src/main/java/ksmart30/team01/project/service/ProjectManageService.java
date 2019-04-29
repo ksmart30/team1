@@ -185,7 +185,7 @@ public class ProjectManageService {
 	}
 	
 	// 선택한 용역계약서의 발주처 입력
-	public void addProjectManageOwner(String PJT_CD, String CUST_CD, String CUST_GBN, String N_RATE, String CONTRACT_AMT, String NOW_DATE) {
+	public void addProjectManageOwner(String PJT_CD, String CUST_CD, String CUST_GBN, String N_RATE, String CONTRACT_AMT) {
 		System.out.println("Service addProjectManageOwner 메서드 실행");
 		// 매개변수용 Map
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -196,22 +196,76 @@ public class ProjectManageService {
 		map.put("N_RATE", Integer.parseInt(N_RATE));
 		map.put("CONTRACT_AMT", Integer.parseInt(CONTRACT_AMT));
 		// 최초 발주처 입력시 insert 쿼리문
-		int result1 = projectManageMapper.addProjectManageOwner(map);
-		System.out.println("발추저 입력 쿼리 실행 여부 확인 : "+result1);
-		// 발주처 히스토리 입력시 최대 시퀀스의 +1값을 가져오는 쿼리문
-		int PJT_SEQ = projectManageMapper.getProjectManageOwnerSeq(PJT_CD);
-		System.out.println(PJT_SEQ);
-		// 발주처 히스토리 입력 매개변수
-		map.put("PJT_SEQ", PJT_SEQ);
-		System.out.println(NOW_DATE);
-		map.put("NOW_DATE", NOW_DATE);
-		// 처음 입력하기 때문에 변경 구분이 무조건 00
-		map.put("PJT_GB", "00");
-		// 최초 발주처 히스토리 입력
-		int result2 = projectManageMapper.addProjectManageOwnerHistory(map);
-		System.out.println("발주처 히스토리 입력 쿼리 실행 여부 확인 : "+result2);
+		int result = projectManageMapper.addProjectManageOwner(map);
+		System.out.println("발추저 입력 쿼리 실행 여부 확인 : "+result);
 	}
+	// 선택한 용역계약서의 발주처 삭제
+	public int delProjectManageOwner(String PJT_CD, String CUST_CD) {
+		System.out.println("Service delProjectManageOwner 메서드 실행");
+		// 매개변수용 Map
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("PJT_CD", PJT_CD);
+		map.put("CUST_CD", CUST_CD);
+		int result = projectManageMapper.delProjectManageOwner(map);
+		System.out.println("발주처 삭제 쿼리 실행 여부 확인 : "+result);
+		return result;
+	}
+	// 선택한 용역계약서의 기성단계 입력
+	public void addProjectManageGiseng(String PJT_CD, String RM_STEP, String SALE_STEP, String RM_AMT, String SUGUM_RATE) {
+		System.out.println("Service addProjectManageGiseng 메서드 실행");
+		// 기성단계 순서를 검색해 입력할 순번을 조회
+		String RM_SEQ = projectManageMapper.getProjectManageGiseongNumber(PJT_CD);
+		// 매개변수용 Map
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("PJT_CD", PJT_CD);
+		map.put("RM_STEP", RM_STEP);
+		map.put("SALE_STEP", SALE_STEP);
+		map.put("RM_AMT", Integer.parseInt(RM_AMT));
+		map.put("SUGUM_RATE", Integer.parseInt(SUGUM_RATE));
+		map.put("RM_SEQ", RM_SEQ);
+		// 기성단계 입력
+		int result = projectManageMapper.addProjectManageGiseong(map);
+		System.out.println("기성단계 입력 쿼리 실행 여부 확인 : "+result);
+	}
+	// 선택한 용역계약서 기성단계 삭제
+	public int delProjectManageGiseong(String PJT_CD, String RM_SEQ) {
+		System.out.println("Service delProjectManageGiseong 메서드 실행");
+		// 매개변수용 Map
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("PJT_CD", PJT_CD);
+		map.put("RM_SEQ", RM_SEQ);
+		int result = projectManageMapper.delProjectManageGiseong(map);
+		System.out.println("기성단계 삭제 쿼리 실행 여부 확인 : "+result);
+		return result;
+	}
+	// ===================================================용역계약서 변경 입력 START===================================================
 
+	
+	// 발주처 히스토리 입력시 최대 시퀀스의 +1값을 가져오는 쿼리문
+	//int PJT_SEQ = projectManageMapper.getProjectManageOwnerSeq(PJT_CD);
+	//System.out.println(PJT_SEQ);
+	// 발주처 히스토리 입력 매개변수
+	//map.put("PJT_SEQ", PJT_SEQ);
+	//System.out.println(NOW_DATE);
+	//map.put("NOW_DATE", NOW_DATE);
+	// 처음 입력하기 때문에 변경 구분이 무조건 00
+	//map.put("PJT_GB", "00");
+	// 최초 발주처 히스토리 입력
+	//int result2 = projectManageMapper.addProjectManageOwnerHistory(map);
+	//System.out.println("발주처 히스토리 입력 쿼리 실행 여부 확인 : "+result2);
+
+	// 기성단계 히스토리 입력시 최대 시퀀스의 +1값을 가져오는 쿼리문
+	//int PJT_SEQ = projectManageMapper.getProjectManageGiseongSeq(PJT_CD);
+	//map.put("PJT_SEQ", PJT_SEQ);
+	// 변경 날짜
+	//map.put("PJT_DATE", NOW_DATE);
+	// 처음 입력하기 때문에 변경 구분이 무조건 00
+	//map.put("PJT_GB", "00");
+	// 기성단계 히스토리 입력
+	//int result2 =projectManageMapper.addProjectManageGiseongHistory(map);
+	//System.out.println("기성단계 히스토리 입력 쿼리 실행 여부 확인 : "+result2);
+	
+	// ===================================================용역계약서 변경 조회 START===================================================
 	// 1번 이상 변경된 이력이 있는 용역계약서를 조회하는 메서드
 	public List<Map<String, ProjectHistory>> getProjectHistoryList(String PJT_CD, String DEPT_CD, String YEAR) {
 		System.out.println("Service getProjectManageHistoryList 메서드 실행");

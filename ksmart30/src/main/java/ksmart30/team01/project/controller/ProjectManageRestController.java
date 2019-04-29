@@ -99,27 +99,30 @@ public class ProjectManageRestController {
 	
 	//3.1.1 용역계약서 발주처 입력 처리
 	@PostMapping("/project/projectManageOwnerWriteProcess")
-	public void projectManageOwnerWriteProcess(String PJT_CD, String CUST_CD, String CUST_GBN, String N_RATE, String CONTRACT_AMT, String NOW_DATE) {
+	public void projectManageOwnerWriteProcess(String PJT_CD, String CUST_CD, String CUST_GBN, String N_RATE, String CONTRACT_AMT) {
 		System.out.println("RestController projectManageOwnerWriteProcess 메서드 실행");
-		projectManageService.addProjectManageOwner(PJT_CD, CUST_CD, CUST_GBN, N_RATE, CONTRACT_AMT, NOW_DATE);
+		projectManageService.addProjectManageOwner(PJT_CD, CUST_CD, CUST_GBN, N_RATE, CONTRACT_AMT);
 	}
 
 	//3.1.1 용역계약서 발주처 삭제 처리
-	@PostMapping("/project/manage/owner_del")
-	public String projectManageOwnerDel() {
-		return "project/manage/owner_del";
+	@PostMapping("/project/projectManageOwnerDeleteProcess")
+	public void projectManageOwnerDeleteProcess(String PJT_CD, String CUST_CD) {
+		System.out.println("RestController projectManageOwnerDeleteProcess 메서드 실행");
+		projectManageService.delProjectManageOwner(PJT_CD, CUST_CD);
 	}
 	
 	//3.1.1 용역계약서 기성단계 입력 처리
-	@PostMapping("/project/manage/giseong_in")
-	public String projectManageGiseongIn(Model model) {
-		return "project/manage/giseong/in";
+	@PostMapping("/project/projectManageGiseongWriteProcess")
+	public void projectManageGiseongWriteProcess(String PJT_CD, String RM_STEP, String SALE_STEP, String RM_AMT, String SUGUM_RATE) {
+		System.out.println("RestController projectManageGiseongWriteProcess 메서드 실행");
+		projectManageService.addProjectManageGiseng(PJT_CD, RM_STEP, SALE_STEP, RM_AMT, SUGUM_RATE);
 	}
 	
 	//3.1.1 용역계약서 기성단계 삭제 처리
-	@PostMapping("/project/manage/giseong_del")
-	public String projectManageGiseongDel() {
-		return "project/manage/giseong/del";
+	@PostMapping("/project/projectManageGiseongDeleteProcess")
+	public void projectManageGiseongDeleteProcess(String PJT_CD, String RM_SEQ) {
+		System.out.println("RestController projectManageGiseongDeleteProcess 메서드 실행");
+		projectManageService.delProjectManageGiseong(PJT_CD, RM_SEQ);
 	}
 	
 	//3.1.1 용역계약서 세부사항 입력 처리

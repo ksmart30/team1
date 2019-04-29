@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <th:block layout:fragment="customHead">
-  	<meta charset="UTF-8">
+    <meta charset="UTF-8">
   </th:block>
   <body class="nav-md" th:fragment="mainBody">
     <div class="container body">
@@ -9,17 +9,14 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="/errorView" class="site_title"><i class="fa fa-bar-chart-o"></i> <span>ERP</span></a>
+              <a href="/" class="site_title"><i class="fa fa-bar-chart-o"></i><span>&nbsp;&nbsp;ERP</span></a>
             </div>
 
             <div class="clearfix"></div>
-
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>사번</h2>
-                <h2>이름</h2>
+              	<span>배포일자:2019-04-24</span>                
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -37,15 +34,15 @@
 		                      <li><a href="/business/businessManageSeunginView">사업수행결정서 승인</a></li>
 		                      <li><a href="/business/businessManageListView">사업수행결정 승인현황</a></li>
                   		<label style="font-size:14px; padding-left:10px">사업성검토예산관리</label>
-		                      <li><a href="#">#사업성검토 예산 입력</a></li>
-		                      <li><a href="#">#사업성검토 예산 승인</a></li>
-		                      <li><a href="#">#사업성검토 예산 출력</a></li>
-		                      <li><a href="#">#사업성검토 검색1</a></li>
-		                      <li><a href="#">#사업성검토 검색2</a></li>
+		                      <li><a href="/business/businessYesanView">사업성검토 예산 입력</a></li>
+		                      <li><a href="/business/businessYesanAdmitView">사업성검토 예산 승인</a></li>
+		                      <li><a href="/business/businessYesanOutputView">사업성검토 예산 출력</a></li>
+		                      <li><a href="/business/businessYesanSearch1View">사업성검토 검색1</a></li>
+		                      <li><a href="/business/businessYesanSearch2View">사업성검토 검색2</a></li>
                   		<label style="font-size:14px; padding-left:10px">사업성검토분석 현황</label>
-		                      <li><a href="/business/businessStateHyunhawngView">진행/종료 현황</a></li>
+		     				  <li><a href="/business/businessStateHyunhwangView">진행/종료 현황</a></li>
 		                      <li><a href="/business/businessOrderHyunhwangView">발주처별 진행현황</a></li>
-		                      <li><a href="/business/businessSuccessRateView">사업성검토 성공율</a></li>
+		                      <li><a href="/business/businessSuccessRateView">사업성검토 성공률</a></li>
                   		</li>
                   	</ul>
                   <li><a><i class="fa fa-check-square-o"></i> 2. 계약프로젝트 관리 <span class="fa fa-chevron-down"></span></a>
@@ -106,6 +103,7 @@
 	                  		<li><a href="#"> #M/H 실적(당해) </a></li>
 	                  		<li><a href="#"> #프로젝트 단계완료 미입력 List </a></li>
 	                  		<li><a href="#"> #프로젝트 일정관리 </a></li>
+	                  		<li><a href="/manHour/projectEndView"> 프로젝트 종료 </a></li>
                   	</ul>
                   	<li><a><i class="fa fa-user"></i> 6. 인사 / 급여 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -204,116 +202,60 @@
             <!-- /sidebar menu -->
 
             <!-- /menu footer buttons -->
-            <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            <div class="sidebar-footer hidden-small" style="width: 230px">
+              <!-- 로그인 상태인 경우 (session notnull)-->
+              <a th:if="${session.KOR_NM != null}" data-toggle="tooltip" data-placement="top" title="출근체크" href="/checkOn" style="width: 115px">
+                <span class="glyphicon glyphicon-time" aria-hidden="true" style="color: darkgray; font-size: 14px">&nbsp;출근체크</span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              <a th:if="${session.KOR_NM != null}" data-toggle="tooltip" data-placement="top" title="퇴근체크" href="/checkOff" style="width: 115px">
+                <span class="glyphicon glyphicon-off" aria-hidden="true" style="color: darkgray; font-size: 14px">&nbsp;퇴근체크</span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="/errorView">
+              <!-- 로그아웃 상태인 경우 (session null)-->
+              <div th:unless="${session.KOR_NM != null}" style="width: 230px; height: 30px;"></div>
+              <!--               
+              <a th:unless="${session.KOR_NM != null}" data-toggle="tooltip" data-placement="top" title="Login" href="/loginView" style="width: 230px">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
+              </a> 
+              -->
             </div>
             <!-- /menu footer buttons -->
           </div>
         </div>
 
         <!-- top navigation -->
-        <div class="top_nav">
+        <div class="top_nav" style="color: black">
           <div class="nav_menu">
             <nav>
               <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
               </div>
+              <!-- 로그인 안한 경우 -->
+              <div th:unless="${session.KOR_NM != null}">
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <a href="/loginView">로그인</a>
+                  </li>
+                </ul>
+              </div>
+              <!-- 로그인한 경우 -->
+              <div th:if="${session.KOR_NM != null}">
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                      Menu
+                      <span class=" fa fa-angle-down"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                      <li><a href="#">내 정보</a></li>
+                      <li><a href="/logoutProcess"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <h5 th:text="${session.KOR_NM} + '님 환영합니다.' " style="padding: 10px;"></h5>
+                  </li>
+                </ul>
+              </div>
 
-              <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    사번
-                    <span class=" fa fa-angle-down"></span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
-                    <li>
-                      <a href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
-                      </a>
-                    </li>
-                    <li><a href="javascript:;">Help</a></li>
-                    <li><a href="/logoutProcess"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                  </ul>
-                </li>
-
-                <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="text-center">
-                        <a>
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
             </nav>
           </div>
         </div>
@@ -328,9 +270,7 @@
 
         <!-- footer content -->
         <footer>
-          <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-          </div>
+          <!-- <div class="pull-right"></div> -->
           <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->

@@ -465,7 +465,53 @@
 			${CONTRACT_AMT}
 		)
 	</insert>
+	<!-- 발주처 삭제 -->
+	<delete id="delProjectManageOwner" parameterType="java.util.Map">
+		DELETE FROM
+			T_P11010
+		WHERE
+			PJT_CD = #{PJT_CD}
+			AND CUST_CD = #{CUST_CD}
+	</delete>
+
+	<!-- 기성단계 입력 순서 검색 -->
+	<select id="getProjectManageGiseongNumber" parameterType="String" resultType="String">
+		SELECT
+			ISNULL((MAX(RM_SEQ)+1),0)
+		FROM
+			T_P11030
+		WHERE
+			PJT_CD = #{PJT_CD}
+	</select>
+	<!-- 처음 기성단계 입력 -->
+	<insert id="addProjectManageGiseong" parameterType="java.util.Map" keyProperty="PJT_CD,RM_SEQ">
+		INSERT INTO T_P11030(
+			PJT_CD,
+			RM_SEQ,
+			RM_STEP,
+			SALE_STEP,
+			RM_AMT,
+			SUGUM_RATE
+		)
+		VALUES (
+			#{PJT_CD},
+			#{RM_SEQ},
+			#{RM_STEP},
+			#{SALE_STEP},
+			${RM_AMT},
+			${SUGUM_RATE}
+		)
+	</insert>
+	<!-- 기성단계 삭제 -->
+	<delete id="delProjectManageGiseong" parameterType="java.util.Map">
+		DELETE FROM
+			T_P11030
+		WHERE
+			PJT_CD = #{PJT_CD}
+			AND RM_SEQ = #{RM_SEQ}
+	</delete>
 	
+	<!-- ====================================================== 용역계약 변경 입력 START ====================================================== -->
 	<!-- 발주처 히스토리 입력 전 최대 시퀀스 검색 -->
 	<select id="getProjectManageOwnerSeq" parameterType="String" resultType="Integer" >
 		SELECT
@@ -499,6 +545,41 @@
 			${CONTRACT_AMT}
 		)
 	</insert>
+	<!-- 기성단계 히스토리 입력 전 최대 시퀀스 검색 -->
+	<select id="getProjectManageGiseongSeq" parameterType="String" resultType="Integer">
+		SELECT
+			ISNULL((MAX(PJT_SEQ)+1),0)
+		FROM
+			T_P11030_H
+		WHERE
+			PJT_CD = #{PJT_CD}
+	</select>
+	<!-- 기성단계 히스토리 입력 -->
+	<insert id="addProjectManageGiseongHistory" parameterType="java.util.Map" keyProperty="PJT_SEQ,PJT_SEQ,CUST_CD">
+		INSERT INTO T_P11030_H (
+			PJT_CD,
+			PJT_SEQ,
+			PJT_DATE,
+			PJT_GB,
+			RM_SEQ,
+			RM_STEP,
+			SALE_STEP,
+			RM_AMT,
+			SUGUM_RATE
+		)
+		VALUES (
+			#{PJT_CD},
+			${PJT_SEQ},
+			#{NOW_DATE},
+			#{PJT_GB},
+ 			#{RM_SEQ},
+			#{RM_STEP},
+			#{SALE_STEP},
+			${RM_AMT},
+			${SUGUM_RATE}
+		)
+	</insert>
+	
 	<!-- 용역계약서 변경 조회를 위해 변경한 이력이 1번이라도 있는 용역계약서를 조회한다 -->
 	<select id="getProjectHistoryList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT DISTINCT

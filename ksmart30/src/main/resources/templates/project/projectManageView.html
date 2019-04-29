@@ -299,7 +299,7 @@
 					$('#OWNER_LIST_ONE').empty();
 					$(data).each((index, item) => {
 						console.log(item);
-						$('#OWNER_LIST_ONE').append('<tr><td></td><td>'+item.CUST_NM+'</td><td>'+item.CUST_GBN_NM+'</td><td>'+item.N_RATE+'</td><td>'+item.CONTRACT_AMT+'</td><td><button type="button" class="btn" style="color:black" onclick="ownerDelBtn()">삭제</button></td></tr>');
+						$('#OWNER_LIST_ONE').append('<tr><td></td><td>'+item.CUST_NM+'</td><td>'+item.CUST_GBN_NM+'</td><td>'+item.N_RATE+'</td><td>'+item.CONTRACT_AMT+'</td><td><button type="button" class="btn" style="color:black" onclick="ownerDelBtn('+item.PJT_CD+','+item.CUST_CD+')">삭제</button></td></tr>');
 					});
 					$('#N_RATE_SUM').empty();						// 지분합계
 					$('#N_RATE_SUM').append(data[0].N_RATE_SUM);
@@ -319,7 +319,7 @@
 					$('#GISEONG_LIST_ONE').empty();
 					$(data).each((index, item) => {
 						console.log(item);
-						$('#GISEONG_LIST_ONE').append('<tr><td width="20%">'+item.RM_SEQ+'</td><td width="20%">'+item.RM_STEP_NM+'</td><td width="20%">'+item.SALE_STEP_NM+'</td><td width="20%">'+item.RM_AMT+'</td><td width="20%">'+item.SUGUM_RATE+'</td></tr>');
+						$('#GISEONG_LIST_ONE').append('<tr><td width="20%">'+item.RM_SEQ+'</td><td width="20%">'+item.RM_STEP_NM+'</td><td width="20%">'+item.SALE_STEP_NM+'</td><td width="20%">'+item.RM_AMT+'</td><td width="20%">'+item.SUGUM_RATE+'</td><td><button type="button" class="btn" style="color:black" onclick="giseongDelBtn('+item.PJT_CD+','+item.RM_SEQ+')">삭제</button></td></tr>');
 					});
 					$('#RM_AMT_SUM').empty();						// 금액합계
 					$('#RM_AMT_SUM').append(data[0].RM_AMT_SUM);
@@ -330,11 +330,39 @@
 		}
 		
 		// 선택한 발주처 삭제
-		function ownerDelBtn() {
-			let PJT_CD = $('#PJT_CD_ONE').text();				// 프로젝트 코드
-			let PJT_DATE = NOW_DATE;
-			console.log('발주처삭제하고싶다');
-			console.log(PJT_CD+PJT_DATE);
+		function ownerDelBtn(PJT_CD, CUST_CD) {
+			console.log(PJT_CD);	// 프로젝트 코드
+			console.log(CUST_CD);	// 발주처 코드
+			$.ajax({
+				url:'/project/projectManageOwnerDeleteProcess',
+				type:'POST',
+				data:{PJT_CD:PJT_CD, CUST_CD:CUST_CD},
+				success:function(data) {
+					alert("발주처 삭제 완료!");
+					pjtOwnerList(PJT_CD);
+				},
+				error:function(request, status, error) {
+					alert(error + "에러입니다.");
+				}
+			});
+		}
+		
+		// 선택한 기성단계 삭제
+		function giseongDelBtn(PJT_CD,RM_SEQ) {
+			console.log(PJT_CD);	// 프로젝트 코드
+			console.log(RM_SEQ);	// 기성단계 순번
+			$.ajax({
+				url:'/project/projectManageGiseongDeleteProcess',
+				type:'POST',
+				data:{PJT_CD:PJT_CD, RM_SEQ:RM_SEQ},
+				success:function(data) {
+					alert("기성단계 삭제 완료!");
+					pjtGiseongList(PJT_CD);
+				},
+				error:function(request, status, error) {
+					alert(error + "에러입니다.");
+				}
+			});
 		}
 		
 		// 신규 용역계약서 작성시 수주심의결정서 상세를 출력
@@ -358,8 +386,6 @@
 				}
 			});
 		}
-		
-		// 용역계약서 신규 입력
 		
 		// input 태그에서 엔터키 금지
 		$('input[type="text"]').keydown((e)=>{
@@ -417,17 +443,36 @@
 				let CUST_GBN = $("#CUST_GBN_VAL option:selected").val();	// 발주처 구분
 				let N_RATE = $('#N_RATE_VAL').val();				// 지분
 				let CONTRACT_AMT = $('#CONTRACT_AMT_VAL').val();	// 계약금액
-				// replace 정규식으로 - 제거
-				NOW_DATE = NOW_YEAR+NOW_MONTH+NOW_DAY;
-				console.log('뭐지?'+NOW_DATE);
 				$.ajax({
 					url:'/project/projectManageOwnerWriteProcess',
 					type:'POST',
-					data:{PJT_CD:PJT_CD, CUST_CD:CUST_CD, CUST_GBN:CUST_GBN, N_RATE:N_RATE, CONTRACT_AMT:CONTRACT_AMT, NOW_DATE:NOW_DATE},
+					data:{PJT_CD:PJT_CD, CUST_CD:CUST_CD, CUST_GBN:CUST_GBN, N_RATE:N_RATE, CONTRACT_AMT:CONTRACT_AMT},
 					success:function(data){
 						console.log(data);
 						alert("발주처 추가 완료!");
 						pjtOwnerList(PJT_CD);
+					},
+					error:function(request, status, error) {
+						alert(error + "추가 실패");
+					}
+				});
+			});
+			
+			// 기성단계 추가
+			$('#giseongAddBtn').click(()=>{
+				let PJT_CD = $('#PJT_CD_ONE').text();						// 프로젝트 코드
+				let RM_STEP = $("#RM_STEP_VAL option:selected").val();		// 기성단계
+				let SALE_STEP = $("#SALE_STEP_VAL option:selected").val();	// 단계
+				let RM_AMT = $('#RM_AMT_VAL').val();						// 금액
+				let SUGUM_RATE = $('#SUGUM_RATE_VAL').val();				// 수금율(%)
+				$.ajax({
+					url:'/project/projectManageGiseongWriteProcess',
+					type:'POST',
+					data:{PJT_CD:PJT_CD, RM_STEP:RM_STEP, SALE_STEP:SALE_STEP, RM_AMT:RM_AMT, SUGUM_RATE:SUGUM_RATE},
+					success:function(data){
+						console.log(data);
+						alert("기성단계 추가 완료!");
+						pjtGiseongList(PJT_CD);
 					},
 					error:function(request, status, error) {
 						alert(error + "추가 실패");
@@ -502,7 +547,13 @@
     <div class="page-title">
 	<div class="title_left">
 	 <h2><b>용역계약서 입력</b></h2>
-	<h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리&nbsp;>&nbsp;&nbsp;2.1.1용역계약서 입력</b></font></h5>			
+	<h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리&nbsp;>&nbsp;&nbsp;2.1.1용역계약서 입력</b></font></h5>
+	<span>
+		1. 용역계약서를 입력할 프로젝트 검색 <br>
+		2. 기본사항 및 세부사항 입력 후 저장 <br>
+		3. 발주처 입력 후 저장 <br>
+		4. 기성단계 입력 후 저장
+	</span>			
 	</div>
 	</div>
     </div>
@@ -929,11 +980,6 @@
 	<div class="x_panel" style="overflow-x:auto">
     <div class="x_title">
     	<label for="ex3">기성단계</label>
-		<div class="nav navbar-right panel_toolbox">
-                      <label for="ex3">
-                      	<button type="submit" class="btn" style="color:black" id="ownerAddBtn">추가</button>
-                      </label>
-		</div>
                   </div>
                   <div class="x_content">
 
@@ -945,13 +991,14 @@
                           <th>단계</th>
                           <th>금액</th>
                           <th>수금율(%)</th>
+                          <th>추가/삭제</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <th width="20%">신규</th>
                           <td>
-                          	<select>
+                          	<select id="RM_STEP_VAL">
                           		<option></option>
 		                    	<th:block th:each="c : ${code}">
 	                    		<th:block th:if="${c.LEVEL1_CD}==150">
@@ -961,7 +1008,7 @@
                   			</select>
                           </td>
                           <td>
-                          	<select>
+                          	<select id="SALE_STEP_VAL">
                           		<option></option>
 		                    	<th:block th:each="c : ${code}">
 	                    		<th:block th:if="${c.LEVEL1_CD}==110">
@@ -970,8 +1017,9 @@
 	                    	</th:block>
                   			</select>
                           </td>
-                          <td><input type="text"></td>
-                          <td><input type="text"></td>
+                          <td><input type="text" id="RM_AMT_VAL"></td>
+                          <td><input type="text" id="SUGUM_RATE_VAL"></td>
+                          <td><button type="button" class="btn" style="color:black" id="giseongAddBtn">추가</button></td>
                         </tr>
                         <tbody id="GISEONG_LIST_ONE">
                         </tbody>
@@ -981,6 +1029,7 @@
                     		<th>합계</th>
                     		<th><span id="RM_AMT_SUM"></span></th>
                     		<th><span id="SUGUM_RATE_SUM"></span></th>
+                    		<th></th>
                     	</tr>
 					</table>
     </div>
