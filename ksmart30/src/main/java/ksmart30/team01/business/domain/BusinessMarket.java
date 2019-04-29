@@ -49,10 +49,44 @@ public class BusinessMarket {
 	private String MARKET_FORECAST_AMT;
 	private String PJT_TYPE;
 	private String PLAN_DATE;
-	
+	private String MARKET_PM;
+	private String MARKET_PD;
+	private String MARKET_EMP_NO;
+	private String MARKET_MAN;
+	private String EMP_NO;
 
 
 	
+	public String getEMP_NO() {
+		return EMP_NO;
+	}
+	public void setEMP_NO(String eMP_NO) {
+		EMP_NO = eMP_NO;
+	}
+	public String getMARKET_MAN() {
+		return MARKET_MAN;
+	}
+	public void setMARKET_MAN(String mARKET_MAN) {
+		MARKET_MAN = mARKET_MAN;
+	}
+	public String getMARKET_EMP_NO() {
+		return MARKET_EMP_NO;
+	}
+	public void setMARKET_EMP_NO(String mARKET_EMP_NO) {
+		MARKET_EMP_NO = mARKET_EMP_NO;
+	}
+	public String getMARKET_PD() {
+		return MARKET_PD;
+	}
+	public void setMARKET_PD(String mARKET_PD) {
+		MARKET_PD = mARKET_PD;
+	}
+	public String getMARKET_PM() {
+		return MARKET_PM;
+	}
+	public void setMARKET_PM(String mARKET_PM) {
+		MARKET_PM = mARKET_PM;
+	}
 	public String getPLAN_DATE() {
 		return PLAN_DATE;
 	}
@@ -344,8 +378,15 @@ public class BusinessMarket {
 				+ ", CUST_CHARGE_NM=" + CUST_CHARGE_NM + ", CUST_TEL=" + CUST_TEL + ", BIZ_TYPE=" + BIZ_TYPE
 				+ ", BIZ_GBN=" + BIZ_GBN + ", BUILD_GB=" + BUILD_GB + ", ADDR=" + ADDR + ", ZIP_CD=" + ZIP_CD
 				+ ", BUILD_TYPE=" + BUILD_TYPE + ", REGION=" + REGION + ", ZONE1=" + ZONE1 + ", SCOPE1=" + SCOPE1
-				+ ", REGION2=" + REGION2 + ", ZONE2=" + ZONE2 + ", SCOPE2=" + SCOPE2 + "]";
+				+ ", REGION2=" + REGION2 + ", ZONE2=" + ZONE2 + ", SCOPE2=" + SCOPE2 + ", DOWN_SU=" + DOWN_SU
+				+ ", H_CNT=" + H_CNT + ", AREA_M=" + AREA_M + ", AREA_P=" + AREA_P + ", COVERAGE=" + COVERAGE
+				+ ", CAPACITY=" + CAPACITY + ", RMK_1=" + RMK_1 + ", RMK_2=" + RMK_2 + ", RMK_3=" + RMK_3 + ", RMK_4="
+				+ RMK_4 + ", RMK_5=" + RMK_5 + ", FORECAST_AMT=" + FORECAST_AMT + ", MARKET_CLASS_GBN="
+				+ MARKET_CLASS_GBN + ", MARKET_DEPT=" + MARKET_DEPT + ", MARKET_FORECAST_AMT=" + MARKET_FORECAST_AMT
+				+ ", PJT_TYPE=" + PJT_TYPE + ", PLAN_DATE=" + PLAN_DATE + ", MARKET_PM=" + MARKET_PM + ", MARKET_PD="
+				+ MARKET_PD + ", MARKET_EMP_NO=" + MARKET_EMP_NO + "]";
 	}
+
 	
 	
 

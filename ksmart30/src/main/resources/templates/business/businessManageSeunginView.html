@@ -259,98 +259,22 @@
 	    		
 	    		/*============================== 사업수행결정서 T_PS3000 저장==================  */
 	    		
-	    		 $('#pjtInsertBtn').click(()=>{
-			    	console.log("pjtInsertBtn 실행단계1버튼");
-			    	let CUST_CD_IN = $('#CUST_CD').val();
-	    			let CUST_NM_IN = $('#CUST_NM').text();
-	    			let YAREA_M_IN = $('#YAREA_M').val();
-	    			let PJT_NM2_IN = $('#PJT_NM2').val();
-	    			let PJT_CD_IN =  ""
-	    			let CUST_GBN_IN = $('#CUST_GBN').val();
-	    			let CUST_CHARGE_NM_IN = $('#CUST_CHARGE_NM').val();
-	    			let CUST_TEL_IN = $('#CUST_TEL').val();
-	    			let BIZ_TYPE_IN = $('#BIZ_TYPE').val();
-	    			let BIZ_GBN_IN = $('#BIZ_GBN').val();
-	    			let BUILD_GB_IN = $('#BUILD_GB').val();
-	    			let sample6_address_IN = $('#sample6_address').val();
-	    			let sample6_postcode_IN = $('#sample6_postcode').val();
-	    			let BUILD_TYPE_IN = $('#BUILD_TYPE').val();
-	    			let REGION_IN = $('#REGION').val();  			
-	    			let ZONE1_IN = $('#ZONE1').val();
-	    			let SCOPE1_IN = $('#SCOPE1').val();
-	    			let REGION2_IN = $('#REGION2').val();
-	    			let ZONE2_IN = $('#ZONE2').val();
-	    			let SCOPE2_IN = $('#SCOPE2').val();
-	    			let DOWN_SU_IN = $('#DOWN_SU').val();
-	    			let UP_SU_IN = $('#UP_SU').val();
-	    			let H_CNT_IN = $('#H_CNT').val();
-	    			let AREA_M_IN = $('#AREA_M').val();
-	    			let AREA_P_IN = $('#AREA_P').val();
-	    			let COVERAGE_IN = $('#COVERAGE').val();
-	    			let YAREA_P_IN = $('#YAREA_P').val();
-	    			let CAPACITY_IN = $('#CAPACITY').val();
-	    			let RMK_1_IN = $('#RMK_1').val();
-	    			let RMK_2_IN = $('#RMK_2').val();
-	    			let RMK_3_IN = $('#RMK_3').val();
-	    			let RMK_4_IN = $('#RMK_4').val();
-	    			let RMK_5_IN = $('#RMK_5').val();
-	    			let MARKET_FORECAST_AMT_IN = $('#MARKET_FORECAST_AMT').val();
-	    			let MARKET_CLASS_GBN_IN = $('#MARKET_CLASS_GBN').val();
-	    			let MARKET_DEPT_IN = $('#DEPT_CD').val();
-	    			console.log(MARKET_FORECAST_AMT_IN);
-	    			let BUSI_DATE_IN = $('#BUSI_DATE').val();
-	    			let PLAN_DATE_IN = $('#PLAN_DATE').val();
+	    		/*  $('#pjtSeunginBtn').click(()=>{ */
+	
 	
 	  				
 	    			 
-	    			 $.ajax({
+	    		/* 	 $.ajax({
 				            url:'/business/businessManageViewInsert',	
 				            type:'POST',	
 				        	data:{
-				        		CUST_CD:CUST_CD_IN,
-				        		CUST_NM:CUST_NM_IN,
-				        		YAREA_M:YAREA_M_IN,
-				        		PJT_NM:PJT_NM2_IN,
-				        		PJT_CD:PJT_CD_IN,
-				        		CUST_GBN:CUST_GBN_IN,
-				        		CUST_CHARGE_NM:CUST_CHARGE_NM_IN,
-				        		CUST_TEL:CUST_TEL_IN,
-				        		BIZ_TYPE:BIZ_TYPE_IN,
-				        		BIZ_GBN:BIZ_GBN_IN,
-				        		BUILD_GB:BUILD_GB_IN,
-				        		ADDR:sample6_address_IN,
-				        		ZIP_CD:sample6_postcode_IN,
-				        		BUILD_TYPE:BUILD_TYPE_IN,
-				        		REGION:REGION_IN,
-				        		ZONE1:ZONE1_IN,
-				        		SCOPE1:SCOPE1_IN,
-				        		REGION2:REGION2_IN,
-				        		ZONE2:ZONE2_IN,
-				        		SCOPE2:SCOPE2_IN,
-				        		DOWN_SU:DOWN_SU_IN,
-				        		UP_SU:UP_SU_IN,
-				        		H_CNT:H_CNT_IN,
-				        		AREA_M:AREA_M_IN,
-				        		AREA_P:AREA_P_IN,
-				        		COVERAGE:COVERAGE_IN,
-				        		YAREA_P:YAREA_P_IN,
-				        		CAPACITY:CAPACITY_IN,
-				        		RMK_1:RMK_1_IN,
-				        		RMK_2:RMK_2_IN,
-				        		RMK_3:RMK_3_IN,
-				        		RMK_4:RMK_4_IN,
-				        		RMK_5:RMK_5_IN,
-				        		MARKET_FORECAST_AMT:MARKET_FORECAST_AMT_IN,
-				        		MARKET_CLASS_GBN:MARKET_CLASS_GBN_IN,
-				        		MARKET_DEPT:MARKET_DEPT_IN,
-				        		BUSI_DATE:BUSI_DATE_IN,
-				        		PLAN_DATE:PLAN_DATE_IN
+				        
 				        		},
 				        	success:function(){
-				                alert('사업수행결정서 저장');
+				                alert('사업수행결정서 승인');
 				        	}
 	    			 });   
-	    		 });
+	    		 }); */
 			    	
 	    		 
 	    		 
@@ -392,7 +316,7 @@
 					class="btn btn-default" type="button">입력</button></a>
 			<button class="btn btn-default" type="button">수정</button>
 			<button class="btn btn-default" type="button">삭제</button>
-			<button class="btn btn-default" type="button" id="pjtInsertBtn">저장</button>
+			<button class="btn btn-default" type="button" id="pjtSeunginBtn">승인</button>
 			<button class="btn btn-default" type="button">출력</button>
 		</div>
 

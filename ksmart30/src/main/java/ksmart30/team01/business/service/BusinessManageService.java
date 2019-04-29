@@ -43,6 +43,13 @@ public class BusinessManageService {
 		
 		return list;
 	}
+	
+	// 사원 검색
+	public List<Map<String,String>> ResultDeptList(Map<String,Object> searchMap){
+
+		return businessManageMapper.ResultEmpList(searchMap);
+	}
+	
 	// 사업수행결정서 저장
 	public void businessManageViewInsert(BusinessMarket vo) {
 		 String Gubun = vo.getBIZ_GBN(); //프로젝트 타입 
@@ -61,6 +68,15 @@ public class BusinessManageService {
 		businessManageMapper.businessManageViewInsert(vo);
 		
 	}
+
+	public void businessManageViewDelete(BusinessMarket vo) {
+		
+		businessManageMapper.businessManageViewDelete(vo);
+		
+		
+	}
+	
+	
 
 
 

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -62,11 +63,27 @@ public class BusinessManageRestController {
 		return businessManageService.DeptCode(dept);
 	}
 	
+	// 사원 검색 버튼
+	@PostMapping("/businessResultEmpList")
+	public List<Map<String,String>> businessResultEmpList(@RequestBody Map<String,Object> searchMap){
+		
+		System.out.println("businessResultEmpList 호출");
+
+		return businessManageService.ResultDeptList(searchMap);
+	}
+	
+	
+	
 	//사업수행결정서 저장
 	@PostMapping("/business/businessManageViewInsert")
 	public void businessManageViewInsert(BusinessMarket vo) {
 		System.out.println(vo.toString());
 		System.out.println("businessManageViewInsert 호출");
 		businessManageService.businessManageViewInsert(vo);
+	}
+	
+	@PostMapping("/business/businessManageViewDelete")
+	public void businessManageViewDelete(BusinessMarket vo) {
+		businessManageService.businessManageViewDelete(vo);
 	}
 }

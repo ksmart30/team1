@@ -20,7 +20,7 @@
 		ORDER BY PJT_CD	 	
 </select>
 
-<!--사업수행결정서 좌측 목록  -->
+<!-- 1.사업성검토관리 >1.1사업수행결정서관리 >1.1.1사업수행결정서  >1.1.1.1사업수행결정서 좌측 목록  -->
 <select id="getBusinessManageViewList" parameterType="ksmart30.team01.business.domain.BusinessMarket" resultType="java.util.Map">	
 
 		SELECT PJT_CD,PJT_NM
@@ -124,7 +124,6 @@ FROM
   , A.BUILD_GB
   , ISNULL(B.BUSI_RMK,'')  BUSI_RMK
   , ISNULL(B.BUSI_PRO,'')  BUSI_PRO
-  , '20190309'               OPINION_EMP_NO
   , ISNULL(B.MEMBER_DEPT,'')    MEMBER_DEPT
   , ISNULL(B.MEMBER_DEPT_NM,'') MEMBER_DEPT_NM
   , ISNULL(B.MEMBER_PM   ,'')   MEMBER_PM
@@ -201,7 +200,7 @@ ORDER BY PJT_CD
 		
 </select>
 
-<!-- 사업수행결정서(승인)프로젝트목록 클릭시 우측에 검색 -->
+<!-- 1.사업성검토관리 >1.1사업수행결정서관리 >1.1.1사업수행결정서  >1.1.1.2 사업수행결정서(승인)프로젝트목록 클릭시 우측에 검색 -->
 <select id="getBusinessManageView" parameterType="ksmart30.team01.business.domain.BusinessMarket" resultType="java.util.Map">
 		SELECT
 		  
@@ -249,7 +248,7 @@ ORDER BY PJT_CD
 				WHERE PJT_NM LIKE #{PJT_NM}
 
 </select>
-	<!-- 거래처 리스트  -->
+	<!-- 거래처 검색  -->
 <select id="CustCodeList" parameterType="String" resultType="java.util.Map">
 		SELECT  CUST_CD,
 		 		CUST_NM
@@ -258,7 +257,7 @@ ORDER BY PJT_CD
 	
 </select>
 
-	<!-- 부서 리스트 -->
+	<!-- 부서 검색 -->
 	<select id="DeptCodeList" parameterType="String" resultType="java.util.Map">
 		SELECT  DEPT_CD,
 		 		DEPT_NM
@@ -266,6 +265,43 @@ ORDER BY PJT_CD
 		WHERE DEPT_CD LIKE '%' + #{dept} + '%' OR DEPT_NM LIKE '%' + #{dept} + '%'
 	</select>
 	
+	<!-- 사원 검색 -->
+	
+		<select id="ResultEmpList" parameterType="map" resultType="map">
+
+		SELECT  A.EMP_NO, 
+				A.KOR_NM, 
+		  		B.SHORT_NM DEPT_NM, 
+		  		(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'H' AND LEVEL1_CD = '110' AND LEVEL2_CD = A.JIKGUP_CD) JIKGUP_NM
+		FROM	(SELECT * FROM T_HM1000 UNION SELECT* FROM T_HM1000_T) A, 
+				T_SC1010 B
+		WHERE 	A.DEPT_CD = B.DEPT_CD AND
+				<choose>
+					<when test="columnValue != null">
+						<choose>
+							<when test='column.equals("JIKGUP_NM")'>
+								(SELECT LEVEL2_NM FROM T_SC9100 WHERE BUSI_GB = 'H' AND LEVEL1_CD = '110' AND LEVEL2_CD = A.JIKGUP_CD) LIKE '%' + #{columnValue} + '%' AND
+							</when>
+							<otherwise>
+								${column} LIKE '%' + #{columnValue} + '%' AND
+							</otherwise>
+						</choose>
+						(CASE WHEN A.OUT_DT ='' THEN '재직자' WHEN A.OUT_DT IS NOT NULL THEN '퇴직자' END) LIKE '%' + #{EMP_GB} + '%'
+					</when>
+					<when test="columnValue == null">
+						(CASE WHEN A.OUT_DT ='' THEN '재직자' WHEN A.OUT_DT IS NOT NULL THEN '퇴직자' END) LIKE '%' + #{EMP_GB} + '%'
+					</when>
+					<otherwise>
+
+					</otherwise>
+				</choose>
+		ORDER BY EMP_NO	
+	</select>
+	
+	
+	
+	
+	<!-- 1.사업성검토관리 >1.1사업수행결정서관리 >1.1.1사업수행결정서  >1.1.1.3 사업수행결정서 저장 T_PS3000 -->
 	<insert id="businessManageViewInsert" parameterType="ksmart30.team01.business.domain.BusinessMarket">
 		INSERT INTO 
 			T_PS3000
@@ -304,7 +340,7 @@ ORDER BY PJT_CD
 				RMK_3,
 				RMK_4,
 				RMK_5,
-				CD_REG_DATE, <!--사업수행결정서 insert 쿼리 승인전이기때문에 ""값줌  -->
+				CD_REG_DATE, <!--사업수행결정서 insert 쿼리 승인전이기때문에 ""값  -->
 				MARKET_FORECAST_AMT,
 				MARKET_CLASS_GBN,
 				REGION3,
@@ -333,11 +369,17 @@ ORDER BY PJT_CD
 				CRT_DEPT,
 				CRT_MAN,
 				UPD_MAN,
-				BUSI_SEQ
+				BUSI_SEQ,
+				MARKET_PM,
+				MARKET_PD,
+				MARKET_EMP_NO,
+				MARKET_MAN,
+				EMP_NO
+				
 				) 
 			VALUES
 				(
-				CONVERT(VARCHAR(4), GETDATE(), 112),
+				CONVERT(VARCHAR(4), GETDATE(), 112), <!--현재시간에서 년도만 추출 -->
 				#{CUST_CD},
 				#{CUST_NM}, 
 				#{YAREA_M},
@@ -386,7 +428,7 @@ ORDER BY PJT_CD
 				'',
 				'',
 				'',
-				'',
+				#{MARKET_DEPT},
 				'',
 				'',
 				'',
@@ -397,15 +439,33 @@ ORDER BY PJT_CD
 				CONVERT(VARCHAR(8), CONVERT(date,#{PLAN_DATE}), 112),
 				CONVERT(VARCHAR(8), GETDATE(), 112),
 				CONVERT(VARCHAR(8), GETDATE(), 112),
-				'1100',
-				'20190007',
-				'20190007',
-				#{BUSI_SEQ}
+				'1100',      <!-- 로그인사용자 부서   -->
+				'20190007',  <!-- 로그인사용자  -->
+				'20190007',  <!-- 로그인사용자  -->
+				#{BUSI_SEQ},
+				#{MARKET_PM},
+				#{MARKET_PD},
+				#{MARKET_EMP_NO},
+				#{MARKET_MAN},
+				#{EMP_NO}
+				
 				)
 	
 	
 	</insert>
 	
+	
+	<!-- 사업수행결정서 T_PS3000 테이블 행 삭제 -->
+	<delete id="businessManageViewDelete" parameterType="ksmart30.team01.business.domain.BusinessMarket">
+	
+		DELETE FROM T_PS3000 WHERE PJT_NM = #{PJT_NM}
+	
+	
+	
+	</delete>
+	
+	
+	<!--일련번호  -->
 	<select id="numUp" resultType="String">
 	
 	SELECT ISNULL(MAX(BUSI_SEQ) + 1, 1) FROM T_PS3000
