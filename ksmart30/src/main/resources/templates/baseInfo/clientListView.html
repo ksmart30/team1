@@ -8,38 +8,43 @@
 	<th:block th:include="layout/customHead"></th:block>
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script>
+	function listCall(){
+		var CUST_GBN = $('#CUST_GBN').val();
+		var NMCD_TYPE = $('#NMCD_TYPE').val();
+		 $.ajax({
+			 url:'/baseinfo/clientListView', //호출할 메소드 호출 
+	            type:'POST',//송신 POST 방식
+	            data:{CUST_GBN:CUST_GBN,NMCD_TYPE:NMCD_TYPE},
+	            success:function(data){
+	            	console.log(data);
+	            	$('#outputList').empty(); //삭제
+	            	$(data).each((index,item)=>{
+	            		var no = index + 1;
+	            		$('#outputList').append(
+	            			'<tr><td style="background-color: #fff9df">'+no+'</td><td>'
+	            			+item.CUST_CD+'</td><td>'// 고객번호
+	            			+item.CUST_NM+'</td><td>' // 회사명
+	                    	+item.BUSI_TYPE+'</td><td>' // 거래유형
+	                    	+item.REPRE_NM+'</td><td>' //대표성명
+	                    	+item.TEL_NO+'</td><td>' //전화
+	                    	+item.FAX_NO+'</td><td>' //팩스
+	                    	+item.ADDR+'</td><td>' //주소
+	            			+item.SVC_CLASS+'</td><td>'//당사협력체
+	            			+item.KUN_CORP_YN+'</td><td>' //PQ기어도
+	            			+item.SVC_PART1_NM+'</td><td>' //용역부문 1
+	            			+item.SVC_PART2_NM+'</td><td>'//용역부문 2
+		 					+item.SVC_PART3_NM+'</td><td>'); //용역부문 3
+	            		
+	            	});
+	            }
+		 });
+		
+	}
+	
 	$(document).ready(function(){
-				
+		listCall();	
 		$('#clientList').on('click',function(){
-			var CUST_GBN = $('#CUST_GBN').val();
-			var NMCD_TYPE = $('#NMCD_TYPE').val();
-			 $.ajax({
-				 url:'/baseinfo/clientListView', //호출할 메소드 호출 
-		            type:'POST',//송신 POST 방식
-		            data:{CUST_GBN:CUST_GBN,NMCD_TYPE:NMCD_TYPE},
-		            success:function(data){
-		            	console.log(data);
-		            	$('#outputList').empty(); //삭제
-		            	$(data).each((index,item)=>{
-		            		var no = index + 1;
-		            		$('#outputList').append(
-		            			'<tr><td style="background-color: #fff9df">'+no+'</td><td>'
-		            			+item.CUST_CD+'</td><td>'// 고객번호
-		            			+item.CUST_NM+'</td><td>' // 회사명
-		                    	+item.BUSI_TYPE+'</td><td>' // 거래유형
-		                    	+item.REPRE_NM+'</td><td>' //대표성명
-		                    	+item.TEL_NO+'</td><td>' //전화
-		                    	+item.FAX_NO+'</td><td>' //팩스
-		                    	+item.ADDR+'</td><td>' //주소
-		            			+item.SVC_CLASS+'</td><td>'//당사협력체
-		            			+item.KUN_CORP_YN+'</td><td>' //PQ기어도
-		            			+item.SVC_PART1_NM+'</td><td>' //용역부문 1
-		            			+item.SVC_PART2_NM+'</td><td>'//용역부문 2
-			 					+item.SVC_PART3_NM+'</td><td>'); //용역부문 3
-		            		
-		            	});
-		            }
-			 });
+			listCall();	
 		});
 	});
 	</script>

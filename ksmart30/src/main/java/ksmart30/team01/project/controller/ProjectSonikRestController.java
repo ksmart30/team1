@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ksmart30.team01.project.domain.ProjectSonikList;
 import ksmart30.team01.project.domain.SonikProjectCodeSearch;
 import ksmart30.team01.project.service.ProjectSonikService;
 
@@ -18,10 +19,10 @@ public class ProjectSonikRestController {
 	
 	// 2.3.4 프로젝트 예산,실적대비표 리스트화면을 보여주기위한 메서드 (예산,실적,차이 구분)
 	@PostMapping("/project/projectSonikList")
-	public List<Map<String,Object>> projectSonikList(String PJT_CD){
+	public List<Map<String,Object>> projectSonikList(ProjectSonikList ProjectSonik){
 		System.out.println("projectSonikList확인");
-		System.out.println("pjt_cd="+PJT_CD);
-		return projectSonikService.projectSonikList(PJT_CD);
+		System.out.println("pjt_cd="+ProjectSonik);
+		return projectSonikService.projectSonikList(ProjectSonik);
 		
 	}
 	

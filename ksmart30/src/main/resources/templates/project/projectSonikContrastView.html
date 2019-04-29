@@ -43,11 +43,13 @@ function somicall2(){
 // 리스트화면에 보여주는 ajax 검색버튼 클릭하지 않아도 리스트화면이 보이도록 
 function somicall(){
 	console.log("sonikList ajax실행");
-	 var PJT_CD = $('#PJT_CD').val();
+	 let PJT_CD = $('#PJT_CD').val();
+	 let DEPT_CD_1 = $('#DEPT_CD_1').val();
+	 let CRT_DATE = $('#CRT_DATE').val();
 	 $.ajax({
 		 url:'/project/projectSonikList', //호출할 메소드 호출 
            type:'POST',//송신 POST 방식
-           data:{PJT_CD:PJT_CD},
+           data:{PJT_CD:PJT_CD,DEPT_CD:DEPT_CD_1,CRT_DATE:CRT_DATE},
            success:function(data){
            	console.log(data);
            	$('#outputList').empty(); //삭제
@@ -55,7 +57,7 @@ function somicall(){
            		let no = index + 1;
            		$('#outputList').append(
            			'<tr><td rowspan="3">'+no+'</td> <td rowspan="3">'
-           			+"부서"+'</td> <td rowspan="3">'
+           			+item.DEPT_NM+'</td> <td rowspan="3">'
            			+"["+item.PJT_CD +"] "+ item.PJT_NM+'</td><td rowspan="3" >' //프로젝트코드, 프로젝트 명
            			+item.TOT_CONTRACT_AMT.toLocaleString()+'</td><td>'//총계약금액 
            			+'<a href="/project/projectSonikContrastSangseView?PJT_CD='+item.PJT_CD+'">'+'<button>상세</button></a></td><td>'
@@ -106,6 +108,25 @@ $(document).ready(function() {
 	console.log("레디 실행");
 	somicall();
 	somicall2();
+	
+	// 날짜 적용 (초기화)
+	let today = new Date();
+	let dd = today.getDate();// 날
+	let mm = today.getMonth()+1; //0 +1 월
+	let yyyy = today.getFullYear();//연
+	if(dd.length>2) {//2자리수만들기 방법 1
+	    dd='0'+dd
+	} 
+	if(mm<10) {//2자리수만들기 방법 2
+	    mm='0'+mm
+	} 
+	//today = yyyy+'-' + mm+'-'+dd; // 2019-04-29
+	console.log('1'+today);
+	today = yyyy+'-'+ mm; 
+	console.log('2'+today);
+	//startYear = yyyy+'-01-01';//올해 첫월 첫일
+	//$('#STRAT_DATE').val(startYear);
+	$('#CRT_DATE').val(today); 
 	
 	 $('#sonikList').on('click',function(){
 		 console.log("클릭 실행");
@@ -167,13 +188,13 @@ $(document).ready(function() {
 					<td width="150"><label>⊙ 부서 : </label></td>
 					<td>
 						<div class="col-md-5 col-sm-5 col-xs-5 ">
-							<select class="form-control">
+							<select class="form-control" id="DEPT_CD_1">
 								<option value="">전 사</option>
-								<option value="2">설계1본부</option>
-								<option value="2">설계2본부</option>
-								<option value="3">설계3본부</option>
-								<option value="4">설계4본부</option>
-								<option value="5">설계5본부</option>
+								<option value="7500">설계1본부</option>
+								<option value="7600">설계2본부</option>
+								<option value="7700">설계3본부</option>
+								<option value="7800">설계4본부</option>
+								<option value="7900">설계5본부</option>
 							</select>
 						</div>
 					</td>
@@ -206,7 +227,7 @@ $(document).ready(function() {
 
 					<td>
 						<div class="col-md-12 col-sm-12 col-xs-12 ">
-							<input type="date" name="date2" class="form-control">
+							<input type="month" name="date2" class="form-control" id="CRT_DATE">
 						</div>
 					</td>
 					<td><label>까지</label></td>

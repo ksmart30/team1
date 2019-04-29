@@ -52,8 +52,8 @@
 		                }
 		
 		                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-		                document.getElementById('sample6_postcode').value = data.zonecode;
-		                document.getElementById("sample6_address").value = addr;
+		                document.getElementById('zip_CD').value = data.zonecode;
+		                document.getElementById("addr").value = addr;
 		                // 커서를 상세주소 필드로 이동한다.
 		                document.getElementById("sample6_address").focus();//원본값 sample6_detailAddress
 		            }
@@ -107,30 +107,36 @@
 			}	
 		});
 	}
+	
+	function searchCall(){
+		var BUSI_TYPE = $('#BUSI_TYPE').val();//고객구분
+		var CUST_NM = $('#CUST_NM').val();//고객명
+		var CUST_CD = $('#CUST_CD').val(); //사업자등록번호 3가지 검색조건에 맞는 
+        $.ajax({
+            url:'/baseInfo/clientView', //호출할 메소드 호출 
+            type:'POST',//송신 POST 방식
+            data:{BUSI_TYPE:BUSI_TYPE,CUST_NM:CUST_NM,CUST_CD:CUST_CD},//넘길 데이터(조건)
+            success:function(data){//받은 데이터
+            	console.log(data);
+            	let str = '';
+            	
+                $('#searchBody').empty();//삭제 
+                $(data).each((index,item)=>{//반복문으로 데이터값이 있는 만큼 추가
+                	str = item.cust_CD;
+                	$('#searchBody').append('<tr onclick="somicall('+str+')"><td style="background-color: #fff9df">'+item.cust_CD+'</td><td>'
+                			+item.cust_NM+'</td></tr>'
+                	);//append추가	                	
+                });              
+            }
+        });
+	}
+	
 	$(document).ready(function(){
 		
+		searchCall();
 		//왼쪽 거래처검색화면에서 검색button이 클릭
 		$('#clientSearch').on('click',function(){  
-			var BUSI_TYPE = $('#BUSI_TYPE').val();//고객구분
-			var CUST_NM = $('#CUST_NM').val();//고객명
-			var CUST_CD = $('#CUST_CD').val(); //사업자등록번호 3가지 검색조건에 맞는 
-	        $.ajax({
-	            url:'/baseInfo/clientView', //호출할 메소드 호출 
-	            type:'POST',//송신 POST 방식
-	            data:{BUSI_TYPE:BUSI_TYPE,CUST_NM:CUST_NM,CUST_CD:CUST_CD},//넘길 데이터(조건)
-	            success:function(data){//받은 데이터
-	            	console.log(data);
-	            	let str = '';
-	            	
-	                $('#searchBody').empty();//삭제 
-	                $(data).each((index,item)=>{//반복문으로 데이터값이 있는 만큼 추가
-	                	str = item.cust_CD;
-	                	$('#searchBody').append('<tr onclick="somicall('+str+')"><td style="background-color: #fff9df">'+item.cust_CD+'</td><td>'
-	                			+item.cust_NM+'</td></tr>'
-	                	);//append추가	                	
-	                });              
-	            }
-	        });
+			searchCall();
 		})
 		
 		$('#clientIn').click(()=>{
@@ -142,8 +148,8 @@
 			let BUSI_TYPE = $('input[name=busy_TYPE2]:checked').val();
 			let CUST_GBN = $('#cust_GBN').val();
 			let REPRE_NM = $('#repre_NM').val();
-			let ZIP_CD = $('#sample6_postcode').val();
-			let ADDR = $('#sample6_address').val();
+			let ZIP_CD = $('#zip_CD').val();
+			let ADDR = $('#addr').val();
 			let TEL_NO = $('#tel_NO').val();
 			let FAX_NO = $('#fax_NO').val();
 			let BIZ_STAT = $('#biz_STAT').val();
@@ -409,7 +415,7 @@
 										<td>
 											<div class="col-md-7 col-sm-7 col-xs-7 ">
 												<input type="text" class="form-control"
-													id="sample6_postcode" value="">
+													id="zip_CD" value="">
 
 											</div>
 										<button class="btn" onclick="sample6_execDaumPostcode()">
@@ -418,7 +424,7 @@
 										<td colspan="6">
 											<div class="col-md-20 col-sm-20 col-xs-20 ">
 												<input type="text"  class="form-control"
-													id="sample6_address">
+													id="addr">
 									<input type="hidden" id="sample6_postcode" placeholder="우편번호">
 									<input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
 									<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">

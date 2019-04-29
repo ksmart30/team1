@@ -5,12 +5,13 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ksmart30.team01.project.domain.ProjectSonikList;
 import ksmart30.team01.project.domain.SonikProjectCodeSearch;
 
 @Mapper
 public interface ProjectSonikMapper {
 	//프로젝트 예산,실적대비표 리스트화면을 보여주기위한 메서드 (예산)
-	List<Map<String, Object>> projectSonikListSearch(String PJT_CD);
+	List<Map<String, Object>> projectSonikListSearch(ProjectSonikList projectSonik);
 	
 	//프로젝트 예산,실적대비표_왼쪽 상단 검색 조건에서 프로젝트 코드를 조회하는 메서드
 	List<Map<String, Object>> projectCodeSearch(SonikProjectCodeSearch jogun);
