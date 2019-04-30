@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ksmart30.team01.project.domain.ProjectSonikIngun;
 import ksmart30.team01.project.domain.ProjectSonikList;
 import ksmart30.team01.project.domain.SonikProjectCodeSearch;
 import ksmart30.team01.project.mapper.ProjectSonikMapper;
@@ -55,5 +56,10 @@ public class ProjectSonikService {
 		result.put("jejo1YesanSearch", jejo1YesanSearch);
 		result.put("projectGeyo", projectGeyo);
 		return result;
+	}
+	//2.3.2 프로젝트 인건비 입력을 위한 메서드
+	public List<Map<String, Object>> projectSonikIngunbi(ProjectSonikIngun ingun) {
+		
+		return projectSonikMapper.sonikIngun(ingun);
 	} 
 }

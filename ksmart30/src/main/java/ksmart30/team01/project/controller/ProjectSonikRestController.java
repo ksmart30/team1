@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ksmart30.team01.project.domain.ProjectSonikIngun;
 import ksmart30.team01.project.domain.ProjectSonikList;
 import ksmart30.team01.project.domain.SonikProjectCodeSearch;
 import ksmart30.team01.project.service.ProjectSonikService;
@@ -37,13 +38,12 @@ public class ProjectSonikRestController {
 	
 	
 	
-	/*
-	 * //제조경비2 상세화면을 위한 메서드(계정과목, 예산)
-	 * 
-	 * @PostMapping("/project/projectSonikContrastJejo2View") public
-	 * List<Map<String,Object>> projectSonikContrastJejo2View(String jejo2) {
-	 * System.out.println("projectSonikContrastJejo2View확인"); return
-	 * projectSonikService.projectSonikContrastJejo2View(jejo2); }
-	 */
+	//2.3.2 프로젝트 인건비 입력
+	@PostMapping("project/projectSonikIngunbi") 
+	public List<Map<String,Object>> projectSonikIngunbi(ProjectSonikIngun ingun) {
+	System.out.println("projectSonikIngun확인"); 
+	  
+	return projectSonikService.projectSonikIngunbi(ingun); 
+	}
 	
 }

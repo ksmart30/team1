@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import ksmart30.team01.project.domain.ProjectSonikIngun;
 import ksmart30.team01.project.service.ProjectSonikService;
 
 @Controller
@@ -60,7 +61,7 @@ public class ProjectSonikController {
 	
 	//2.3.2 프로젝트 인건비 입력
 	@GetMapping("project/projectSonikIngun")
-	public String projectSonikContrastBebooView() {
+	public String projectSonikIngun() {
 		return "/project/projectSonikIngun";
 	}	
 }

@@ -8,11 +8,141 @@
 	<th:block th:include="layout/customHead"></th:block>
 </th:block>
 <th:block layout:fragment="customBody">
-	<font color="black"> <!-- 프로젝트 개요 start -->
-		test
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script>	
+
+function inguncall(){
+	consol.log("인건비ajax시작");
+	let EMP_NO = $('EMP_NO').val();
+	let PAY_YYMM = $('PAY_YYMM').val();
+	$.ajax({
+		url:'project/projectSonikIngunbi',
+		type:'POST',
+		data:{EMP_NO:EMP_NO,PAY_YYMM:PAY_YYMM},
+		success:function(data){
+			console.log(data);
+			$('#ingunbi').empty(); //삭제
+			$(data).each((index,item)=>{//반복문
+				$('#ingunbi').append(
+					'<tr><td>'+DEPT_NM+'</td></tr>'	
+				);
+			});
+		};
+	});
+}
+
+
+$(document).ready(function() {
+	consol.log("인건비호출");
+	inguncall();
+});
+
+</script>
+	<font color="black"> <!-- 검색 폼 -->
+		<div class="x_panel">
+			<div class="x_title">
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<!-- 목차 상단에 추가 -->
+				<div class="col-md-12 col-xs-12">
+					<div class="page-title">
+						<div class="title_left">
+							<h2>
+								<b>프로젝트 인건비 입력</b>
+							</h2>
+							<h5>
+								<font color="gray"><b>2. 계약프로젝트
+										관리&nbsp;>&nbsp;&nbsp;2.3 프로젝트손익 관리&nbsp;>&nbsp;&nbsp;2.3.2
+										프로젝트 인건비 입력</b></font>
+							</h5>
+						</div>
+					</div>
+					<div class="x_content" style="text-align: right">
+						<div class="btn-group">
+							<button class="btn btn-default" type="reset" id="pjtListBtn">조회</button>
+							<button class="btn btn-default" type="reset" disabled="disabled">입력</button>
+							<button class="btn btn-default" type="button" disabled="disabled">수정</button>
+							<button class="btn btn-default" type="button" disabled="disabled">삭제</button>
+							<button class="btn btn-default" type="button" disabled="disabled">저장</button>
+							<button class="btn btn-default" type="button">출력</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- 목차 상단에 추가 end -->
+
+				<!-- 검색 폼 -->
+				<div align="right" style="right: 100%"></div>
+				<table class="table">
+					<tr>
+						<td width="100"><label>⊙ 지급년월 : </label></td>
+
+						<td>
+							<div class="col-md-12 col-sm-12 col-xs-12 ">
+								<input type="month" name="date2" class="form-control"
+									id="CRT_DATE">
+							</div>
+						</td>
+						<td width="7%"><label>⊙ 사원번호:</label></td>
+						<td>
+							<div class="col-md-14 col-sm-14 col-xs-14 ">
+								<input type="text" name="code" id="YAREA_P" class="form-control"
+									value="0">
+							</div>
+						</td>
+						<td>
+							<div>
+								<button class="btn" type="button" data-toggle="modal"
+									data-target=".bs-example-modal-lg3">
+									<i class="fa fa-search"></i>
+								</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div> <!-- 검색폼 끝 --> <!-- 출력 리스트 검색 시작 -->
+		<div class="x_panel">
+			<div class="x_title">
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i>숨기기</a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="x_content">
+
+				<div class="table-responsive">
+					<table class="table table-striped jambo_table bulk_action">
+						<thead>
+							<tr class="headings">
+								<th>
+									<!-- <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; visibility: hidden;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> -->
+								</th>
+								<th class="column-title">부서명</th>
+								<th class="column-title">사번</th>
+								<th class="column-title">사원명</th>
+								<th class="column-title">직급</th>
+								<th class="column-title">직책</th>
+								<th class="column-title">계정구분</th>
+								<th class="column-title">총지급액</th>
+								<th class="column-title">국민연금</th>
+								<th class="column-title">의료보험</th>
+								<th class="column-title">고용보험</th>
+								<th class="column-title">산재보험</th>
+								<th class="column-title">퇴직충당금</th>
+							</tr>
+						</thead>
+						<tbody id="ingunbi"></tbody>
+					</table>
+					<!-- 출력 리스트 검색 끝 -->
+				</div>
+			</div>
+		</div>
 	</font>
 </th:block>
 <th:block layout:fragment="customJquery">
-	<th:block th:include="layout/customJquery"></th:block>
+<th:block th:include="layout/customJquery"></th:block>
 </th:block>
 </html>

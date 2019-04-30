@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart30.team01.project.mapper.ProjectSonikMapper"> 
 
+
 <!-- 프로젝트 예산,실적대비표 리스트화면을 보여주기위한 쿼리 (조정영업이익 남음)-->
 <select id="projectSonikListSearch"
 		parameterType="ksmart30.team01.project.domain.ProjectSonikList"
@@ -147,8 +148,6 @@ FROM
 </select>
 
 
-
-
 <!-- 프로젝트 예산,실적 대비표 리스트에서 예산 상세버튼 클릭시 상세내용화면을 보여주는 쿼리  프로젝트 개요, 상세 내역 (예산)-->
 <select id="SonikContrastSangse"
  		parameterType="String"
@@ -262,6 +261,7 @@ AND
 	
  </select>
 
+
 <!-- 제조경비2 상세화면을위한 검색 쿼리 작성 (프로젝트개요, 계정과목, 예산) -->
 <select id="jejo2YesanSearch"
 		parameterType="String"
@@ -302,7 +302,7 @@ SELECT
 </select>
 
 
-<!-- 제조경비2 상세화면을위한 검색 쿼리 작성 (당기누계, 전기누계) -->
+<!-- 제조경비2 상세화면을위한 검색 쿼리 작성 (당기누계, 전기누계) 실적은 아직 미확인-->
 <!-- <select id="jejo2YesanSearch"
 		parameterType="String"
 		resultType="java.util.Map">
@@ -311,6 +311,8 @@ SELECT * from T_P12010 WHERE PJT_CD = #{PJT_CD}
 
 </select>
  -->
+ 
+ 
 <!-- 프로젝트 개요  -->
 <select id="projectGeyo"
 		parameterType="String"
@@ -344,6 +346,7 @@ SELECT
 
 </select>
 
+
 <!-- 제조경비1 상세화면을위한 검색 쿼리 작성 (프로젝트개요, 예산) -->
 <select id="jejo1YesanSearch"
 		parameterType="String"
@@ -360,4 +363,47 @@ AND
 
 
 </select>
+
+<!-- 3.3.2 프로젝트손익관리_프로젝트 인건비 입력 비용과 사원정보를 불러오는 쿼리  -->
+<select id="ingunIn"
+		parameterType="ksmart30.team01.project.domain.ProjectSonikIngun"
+		resultType="java.util.Map">
+
+SELECT
+A.DEPT_NM --부서명
+,A.EMP_NO --사원번호
+,B.KOR_NM
+,D.LEVEL2_NM JIKGUP_NM --직급코드
+,C.LEVEL2_NM JIKCHK_NM
+,E.LEVEL2_NM ACC_NM -- 계정구분
+,A.PAYTOT  --총지급액
+,A.PENSION
+,A.H_INSURE
+,A.E_INSURE
+,A.TAKE19
+,A.TAKE20
+,A.PAY_YYMM  --날짜구분검색
+FROM 
+T_HM5000 A,
+T_HM1000 B,
+(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'H' AND LEVEL1_CD = '120')C,
+(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'H' AND LEVEL1_CD = '110')D,
+(SELECT * FROM T_SC9100 WHERE BUSI_GB = 'H' AND LEVEL1_CD = '200')E
+
+WHERE
+A.EMP_NO = B.EMP_NO
+AND
+A.JIKGUP_CD = D.LEVEL2_CD
+AND
+A.JIKCHK_CD = C.LEVEL2_CD
+AND
+A.ACC_CD = E.LEVEL2_CD
+AND
+A.EMP_NO LIKE '%'+'#{EMP_NO}'+'%'
+AND 
+PAY_YYMM = #{PAY_YYMM}
+
+</select>
+
+
 </mapper>

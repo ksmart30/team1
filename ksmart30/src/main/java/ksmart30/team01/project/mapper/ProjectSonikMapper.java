@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ksmart30.team01.project.domain.ProjectSonikIngun;
 import ksmart30.team01.project.domain.ProjectSonikList;
 import ksmart30.team01.project.domain.SonikProjectCodeSearch;
 
@@ -27,4 +28,9 @@ public interface ProjectSonikMapper {
 	
 	//프로젝트 개요를 검색하는 메서드
 	Map<String, Object> projectGeyo(String PJT_CD);
+
+	List<Map<String, Object>> sonikIngun(ProjectSonikIngun ingun);
+	
+	//프로잭트 인건비 입력을 위한 메서드
+	
 }

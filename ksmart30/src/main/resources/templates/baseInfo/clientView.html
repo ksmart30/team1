@@ -139,6 +139,12 @@
 			searchCall();
 		})
 		
+		//선택 색상 변경
+  	 $("#searchBody").on('click','tr',function(){
+  		$("#searchBody tr").css("background-color", "#ffffff");
+  		$(this).css( "background-color", "#fdd2df" );
+  	 });
+		
 		$('#clientIn').click(()=>{
 			console.log("clientInsert시작 저장");
 			let CUST_CD = $('#cust_cd').val();
