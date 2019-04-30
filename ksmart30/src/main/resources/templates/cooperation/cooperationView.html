@@ -95,7 +95,7 @@ function callme(IN_PJT_CD,IN_OUT_CORP,IN_OUT_ITEM){
 $(document).ready(()=>{
 	pjtSearch();//검색 부문 먼저 불러오기
 	//선택 색상 변경
-  	 $("#gyhh tr").click(function() {
+  	 $("#gyhh").on('click','tr',function() {
   		$("#gyhh tr").css("background-color", "#ffffff");
   		$(this).css( "background-color", "#ABF200" );
   	 });

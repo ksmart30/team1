@@ -7,14 +7,24 @@
 	<title>입력된 외주계약서 검색</title>
 	<th:block th:include="layout/customHead"></th:block>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- Datatables -->
+    <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">	
 	<script>
 $(document).ready(function(){
 	pjtSearch();//검색 부문 먼저 불러오기
 	cooperationSearch();//기본검색 먼저 시작
     // 서치
-    $('#cooperationSearch').on('click',function(){
+    $('#cooperationSearch').on('click',()=>{
     	cooperationSearch();
     });
+	
+	$('#cooperationOutPrint').click(()=>{
+		$('.buttons-csv').click();
+	});
     
     /* ============================프로젝트코드별조회================================= */
 	$('#btnPjtSearch').click(()=>{
@@ -60,21 +70,21 @@ function pjtSearch() {
 }
 //외주계약서 검색
 function cooperationSearch() {
-	var inDeptCd = $('#inDeptCd').val(); //부서코드
-	var inContractDate = $('#inContractDate').val(); //년도검색 4 자리
-	var inPjtCd = $('#inPjtCd').val(); // 프로젝트코드
-	var inPjtNm = $('#inPjtNm').val(); // 프로젝트네임
-	var inOutItem = $('#inOutItem').val(); // 외주부문(외주분야)
-	var inCustNm = $('#inCustNm').val(); // 외주처명(발주처,거래처)
-	var inContractNm = $('#inContractNm').val(); // 용역명(외주계약명)
-	var inBuildType = $('#inBuildType').val(); // 건축물 유형
+	let inDeptCd = $('#inDeptCd').val(); //부서코드
+	let inContractDate = $('#inContractDate').val(); //년도검색 4 자리
+	let inPjtCd = $('#inPjtCd').val(); // 프로젝트코드
+	let inPjtNm = $('#inPjtNm').val(); // 프로젝트네임
+	let inOutItem = $('#inOutItem').val(); // 외주부문(외주분야)
+	let inCustNm = $('#inCustNm').val(); // 외주처명(발주처,거래처)
+	let inContractNm = $('#inContractNm').val(); // 용역명(외주계약명)
+	let inBuildType = $('#inBuildType').val(); // 건축물 유형
     $.ajax({
         url:'/cooperationSearch',//호출할 메소드
         type:'POST',//송신 방식 
         data:{inDeptCd:inDeptCd,inContractDate:inContractDate,
         		inPjtCd:inPjtCd,inPjtNm:inPjtNm,inOutItem:inOutItem,
         		inCustNm:inCustNm,inContractNm:inContractNm,inBuildType:inBuildType},//넘길 데이터
-        success:function(data){//받은 데이터
+        success:(data)=>{//받은 데이터
         	console.log(data);
             $('#searchBody').empty();//삭제 
             $(data).each((index,item)=>{
@@ -94,6 +104,46 @@ function cooperationSearch() {
             });              
         }
     });
+    $.ajax({
+		url : '/cooperationSearch',
+		type : 'GET',
+		data : {inDeptCd:inDeptCd,inContractDate:inContractDate,
+    		inPjtCd:inPjtCd,inPjtNm:inPjtNm,inOutItem:inOutItem,
+    		inCustNm:inCustNm,inContractNm:inContractNm,inBuildType:inBuildType},
+		success : (list)=>{
+			console.log(JSON.stringify(list));
+			$('#myTable').DataTable({
+				dom: 'Blfrtip',
+				buttons: [
+					{extend: "copy"		,className: "btn-sm"},
+					{extend: "csv"		,className: "btn-sm"},
+					{extend: "excel"	,className: "btn-sm"},
+					{extend: "pdfHtml5"	,className: "btn-sm"},
+					{extend: "print"	,className: "btn-sm"},
+				  ],
+				searching:false,
+				lengthChange:false,
+				responsive: true,
+				destroy: true,
+				data:list,
+				columns: [
+			        {data: 'DEPT_NM'},
+			        {data: 'PJT_CD'},
+			        {data: 'PJT_NM'},
+			        {data: 'BUILD_TYPE_NM'},
+			        {data: 'PJT_E_GBN_NM'},
+			        {data: 'PJT_CONTRACT_PER'},
+			        {data: 'G_YAREA_P'},
+			        {data: 'G_YAREA_M'},
+			        {data: 'CUST_NM'},
+			        {data: 'OUT_ITEM_NM'},
+			        {data: 'CONTRACT_NM'},
+			        {data: 'CONTRACT_DATE'},
+			        {data: 'CONTRACT_AMT'},	        
+			    ]
+			});
+		}
+	});
 }
 </script>
 </th:block>
@@ -118,7 +168,7 @@ function cooperationSearch() {
 <button class="btn btn-default" type="button" disabled="disabled">수정</button>
 <button class="btn btn-default" type="button" disabled="disabled">삭제</button>
 <button class="btn btn-default" type="button" disabled="disabled">저장</button>
-<button class="btn btn-default" type="button" id="cooperationOutPrint" disabled="disabled">출력</button>
+<button class="btn btn-default" type="button" id="cooperationOutPrint">출력</button>
 </div>
 </div>        
 	<div class="x_panel">
@@ -332,12 +382,12 @@ function cooperationSearch() {
 	<!-- <div class="table-responsive"> -->
 	<div
 		style="overflow: scroll; width: 100%; height: 100%; padding: 10px; background-color:;">
-		<table class="table table-striped jambo_table bulk_action">
+		<table class="table table-striped jambo_table bulk_action" id="myTable">
 			<thead>
 
 				<tr>
 					<th rowspan="2" >부서명</th>
-					<th rowspan="2" >프로젝트명</th>
+					<th rowspan="2" colspan="2">프로젝트명</th>
 					<th rowspan="2" >건축물유형</th>
 					<th rowspan="2" >종료구분</th>
 					<th rowspan="2" >지분율</th>
@@ -369,5 +419,21 @@ function cooperationSearch() {
 </th:block>
 <th:block layout:fragment="customJquery">
 		<th:block th:include="layout/customJquery"></th:block>
+		<!-- Datatables -->
+    <script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="../vendors/jszip/dist/jszip.min.js"></script>
+    <script src="../vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
     </th:block>
 </html>

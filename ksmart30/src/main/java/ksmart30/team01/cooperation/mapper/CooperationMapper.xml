@@ -273,5 +273,127 @@ ORDER BY
 			X.BUILD_GBN, X.YAREA_GBN, X.BIZ_GBN, X.GUBUN, X.GUBUN_SEQ, X.G_YAREA_P, X.PJT_CD
 	
 	</select>
+	
+	
+<!--3.1.1 용역계약서 입력 본문 insert -->
+	<insert id="addCooperationPJTSangse"
+		parameterType="String">
+		INSERT INTO 
+		T_P12000(
+			PJT_CD -- 프로젝트코드
+			,OUT_CORP -- 외주처
+			,CONTRACT_NM -- 외주처이름
+			,DEPT_CD -- 부서코드
+			,OUT_ITEM -- 부문
+			,CONTRACT_DATE -- 계약일자
+			,S_DATE -- 계약기간 시작
+			,E_DATE -- 계약기간 끝
+			,E_RMK -- 종료구분
+			,EX_AMT -- 금액
+			,CONTRACT_AMT --계약금액
+			,VAT_YN -- VAT여부
+			,CON_DOC_YN --계약서 유무
+			,CO_SERVICE --면세근거
+			,CRT_DATE -- 입력날짜
+			) 
+		VALUES (
+			#{PJT_CD} --프로젝트코드
+			,#{OUT_CORP} --외주처 코드(사업자?)
+			,#{CONTRACT_NM} --외주처이름
+			,#{DEPT_CD} --부서코드
+			,#{OUT_ITEM} -- 부문
+			,CONVERT(VARCHAR(8),CONVERT(DATE,#{CONTRACT_DATE}),112) --계약일자
+			,CONVERT(VARCHAR(8),CONVERT(DATE,#{S_DATE}),112) --계약기간 시작
+			,#{E_DATE} --계약기간 끝 입력하지 않아도 됨
+			,#{E_RMK} --종료구분 01 ~ 08
+			,'0' -- 어떤 금액인지 모르겟음
+			,#{CONTRACT_AMT} -- 계약금액 기성 단계 총합과 같아야 됨
+			,#{VAT_YN} -- VAT여부 1,2,3,4
+			,#{CON_DOC_YN} --계약서 유무
+			,'' -- 공백 or 해당없음 (공백도 해당없음 처리) 왜??
+			,CONVERT(VARCHAR(8),GETDATE(),112) -- 현재날짜 문자열로 변환후 입력
+			)	
+	</insert>
+<!--3.1.1 용역계약서 입력 기성단계 insert -->
+	<insert id="addCooperationPJTGisung"
+		parameterType="String">
+		INSERT INTO 
+		T_P12010(
+			PJT_CD
+			,OUT_CORP
+			,CRT_SEQ
+			,OUT_ITEM
+			,GI_GBN
+			,GI_AMT
+			,GI_RATE	
+			) 
+		VALUES (
+			#{PJT_CD} -- 프로젝트코드
+			,#{OUT_CORP} --외주처 코드(사업자?)
+			,#{CRT_SEQ} -- 기성단계 구분 숫자 1~
+			,#{OUT_ITEM} -- 01~27
+			,#{GI_GBN} -- 01 ~ 99
+			,#{GI_AMT} -- 전체 기성 단계 합이 계약 금액과 같아야함
+			,#{GI_RATE} -- % 입력하지 않아도 됨
+			)	
+	</insert>
+<!--3.1.1 용역계약서 입력 용역내용 insert -->
+	<insert id="addCooperationPJTDragon"
+		parameterType="String">
+		INSERT INTO 
+		T_P12020(
+			PJT_CD
+			,OUT_CORP
+			,OUT_ITEM
+			,SEQ
+			,CONTRACT_MEMO
+			) 
+		VALUES (
+			#{PJT_CD} -- 프로젝트코드
+			,#{OUT_CORP} --외주처 코드(사업자?)
+			,#{OUT_ITEM} -- 01~27
+			,#{SEQ} -- 용역 구분 숫자 1~
+			,#{CONTRACT_MEMO} -- 용역 내용코드
+			) 	
+	</insert>
+<!--3.1.1 용역계약서 입력 제조경비예산(예산현황) 입력  insert -->
+	<insert id="addCooperationJEJO"
+		parameterType="String">
+		INSERT INTO
+		T_P11070(
+			PJT_CD --프로젝트 코드
+			,SCV_PART -- 부문
+			,EXCHANGE_NO --외주처
+			,EX_AMT -- 예산
+			,EX_RATE -- 계약 예산
+			,EX_GROUND -- ??
+			,EX_WORK_AMT --실행 예산
+			,BIGO
+		)
+		VALUES(
+			#{PJT_CD} -- 필수
+			,#{OUT_ITEM} -- 필수 
+			,#{OUT_CORP} --필수
+			,'0' -- 계약 외주없체 외 다른 업체입력시 공백
+			,'' -- % 기준이 먼지 몰겟다;;
+			,''
+			,#{CONTRACT_AMT} -- 계약 금액 필수 -- 이거때문에 ㅜㅡ;;
+			,''
+		)
+	</insert>
+<!--3.1.1 용역계약서 입력 제조경비예산(예산현황) 수정  update -->
+	<update id="modifyCooperationJEJO"
+		parameterType="String">
+		UPDATE 
+			T_P11070 
+		SET 
+			EX_WORK_AMT = #{CONTRACT_AMT} -- 계약금액 입력
+		WHERE
+			PJT_CD = #{PJT_CD} -- 프로젝트코드
+			AND
+			SCV_PART = #{OUT_ITEM} --부문
+			AND
+			EXCHANGE_NO = #{OUT_CORP} -- 외주처
+	</update>
 
 </mapper>

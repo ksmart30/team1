@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ksmart30.team01.cooperation.domain.CooperationSearchRequest;
@@ -31,7 +32,7 @@ public class CooperationRestController {
 	 * @brief    projectCooperationManageService객체의 cooperationListSearch 메서드 호출
 	 * @return  List<Map<String,Object>> re - json방식
 	 */	
-	@PostMapping("/cooperationSearch")
+	@GetMapping("/cooperationSearch")
 	public List<Map<String,Object>> projectCooperationSearch(CooperationSearchRequest vo) {
 		System.out.print("용역계약서 검색 실행");
 		System.out.print("cooperationSearch 담긴값 : "+vo);
