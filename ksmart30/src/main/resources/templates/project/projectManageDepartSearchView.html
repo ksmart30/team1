@@ -21,6 +21,11 @@
 	<link href="../build/css/custom.min.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
+		// 숫자 단위에 콤마를 넣는 정규식
+	    function numberWithCommas(x) {
+	        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	    }
+		
 		function modalCustOneBtn(CUST_CD, CUST_NM) {
 			console.log(CUST_CD+CUST_NM);			
 			$('#CUST_CD_VAL').empty();
@@ -104,6 +109,10 @@
 						console.log(data);
 						console.log(JSON.stringify(data));
 						let deptSearchTable = $('#deptSearchTable').DataTable({
+							language: {
+								decimal: ",",
+								thousands: "."
+						    },
 							destroy:true,
 							searching:false,
 							scrollX: true,
@@ -179,13 +188,13 @@
 					</td>
 					<td>
 						<div class="col-md-12 col-sm-12 col-xs-12 ">
-							<input type="date" id="START_DATE" class="form-control">
+							<input type="date" id="START_DATE" class="form-control" max="2020-12-31">
 						</div>
 						
 					</td>
 					<td>
 						<div class="col-md-12 col-sm-15 col-xs-15 ">
-							<input type="date" id="END_DATE" class="form-control">
+							<input type="date" id="END_DATE" class="form-control" max="2020-12-31">
 						</div>
 					</td>
 				</tr>

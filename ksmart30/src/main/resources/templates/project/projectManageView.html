@@ -9,54 +9,76 @@
 		<script>
 		// 우편번호 및 주소 검색
 		function sample6_execDaumPostcode() {
-		        new daum.Postcode({
-		            oncomplete: function(data) {
-		                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
+	                    document.getElementById("sample6_extraAddress").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("sample6_extraAddress").value = '';
+	                }
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                $('#ZIP_CD_ONE').empty();
+	                $('#ZIP_CD_ONE').val(data.zonecode);
+	                $('#PJT_ADDR_ONE').empty();
+	               	$('#PJT_ADDR_ONE').append(addr);
+	                // 커서를 상세주소 필드로 이동한다.
+	                //document.getElementById("sample6_detailAddress").focus();
+				}
+			}).open();
+		}
 		
-		                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-		                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-		                var addr = ''; // 주소 변수
-		                var extraAddr = ''; // 참고항목 변수
+		// 숫자 단위에 콤마를 넣는 정규식
+	    function numberWithCommas(x) {
+	        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	    }
 		
-		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-		                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-		                    addr = data.roadAddress;
-		                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-		                    addr = data.jibunAddress;
-		                }
+		// 대지면적 -> 평 자동 계산
+		function areaP() {
+			if($('#G_AREA_M_ONE').val() || 0) {
+				let areaP = $('#G_AREA_M_ONE').val() / 3.305785;
+				// 소수점 4번째 자리에서 자르고 반올림
+				$('#G_AREA_P_ONE').val(areaP.toFixed(4));
+			}
+		}
+		// 연면적 -> 평 자동 계산
+		function yareaP() {
+			if($('#G_YAREA_M_ONE').val() || 0) {
+				let yareaP = $('#G_YAREA_M_ONE').val() / 3.305785;
+				// 소수점 4번째 자리에서 자르고 반올림
+				$('#G_YAREA_P_ONE').val(yareaP.toFixed(4));
+			}
+		}
 		
-		                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-		                if(data.userSelectedType === 'R'){
-		                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-		                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-		                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-		                        extraAddr += data.bname;
-		                    }
-		                    // 건물명이 있고, 공동주택일 경우 추가한다.
-		                    if(data.buildingName !== '' && data.apartment === 'Y'){
-		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-		                    }
-		                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-		                    if(extraAddr !== ''){
-		                        extraAddr = ' (' + extraAddr + ')';
-		                    }
-		                    // 조합된 참고항목을 해당 필드에 넣는다.
-		                    document.getElementById("sample6_extraAddress").value = extraAddr;
-		                
-		                } else {
-		                    document.getElementById("sample6_extraAddress").value = '';
-		                }
-		
-		                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-		                $('#ZIP_CD_ONE').empty();
-		                $('#ZIP_CD_ONE').val(data.zonecode);
-		                $('#PJT_ADDR_ONE').empty();
-		               	$('#PJT_ADDR_ONE').append(addr);
-		                // 커서를 상세주소 필드로 이동한다.
-		                //document.getElementById("sample6_detailAddress").focus();
-		            }
-		        }).open();
-		    }
 		// 모달에서 프로젝트 선택
 		function modalPjtOneBtn(PJT_CD, PJT_NM) {
 			console.log('프로젝트 모달 선택완료!');
@@ -135,7 +157,7 @@
 			$('#PJT_NIC_ONE').empty();
 			$('#PJT_ADDR_ONE').empty();
 			$('#ZIP_CODE_ONE').empty();
-			$('#reset').click();
+			$('#reset').trigger("click");
 		}
 		
 		// 프로젝트 하나 선택시 상세내역 출력
@@ -187,15 +209,15 @@
 						$('#G_YAREA_P_ONE').empty();		// 연면적_P
 						$('#G_YAREA_P_ONE').attr('value', data.sangse.G_YAREA_P);
 						$('#PYUNG_DAN_ONE').empty();		// 평당단가
-						$('#PYUNG_DAN_ONE').attr('value', data.sangse.PYUNG_DAN);
+						$('#PYUNG_DAN_ONE').attr('value', numberWithCommas(data.sangse.PYUNG_DAN));
 						$('#TOT_CONTRACT_AMT_ONE').empty();	// 당사 총계약액
-						$('#TOT_CONTRACT_AMT_ONE').attr('value', data.sangse.TOT_CONTRACT_AMT);
+						$('#TOT_CONTRACT_AMT_ONE').attr('value', numberWithCommas(data.sangse.TOT_CONTRACT_AMT));
 						$('#PJT_CONTRACT_AMT_ONE').empty();	// PJT 총계약액
-						$('#PJT_CONTRACT_AMT_ONE').attr('value', data.sangse.PJT_CONTRACT_AMT);
+						$('#PJT_CONTRACT_AMT_ONE').attr('value', numberWithCommas(data.sangse.PJT_CONTRACT_AMT));
 						$('#CHANGE_AMT_ONE').empty();		// 변경가감액
-						$('#CHANGE_AMT_ONE').attr('value', data.sangse.CHANGE_AMT);
+						$('#CHANGE_AMT_ONE').attr('value', numberWithCommas(data.sangse.CHANGE_AMT));
 						$('#BALANCE_AMT_ONE').empty();		// 매출잔액
-						$('#BALANCE_AMT_ONE').attr('value', data.sangse.BALANCE_AMT);
+						$('#BALANCE_AMT_ONE').attr('value', numberWithCommas(data.sangse.BALANCE_AMT));
 						// 부가세여부
 						$('#SURTAX_ONE').attr('value', data.sangse.SURTAX);
 							$('select[id=SURTAX_ONE]').val(data.sangse.SURTAX);
@@ -205,7 +227,7 @@
 						pjtGiseongList(PJT_CD)
 						// 세부사항
 						$('#PJT_CONTRACT_AMT_ONE_SEBU').empty();		// 프로젝트 총계약액
-						$('#PJT_CONTRACT_AMT_ONE_SEBU').append(data.sangse.PJT_CONTRACT_AMT);
+						$('#PJT_CONTRACT_AMT_ONE_SEBU').append(numberWithCommas(data.sangse.PJT_CONTRACT_AMT));
 						$('#DONG_SU_ONE').empty();						// 동수
 						$('#DONG_SU_ONE').attr('value', data.sangse.DONG_SU);
 						$('#HOUSE_SU_ONE').empty();						// 세대수
@@ -223,8 +245,8 @@
 						$('#PJT_ADDR_ONE').empty();						// 주소
 						$('#PJT_ADDR_ONE').append(data.sangse.PJT_ADDR);
 						// 지역1
-						$('#REGION_ONE').attr('value', data.sangse.REGION);
-							$('select[id=REGION_ONE]').val(data.sangse.REGION);	
+						$('#REGION_ONE1').attr('value', data.sangse.REGION);
+							$('select[id=REGION_ONE1]').val(data.sangse.REGION);	
 						// 지역2
 						$('#REGION2_ONE').attr('value', data.sangse.REGION2);
 							$('select[id=REGION2_ONE]').val(data.sangse.REGION2);
@@ -239,9 +261,6 @@
 							$('select[id=SCOPE1_ONE]').val(data.sangse.SCOPE1);
 						// 구역2
 						$('#SCOPE2_ONE').attr('value', data.sangse.SCOPE2);
-							$('select[id=SCOPE2_ONE]').val(data.sangse.SCOPE2);
-						// 구역2
-						$('#SCOPE2_ONE').attr('value', data.sangse.SCOPE2);		
 							$('select[id=SCOPE2_ONE]').val(data.sangse.SCOPE2);
 						// 수주구분1 필요
 						// 수주구분2
@@ -276,7 +295,7 @@
 						$('#PJT_NIC_ONE').empty();					// 프로젝트 별명
 						$('#PJT_NIC_ONE').attr('value', data.sangse.PJT_NIC);
 					} else {
-						alert('용역계약서를 한 번도 작성하지 않았습니다.');
+						alert('용역계약서를 한 번도 작성하지 않았습니다. 입력버튼을 눌러 입력해주세요.');
 						// 입력 데이터 초기화
 						reset();
 						// 수주심의결정서 상세
@@ -299,12 +318,12 @@
 					$('#OWNER_LIST_ONE').empty();
 					$(data).each((index, item) => {
 						console.log(item);
-						$('#OWNER_LIST_ONE').append('<tr><td></td><td>'+item.CUST_NM+'</td><td>'+item.CUST_GBN_NM+'</td><td>'+item.N_RATE+'</td><td>'+item.CONTRACT_AMT+'</td><td><button type="button" class="btn" style="color:black" onclick="ownerDelBtn('+item.PJT_CD+','+item.CUST_CD+')">삭제</button></td></tr>');
+						$('#OWNER_LIST_ONE').append('<tr><td></td><td>'+item.CUST_NM+'</td><td>'+item.CUST_GBN_NM+'</td><td>'+item.N_RATE+'</td><td>'+numberWithCommas(item.CONTRACT_AMT)+'</td><td><button type="button" class="btn" style="color:black" onclick="ownerDelBtn('+item.PJT_CD+','+item.CUST_CD+')">삭제</button></td></tr>');
 					});
 					$('#N_RATE_SUM').empty();						// 지분합계
 					$('#N_RATE_SUM').append(data[0].N_RATE_SUM);
 					$('#CONTRACT_AMT_SUM').empty();					// 금액합계
-					$('#CONTRACT_AMT_SUM').append(data[0].CONTRACT_AMT_SUM);
+					$('#CONTRACT_AMT_SUM').append(numberWithCommas(data[0].CONTRACT_AMT_SUM));
 				}
 			});
 		}
@@ -319,10 +338,10 @@
 					$('#GISEONG_LIST_ONE').empty();
 					$(data).each((index, item) => {
 						console.log(item);
-						$('#GISEONG_LIST_ONE').append('<tr><td width="20%">'+item.RM_SEQ+'</td><td width="20%">'+item.RM_STEP_NM+'</td><td width="20%">'+item.SALE_STEP_NM+'</td><td width="20%">'+item.RM_AMT+'</td><td width="20%">'+item.SUGUM_RATE+'</td><td><button type="button" class="btn" style="color:black" onclick="giseongDelBtn('+item.PJT_CD+','+item.RM_SEQ+')">삭제</button></td></tr>');
+						$('#GISEONG_LIST_ONE').append('<tr><td width="20%">'+item.RM_SEQ+'</td><td width="20%">'+item.RM_STEP_NM+'</td><td width="20%">'+item.SALE_STEP_NM+'</td><td width="20%">'+numberWithCommas(item.RM_AMT)+'</td><td width="20%">'+item.SUGUM_RATE+'</td><td><button type="button" class="btn" style="color:black" onclick="giseongDelBtn('+item.PJT_CD+','+item.RM_SEQ+')">삭제</button></td></tr>');
 					});
 					$('#RM_AMT_SUM').empty();						// 금액합계
-					$('#RM_AMT_SUM').append(data[0].RM_AMT_SUM);
+					$('#RM_AMT_SUM').append(numberWithCommas(data[0].RM_AMT_SUM));
 					$('#SUGUM_RATE_SUM').empty();					// 수금율합계
 					$('#SUGUM_RATE_SUM').append(data[0].SUGUM_RATE_SUM);
 				}
@@ -379,12 +398,124 @@
 					$('#PJT_NM_ONE').append(data.SVC);
 					// 수행부서 코드
 					$('#DEPT_CD_ONE').attr('value', data.DEPT_CD);
-						$('select[id=DEPT_CD_ONE]').val(data.DEPT_CD);
+					$('select[id=DEPT_CD_ONE]').val(data.DEPT_CD);
+					// 건축물 유형
+					$('#BUILD_TYPE_ONE').attr('value', data.BUILD_TYPE);
+						$('select[id=BUILD_TYPE_ONE]').val(data.BUILD_TYPE);
+					$('#G_AREA_M_ONE').empty();			// 대지면적_M
+					$('#G_AREA_M_ONE').attr('value', data.AREA_M);
+					$('#G_AREA_P_ONE').empty();			// 대지면적_P
+					$('#G_AREA_P_ONE').attr('value', data.AREA_P);
+					$('#G_YAREA_M_ONE').empty();		// 연면적_M
+					$('#G_YAREA_M_ONE').attr('value', data.YAREA_M);
+					$('#G_YAREA_P_ONE').empty();		// 연면적_P
+					$('#G_YAREA_P_ONE').attr('value', data.YAREA_P);
+					// 대지위치
+					$('#ZIP_CD_ONE').empty();						// 우편번호
+					$('#ZIP_CD_ONE').attr('value', data.ZIP_CD);
+					$('#PJT_ADDR_ONE').empty();						// 주소
+					$('#PJT_ADDR_ONE').append(data.ADDR);
+					// 지역1
+					$('#REGION_ONE1').attr('value', data.REGION);
+						$('select[id=REGION_ONE1]').val(data.REGION);	
+					// 지역2
+					$('#REGION2_ONE').attr('value', data.REGION2);
+						$('select[id=REGION2_ONE]').val(data.REGION2);
+					// 지구1
+					$('#ZONE1_ONE').attr('value', data.ZONE1);	
+						$('select[id=ZONE1_ONE]').val(data.ZONE1);
+					// 지구2
+					$('#ZONE2_ONE').attr('value', data.ZONE2);	
+						$('select[id=ZONE2_ONE]').val(data.ZONE2);
+					// 구역1
+					$('#SCOPE1_ONE').attr('value', data.SCOPE1);	
+						$('select[id=SCOPE1_ONE]').val(data.SCOPE1);
+					// 구역2
+					$('#SCOPE2_ONE').attr('value', data.SCOPE2);
+						$('select[id=SCOPE2_ONE]').val(data.SCOPE2);
+					// 수주구분1 필요s
+					// 수주구분2
+					$('#BIZ_GBN_ONE').attr('value', data.BIZ_GBN);		
+						$('select[id=BIZ_GBN_ONE]').val(data.BIZ_GBN);
+					// 사업분류
+					$('#BUILD_GB_ONE').attr('value', data.BUILD_GB);		
+					$('select[id=BUILD_GB_ONE]').val(data.BUILD_GB);
+					$('#PM_EMP_NO_ONE').empty();					// PM
+					$('#PM_EMP_NO_ONE').attr('value', data.PM_EMP_NO);
+					$('#PM_EMP_NO_NM_ONE').empty();					// PM 이름
+					$('#PM_EMP_NO_NM_ONE').append(data.PM_EMP_NO_NM);
+					$('#EMP_NO_ONE').empty();						// 관리임원
+					$('#EMP_NO_ONE').attr('value', data.EMP_NO);
+					$('#EMP_NO_NM_ONE').empty();						// 관리임원 이름
+					$('#EMP_NO_NM_ONE').append(data.EMP_NO_NM);
+					$('#MARKET_MAN_ONE').empty();					// 수주책임자
+					$('#MARKET_MAN_ONE').attr('value', data.MARKET_MAN);
+					$('#MARKET_MAN_NM_ONE').empty();					// 수주책임자 이름
+					$('#MARKET_MAN_NM_ONE').append(data.MARKET_MAN_NM);
+					$('#INFO_EMP_NO_ONE').empty();					// 정보취득자
+					$('#INFO_EMP_NO_ONE').attr('value', data.INFO_EMP_NO);
+					$('#INFO_EMP_NO_NM_ONE').empty();					// 정보취득자 이름
+					$('#INFO_EMP_NO_NM_ONE').append(data.INFO_EMP_NO_NM);
 				},
 				error:function(request, status, error) {
 					alert(error + "에러입니다.");
 				}
 			});
+		}
+		
+		// 용역계약서를 한 번도 작성하지 않았을 때 수주심의 결정서를 기반으로 한 신규 용역계약서 작성
+		function pjtWriteFirst(PJT_CD) {
+			let CRT_DATE = $('#CRT_DATE_ONE').text();
+			let CONTRACT_DATE = $('#CONTRACT_DATE').val();
+			console.log(CONTRACT_DATE);
+			/* let CONTRACT_PRI1,
+			let CONTRACT_PRI2,
+			let CONTRACT_PRI3,
+			let DEPT_CD,
+			let G_AREA_M,
+			let G_AREA_P,
+			let G_YAREA_M,
+			let G_YAREA_P,
+			let PYUNG_DAN,
+			let BUILD_TYPE,
+			let TOT_CONTRACT_AMT,
+			let PJT_CONTRACT_AMT,
+			let CHANGE_AMT,
+			let BALANCE_AMT,
+			let SURTAX,
+			let DONG_SU,
+			let HOUSE_SU,
+			let B_UP_SU,
+			let B_DOWN_SU,
+			let BUILD_STRUCT,
+			let ZIP_CD,
+			let PJT_ADDR,
+			let REGION,
+			let REGION2,
+			let ZONE1,
+			let ZONE2,
+			let SCOPE1,
+			let SCOPE2,
+			let BUILD_GB,
+			let PM_EMP_NO,
+			let EMP_NO,
+			let MARKET_MAN,
+			let INFO_EMP_NO,
+			let PJT_E_GBN,
+			let PJT_E_DATE,
+			let BREAK_AMT,
+			let PJT_NIC */
+			/* $.ajax({
+				url:'/project/projectManageWriteProcess',
+				type:'POST',
+				data:{PJT_CD:PJT_CD},
+				success:function(data){
+					console.log(data);
+				},
+				error:function(request, status, error) {
+					alert(error + "에러입니다.");
+				}
+			}); */
 		}
 		
 		// input 태그에서 엔터키 금지
@@ -394,7 +525,33 @@
 			}
 		});
 		
+		// 프로젝트 리스트 조회
+		function pjtSearch(PJT_CD, DEPT_CD, YEAR, pjtRadioValue) {
+			$.ajax({
+				// ajax로 "/project/projectManageListProcess" URI를 지정 POST방식으로 data를 보낸다.
+				url:'/project/projectManageListProcess',
+				type:'POST',
+				data:{PJT_CD:PJT_CD, DEPT_CD:DEPT_CD, YEAR:YEAR, pjtRadioValue:pjtRadioValue},
+				success:function(data){
+					$('#pjtList').empty();
+					$('#resultLength').empty();
+					$(data).each((index,item) => {
+						$('#pjtList').append('<tr><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td onclick="pjtOneBtn('+item.PJT_CD+',&#39'+item.PJT_NM+'&#39)">'+item.PJT_NM+'</td></tr>');
+					});
+					$('#resultLength').append(data.length);
+					pjtOneBtn(data[0].PJT_CD,data[0].PJT_NM);
+				},
+				error:function(request, status, error) {
+					alert(error + "에러입니다.");
+				}
+			});
+		}
+		
 		$(document).ready(function() {
+			$('#reset').hide();
+			$('#reset').click(function(){
+				$('input[type="text"]').attr('value','');
+			});
 			//현재 날짜
 			let date = new Date();
 			var NOW_YEAR =date.getFullYear();
@@ -406,7 +563,13 @@
 			console.log('현재날짜 : '+NOW_DATE);
 			$('#pjtYear').val(NOW_YEAR);
 			// 용역계약서 입력을 위한 프로젝트 검색 부분
-			$('#reset').hide();
+			// 필드로 입력받은 값들을 변수에 저장
+			let PJT_CD = $('#PJT_CD_VAL').val();
+			let DEPT_CD = $('#pjtDept').val();
+			let YEAR = $('#pjtYear').val();
+			let pjtRadioValue = $('input[name=pjtRadioValue]:checked', '#radioForm').val();
+			pjtSearch(PJT_CD, DEPT_CD, YEAR, pjtRadioValue);
+			// 조회 버튼 클릭시
 			$('#search').click(function(){
 				// 필드로 입력받은 값들을 변수에 저장
 				let PJT_CD = $('#PJT_CD_VAL').val();
@@ -417,23 +580,13 @@
 				console.log(DEPT_CD);
 				console.log(YEAR);
 				console.log(pjtRadioValue);
-				$.ajax({
-					// ajax로 "/project/projectManageListProcess" URI를 지정 POST방식으로 data를 보낸다.
-					url:'/project/projectManageListProcess',
-					type:'POST',
-					data:{PJT_CD:PJT_CD, DEPT_CD:DEPT_CD, YEAR:YEAR, pjtRadioValue:pjtRadioValue},
-					success:function(data){
-						$('#pjtList').empty();
-						$('#resultLength').empty();
-						$(data).each((index,item) => {
-							$('#pjtList').append('<tr><td style="background-color:#fff9df">'+item.PJT_CD+'</td><td onclick="pjtOneBtn('+item.PJT_CD+',&#39'+item.PJT_NM+'&#39)">'+item.PJT_NM+'</td></tr>');
-						});
-						$('#resultLength').append(data.length);
-					},
-					error:function(request, status, error) {
-						alert(error + "에러입니다.");
-					}
-				});
+				// 프로젝트 리스트 조회
+				pjtSearch(PJT_CD, DEPT_CD, YEAR, pjtRadioValue);
+			});
+			// 입력 버튼 클릭시
+			$('#insert').click(() => {
+				let PJT_CD = $('#PJT_CD_ONE').text();
+				pjtWriteFirst(PJT_CD);
 			});
 			
 			// 발주처 추가
@@ -539,6 +692,20 @@
 					}
 				});
 			});
+			
+			// 라디오버튼 선택시 프로젝트 리스트 조회
+			$("input:radio[name=pjtRadioValue]").click(()=> {
+				// 필드로 입력받은 값들을 변수에 저장
+				let PJT_CD = $('#PJT_CD_VAL').val();
+				let DEPT_CD = $('#pjtDept').val();
+				let YEAR = $('#pjtYear').val();
+				let pjtRadioValue = $('input[name=pjtRadioValue]:checked', '#radioForm').val();
+				console.log(PJT_CD);
+				console.log(DEPT_CD);
+				console.log(YEAR);
+				console.log(pjtRadioValue);
+				pjtSearch(PJT_CD, DEPT_CD, YEAR, pjtRadioValue);
+			});
 		});
 		</script>
 	</th:block>
@@ -552,7 +719,9 @@
 		1. 용역계약서를 입력할 프로젝트 검색 <br>
 		2. 기본사항 및 세부사항 입력 후 저장 <br>
 		3. 발주처 입력 후 저장 <br>
-		4. 기성단계 입력 후 저장
+		4. 기성단계 입력 후 저장 <br>
+		5. 용역계약서를 처음 입력할 경우 먼저 입력 버튼을 눌러 용역계약서 활성화 <br>
+		6. 1~4와 같은 방식으로 입력 후 저장
 	</span>			
 	</div>
 	</div>
@@ -561,10 +730,15 @@
 	<div class="x_content" style="text-align: right">
 		<div class="btn-group" >
 		<button class="btn btn-default" type="button" id="search">조회</button>
-		<button class="btn btn-default" type="button">입력</button>
+		<button class="btn btn-default" type="button" id="insert">입력</button>
 		<button class="btn btn-default" type="button" disabled="disabled">수정</button>
-		<button class="btn btn-default" type="button">삭제</button>
-		<button class="btn btn-default" type="button">저장</button>
+		<button class="btn btn-default" type="button" disabled="disabled">삭제</button>
+		<th:block th:if="${sangse}==null">
+			<button class="btn btn-default" type="button" disabled="disabled">저장</button>
+		</th:block>
+		<th:block th:unless="${sangse}==null">
+			<button class="btn btn-default" type="button">저장</button>
+		</th:block>
 		<button class="btn btn-default" type="button">출력</button>
 		</div>
 	</div>
@@ -664,7 +838,7 @@
 			<table>
 				<tr>
 					<td>
-						<input type="radio" name="pjtRadioValue" value="1">검토
+						<input type="radio" name="pjtRadioValue" value="1" checked="checked">검토
 					</td>
 					<td>
 						<input type="radio" name="pjtRadioValue" value="2">계약
@@ -679,7 +853,7 @@
 						<input type="radio" name="pjtRadioValue" value="5">종료
 					</td>
 					<td>
-						<input type="radio" name="pjtRadioValue" value="6" checked="checked">ALL
+						<input type="radio" name="pjtRadioValue" value="6">ALL
 					</td>
 				</tr>
 			</table>
@@ -701,13 +875,13 @@
 				</thead>
 				<tbody id="pjtList">
 				</tbody>
-				<thead>
+				<tfoot>
 					<tr>
 						<td colspan="2" style="background-color:#ffeeaa">
 							<b><span id="resultLength"></span></b>
 						</td>
 					</tr>
-				</thead>
+				</tfoot>
 			</table>
 			<!-- 결과부분 end -->
 		</div>
@@ -715,7 +889,8 @@
 		</div>
 		
 		<!-- 프로젝트 start -->
-		<form>
+		<form id="resetForm">
+		<button type="reset" id="reset"></button>
 		<font color="black">
 		<div class="col-md-9 col-sm-6 col-xs-12">
 		<div class="x_panel">
@@ -854,11 +1029,11 @@
 					  <label for="ex3">계약면적</label>
 	                  <div class="form-group">
 	                  	<label for="ex3">대지면적</label>
-	                  	<input type="text" id="G_AREA_M_ONE">m²
+	                  	<input type="text" id="G_AREA_M_ONE" onkeyup='areaP()'>m²
 	                  	<input type="text" id="G_AREA_P_ONE">평<br>
 	                  	<br>
 	                  	<label for="ex3">연 면 적</label>
-	                  	<input type="text" id="G_YAREA_M_ONE">m²
+	                  	<input type="text" id="G_YAREA_M_ONE" onkeyup='yareaP()'>m²
 	                  	<input type="text" id="G_YAREA_P_ONE">평<br>
 	                  	<br>
 	                  	<label for="ex3">평당단가</label>
@@ -1380,7 +1555,7 @@
 					지역
 				</td>
 				<td>
-					<select id="REGION_ONE">
+					<select id="REGION_ONE1">
 						<option selected="selected"></option>
 						<th:block th:each="c : ${code}">
 	                    	<th:block th:if="${c.LEVEL1_CD}==320">
@@ -1825,7 +2000,7 @@
 	</div>
 	</div>
 	</div>	
-	<input type="reset" id="reset">
+	
 	
 	<!-- Tap end -->
 			</div>

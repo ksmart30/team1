@@ -20,6 +20,12 @@
 	    <link href="/build/css/custom.min.css" rel="stylesheet">
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	    <script>
+	    
+	    // 숫자 단위에 콤마를 넣는 정규식
+	    function numberWithCommas(x) {
+	        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	    }
+
         // 계약현황 차트 함수
         function chartFunction(YEAR) {
             // 월별 차트 초기화
@@ -55,9 +61,12 @@
                 data:{YEAR:YEAR},
 				success:function(data){
                     console.log(data);
+                    $('#DEPT_CD_COUNT').empty();
                     $('#DEPT_CD_COUNT').append(data.monthHyunhwang[0].TOT_CNT);
                     // 월별 계약현황 개수 반복문
+                    let TOTAL = 0;
                     $(data.monthHyunhwang).each((index, item)=> {
+                    	TOTAL =+ data.monthHyunhwang[index].TOT_CNT;
                         if(item.WORK_MM=='01') {
                             WORK_MM_COUNT1 = item.TOT_CNT;
                         }  else if(item.WORK_MM=='02') {
@@ -82,8 +91,9 @@
                             WORK_MM_COUNT11 = item.TOT_CNT;
                         }  else if(item.WORK_MM=='12') {
                             WORK_MM_COUNT12 = item.TOT_CNT;
-                        } 
+                        }
                     });
+                    console.log('과연? : '+TOTAL);
                     // 본부별 계약현황 개수 반복문
 					$(data.ownerHyunhwang).each((index, item)=> {
                         if(item.DEPT_CD_SUB=="75") {
@@ -165,19 +175,19 @@
                type:'POST',
                data:{YEAR_MONTH:YEAR_MONTH},
                success:function(data){
-                    console.log(data);
+					console.log(data);
                     $('#YEAR_MONTH_SANGSE').empty();
                     $('#YEAR_MONTH_SANGSE').append(YEAR);
                     $('#WORK_MM_MONTH_SANGSE').empty();
                     $('#WORK_MM_MONTH_SANGSE').append(WORK_MM);
                     $('#MONTH_SANGSE').empty();
                     $(data).each((index, item)=> {
-                        $('#MONTH_SANGSE').append('<tr><td>'+item.DEPT_NM+'</td><td>['+item.PJT_CD+'] '+item.PJT_NM+'</td><td>'+item.PJT_DATE+'</td><td>'+item.TOT_CONTRACT_AMT+'</td></tr>');
+                        $('#MONTH_SANGSE').append('<tr><td>'+item.DEPT_NM+'</td><td>['+item.PJT_CD+'] '+item.PJT_NM+'</td><td>'+item.PJT_DATE+'</td><td>'+numberWithCommas(item.TOT_CONTRACT_AMT)+'</td></tr>');
                     });
                     $('#COUNT_VALUE_MONTH_SANGSE').empty();
                     $('#COUNT_VALUE_MONTH_SANGSE').append(data[0].COUNT_VALUE);
                     $('#TOT_CONTRACT_AMT_SUM_MONTH_SANGSE').empty();
-                    $('#TOT_CONTRACT_AMT_SUM_MONTH_SANGSE').append(data[0].TOT_CONTRACT_AMT);
+                    $('#TOT_CONTRACT_AMT_SUM_MONTH_SANGSE').append(numberWithCommas(data[0].TOT_CONTRACT_AMT_SUM));
                }
             });
         }
@@ -190,19 +200,18 @@
                data:{YEAR:YEAR, DEPT_CD_SUB:DEPT_CD_SUB},
                success:function(data){
                     console.log(data);
-                    // 
                     $('#YEAR_DEPT_SANGSE').empty();
                     $('#YEAR_DEPT_SANGSE').append(YEAR);
                     $('#DEPT_CD_SUB_DEPT_SANGSE').empty();
                     $('#DEPT_CD_SUB_DEPT_SANGSE').append(i);
                     $('#DEPT_SANGSE').empty();
                     $(data).each((index, item)=> {
-                        $('#DEPT_SANGSE').append('<tr><td>'+item.DEPT_NM+'</td><td>['+item.PJT_CD+'] '+item.PJT_NM+'</td><td>'+item.PJT_DATE+'</td><td>'+item.TOT_CONTRACT_AMT+'</td></tr>');
+                        $('#DEPT_SANGSE').append('<tr><td>'+item.DEPT_NM+'</td><td>['+item.PJT_CD+'] '+item.PJT_NM+'</td><td>'+item.PJT_DATE+'</td><td>'+numberWithCommas(item.TOT_CONTRACT_AMT)+'</td></tr>');
                     });
-                    $('#COUNT_VALUE_MONTH_SANGSE').empty();
-                    $('#COUNT_VALUE_MONTH_SANGSE').append(data[0].COUNT_VALUE);
-                    $('#TOT_CONTRACT_AMT_SUM_MONTH_SANGSE').empty();
-                    $('#TOT_CONTRACT_AMT_SUM_MONTH_SANGSE').append(data[0].TOT_CONTRACT_AMT_SUM);
+                    $('#COUNT_VALUE_DEPT_SANGSE').empty();
+                    $('#COUNT_VALUE_DEPT_SANGSE').append(data[0].COUNT_VALUE);
+                    $('#TOT_CONTRACT_AMT_SUM_DEPT_SANGSE').empty();
+                    $('#TOT_CONTRACT_AMT_SUM_DEPT_SANGSE').append(numberWithCommas(data[0].TOT_CONTRACT_AMT_SUM));
                 } 
             });
         }
@@ -286,14 +295,14 @@
 			</thead>
 			<tbody id="MONTH_SANGSE">
 			</tbody>
-			<thead>
+			<tfoot>
 				<tr>
 					<td style="background-color:#ffeeaa">**합계**</td>
 					<td style="background-color:#ffeeaa"></td>
-					<td style="background-color:#ffeeaa" id="COUNT_VALUE_MONTH_SANGSE">1</td>
-					<td style="background-color:#ffeeaa" id="TOT_CONTRACT_AMT_SUM_MONTH_SANGSE">1,000,000,000</td>
+					<td style="background-color:#ffeeaa" id="COUNT_VALUE_MONTH_SANGSE"></td>
+					<td style="background-color:#ffeeaa" id="TOT_CONTRACT_AMT_SUM_MONTH_SANGSE"></td>
 				</tr>
-			</thead>
+			</tfoot>
 			</table>
 		</div>
 		</div>
@@ -329,14 +338,14 @@
 			</thead>
 			<tbody id="DEPT_SANGSE">
 			</tbody>
-			<thead>
+			<tfoot>
 				<tr>
 					<td style="background-color:#ffeeaa">**합계**</td>
 					<td style="background-color:#ffeeaa"></td>
-					<td style="background-color:#ffeeaa" id="COUNT_VALUE_DEPT_SANGSE">1</td>
-					<td style="background-color:#ffeeaa" id="TOT_CONTRACT_AMT_SUM_DEPT_SANGSE">1,000,000,000</td>
+					<td style="background-color:#ffeeaa" id="COUNT_VALUE_DEPT_SANGSE"></td>
+					<td style="background-color:#ffeeaa" id="TOT_CONTRACT_AMT_SUM_DEPT_SANGSE"></td>
 				</tr>
-			</thead>
+			</tfoot>
 			</table>
 		</div>
 		</div>

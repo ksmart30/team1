@@ -173,54 +173,16 @@
 	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (검토) -->
 	<select id="getProjectManageGumList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
-			PRE_PJT_CD,
 			PJT_CD,
 			PJT_TYPE,
 			SVC AS PJT_NM,
-			CUST_CD,
-			CUST_NM,
-			AREA_P,
-			AREA_M,
-			YAREA_P,
-			YAREA_M,
-			EST_AMT,
-			BIZ_GBN,
-			REGION,
-			ZONE1,
-			ZONE2,
-			ZONE3,
-			ZIP_CD,
-			ADDR,
-			BUILD_TYPE,
 			DEPT_CD,
-			INFO_EMP_NO,
-			EMP_NO,
-			PM_EMP_NO,
-			ACT_STAT,
-			PRODUCT,
-			CRT_MAN,
-			CRT_DATE,
-			UPD_MAN,
-			UPD_DATE,
-			FORECAST_AMT,
-			MARKET_MAN,
-			UP_SU,
-			DOWN_SU,
-			COVERAGE,
-			CAPACITY,
-			PRINT_YN,
-			PRINT_CNT,
-			H_CNT,
-			BIZ_TYPE,
-			END_GBN
-		FROM
-			T_PS1000
-		WHERE
-			ACT_STAT != '5'
-			AND END_GBN = ''
-			AND PJT_CD LIKE #{YEAR}+'%'
-			AND PRE_PJT_CD LIKE '%'+#{PJT_CD}+'%'
-			AND DEPT_CD LIKE '%'+#{DEPT_CD}+'%'
+			PRE_PJT_CD
+		FROM T_PS1000
+		WHERE ACT_STAT != '5'
+		AND PJT_CD LIKE '%'+#{PJT_CD}+'%'
+		AND DEPT_CD LIKE '%'+#{DEPT_CD}+'%'
+		AND PRE_PJT_CD LIKE '%'+#{YEAR}+'%'
 	</select>
 	
 	<!-- 용역계약서 입력을 위해 전체 프로젝트 대장 조회 (계약, 예산, 승인, 종료) -->
@@ -392,60 +354,114 @@
 	<!-- 한번도 용역계약서를 입력하지 않은 경우 수주심의결정서의 상세를 조회한다 -->
 	<select id="getBusinessManageSangse" parameterType="String" resultType="java.util.Map">
 		SELECT
-			PJT_CD,
-			PJT_TYPE,
-			SVC,
-			CUST_CD,
-			CUST_GBN,
-			CUST_NM,
-			AREA_P,
-			AREA_M,
-			YAREA_P,
-			YAREA_M,
-			EST_AMT,
-			BIZ_GBN,
-			REGION,
-			REGION2,
-			REGION3,
-			ZONE1,
-			ZONE2,
-			ZONE3,
-			SCOPE1,
-			SCOPE2,
-			SCOPE3,
-			ZIP_CD,
-			ADDR,
-			BUILD_TYPE,
-			DEPT_CD,
-			INFO_EMP_NO,
-			EMP_NO,
-			PM_EMP_NO,
-			CD_REG_DATE,
-			END_DATE,
-			END_GBN,
-			END_BIGO1,
-			PRODUCT,
-			CRT_MAN,
-			CRT_DATE,
-			UPD_MAN,
-			UPD_DATE,
-			FORECAST_AMT,
-			MARKET_MAN,
-			DESIGN_MAN,
-			UP_SU,
-			DOWN_SU,
-			COVERAGE,
-			CAPACITY,
-			CLASS_GBN,
-			BUILD_GB,
-			PRINT_YN,
-			PRINT_CNT,
-			BIZ_TYPE
+			A.PJT_CD,
+			A.PJT_TYPE,
+			A.SVC,
+			A.CUST_CD,
+			A.CUST_GBN,
+			A.CUST_NM,
+			A.AREA_P,
+			A.AREA_M,
+			A.YAREA_P,
+			A.YAREA_M,
+			A.EST_AMT,
+			A.BIZ_GBN,
+			A.REGION,
+			A.REGION2,
+			A.REGION3,
+			A.ZONE1,
+			A.ZONE2,
+			A.ZONE3,
+			A.SCOPE1,
+			A.SCOPE2,
+			A.SCOPE3,
+			A.ZIP_CD,
+			A.ADDR,
+			A.BUILD_TYPE,
+			A.DEPT_CD,
+			A.INFO_EMP_NO,
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = A.INFO_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = A.INFO_EMP_NO) INFO_EMP_NO_NM,
+			A.EMP_NO,
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = A.EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = A.EMP_NO) EMP_NO_NM,
+			A.PM_EMP_NO,
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = A.PM_EMP_NO UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = A.PM_EMP_NO) PM_EMP_NO_NM,
+			A.CD_REG_DATE,
+			A.END_DATE,
+			A.END_GBN,
+			A.END_BIGO1,
+			A.PRODUCT,
+			A.CRT_MAN,
+			A.CRT_DATE,
+			A.UPD_MAN,
+			A.UPD_DATE,
+			A.FORECAST_AMT,
+			A.MARKET_MAN,
+			(SELECT KOR_NM FROM T_HM1000 WHERE EMP_NO = A.MARKET_MAN UNION SELECT KOR_NM FROM T_HM1000_T WHERE EMP_NO = A.MARKET_MAN) MARKET_MAN_NM,
+			A.DESIGN_MAN,
+			A.UP_SU,
+			A.DOWN_SU,
+			A.COVERAGE,
+			A.CAPACITY,
+			A.CLASS_GBN,
+			A.BUILD_GB,
+			A.PRINT_YN,
+			A.PRINT_CNT,
+			A.BIZ_TYPE
 		FROM
-			T_PS1000
+			T_PS1000 A
 		WHERE
 			PJT_CD = #{PJT_CD}
 	</select>
+	
+	<!-- 처음 용역계약서 입력 -->
+	<insert id="addProjectManage" parameterType="java.util.Map">
+		INSERT INTO
+			T_P11000(
+				PJT_CD,
+				CRT_DATE,
+				CONTRACT_DATE,
+				CONTRACT_PRI1,
+				CONTRACT_PRI2,
+				CONTRACT_PRI3,
+				DEPT_CD,
+				G_AREA_M,
+				G_AREA_P,
+				G_YAREA_M,
+				G_YAREA_P,
+				PYUNG_DAN,
+				BUILD_TYPE,
+				TOT_CONTRACT_AMT,
+				PJT_CONTRACT_AMT,
+				CHANGE_AMT,
+				BALANCE_AMT,
+				SURTAX,
+				DONG_SU,
+				HOUSE_SU,
+				B_UP_SU,
+				B_DOWN_SU,
+				BUILD_STRUCT,
+				ZIP_CD,
+				PJT_ADDR,
+				REGION,
+				REGION2,
+				ZONE1,
+				ZONE2,
+				SCOPE1,
+				SCOPE2,
+				BUILD_GB,
+				PM_EMP_NO,
+				EMP_NO,
+				MARKET_MAN,
+				INFO_EMP_NO,
+				PJT_E_GBN,
+				PJT_E_DATE,
+				BREAK_AMT,
+				PJT_NIC
+			)
+		VALUES (
+			'19999'
+		)
+	</insert>
 	
 	<!-- 처음 발주처 입력 -->
 	<insert id="addProjectManageOwner" parameterType="java.util.Map" keyProperty="PJT_CD,CUST_CD">
