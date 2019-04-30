@@ -154,7 +154,7 @@ public class ProjectYesanRestController {
 	}
 	
 	//2.2.5. 계약프로젝트List
-	@PostMapping("/project/projectYesanListView")
+	@GetMapping("/project/projectYesanDataTableView")
 	public List<Map<String, Object>> projectYesanListView(ProjectYesanListRequest projectYesanListRequest) {
 		System.out.println("/project/projectYesanListView 계약프로젝트List 조회 요청 RestController post");
 		return projectYesanService.projectYesanList(projectYesanListRequest);
