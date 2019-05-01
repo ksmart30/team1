@@ -152,7 +152,7 @@ $(document).ready(()=>{
 		pjtSearch();		
 	});
     
-	$('#pjtList').delegate('tr', 'dblclick', function(){
+	$('#pjtList').delegate('tr', 'click', function(){
 		let tr = $(this);
 		let td = tr.children();
 		$('#PJT_CD').val(td.eq(0).text());
