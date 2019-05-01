@@ -35,6 +35,12 @@ public interface BusinessManageMapper {
 	//사업수행결정서 삭제
 	void businessManageViewDelete(BusinessMarket vo);
 	
+	//사업수행결정서 승인 업데이트및 저장
+	void businessManageSeunginViewUpdate(BusinessMarket vo);
+	void businessManageSeunginViewInsert1(BusinessMarket vo);
+	void businessManageSeunginViewInsert2(BusinessMarket vo);
+	
+	
 	//일련번호 증가 
 	String numUp();
 }

@@ -54,9 +54,44 @@ public class BusinessMarket {
 	private String MARKET_EMP_NO;
 	private String MARKET_MAN;
 	private String EMP_NO;
+	private String CLASS_GBN;
+	private String END_DATE;
+	private String DESIGN_MAN;
+	private String PM_EMP_NO;
+	private String BUSI_YY2;
 
 
 	
+	public String getBUSI_YY2() {
+		return BUSI_YY2;
+	}
+	public void setBUSI_YY2(String bUSI_YY2) {
+		BUSI_YY2 = bUSI_YY2;
+	}
+	public String getCLASS_GBN() {
+		return CLASS_GBN;
+	}
+	public void setCLASS_GBN(String cLASS_GBN) {
+		CLASS_GBN = cLASS_GBN;
+	}
+	public String getEND_DATE() {
+		return END_DATE;
+	}
+	public void setEND_DATE(String eND_DATE) {
+		END_DATE = eND_DATE;
+	}
+	public String getDESIGN_MAN() {
+		return DESIGN_MAN;
+	}
+	public void setDESIGN_MAN(String dESIGN_MAN) {
+		DESIGN_MAN = dESIGN_MAN;
+	}
+	public String getPM_EMP_NO() {
+		return PM_EMP_NO;
+	}
+	public void setPM_EMP_NO(String pM_EMP_NO) {
+		PM_EMP_NO = pM_EMP_NO;
+	}
 	public String getEMP_NO() {
 		return EMP_NO;
 	}
@@ -384,7 +419,9 @@ public class BusinessMarket {
 				+ RMK_4 + ", RMK_5=" + RMK_5 + ", FORECAST_AMT=" + FORECAST_AMT + ", MARKET_CLASS_GBN="
 				+ MARKET_CLASS_GBN + ", MARKET_DEPT=" + MARKET_DEPT + ", MARKET_FORECAST_AMT=" + MARKET_FORECAST_AMT
 				+ ", PJT_TYPE=" + PJT_TYPE + ", PLAN_DATE=" + PLAN_DATE + ", MARKET_PM=" + MARKET_PM + ", MARKET_PD="
-				+ MARKET_PD + ", MARKET_EMP_NO=" + MARKET_EMP_NO + "]";
+				+ MARKET_PD + ", MARKET_EMP_NO=" + MARKET_EMP_NO + ", MARKET_MAN=" + MARKET_MAN + ", EMP_NO=" + EMP_NO
+				+ ", CLASS_GBN=" + CLASS_GBN + ", END_DATE=" + END_DATE + ", DESIGN_MAN=" + DESIGN_MAN + ", PM_EMP_NO="
+				+ PM_EMP_NO + ", BUSI_YY2=" + BUSI_YY2 + "]";
 	}
 
 	

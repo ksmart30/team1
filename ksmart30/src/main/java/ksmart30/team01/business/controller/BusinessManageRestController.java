@@ -71,7 +71,13 @@ public class BusinessManageRestController {
 
 		return businessManageService.ResultDeptList(searchMap);
 	}
-	
+	//사업수행결정서 승인 저장 
+	@PostMapping("/business/businessManageSeunginViewUpdate")
+	public void businessManageSeunginViewUpdate(BusinessMarket vo) {
+		System.out.println(vo.toString());
+		System.out.println("businessManageSeunginViewUpdate 호출");
+		businessManageService.businessManageSeunginViewUpdate(vo);
+	}
 	
 	
 	//사업수행결정서 저장

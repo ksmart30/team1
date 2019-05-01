@@ -243,7 +243,15 @@ ORDER BY PJT_CD
 				RMK_5, <!--대표이사 의견  -->
 				BUILD_GB, <!--사업분류 -->
 				CD_REG_DATE, <!--승인일자  -->
-				PJT_CD		 <!--프로젝트코드  -->
+				PJT_CD,		 <!--프로젝트코드  -->
+				MARKET_PM,
+				MARKET_PD,
+				MARKET_EMP_NO,
+				MARKET_MAN,
+				EMP_NO,
+				DEPT_CD,  <!--수행부서  -->
+				ZIP_CD
+				
 			FROM T_PS3000	
 				WHERE PJT_NM LIKE #{PJT_NM}
 
@@ -471,5 +479,78 @@ ORDER BY PJT_CD
 	SELECT ISNULL(MAX(BUSI_SEQ) + 1, 1) FROM T_PS3000
 
 	</select>
-
+	
+	
+	<!-- 사업수행결정서 승인 T_PS3000 업데이트  -->
+	<update id="businessManageSeunginViewUpdate" parameterType="ksmart30.team01.business.domain.BusinessMarket">
+	
+	UPDATE T_PS3000 SET
+					CD_REG_DATE = CONVERT(VARCHAR(8), CONVERT(date,GETDATE()), 112), <!--승인일  -->
+					CLASS_GBN = #{CLASS_GBN}, <!--범위-->
+					FORECAST_AMT = #{FORECAST_AMT}, <!-- 추정계약액 -->
+					END_DATE = CONVERT(VARCHAR(8), CONVERT(date,#{END_DATE}), 112), <!--처리기한  -->
+ 					DEPT_CD = #{DEPT_CD}, <!-- 사업관리실 수행부서  -->
+					DESIGN_MAN = #{DESIGN_MAN},
+					PM_EMP_NO = #{PM_EMP_NO},
+					PJT_CD = #{PJT_CD}		
+	WHERE
+		PJT_NM = #{PJT_NM}
+	
+	
+	</update>
+	
+	
+	<!--사업수행결정서 승인 SM3000  -->
+	<insert id="businessManageSeunginViewInsert1" parameterType="ksmart30.team01.business.domain.BusinessMarket">
+	
+		INSERT INTO 
+			T_SM3000
+			(
+			PJT_CD,
+			PJT_NM,
+			CRT_MAN,
+			CRT_DATE,
+			UPD_MAN,
+			UPD_DATE,
+			PJT_TYPE,
+			COSTOM,
+			REAL_DEPT, <!-- 수행부서 -->
+			S_CUST_NM, <!--사업수행결정서 거래처명  -->
+			S_PJT_TYPE,
+			S_DEPT_CD,
+			S_PM_EMP_NO,
+			S_EMP_NO,
+			S_ZIP_CD,
+			S_ADDR
+			)
+			VALUES
+			(
+			#{PJT_CD},
+			#{PJT_NM},
+			'20190007',
+			CONVERT(VARCHAR(8), GETDATE(), 112),
+			'20190007',	    
+			CONVERT(VARCHAR(8), GETDATE(), 112),  <!-- 로그인사용자  -->
+			#{PJT_TYPE},
+			#{CUST_CD},
+			#{DEPT_CD},
+			#{CUST_NM},
+			#{PJT_TYPE},
+			#{MARKET_DEPT},
+			#{MARKET_PM},
+			#{EMP_NO},
+			#{ZIP_CD},
+			#{ADDR}	
+			)
+			
+	
+	</insert>
+	
+	
+	<!--사업수행결정서 승인PS1000  -->
+	<insert id="businessManageSeunginViewInsert2" parameterType="ksmart30.team01.business.domain.BusinessMarket">
+	
+	</insert>
+	
+	
 </mapper>

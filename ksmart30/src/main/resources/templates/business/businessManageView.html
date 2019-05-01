@@ -165,7 +165,13 @@
 							
 						let myElem5 = document.getElementById('RMK_5'); // TEXTAREA 대표이사 의견
 							myElem5.value = data.RMK_5;
-
+						
+							$('#MARKET_PM').attr('value',data.MARKET_PM); 
+							$('#MARKET_PD').attr('value',data.MARKET_PD);
+							$('#MARKET_EMP_NO').attr('value',data.MARKET_EMP_NO);
+							$('#MARKET_MAN').attr('value',data.MARKET_MAN);
+							$('#EMP_NO').attr('value',data.EMP_NO); 
+							$('#DEPT_CD').attr('value',data.DEPT_CD);
 					}
 				});
 			}
