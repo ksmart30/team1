@@ -6,6 +6,26 @@
 		<th:block th:include="layout/customHead"></th:block>
 	</th:block>
 	<th:block layout:fragment="customBody">
+	<div class="col-md-12 col-xs-12" style="color:black;">
+        <div class="page-title">
+			<div class="title_left">
+				<h2><b>용역계약서 변경 입력</b></h2>
+				<h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리&nbsp;>&nbsp;&nbsp;2.1.2용역계약서 변경 입력</b></font></h5>			
+			</div>
+		</div>
+    </div>
+    
+    <div class="x_content" style="text-align:right">
+		<div class="btn-group" >
+			<button class="btn btn-default" type="button" id="Search">조회</button>
+			<button class="btn btn-default" type="button" disabled="disabled">입력</button>
+			<button class="btn btn-default" type="button" disabled="disabled">수정</button>
+			<button class="btn btn-default" type="button" disabled="disabled">삭제</button>
+			<button class="btn btn-default" type="button" disabled="disabled">저장</button>
+			<button class="btn btn-default" type="button">출력</button>
+		</div>
+	</div>
+	<font color="black">
 		<!-- 검색부분 start -->
 		<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="x_panel">
@@ -53,7 +73,7 @@
 			<div class="x_title">
 			</div>
 			<!-- 결과부분 start -->
-			<table class="table table-bordered">
+			<table class="table table-bordered table-hover jambo_table">
 				<thead>
 				<tr>
 					<th width="30%">PJT코드</th><th>프로젝트명</th>
@@ -82,7 +102,7 @@
 			<div class="x_title">
 			</div>
 			<!-- 계약서변경현황 start -->
-			<table class="table table-bordered">
+			<table class="table table-bordered table-hover jambo_table">
 				<thead>
 				<tr>
 					<th width="30%">변경일자</th><th>변경구분</th>
@@ -316,6 +336,7 @@
 		<div class="x_title"></div>
 		</div>
 		</div>
+		</font>
 		<!-- 프로젝트 end -->
 	</th:block>
 	<th:block layout:fragment="customJquery">

@@ -177,14 +177,16 @@
 						$('#PJT_NM_ONE').empty();			// 프로젝트 명
 						$('#PJT_NM_ONE').append(data.sangse.PJT_NM);
 						$('#CRT_DATE_ONE').empty();			// 계약서등록일
-						$('#CRT_DATE_ONE').append('계약서등록일 : '+data.sangse.CRT_DATE);
+						$('#CRT_DATE_ONE').append('계약서등록일 : '+data.sangse.CRT_DATE.substring(0,4)+'-'+data.sangse.CRT_DATE.substring(4,6)+'-'+data.sangse.CRT_DATE.substring(6,8));
 						if(data.seq.PJT_SEQ>0) {
 							$('#PJT_SEQ_ONE').empty();
 							$('#PJT_SEQ_ONE').append(', 총 '+data.seq.PJT_SEQ+'회 변경');
 						}
 						// 기본사항
 						$('#CONTRACT_DATE_ONE').empty();	// 계약일자
-						$('#CONTRACT_DATE_ONE').append(data.sangse.CONTRACT_DATE);
+						let CONTRACT_DATE_ONE = data.sangse.CONTRACT_DATE.substring(0,4)+'-'+data.sangse.CONTRACT_DATE.substring(4,6)+'-'+data.sangse.CONTRACT_DATE.substring(6,8);
+						$('#CONTRACT_DATE_ONE').append(CONTRACT_DATE_ONE);
+						console.log('에어컨온당 : '+CONTRACT_DATE_ONE);
 						$('#CONTRACT_PRI1_ONE').empty();	// 계약기간(시작)
 						$('#CONTRACT_PRI1_ONE').append(data.sangse.CONTRACT_PRI1);
 						$('#CONTRACT_PRI2_ONE').empty();	// 계약기간(끝)
@@ -201,13 +203,13 @@
 						$('#BUILD_TYPE_ONE').attr('value', data.sangse.BUILD_TYPE);
 							$('select[id=BUILD_TYPE_ONE]').val(data.sangse.BUILD_TYPE);
 						$('#G_AREA_M_ONE').empty();			// 대지면적_M
-						$('#G_AREA_M_ONE').attr('value', data.sangse.G_AREA_M);
+						$('#G_AREA_M_ONE').attr('value', numberWithCommas(data.sangse.G_AREA_M));
 						$('#G_AREA_P_ONE').empty();			// 대지면적_P
-						$('#G_AREA_P_ONE').attr('value', data.sangse.G_AREA_M);
+						$('#G_AREA_P_ONE').attr('value', numberWithCommas(data.sangse.G_AREA_M));
 						$('#G_YAREA_M_ONE').empty();		// 연면적_M
-						$('#G_YAREA_M_ONE').attr('value', data.sangse.G_YAREA_M);
+						$('#G_YAREA_M_ONE').attr('value', numberWithCommas(data.sangse.G_YAREA_M));
 						$('#G_YAREA_P_ONE').empty();		// 연면적_P
-						$('#G_YAREA_P_ONE').attr('value', data.sangse.G_YAREA_P);
+						$('#G_YAREA_P_ONE').attr('value', numberWithCommas(data.sangse.G_YAREA_P));
 						$('#PYUNG_DAN_ONE').empty();		// 평당단가
 						$('#PYUNG_DAN_ONE').attr('value', numberWithCommas(data.sangse.PYUNG_DAN));
 						$('#TOT_CONTRACT_AMT_ONE').empty();	// 당사 총계약액
@@ -403,13 +405,13 @@
 					$('#BUILD_TYPE_ONE').attr('value', data.BUILD_TYPE);
 						$('select[id=BUILD_TYPE_ONE]').val(data.BUILD_TYPE);
 					$('#G_AREA_M_ONE').empty();			// 대지면적_M
-					$('#G_AREA_M_ONE').attr('value', data.AREA_M);
+					$('#G_AREA_M_ONE').attr('value', numberWithCommas(data.AREA_M));
 					$('#G_AREA_P_ONE').empty();			// 대지면적_P
-					$('#G_AREA_P_ONE').attr('value', data.AREA_P);
+					$('#G_AREA_P_ONE').attr('value', numberWithCommas(data.AREA_P));
 					$('#G_YAREA_M_ONE').empty();		// 연면적_M
-					$('#G_YAREA_M_ONE').attr('value', data.YAREA_M);
+					$('#G_YAREA_M_ONE').attr('value', numberWithCommas(data.YAREA_M));
 					$('#G_YAREA_P_ONE').empty();		// 연면적_P
-					$('#G_YAREA_P_ONE').attr('value', data.YAREA_P);
+					$('#G_YAREA_P_ONE').attr('value', numberWithCommas(data.YAREA_P));
 					// 대지위치
 					$('#ZIP_CD_ONE').empty();						// 우편번호
 					$('#ZIP_CD_ONE').attr('value', data.ZIP_CD);
@@ -456,6 +458,10 @@
 					$('#INFO_EMP_NO_ONE').attr('value', data.INFO_EMP_NO);
 					$('#INFO_EMP_NO_NM_ONE').empty();					// 정보취득자 이름
 					$('#INFO_EMP_NO_NM_ONE').append(data.INFO_EMP_NO_NM);
+					$('#RM_AMT_SUM').empty();
+					$('#RM_AMT_SUM').append("0");
+					$('#TOT_CONTRACT_AMT_ONE').empty();
+					$('#TOT_CONTRACT_AMT_ONE').attr('value', '0');// 당사 총계약액
 				},
 				error:function(request, status, error) {
 					alert(error + "에러입니다.");
@@ -618,19 +624,37 @@
 				let SALE_STEP = $("#SALE_STEP_VAL option:selected").val();	// 단계
 				let RM_AMT = $('#RM_AMT_VAL').val();						// 금액
 				let SUGUM_RATE = $('#SUGUM_RATE_VAL').val();				// 수금율(%)
-				$.ajax({
-					url:'/project/projectManageGiseongWriteProcess',
-					type:'POST',
-					data:{PJT_CD:PJT_CD, RM_STEP:RM_STEP, SALE_STEP:SALE_STEP, RM_AMT:RM_AMT, SUGUM_RATE:SUGUM_RATE},
-					success:function(data){
-						console.log(data);
-						alert("기성단계 추가 완료!");
-						pjtGiseongList(PJT_CD);
-					},
-					error:function(request, status, error) {
-						alert(error + "추가 실패");
+				let RM_AMT_SUM = $('#RM_AMT_SUM').text();					// 금액 합계
+				let TOT_CONTRACT_AMT = $('#TOT_CONTRACT_AMT_ONE').val();	// 당사 총계약액
+				console.log('금액 합계 : '+ RM_AMT_SUM+' 당사 총계약액 : '+TOT_CONTRACT_AMT);
+				// 당사 총계약액보다 적을때
+				if(RM_AMT_SUM<TOT_CONTRACT_AMT) {
+					// 저장 가능
+					// 당사 총계약액보다 많을때
+					if((RM_AMT+RM_AMT_SUM)>TOT_CONTRACT_AMT) {
+						alert("당사 총 계약액과 기성단계 합이 일치하지 않습니다.");
+					} else {
+						$.ajax({
+							url:'/project/projectManageGiseongWriteProcess',
+							type:'POST',
+							data:{PJT_CD:PJT_CD, RM_STEP:RM_STEP, SALE_STEP:SALE_STEP, RM_AMT:RM_AMT, SUGUM_RATE:SUGUM_RATE},
+							success:function(data){
+								console.log(data);
+								alert("기성단계 추가 완료!");
+								pjtGiseongList(PJT_CD);
+							},
+							error:function(request, status, error) {
+								alert(error + "추가 실패");
+							}
+						});
 					}
-				});
+				} else if(RM_AMT_SUM==TOT_CONTRACT_AMT) {
+					// 불가능
+					alert("당사 총 계약액과 기성단계 합이 일치하지 않습니다.");
+				} else {
+					// 불가능
+					alert("당사 총 계약액과 기성단계 합이 일치하지 않습니다.");
+				}
 			});
 			
 			// 프로젝트 검색 모달

@@ -50,7 +50,7 @@ public interface ProjectManageMapper {
 	Map<String, Object> getProjectManageSangse(Project project);
 	
 	// 용역계약서가 이미 작성되어 있는 경우 그 발주처 리스트 조회 쿼리를 호출하는 메서드
-	List<Map<String, Object>> getProjectManageOwnerList(Project project);
+	List<Map<String, Object>> getProjectManageOwnerList(String PJT_CD);
 	
 	// 용역계약서가 이미 작성되어 있는 경우 그 기성단계 리스트 조회 쿼리를 호출하는 메서드
 	List<Map<String, Object>> getProjectManageGiseongList(Project project);
@@ -121,10 +121,12 @@ public interface ProjectManageMapper {
 	// ====================================================== 용역계약서 검색(부서) END ======================================================
 
 	// ====================================================== 용역계약서 현황 START ====================================================== 
+	// 년도를 기준으로 총 계약 프로젝트 개수 조회 쿼리를 호출하는 메서드
+	Map<String, Object> getProjectManageMonthHyunhwangTotal(String YEAR);
 	// 년도를 기준으로 월(Month)별로 계약 회수 조회 쿼리를 호출하는 메서드
-	List<Map<String, Object>> getProjectManageMonthHyunhwangCount(Map<String, Object> map);
+	List<Map<String, Object>> getProjectManageMonthHyunhwangChart(Map<String, Object> map);
 	// 년도를 기준으로 부서별로 계약 회수 조회 쿼리를 호출하는 메서드
-	List<Map<String, Object>> getProjectManageOwnerHyunhwangCount(Map<String, Object> map);
+	List<Map<String, Object>> getProjectManageOwnerHyunhwangChart(Map<String, Object> map);
 	// 년도를 기준으로 월별로 계약 회수 조회 쿼리를 호출하는 메서드
 	List<Map<String, Object>> getProjectManageMonthHyunhwangSangse(Map<String, Object> map);
 	// 년도를 기준으로 부서별로 계약 리스트 조회 쿼리를 호출하는 메서드

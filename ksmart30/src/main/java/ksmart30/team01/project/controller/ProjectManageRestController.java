@@ -71,9 +71,9 @@ public class ProjectManageRestController {
 	
 	//3.1.1 용역게약서 발주처 데이터 출력
 	@PostMapping("/project/projectManageOwnerListProcess")
-	public List<Map<String, Object>> projectManageOwnerListProcess(Project project) {
+	public List<Map<String, Object>> projectManageOwnerListProcess(String PJT_CD) {
 		System.out.println("RestController projectManageOwnerListProcess 메서드 실행");
-		return projectManageService.getProjectManageOwnerList(project);
+		return projectManageService.getProjectManageOwnerList(PJT_CD);
 	}
 	
 	//3.1.1 용역게약서 기성단계 데이터 출력

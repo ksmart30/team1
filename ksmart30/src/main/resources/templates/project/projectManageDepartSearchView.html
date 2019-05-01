@@ -40,7 +40,11 @@
 			var ZERO = '0';
 			var NOW_MONTH = ZERO+NOW_MONTH_0;
 			var NOW_DAY = date.getDate();
-			var NOW_DATE = NOW_YEAR+'-'+NOW_MONTH+'-'+NOW_DAY
+			// 일자가 10보다 작을 경우 앞에 0을 붙임
+			if(NOW_DAY<10) {
+				NOW_DAY = ZERO+NOW_DAY;
+			}
+			var NOW_DATE = NOW_YEAR+'-'+NOW_MONTH+'-'+NOW_DAY;
 			console.log('현재날짜 : '+NOW_DATE);
  			$('#START_DATE').val(NOW_YEAR+'-01-01');
  			$('#END_DATE').val(NOW_DATE);
@@ -109,10 +113,6 @@
 						console.log(data);
 						console.log(JSON.stringify(data));
 						let deptSearchTable = $('#deptSearchTable').DataTable({
-							language: {
-								decimal: ",",
-								thousands: "."
-						    },
 							destroy:true,
 							searching:false,
 							scrollX: true,
@@ -396,7 +396,7 @@
 	<!-- sort 끝 -->
 
 	<!-- 출력 리스트 검색 시작 -->
-
+<div class="col-md-12 col-sm-6 col-xs-12">
 	<div class="x_panel">
 		<div class="x_content">
 			<div class="table-responsive">
@@ -428,6 +428,7 @@
 				<!-- 출력 리스트 검색 끝 -->
 			</div>
 		</div>
+	</div>
 	</div>
 	</font>
 	</th:block>

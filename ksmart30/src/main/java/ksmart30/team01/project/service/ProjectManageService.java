@@ -167,9 +167,9 @@ public class ProjectManageService {
 	}
 	
 	// 프로젝트 코드로 선택하여 용역계약서의 발주처 리스트를 조회하는 메서드
-	public List<Map<String, Object>> getProjectManageOwnerList(Project project) {
+	public List<Map<String, Object>> getProjectManageOwnerList(String PJT_CD) {
 		System.out.println("Service getProjectManageOwnerList 메서드 실행");
-		return projectManageMapper.getProjectManageOwnerList(project);
+		return projectManageMapper.getProjectManageOwnerList(PJT_CD);
 	}
 	
 	// 프로젝트 코드로 선택하여 용역게약서의 기성단계 리스트를 조회하는 메서드
@@ -195,7 +195,7 @@ public class ProjectManageService {
 		map.put("CUST_GBN", CUST_GBN);
 		map.put("N_RATE", Integer.parseInt(N_RATE));
 		map.put("CONTRACT_AMT", Integer.parseInt(CONTRACT_AMT));
-		// 최초 발주처 입력시 insert 쿼리문
+		//최초 발주처 입력시 insert 쿼리문
 		int result = projectManageMapper.addProjectManageOwner(map);
 		System.out.println("발추저 입력 쿼리 실행 여부 확인 : "+result);
 	}
@@ -339,8 +339,9 @@ public class ProjectManageService {
 		map.put("YEAR", YEAR);
 		// 결과 리턴용 Map
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("ownerHyunhwang", projectManageMapper.getProjectManageOwnerHyunhwangCount(map));
-		resultMap.put("monthHyunhwang", projectManageMapper.getProjectManageMonthHyunhwangCount(map));
+		resultMap.put("ownerHyunhwang", projectManageMapper.getProjectManageOwnerHyunhwangChart(map));
+		resultMap.put("ownerHyunhwangTotal", projectManageMapper.getProjectManageMonthHyunhwangTotal(YEAR));
+		resultMap.put("monthHyunhwang", projectManageMapper.getProjectManageMonthHyunhwangChart(map));
 		return resultMap;
 	}
 

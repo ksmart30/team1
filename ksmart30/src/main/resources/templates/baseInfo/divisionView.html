@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main">
+<th:block layout:fragment="customHead">
+	<meta charset="UTF-8">
+	<title>프로젝트예산서 배부액 등록</title>
+	<th:block th:include="layout/customHead"></th:block>
+</th:block>
+<th:block layout:fragment="customBody">
+	<!-- 검색 폼 -->
+	<!-- 검색 폼 -->
+	<div class="col-md-12 col-xs-12" style="color:black;">
+	   	<div class="page-title">
+			<div class="title_left">
+				<h2><b>프로젝트예산서 배부액 등록</b></h2>
+				<h5><font color="gray"><b>10.기준정보 관리&nbsp;>&nbsp;&nbsp;10.2프로젝트 관리2(수익/배분)&nbsp;>&nbsp;&nbsp;10.2.1프로젝트예산서 배부액 등록</b></font></h5>
+			</div>
+		</div>
+	</div>
+	<div class="x_content" style="text-align:right">
+		<div class="btn-group" >
+			<button class="btn btn-default" type="button" id="search">조회</button>
+			<button class="btn btn-default" type="button">입력</button>
+			<button class="btn btn-default" type="button">수정</button>
+			<button class="btn btn-default" type="button">삭제</button>
+			<button class="btn btn-default" type="button">저장</button>
+			<button class="btn btn-default" type="button" disabled="disabled">출력</button>
+		</div>
+	</div>
+	<font color="black">
+	<div class="col-md-12 col-sm-6 col-xs-12">
+	<div class="x_panel">
+		<div class="x_content">
+		<table class="table table table-striped table-bordered">
+			<tr>
+				<td>
+					<label>회계년도</label>
+				</td>
+				<td>
+					<input type="number" id="YEAR">
+				</td>
+			</tr>
+		</table>
+		</div>
+	</div>
+	</div>
+	<!-- 검색폼 끝 -->
+
+
+	<!-- 출력 리스트 검색 시작 -->
+	<div class="col-md-12 col-sm-6 col-xs-12">
+	<div class="x_panel">
+		<div class="x_content">
+			<div class="table-responsive">
+				<table class="table table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th>회계년월</th>
+							<th>배부구분</th>
+							<th>부서</th>
+							<th colspan="5">공통비Ⅰ</th>
+							<th>공통비Ⅱ</th>
+							<th>관리부분비</th>
+						</tr>
+						<tr>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th>설계부문</th>
+							<th>지원부서</th>
+							<th>본부장</th>
+							<th>본부(부)</th>
+							<th>공통비Ⅰ계</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<!-- 출력 리스트 검색 끝 -->
+			</div>
+		</div>
+		</div>
+	</div>
+	</font>
+	</th:block>
+	<th:block layout:fragment="customJquery">
+		<th:block th:include="layout/customJquery"></th:block>
+    </th:block>

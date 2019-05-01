@@ -8,11 +8,31 @@
 	<th:block th:include="layout/customHead"></th:block>
 </th:block>
 <th:block layout:fragment="customBody">
-
 	<!-- 검색 폼 -->
-	<h3>용역계약서 관리 - 용역계약서 검색(발주처)</h3>
-	<div><button class="btn">검색</button></div>
-		<table class="table">
+	<!-- 검색 폼 -->
+	<div class="col-md-12 col-xs-12" style="color:black;">
+	   	<div class="page-title">
+			<div class="title_left">
+				<h2><b>용역계약서 검색(발주처)</b></h2>
+				<h5><font color="gray"><b>2.계약프로젝트 관리&nbsp;>&nbsp;&nbsp;2.1용역계약서 관리&nbsp;>&nbsp;&nbsp;2.1.5용역계약서 검색(발주처)</b></font></h5>		
+			</div>
+		</div>
+	</div>
+	<div class="x_content" style="text-align:right">
+		<div class="btn-group" >
+			<button id="search" class="btn btn-default" type="button">조회</button>
+			<button class="btn btn-default" type="reset" disabled="disabled">입력</button>
+			<button class="btn btn-default" type="button" disabled="disabled">수정</button>
+			<button class="btn btn-default" type="button" disabled="disabled">삭제</button>
+			<button class="btn btn-default" type="button" disabled="disabled">저장</button>
+			<button class="btn btn-default" type="button">출력</button>
+		</div>
+	</div>
+	<font color="black">
+	<div class="col-md-12 col-sm-6 col-xs-12">
+	<div class="x_panel">
+		<div class="x_content">
+		<table class="table table table-striped table-bordered">
 			<tr>
 				<td width="150"><label>⊙ 부서 : </label></td>
 				<td>
@@ -42,15 +62,18 @@
 				</td>
 			</tr>
 		</table>
+		</div>
+	</div>
+	</div>
 	<!-- 검색폼 끝 -->
 
 
 	<!-- 출력 리스트 검색 시작 -->
-
+	<div class="col-md-12 col-sm-6 col-xs-12">
 	<div class="x_panel">
 		<div class="x_content">
 			<div class="table-responsive">
-				<table class="table table-bordered">
+				<table class="table table table-striped jambo_table bulk_action">
 					<thead>
 						<tr class="headings">
 							<th class="column-title">프로젝트코드명</th>
@@ -97,6 +120,8 @@
 			</div>
 		</div>
 	</div>
+	</div>
+	</font>
 	</th:block>
 	<th:block layout:fragment="customJquery">
 		<th:block th:include="layout/customJquery"></th:block>

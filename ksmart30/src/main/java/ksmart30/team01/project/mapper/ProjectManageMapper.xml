@@ -280,7 +280,7 @@
 	</select>
 	
 	<!-- 하나의 프로젝트 선택시 프로젝트 대장 발주처 리스트를 조회한다 -->
-	<select id="getProjectManageOwnerList" parameterType="ksmart30.team01.project.domain.Project" resultType="java.util.Map">
+	<select id="getProjectManageOwnerList" parameterType="String" resultType="java.util.Map">
 	SELECT
 		A.PJT_CD,
 		A.CUST_CD,
@@ -870,7 +870,7 @@
 	<!-- ====================================================== 용역계약 현황 START ====================================================== -->
 	
 	<!-- 용역계약서 현황 년도를 기준으로 월별 계약 현황(차트) -->
-	<select id="getProjectManageMonthHyunhwangCount" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getProjectManageMonthHyunhwangChart" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			C.WORK_YY, 
 			C.WORK_MM,
@@ -924,6 +924,27 @@
 		) C
 		GROUP BY WORK_YY, WORK_MM
 	</select>
+	<!-- 용역계약서 현황 년도를 기준으로 총 계약 프로젝트 개수 -->
+	<select id="getProjectManageMonthHyunhwangTotal" parameterType="String" resultType="java.util.Map">
+		SELECT
+	SUM(X.DEPT_CD_COUNT) TOTAL
+FROM
+	(
+		SELECT                                       
+			C.DEPT_CD_SUB,                 
+			COUNT(C.DEPT_CD_SUB) DEPT_CD_COUNT,
+			SUM(B.TOT_CONTRACT_AMT) TOT_CONTRACT_AMT_SUB
+		FROM
+			T_SM3000 A,
+			T_P11000 B,
+			(SELECT DISTINCT SUBSTRING(DEPT_CD,1,2) DEPT_CD_SUB, DEPT_CD FROM T_SC1010 GROUP BY DEPT_CD) C
+		WHERE
+			A.PJT_CD = B.PJT_CD
+			AND C.DEPT_CD = B.DEPT_CD
+			AND B.CONTRACT_DATE BETWEEN #{YEAR}+'0101' AND #{YEAR}+'1231'
+		GROUP BY C.DEPT_CD_SUB
+		) X
+	</select>
 	<!-- 용역계약서 현황 년도를 기준으로 월별 계약 상세 현황(표) -->
 	<select id="getProjectManageMonthHyunhwangSangse" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
@@ -945,7 +966,7 @@
 		ORDER BY B.DEPT_CD
 	</select>
 	<!-- 용역계약서 현황 년도를 기준으로 부서별 계약 개수(차트) -->
-	<select id="getProjectManageOwnerHyunhwangCount" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getProjectManageOwnerHyunhwangChart" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT                                       
 			C.DEPT_CD_SUB,                 
 			COUNT(C.DEPT_CD_SUB) DEPT_CD_COUNT,
