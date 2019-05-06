@@ -68,8 +68,8 @@ function searchCall() {
    	        			+item.WORK_STEP_NM+'</td><td>'
    	        			+item.PLAN_MH1+'</td><td>'+item.PLAN_MH2+'</td><td>'
    	        			+item.PLAN_TOT+'</td><td>'+item.SIL_MH1+'</td><td>'
-   	        			+item.SIL_MH2+'</td><td>'+item.SIL_TOT+'</td><td>'+item.COST_AMT1.toLocaleString()+'</td><td>'
-   	        			+item.SIL_COST1.toLocaleString()+'</td><td>'+item.CHA_COST1.toLocaleString()+'</td><td></tr>')
+   	        			+item.SIL_MH2+'</td><td>'+item.SIL_TOT+'</td><td>'+item.COST_AMT1+'</td><td>'
+   	        			+item.SIL_COST1+'</td><td>'+item.CHA_COST1+'</td><td></tr>')
         		 }else if(item.PJT_CD=='ZZZZZZ'){
      			 $('#searchList').append(
    	        			'<tr style="background-color: #fff9df"><td>'
@@ -94,8 +94,8 @@ function searchCall() {
    	        			+item.WORK_STEP_NM+'</td><td>'
    	        			+item.PLAN_MH1+'</td><td>'+item.PLAN_MH2+'</td><td>'
    	        			+item.PLAN_TOT+'</td><td>'+item.SIL_MH1+'</td><td>'
-   	        			+item.SIL_MH2+'</td><td>'+item.SIL_TOT+'</td><td>'+item.COST_AMT1.toLocaleString()+'</td><td>'
-   	        			+item.SIL_COST1.toLocaleString()+'</td><td>'+item.CHA_COST1.toLocaleString()+'</td><td></tr>')
+   	        			+item.SIL_MH2+'</td><td>'+item.SIL_TOT+'</td><td>'+item.COST_AMT1+'</td><td>'
+   	        			+item.SIL_COST1+'</td><td>'+item.CHA_COST1+'</td><td></tr>')
 	     		 }else{
 	     			 $('#searchList').append(
   	        			'<tr><td>'
@@ -105,24 +105,24 @@ function searchCall() {
   	        			+item.CUST_NM+'</td><td>'//발주처
   	        			+item.G_AREA_P+'</td><td>'//대지평
   	        			+item.G_YAREA_P+'</td><td>'//연면적평	        			
-  	        			+item.CONTRACT_AMT.toLocaleString()+'</td><td>'//계약금액
-  	        			+item.CONTRACT_DAN.toLocaleString()+'</td><td>'//평단가
+  	        			+item.CONTRACT_AMT+'</td><td>'//계약금액
+  	        			+item.CONTRACT_DAN+'</td><td>'//평단가
   	        			+item.CONTRACT_RAT+'</td><td>'//비율
-  	        			+item.OUT_01.toLocaleString()+'</td><td>'+item.DAN_01.toLocaleString()+'</td><td>'//건축
-  	        			+item.OUT_02.toLocaleString()+'</td><td>'+item.DAN_02.toLocaleString()+'</td><td>'//기계	        			
-  	        			+item.OUT_03.toLocaleString()+'</td><td>'+item.DAN_03.toLocaleString()+'</td><td>'//전기	        			
-  	        			+item.OUT_04.toLocaleString()+'</td><td>'+item.DAN_04.toLocaleString()+'</td><td>'//구조	        			
-  	        			+item.OUT_05.toLocaleString()+'</td><td>'+item.DAN_05.toLocaleString()+'</td><td>'//견적	        			
-  	        			+item.OUT_08.toLocaleString()+'</td><td>'+item.DAN_08.toLocaleString()+'</td><td>'//교통영향평가	        			
-  	        			+item.OUT_11.toLocaleString()+'</td><td>'+item.DAN_11.toLocaleString()+'</td><td>'//측량	        			
-  	        			+item.OUT_14.toLocaleString()+'</td><td>'+item.DAN_14.toLocaleString()+'</td><td>'//소방	        			
-  	        			+item.OUT_29.toLocaleString()+'</td><td>'+item.DAN_29.toLocaleString()+'</td><td>'//기타	        			
-  	        			+item.OUT_04.toLocaleString()+'</td><td>'+item.DAN_04.toLocaleString()+'</td><td>'//토목	        			
-  	        			+item.OUT_05.toLocaleString()+'</td><td>'+item.DAN_05.toLocaleString()+'</td><td>'//조경	        			
-  	        			+item.OUT_10.toLocaleString()+'</td><td>'+item.DAN_10.toLocaleString()+'</td><td>'//지질조사
-  	        			+item.OUT_12.toLocaleString()+'</td><td>'+item.DAN_12.toLocaleString()+'</td><td>'//흙막이	        			
-  	        			+item.COST2_01.toLocaleString()+'</td><td>'//조감도비
-  	        			+item.COST2_02.toLocaleString()+'</td><td>'//모형비
+  	        			+item.OUT_01+'</td><td>'+item.DAN_01+'</td><td>'//건축
+  	        			+item.OUT_02+'</td><td>'+item.DAN_02+'</td><td>'//기계	        			
+  	        			+item.OUT_03+'</td><td>'+item.DAN_03+'</td><td>'//전기	        			
+  	        			+item.OUT_04+'</td><td>'+item.DAN_04+'</td><td>'//구조	        			
+  	        			+item.OUT_05+'</td><td>'+item.DAN_05+'</td><td>'//견적	        			
+  	        			+item.OUT_08+'</td><td>'+item.DAN_08+'</td><td>'//교통영향평가	        			
+  	        			+item.OUT_11+'</td><td>'+item.DAN_11+'</td><td>'//측량	        			
+  	        			+item.OUT_14+'</td><td>'+item.DAN_14+'</td><td>'//소방	        			
+  	        			+item.OUT_29+'</td><td>'+item.DAN_29+'</td><td>'//기타	        			
+  	        			+item.OUT_04+'</td><td>'+item.DAN_04+'</td><td>'//토목	        			
+  	        			+item.OUT_05+'</td><td>'+item.DAN_05+'</td><td>'//조경	        			
+  	        			+item.OUT_10+'</td><td>'+item.DAN_10+'</td><td>'//지질조사
+  	        			+item.OUT_12+'</td><td>'+item.DAN_12+'</td><td>'//흙막이	        			
+  	        			+item.COST2_01+'</td><td>'//조감도비
+  	        			+item.COST2_02+'</td><td>'//모형비
   	        			+item.WORK_STEP_NM+'</td><td>'//일정  	        			
   	        			+item.PLAN_MH1+'</td><td>'//M/H계획
   	        			+item.PLAN_MH2+'</td><td>'
@@ -130,9 +130,9 @@ function searchCall() {
   	        			+item.SIL_MH1+'</td><td>'//M/H실적
   	        			+item.SIL_MH2+'</td><td>'
   	        			+item.SIL_TOT+'</td><td>'
-  	        			+item.COST_AMT1.toLocaleString()+'</td><td>' //인건비
-  	        			+item.SIL_COST1.toLocaleString()+'</td><td>'
-  	        			+item.CHA_COST1.toLocaleString()+'</td><td>'
+  	        			+item.COST_AMT1+'</td><td>' //인건비
+  	        			+item.SIL_COST1+'</td><td>'
+  	        			+item.CHA_COST1+'</td><td>'
   	        			+'</tr>')
        		 }
         		 
