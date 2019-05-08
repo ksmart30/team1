@@ -85,13 +85,30 @@ layout:decorator="layout/main">
 	                $('#G_YAREA_M').append(data.projectYesanSangse.G_YAREA_M+'m²');	//계약연면적_M
 	                $('#G_YAREA_P').empty();
 	                $('#G_YAREA_P').append(data.projectYesanSangse.G_YAREA_P+'평');	//계약연면적_평	
-
+	     
+	                //승인일때만 승인취소버튼 활성화함
+	                console.log(data.projectYesanSangse.PJT_YEA_YN+" :승인유무");
+    	            if(data.projectYesanSangse.PJT_YEA_YN=="승인") {
+    	            	$("#revocation").attr("disabled",false);
+    	            } else {
+    	            	$("#revocation").attr("disabled",true);
+    	            }	
+	                
+    	            //일정계획과 MH계획이 없으면 승인버튼 비활성화
+	                console.log(data.projectYesanSangseWorkStep.length+"일정계획유무");
+    	            console.log(data.projectYesanSangseMH.length+"MH계획유무");
+    	            if((data.projectYesanSangseMH.length==0)||(data.projectYesanSangseWorkStep==0)||(data.projectYesanSangse.PJT_YEA_YN=="승인")) {
+    	            	$("#approval").attr("disabled",true);
+    	            } else {
+    	            	$("#approval").attr("disabled",false);
+    	            }	     	            
+    	            
 	                //발주처
                 	$('#CUST_NM').empty();	//발주처 삭제
     	            $(data.projectYesanSangseCustNm).each((index,item)=>{  	
     	                $('#CUST_NM').append('<tr><td>'+item.CUST_NM+'</td></tr>');	//발주처명	
    	                });
-	                
+	    	          	
 	                //일정계획
 	                let needTermTotal = null;	//소요시간 변수초기화
                 	$('#workStep').empty();	//일정계획 삭제
@@ -108,11 +125,12 @@ layout:decorator="layout/main">
 		                needTermTotal = needTermTotal + parseInt(item.NEED_TERM); 
     	                month = parseInt(needTermTotal/25);		
     	                day = needTermTotal % 25;
+
     	            }); 
 	                console.log(needTermTotal+'소요기간');
 	                $('#needTermTotal').empty();
 	                $('#needTermTotal').append(month+'개월'+day+'일');
-	                
+    	            
 	                //MH계획
 	                //주관부서
 	                let INWON_1_TOTAL = null;	//주관부서 인원합계를 구하기 위한 변수초기화

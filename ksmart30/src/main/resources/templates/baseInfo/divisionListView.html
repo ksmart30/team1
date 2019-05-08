@@ -8,61 +8,75 @@
 	<th:block th:include="layout/customHead"></th:block>
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script>
+	
+	function yearCall() {
+		//날짜 초기화(적용하기)
+		let today = new Date();
+		let yyyy = today.getFullYear();
+		$('#REG_YYMM').val(yyyy);
+	}		
+
+	// 필드로 입력받은 값들을 변수에 저장
+	function divisionList(){
+		let REG_YYMM = $('#REG_YYMM').val();
+		console.log(REG_YYMM);
+		$.ajax({
+	        url:'/baseInfo/divisionListView',	//url을 요청하고
+	        type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
+	    	data:{REG_YYMM:REG_YYMM},	//넘길 데이터
+	        success:(data)=>{	//받은 데이터
+	        	console.log(data);
+	        	//직급별 단가 조회
+	            $('#jikgupDangaList').empty();	//리스트를 비우고	               
+	            $(data.jikgupDangaList).each((index,item)=>{
+	                $('#jikgupDangaList').append(
+	                		'<tr><td>'+item.JIKGUP_NM+'</td><td>'		                    		
+	                		+item.MAX_PAY+'</td><td>'
+	                		+item.RETI_MONTH+'</td><td>'
+	                		+item.AMT+'</td><td>'
+	                		+item.BNS_MONTH+'</td><td>'
+	                		+item.MD_PAY_DAN+'</td><td>'
+	                		+item.MD_RETI_DAN+'</td><td>'
+	                		+item.PAY_DAN+'</td><td>'
+	                		+item.MD_BNS_DAN+'</td></tr>');		                   
+	            });
+	        	
+	            //배부 단가 조회
+	        	$('#DIV_AMT11').empty();
+	        	$('#DIV_AMT11').append(data.divisionDangaList.DIV_AMT11);	//빌딩
+	        	$('#DIV_AMT13').empty();
+	        	$('#DIV_AMT13').append(data.divisionDangaList.DIV_AMT13);	//전산
+	        	$('#DIV_AMT12').empty();
+	        	$('#DIV_AMT12').append(data.divisionDangaList.DIV_AMT12);	//통신
+	        	$('#DIV_AMT10').empty();
+	        	$('#DIV_AMT10').append(data.divisionDangaList.DIV_AMT10);	//간접비 소계
+	        	$('#DIV_AMT20').empty();
+	        	$('#DIV_AMT20').append(data.divisionDangaList.DIV_AMT20);	//공통비2
+	        	$('#DIV_AMT30').empty();
+	        	$('#DIV_AMT30').append(data.divisionDangaList.DIV_AMT30);	//관리부문비
+	        	$('#DIV_AMT44').empty();
+	        	$('#DIV_AMT44').append(data.divisionDangaList.DIV_AMT44);	//설계 부문
+	        	$('#DIV_AMT43').empty();
+	        	$('#DIV_AMT43').append(data.divisionDangaList.DIV_AMT43);	//지원 부서
+	        	$('#DIV_AMT41').empty();
+	        	$('#DIV_AMT41').append(data.divisionDangaList.DIV_AMT41);	//본부장
+	        	$('#DIV_AMT42').empty();
+	        	$('#DIV_AMT42').append(data.divisionDangaList.DIV_AMT42);	//본부(부)
+	        	$('#DIV_AMT40').empty();
+	        	$('#DIV_AMT40').append(data.divisionDangaList.DIV_AMT40);	//공통비1 소계        
+	        	
+	        	//제조경비1 단가 조회
+	        	
+	    	}
+		});		
+	}
 		//회계연도를 입력받아 직급별 단가와 배부 단가를 보여준다
 		$(document).ready(()=>{
+			yearCall();
+			divisionList();
+			
 		    $('#btn').click(()=>{	//btn을 클릭하면
-				// 필드로 입력받은 값들을 변수에 저장
-				let REG_YYMM = $('#REG_YYMM').val();
-				console.log(REG_YYMM);
-		    	$.ajax({
-		            url:'/baseInfo/divisionListView',	//url을 요청하고
-		            type:'POST',	//검색조건을 담아서 post 방식으로 보낸다
-		        	data:{REG_YYMM:REG_YYMM},	//넘길 데이터
-		            success:(data)=>{	//받은 데이터
-		            	console.log(data);
-		            	//직급별 단가 조회
-		                $('#jikgupDangaList').empty();	//리스트를 비우고	               
-		                $(data.jikgupDangaList).each((index,item)=>{
-		                    $('#jikgupDangaList').append(
-		                    		'<tr><td>'+item.JIKGUP_NM+'</td><td>'		                    		
-		                    		+item.MAX_PAY+'</td><td>'
-		                    		+item.RETI_MONTH+'</td><td>'
-		                    		+item.AMT+'</td><td>'
-		                    		+item.BNS_MONTH+'</td><td>'
-		                    		+item.MD_PAY_DAN+'</td><td>'
-		                    		+item.MD_RETI_DAN+'</td><td>'
-		                    		+item.PAY_DAN+'</td><td>'
-		                    		+item.MD_BNS_DAN+'</td></tr>');		                   
-		                });
-	                	
-		                //배부 단가 조회
-	                	$('#DIV_AMT11').empty();
-	                	$('#DIV_AMT11').append(data.divisionDangaList.DIV_AMT11);	//빌딩
-	                	$('#DIV_AMT13').empty();
-	                	$('#DIV_AMT13').append(data.divisionDangaList.DIV_AMT13);	//전산
-	                	$('#DIV_AMT12').empty();
-	                	$('#DIV_AMT12').append(data.divisionDangaList.DIV_AMT12);	//통신
-	                	$('#DIV_AMT10').empty();
-	                	$('#DIV_AMT10').append(data.divisionDangaList.DIV_AMT10);	//간접비 소계
-	                	$('#DIV_AMT20').empty();
-	                	$('#DIV_AMT20').append(data.divisionDangaList.DIV_AMT20);	//공통비2
-	                	$('#DIV_AMT30').empty();
-	                	$('#DIV_AMT30').append(data.divisionDangaList.DIV_AMT30);	//관리부문비
-	                	$('#DIV_AMT44').empty();
-	                	$('#DIV_AMT44').append(data.divisionDangaList.DIV_AMT44);	//설계 부문
-	                	$('#DIV_AMT43').empty();
-	                	$('#DIV_AMT43').append(data.divisionDangaList.DIV_AMT43);	//지원 부서
-	                	$('#DIV_AMT41').empty();
-	                	$('#DIV_AMT41').append(data.divisionDangaList.DIV_AMT41);	//본부장
-	                	$('#DIV_AMT42').empty();
-	                	$('#DIV_AMT42').append(data.divisionDangaList.DIV_AMT42);	//본부(부)
-	                	$('#DIV_AMT40').empty();
-	                	$('#DIV_AMT40').append(data.divisionDangaList.DIV_AMT40);	//공통비1 소계        
-	                	
-	                	//제조경비1 단가 조회
-	                	
-		        	}
-		    	});			    	
+		    	divisionList();
 		    });			    
 		});
 		</script>
@@ -85,10 +99,11 @@
 				</div>
 				<div class="x_content" style="text-align: right">
 					<div class="btn-group">
-						<button class="btn btn-default" type="reset">입력</button>
-						<button class="btn btn-default" type="button">수정</button>
-						<button class="btn btn-default" type="button">삭제</button>
-						<button class="btn btn-default" type="button">저장</button>
+						<button class="btn btn-default" type="button" id="btn">조회</button>
+						<button class="btn btn-default" type="reset" disabled="disabled">입력</button>
+						<button class="btn btn-default" type="button" disabled="disabled">수정</button>
+						<button class="btn btn-default" type="button" disabled="disabled">삭제</button>
+						<button class="btn btn-default" type="button" disabled="disabled">저장</button>
 						<button class="btn btn-default" type="button">출력</button>
 					</div>
 				</div>
@@ -127,9 +142,6 @@
 										style="width: 100%;" aria-sort="ascending"
 										aria-label="First name: activate to sort column descending">
 										<label class="control-label">회계년도</label><input type="number" id="REG_YYMM">
-									</td>
-									<td><div class="x_content" style="text-align: right"><button class="btn" id="btn">검색</button></div>
-									</td>
 								</tr>
 							</tbody>
 						</table>
